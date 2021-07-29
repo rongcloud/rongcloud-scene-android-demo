@@ -413,7 +413,13 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
     }
 
     private fun doOnDataScheduler(block: () -> Unit) {
-        dataModifyWorker.schedule(block)
+        dataModifyWorker.schedule{
+            try {
+                block()
+            } catch (e: Exception) {
+                Log.e(TAG, "doOnDataScheduler: ", e)
+            }
+        }
     }
 
     fun getMemberInfoByUserIdOnlyLocal(userId: String?): UiMemberModel? {
@@ -853,7 +859,10 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
         refreshAllMemberList.onNext(Unit)
     }
 
-    fun queryAllUserInfo(onComplete: (() -> Unit)? = null) {
+    fun queryAllUserInfo(
+        needRefreshRequestSeatUserList: Boolean = false,
+        onComplete: (() -> Unit)? = null
+    ) {
         addDisposable(RetrofitManager
             .commonService
             .getMembersList(roomId)
@@ -912,7 +921,9 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                     }
                 }
             }.doOnSuccess {
-                refreshRequestSeatUserList()
+                if (needRefreshRequestSeatUserList) {
+                    refreshRequestSeatUserList()
+                }
             }
             .subscribe({
                 onComplete?.invoke()
@@ -973,7 +984,7 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                         }
                         memberListChangeSubject.onNext(roomMemberInfoList)
                     } else {
-                        refreshAllMemberInfoList()
+                        queryAllUserInfo(false)
                     }
                 }
             }

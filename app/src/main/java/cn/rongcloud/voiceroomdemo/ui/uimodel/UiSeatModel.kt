@@ -17,6 +17,11 @@ class UiSeatModel(
     private val seatInfoChangeSubject: BehaviorSubject<UiSeatModel>
 ) {
 
+    /**
+     * 记录上次通话状态，防止频繁触发
+     */
+    private var preSpeakingStatus:Boolean? = null
+
     var member: UiMemberModel? = null
         set(value) {
             if (value != field) {
@@ -30,7 +35,6 @@ class UiSeatModel(
             return seatModel.userId
         }
         set(value) {
-            seatModel.userId = value
             seatInfoChangeSubject.onNext(this)
         }
 
@@ -39,7 +43,6 @@ class UiSeatModel(
             return seatModel.status ?: RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusEmpty
         }
         set(value) {
-            seatModel.status = value
             seatInfoChangeSubject.onNext(this)
         }
 
@@ -49,7 +52,6 @@ class UiSeatModel(
             return seatModel.isMute
         }
         set(value) {
-            seatModel.isMute = value
             seatInfoChangeSubject.onNext(this)
         }
 
@@ -58,8 +60,10 @@ class UiSeatModel(
             return seatModel.isSpeaking
         }
         set(value) {
-            seatModel.isSpeaking = value
-            seatInfoChangeSubject.onNext(this)
+            if (preSpeakingStatus != value) {
+                preSpeakingStatus = value
+                seatInfoChangeSubject.onNext(this)
+            }
         }
 
     var extra: String?
