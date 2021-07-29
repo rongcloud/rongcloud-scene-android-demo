@@ -1,0 +1,144 @@
+/*
+ * Copyright © 2021 RongCloud. All rights reserved.
+ */
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "cn.rongcloud.voiceroomdemo"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+
+        renderscriptTargetApi 14
+        renderscriptSupportModeEnabled  true
+        multiDexEnabled true
+    }
+
+    signingConfigs{
+        debug{
+            keyAlias "debugkey"
+            keyPassword "123456"
+            storeFile file("./debugkey.key")
+            storePassword '123456'
+        }
+    }
+
+    buildTypes {
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    androidExtensions{
+        experimental = true
+    }
+
+    applicationVariants.all{
+        variant->
+                variant.outputs.all{
+                    output->outputFileName = new File(variant.name,"RTC_RC_"+releaseTime()+".apk")
+                }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+    // rxjava 相关
+    implementation "io.reactivex.rxjava3:rxjava:3.0.0"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    // retrofit 相关
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    // 权限相关
+    implementation 'pub.devrel:easypermissions:3.0.0'
+    // okhttp
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    // datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0-beta01")
+    implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0-beta01")
+    // 圆形图片
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    // paging
+    implementation("androidx.paging:paging-runtime-ktx:3.0.0")
+    implementation("androidx.paging:paging-rxjava3:3.0.0")
+    // gif 支持
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
+
+    // 图片压缩
+    implementation 'top.zibin:Luban:1.1.8'
+    // recyclerview 下拉刷新和加载更多
+    implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
+    // 表情
+    implementation 'com.vanniktech:emoji-ios:0.7.0'
+    implementation 'com.vdurmont:emoji-java:5.1.1'
+
+    // 友盟统计相关
+    implementation  'com.umeng.umsdk:common:9.4.0'// 必选
+    implementation  'com.umeng.umsdk:asms:1.2.3'// 必选
+    implementation 'com.umeng.umsdk:apm:1.3.1' // 错误分析升级为独立SDK，看crash数据请一定集成，可选
+    implementation  'com.umeng.umsdk:abtest:1.0.0'//使用U-App中ABTest能力，可选
+
+    //adapter
+    implementation 'com.github.lbasis:adapter:1.0.1'
+
+    // rongcloud
+    implementation "cn.rongcloud.sdk:im_lib:$rongcloudSdkVersion"
+    implementation "cn.rongcloud.sdk:call_lib:$rongcloudSdkVersion"
+    implementation "cn.rongcloud.sdk:im_kit:$rongcloudSdkVersion"
+    implementation files('libs/RCRTC1.0.1.aar')
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+}

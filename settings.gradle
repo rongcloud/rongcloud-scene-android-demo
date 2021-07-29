@@ -1,0 +1,9 @@
+/*
+ * Copyright © 2021 RongCloud. All rights reserved.
+ */
+
+rootProject.name = "VoiceRoomDemo"
+include ':app'
+
+
+

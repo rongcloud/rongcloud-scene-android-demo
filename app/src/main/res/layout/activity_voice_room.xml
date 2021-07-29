@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    tools:context=".mvp.activity.VoiceRoomActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:scaleType="centerCrop" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_member_list"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_member_list_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_room_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_vertical"
+                    android:minWidth="145dp"
+                    android:textColor="@color/whiteTextColor"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_room_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/whiteTextColor"
+                    android:textSize="9sp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_room_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_room_name" />
+
+                <TextView
+                    android:id="@+id/tv_room_members_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/ic_online_members_count"
+                    android:drawablePadding="3dp"
+                    android:textColor="@color/whiteTextColor"
+                    android:textSize="9sp"
+                    app:layout_constraintStart_toEndOf="@+id/tv_room_id"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_room_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_right_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="4dp"
+                android:padding="3dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <cn.rongcloud.voiceroomdemo.ui.widget.WaveView
+            android:id="@+id/wv_creator_background"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            app:init_radius="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_room_creator_portrait"
+            app:layout_constraintEnd_toEndOf="@+id/iv_room_creator_portrait"
+            app:layout_constraintStart_toStartOf="@+id/iv_room_creator_portrait"
+            app:layout_constraintTop_toTopOf="@+id/iv_room_creator_portrait"
+            app:wave_color="@color/color_speaking_bg" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_room_creator_portrait"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="12dp"
+            android:padding="1dp"
+            android:src="@drawable/ic_room_creator_not_in_seat"
+            app:layout_constraintBottom_toTopOf="@+id/tv_room_creator_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_title_bar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_is_mute"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iv_room_creator_portrait"
+            app:layout_constraintEnd_toEndOf="@+id/iv_room_creator_portrait"
+            app:srcCompat="@drawable/ic_is_mute"
+            tools:visibility="visible" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_room_creator_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/ic_creator"
+            android:drawablePadding="3dp"
+            android:textAlignment="textStart"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_gift_count"
+            app:layout_constraintEnd_toEndOf="@id/iv_room_creator_portrait"
+            app:layout_constraintStart_toStartOf="@id/iv_room_creator_portrait"
+            app:layout_constraintTop_toBottomOf="@+id/iv_room_creator_portrait"
+            tools:text="123431" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_gift_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_gift_count"
+            android:drawableStart="@drawable/ic_gift_count"
+            android:drawablePadding="5dp"
+            android:paddingEnd="5dp"
+            android:text="0"
+            android:textAlignment="textStart"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="9sp"
+            app:layout_constraintBottom_toTopOf="@+id/rv_seat_list"
+            app:layout_constraintEnd_toEndOf="@+id/tv_room_creator_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_room_creator_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_room_creator_name"
+            tools:text="111111" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_seat_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/rv_message_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_gift_count"
+            app:spanCount="4" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_message_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/cl_buttons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/rv_seat_list" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_open_send_message"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:background="@drawable/bg_btn_open_send_message_window"
+                android:gravity="center"
+                android:text="聊聊吧..."
+                android:textColor="@color/whiteTextColor"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_seat_order"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                app:layout_constraintStart_toEndOf="@id/btn_open_send_message"
+                app:srcCompat="@drawable/ic_seat_order" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_seat_order_operation_number"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:background="@drawable/bg_seat_order_subscript"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="@+id/btn_seat_order"
+                app:layout_constraintTop_toTopOf="@+id/btn_seat_order"
+                tools:text="11" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_room_setting"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="7dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_room_setting" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_send_message"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="7dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/iv_room_setting"
+                app:srcCompat="@drawable/ic_send_message" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_unread_message_number"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:background="@drawable/bg_seat_order_subscript"
+                android:gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="@+id/iv_send_message"
+                app:layout_constraintTop_toTopOf="@+id/iv_send_message"
+                tools:text="11" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_send_gift"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="7dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/iv_send_message"
+                app:srcCompat="@drawable/ic_send_gift" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_request_enter_seat"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="7dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/iv_send_gift"
+                app:srcCompat="@drawable/ic_request_enter_seat" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <cn.rongcloud.voiceroomdemo.ui.widget.CustomConstraintLayout
+            android:id="@+id/cl_input_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_bar"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <com.vanniktech.emoji.EmojiEditText
+                android:id="@+id/et_message"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_voice_room_message_edit"
+                android:paddingStart="10dp"
+                android:imeOptions="actionSend"
+                android:singleLine="true"
+                android:textColor="@color/defaultTextColor"
+                app:layout_constraintEnd_toStartOf="@+id/btn_emoji_keyboard"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_emoji_keyboard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/btn_send_message"
+                app:srcCompat="@drawable/ic_voice_room_emoji" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_send_message"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_voice_room_send_button"
+                android:gravity="center"
+                android:text="发送"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </cn.rongcloud.voiceroomdemo.ui.widget.CustomConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

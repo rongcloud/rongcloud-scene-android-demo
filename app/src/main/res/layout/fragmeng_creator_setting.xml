@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_member_setting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gl_bg" />
+
+    <View
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/bg_setting_fragment_portrait"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_member_portrait"
+        app:layout_constraintEnd_toEndOf="@+id/iv_member_portrait"
+        app:layout_constraintStart_toStartOf="@+id/iv_member_portrait"
+        app:layout_constraintTop_toTopOf="@+id/iv_member_portrait" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_member_portrait"
+        app:layout_constraintGuide_begin="35dp"
+        app:layout_constraintTop_toTopOf="@+id/iv_member_portrait" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_member_portrait"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/bg_voice_room_portrait"
+        android:padding="1dp"
+        android:src="@drawable/default_portrait"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_member_portrait"
+        tools:text="1111111" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_out_of_seat"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:background="#33CDCDCD"
+        android:gravity="center"
+        android:text="下麦围观"
+        android:textColor="#EF499A"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_member_name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_mute_self"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="#33CDCDCD"
+        android:gravity="center"
+        android:text="关闭麦克风"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_out_of_seat" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

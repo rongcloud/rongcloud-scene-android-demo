@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/selector_present_select_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="3dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_present"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/default_portrait" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_present_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:lines="1"
+        android:text=""
+        android:textColor="@color/whiteTextColor"
+        android:textSize="12sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_present_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:drawableLeft="@drawable/ic_diamond"
+        android:drawablePadding="5dp"
+        android:lines="1"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="10sp" />
+</LinearLayout>
