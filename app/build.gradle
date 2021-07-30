@@ -137,7 +137,7 @@ dependencies {
     implementation "cn.rongcloud.sdk:im_lib:$rongcloudSdkVersion"
     implementation "cn.rongcloud.sdk:call_lib:$rongcloudSdkVersion"
     implementation "cn.rongcloud.sdk:im_kit:$rongcloudSdkVersion"
-    implementation files('libs/RCRTC1.0.1.aar')
+    implementation files('libs/RC_RTC_1.0.2.aar')
 
     implementation 'com.android.support:multidex:1.0.3'
 
