@@ -4,12 +4,12 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.revokeseatrequest
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
+import com.rongcloud.common.base.IBaseView
 
 /**
  * @author gusd
  * @Date 2021/06/29
  */
-interface IRevokeSeatView:IBaseView {
+interface IRevokeSeatView: IBaseView {
     fun fragmentDismiss()
 }

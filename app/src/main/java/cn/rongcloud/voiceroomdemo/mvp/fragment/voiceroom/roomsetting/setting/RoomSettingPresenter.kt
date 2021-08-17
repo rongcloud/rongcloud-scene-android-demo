@@ -4,31 +4,37 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting
 
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import androidx.fragment.app.Fragment
+import com.rongcloud.common.base.BaseLifeCyclePresenter
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting.functionmodel.*
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/22
  */
 
-class RoomSettingPresenter(view: IRoomSettingView, private val roomInfoBean: VoiceRoomBean) :
-    BaseLifeCyclePresenter<IRoomSettingView>(view) {
+class RoomSettingPresenter @Inject constructor(
+    view: IRoomSettingView,
+    val roomModel: VoiceRoomModel,
+    fragment: Fragment
+) :
+    BaseLifeCyclePresenter(fragment) {
 
     private var functionList: ArrayList<BaseFunctionModel> = arrayListOf()
 
     init {
         functionList.apply {
-            add(LockRoomFunction(roomInfoBean.roomId, view))
-            add(RoomNameFunction(roomInfoBean.roomId, view))
+            add(LockRoomFunction(roomModel, view))
+            add(RoomNameFunction(roomModel, view))
             add(BackgroundFunction(view))
-            add(EnterSeatModelFunction(roomInfoBean.roomId, view))
-            add(MuteAllSeatFunction(roomInfoBean.roomId, view))
-            add(LockAllSeatFunction(roomInfoBean.roomId, view))
-            add(MuteAllRemoteFunction(roomInfoBean.roomId,view))
-            add(ChangeSeatFunction(roomInfoBean.roomId,view))
-            add(MusicFunction(roomInfoBean.roomId,view))
+            add(EnterSeatModelFunction(roomModel, view))
+            add(MuteAllSeatFunction(roomModel, view))
+            add(LockAllSeatFunction(roomModel, view))
+            add(MuteAllRemoteFunction(roomModel, view))
+            add(ChangeSeatFunction(roomModel, view))
+            add(MusicFunction(roomModel, view))
         }
     }
 

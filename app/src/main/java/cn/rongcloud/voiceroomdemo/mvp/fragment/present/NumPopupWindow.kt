@@ -9,8 +9,7 @@ import android.view.View
 import com.bcq.adapter.recycle.RcyHolder
 import com.bcq.adapter.recycle.RcySAdapter
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.mvp.fragment.present.pop.CustomerPopupWindow
-import cn.rongcloud.voiceroomdemo.utils.UiUtils.dp2Px
+import com.rongcloud.common.utils.UiUtils.dp2Px
 import kotlinx.android.synthetic.main.layout_pop_present_num.view.*
 import kotlinx.android.synthetic.main.layout_pop_present_num_item.view.*
 

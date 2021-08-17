@@ -5,5 +5,17 @@
 rootProject.name = "VoiceRoomDemo"
 include ':app'
 
+include ':callkit'
+// 语聊房
+include ':mvoiceroom'
+// module形式依赖 语聊房SDK
+include ':rcvoiceroom'
 
+//公共业务模块:评价反馈
+include ':combusis'
+// 公共模块
+include ':common'
 
+// 编译模块
+include ':processor'
+include ':annotation'

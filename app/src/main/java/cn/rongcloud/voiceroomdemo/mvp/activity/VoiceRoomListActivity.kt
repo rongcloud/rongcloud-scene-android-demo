@@ -11,23 +11,30 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
+import cn.rong.combusis.feedback.FeedbackHelper
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.*
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.IVoiceRoomListView
+import cn.rongcloud.voiceroomdemo.mvp.adapter.VoiceRoomListAdapter
 import cn.rongcloud.voiceroomdemo.mvp.fragment.createroom.CreateVoiceRoomDialogFragment
 import cn.rongcloud.voiceroomdemo.mvp.fragment.createroom.ICreateVoiceRoomView
 import cn.rongcloud.voiceroomdemo.mvp.presenter.VoiceRoomListPresenter
-import cn.rongcloud.voiceroomdemo.net.api.ApiConstant
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.mvp.adapter.VoiceRoomListAdapter
-import cn.rongcloud.voiceroomdemo.ui.dialog.ConfirmDialog
-import cn.rongcloud.voiceroomdemo.ui.dialog.InputPasswordDialog
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import com.rongcloud.common.ui.dialog.ConfirmDialog
+import com.rongcloud.common.ui.dialog.InputPasswordDialog
+import com.rongcloud.common.base.BaseActivity
+import com.rongcloud.common.extension.showToast
+import com.rongcloud.common.extension.ui
+import com.rongcloud.common.net.ApiConstant
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_voice_room_list.*
-import kotlinx.android.synthetic.main.layout_input_password_dialog.*
+import javax.inject.Inject
 
 private const val TAG = "VoiceRoomListActivity"
 
-class VoiceRoomListActivity : BaseActivity<VoiceRoomListPresenter, IVoiceRoomListView>(),
+@HiltBinding(value = IVoiceRoomListView::class)
+@AndroidEntryPoint
+class VoiceRoomListActivity : BaseActivity(),
     IVoiceRoomListView, ICreateVoiceRoomView {
     companion object {
         fun startActivity(context: Context) {
@@ -41,9 +48,9 @@ class VoiceRoomListActivity : BaseActivity<VoiceRoomListPresenter, IVoiceRoomLis
     private var createVoiceRoomDialogFragment: CreateVoiceRoomDialogFragment? = null
     private var messageDialog: ConfirmDialog? = null
 
-    override fun initPresenter(): VoiceRoomListPresenter {
-        return VoiceRoomListPresenter(this)
-    }
+    @Inject
+    lateinit var presenter: VoiceRoomListPresenter
+
 
     override fun getContentView(): Int = R.layout.activity_voice_room_list
 
@@ -67,11 +74,12 @@ class VoiceRoomListActivity : BaseActivity<VoiceRoomListPresenter, IVoiceRoomLis
         rv_voice_room.setLoadMoreListener {
             presenter.loadMore()
         }
+        FeedbackHelper.getHelper().registeFeedbackObservice(this)
     }
 
 
-    private fun gotoVoiceRoomActivity(bean: VoiceRoomBean) {
-        presenter.gotoVoiceRoomActivity(this, bean.roomId)
+    private fun gotoVoiceRoomActivity(bean: VoiceRoomBean, isCreate: Boolean = false) {
+        presenter.gotoVoiceRoomActivity(this, bean.roomId, isCreate)
     }
 
     override fun showInputPasswordDialog(bean: VoiceRoomBean) {
@@ -82,7 +90,7 @@ class VoiceRoomListActivity : BaseActivity<VoiceRoomListPresenter, IVoiceRoomLis
             }
             if (password == bean.password) {
                 passwordDialog?.dismiss()
-                presenter.turnToRoom(this,bean)
+                presenter.turnToRoom(this, bean)
             } else {
                 showToast(R.string.password_error)
             }
@@ -101,6 +109,7 @@ class VoiceRoomListActivity : BaseActivity<VoiceRoomListPresenter, IVoiceRoomLis
 
     override fun onDestroy() {
         super.onDestroy()
+        FeedbackHelper.getHelper().unregisteObservice()
         passwordDialog?.dismiss()
         messageDialog?.dismiss()
     }
@@ -131,7 +140,8 @@ class VoiceRoomListActivity : BaseActivity<VoiceRoomListPresenter, IVoiceRoomLis
     override fun onCreateRoomSuccess(data: VoiceRoomBean?) {
         createVoiceRoomDialogFragment?.dismiss()
         data?.let {
-            gotoVoiceRoomActivity(it)
+            presenter.addRoomInfo(it)
+            gotoVoiceRoomActivity(it, true)
         }
     }
 

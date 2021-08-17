@@ -4,27 +4,27 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.membersetting
 
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import androidx.fragment.app.Fragment
+import com.rongcloud.common.base.BaseLifeCyclePresenter
 import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
-import cn.rongcloud.voiceroomdemo.mvp.model.getVoiceRoomModelByRoomId
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMemberModel
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMemberModel
+import com.rongcloud.common.utils.AccountStore
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/21
  */
-class MemberSettingPresenter(
+class MemberSettingPresenter @Inject constructor(
     private val view: IMemberSettingView,
     private val roomInfoBean: VoiceRoomBean,
-    private var member: UiMemberModel
+    private var member: UiMemberModel,
+    private val roomModel: VoiceRoomModel,
+    fragment: Fragment
 ) :
-    BaseLifeCyclePresenter<IMemberSettingView>(view) {
-    private val roomModel: VoiceRoomModel by lazy {
-        getVoiceRoomModelByRoomId(roomInfoBean.roomId)
-    }
+    BaseLifeCyclePresenter(fragment) {
 
     override fun onCreate() {
         super.onCreate()
@@ -79,6 +79,7 @@ class MemberSettingPresenter(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     view.fragmentDismiss()
+                    view.showMessage("座位已关闭")
                 }, {
                     view.showError(it.message)
                 })
@@ -92,6 +93,13 @@ class MemberSettingPresenter(
                     .setSeatMuteByUserId(member.userId, !isMute)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
+                        view.showMessage(
+                            if (isMute) {
+                                "已取消闭麦"
+                            } else {
+                                "此麦位已闭麦"
+                            }
+                        )
                         view.fragmentDismiss()
                     }, {
                         view.showError(it.message)

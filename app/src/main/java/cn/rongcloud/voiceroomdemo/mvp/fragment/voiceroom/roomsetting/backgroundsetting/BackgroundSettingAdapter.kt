@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.loadImageView
+import com.rongcloud.common.extension.loadImageView
 import kotlinx.android.synthetic.main.layout_background_item.view.*
 
 /**

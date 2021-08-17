@@ -106,6 +106,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_remote_audio_volume_back"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:paddingStart="20dp"
@@ -144,6 +145,44 @@
             app:layout_constraintEnd_toStartOf="@+id/tv_mic_audio_value"
             app:layout_constraintStart_toEndOf="@+id/tv_label_mic_audio_volume"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1AFFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/cl_remote_audio_volume_back">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="耳返"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sw_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="关"
+            android:textOn="开"
+            android:theme="@style/SwitchCompat.Control"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showText="false"
+            app:switchTextAppearance="@style/SwitchCompat.Text" />
 
         <View
             android:layout_width="match_parent"

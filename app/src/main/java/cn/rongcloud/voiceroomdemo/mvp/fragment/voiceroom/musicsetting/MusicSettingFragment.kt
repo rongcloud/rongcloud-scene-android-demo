@@ -8,16 +8,19 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import cn.rongcloud.annotation.HiltBinding
+import cn.rongcloud.mvoiceroom.utils.MUSIC_ATMOSPHERE_CHEER
+import cn.rongcloud.mvoiceroom.utils.MUSIC_ATMOSPHERE_CLAP
+import cn.rongcloud.mvoiceroom.utils.MUSIC_ATMOSPHERE_ENTER
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseBottomSheetDialogFragment
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMusicModel
-import cn.rongcloud.voiceroomdemo.ui.widget.ActionSnackBar
-import cn.rongcloud.voiceroomdemo.utils.MUSIC_ATMOSPHERE_CHEER
-import cn.rongcloud.voiceroomdemo.utils.MUSIC_ATMOSPHERE_CLAP
-import cn.rongcloud.voiceroomdemo.utils.MUSIC_ATMOSPHERE_ENTER
+import com.rongcloud.common.base.BaseBottomSheetDialogFragment
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMusicModel
+import com.rongcloud.common.ui.widget.ActionSnackBar
 import com.google.android.material.snackbar.BaseTransientBottomBar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_music_setting.*
 import kotlinx.android.synthetic.main.layout_music_atmosphere.view.*
+import javax.inject.Inject
 
 /**
  * @author gusd
@@ -26,19 +29,22 @@ import kotlinx.android.synthetic.main.layout_music_atmosphere.view.*
 
 private const val TAG = "MusicSettingFragment"
 
-
-class MusicSettingFragment(val roomId: String, view: IMusicSettingView) :
-    BaseBottomSheetDialogFragment<MusicSettingPresenter, IMusicSettingView>(R.layout.fragment_music_setting),
+@HiltBinding(value = IMusicSettingView::class)
+@AndroidEntryPoint
+class MusicSettingFragment(view: IMusicSettingView) :
+    BaseBottomSheetDialogFragment(R.layout.fragment_music_setting),
     IMusicSettingView by view, IMusicAddView, IMusicListView, IMusicControlView {
 
     private val fragmentList by lazy {
         arrayListOf<Fragment>(
-            MusicListFragment(this, roomId),
-            MusicAddFragment(this, roomId),
-            MusicControlFragment(this, roomId)
+            MusicListFragment(this),
+            MusicAddFragment(this),
+            MusicControlFragment(this)
         )
     }
 
+    @Inject
+    lateinit var presenter: MusicSettingPresenter
 
     private val buttons by lazy {
         arrayListOf<View>(iv_music_list, iv_add_music, iv_music_control)
@@ -90,9 +96,6 @@ class MusicSettingFragment(val roomId: String, view: IMusicSettingView) :
     }
 
 
-    override fun initPresenter(): MusicSettingPresenter {
-        return MusicSettingPresenter(roomId, this)
-    }
 
     override fun initView() {
         iv_atmosphere_music.setOnClickListener {

@@ -5,30 +5,40 @@
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.backgroundsetting
 
 import androidx.recyclerview.widget.GridLayoutManager
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.showToast
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseBottomSheetDialogFragment
-import cn.rongcloud.voiceroomdemo.mvp.model.getVoiceRoomModelByRoomId
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.ui.widget.GridSpacingItemDecoration
+import com.rongcloud.common.extension.showToast
+import com.rongcloud.common.base.BaseBottomSheetDialogFragment
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import com.rongcloud.common.ui.widget.GridSpacingItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_background_setting.*
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/22
  */
+@HiltBinding(value = IBackgroundSettingView::class)
+@AndroidEntryPoint
 class BackgroundSettingFragment(
-    private val roomInfoBean: VoiceRoomBean,
     view: IBackgroundSettingView
 ) :
-    BaseBottomSheetDialogFragment<BackgroundSettingPresenter, IBackgroundSettingView>(R.layout.fragment_background_setting),
+    BaseBottomSheetDialogFragment(R.layout.fragment_background_setting),
     IBackgroundSettingView by view {
 
+    @Inject
+    lateinit var roomInfoBean: VoiceRoomBean
+
+    @Inject
+    lateinit var roomModel: VoiceRoomModel
+
+    @Inject
+    lateinit var presenter:BackgroundSettingPresenter
+
     private var adapter: BackgroundSettingAdapter? = null
-    override fun initPresenter(): BackgroundSettingPresenter {
-        return BackgroundSettingPresenter(this, roomInfoBean)
-    }
 
     override fun initView() {
         val itemDecoration = GridSpacingItemDecoration(
@@ -44,7 +54,7 @@ class BackgroundSettingFragment(
         tv_confirm.setOnClickListener {
 
             adapter?.currentSelectedBackground?.let {
-                getVoiceRoomModelByRoomId(roomInfoBean.roomId)
+                roomModel
                     .setRoomBackground(it)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { result ->

@@ -28,7 +28,7 @@
             android:layout_height="50dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <cn.rongcloud.voiceroomdemo.ui.widget.RealtimeBlurView
+            <com.rongcloud.common.ui.widget.RealtimeBlurView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:realtimeBlurRadius="14dp"
@@ -80,7 +80,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <cn.rongcloud.voiceroomdemo.ui.widget.RealtimeBlurView
+        <com.rongcloud.common.ui.widget.RealtimeBlurView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/vp_page"

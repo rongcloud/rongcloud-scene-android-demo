@@ -4,14 +4,14 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
+import com.rongcloud.common.base.IBaseView
 import io.reactivex.rxjava3.core.Maybe
 
 /**
  * @author gusd
  * @Date 2021/06/22
  */
-interface IRoomSettingView :IBaseView {
+interface IRoomSettingView : IBaseView {
     fun showPasswordDialog(): Maybe<String>?{
         return null
     }

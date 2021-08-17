@@ -18,17 +18,11 @@
     <string name="label_setting_background">设置背景</string>
     <string name="label_is_a_public_room">房间是否公开</string>
     <string name="label_create_room">创建房间</string>
-    <string name="cancel">取消</string>
-    <string name="confirm">确定</string>
-    <string name="please_setting_four_number_password">请设置 4 位数字密码</string>
-    <string name="please_input_four_number_password">请输入 4 位数字密码</string>
 
     <string name="please_input_complete_password">请输入完整的密码</string>
     <string name="password_error">密码错误</string>
     <string name="private_voice_room">私密</string>
     <string name="public_voice_room">公开</string>
-    <string name="leave_room">离开房间</string>
-    <string name="close_room">关闭房间</string>
     <string name="send_gift">送礼物</string>
     <string name="send_message">发私信</string>
 

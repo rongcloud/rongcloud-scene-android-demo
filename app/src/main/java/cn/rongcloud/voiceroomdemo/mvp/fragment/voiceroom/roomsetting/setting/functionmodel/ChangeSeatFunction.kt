@@ -6,16 +6,17 @@ package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting.fu
 
 import cn.rongcloud.voiceroomdemo.R
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting.IRoomSettingView
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 /**
  * @author gusd
  * @Date 2021/06/24
  */
-class ChangeSeatFunction(roomId: String, val view: IRoomSettingView) :
-    BaseRoomSettingFunctionModel(roomId) {
+class ChangeSeatFunction(val roomModel: VoiceRoomModel, val view: IRoomSettingView) :
+    BaseRoomSettingFunctionModel() {
     override fun onCreate() {
-        roomModel
+        addDisposable(roomModel
             .obSeatListChange()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { list ->
@@ -30,6 +31,6 @@ class ChangeSeatFunction(roomId: String, val view: IRoomSettingView) :
                         view.hideSettingView()
                     }
                 }
-            }
+            })
     }
 }

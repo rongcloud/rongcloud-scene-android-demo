@@ -5,18 +5,22 @@
 package cn.rongcloud.voiceroomdemo.mvp.model
 
 import android.util.Log
-import cn.rongcloud.voiceroomdemo.common.LocalDataStore
-import cn.rongcloud.voiceroomdemo.net.RetrofitManager
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomInfoBean
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomListBean
+import cn.rongcloud.mvoiceroom.net.VoiceRoomNetManager
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomInfoBean
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomListBean
 import cn.rongcloud.voiceroomdemo.throwable.RoomNotExistException
+import com.rongcloud.common.base.BaseModel
+import com.rongcloud.common.net.ApiConstant
+import com.rongcloud.common.utils.LocalDataStore
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * @author gusd
@@ -24,7 +28,8 @@ import io.reactivex.rxjava3.subjects.PublishSubject
  */
 private const val TAG = "VoiceRoomListModel"
 
-object VoiceRoomListModel {
+@Singleton
+class VoiceRoomListModel @Inject constructor() : BaseModel {
 
     private val pageSize = 10
     private var page = 0
@@ -56,15 +61,15 @@ object VoiceRoomListModel {
     }
 
     private fun requestRoomList() {
-        RetrofitManager
-            .commonService
+        VoiceRoomNetManager
+            .aRoomApi
             .getRoomList(page, pageSize)
             .observeOn(loadSchedulers)
             .subscribeOn(loadSchedulers)
             .subscribe({ bean ->
                 onRoomListChange(bean)
                 bean.data?.images?.let {
-                    LocalDataStore.saveBackGroundUrl(bean.data.images)
+                    LocalDataStore.saveBackGroundUrl(it)
                 }
             }, { t ->
                 roomListErrorSubject.onNext(t)
@@ -77,7 +82,7 @@ object VoiceRoomListModel {
 
 
     private fun onRoomListChange(bean: VoiceRoomListBean) {
-        if (bean.code == 10000) {
+        if (bean.code == ApiConstant.REQUEST_SUCCESS_CODE) {
             bean.data?.rooms?.let { list ->
                 list.forEach { room ->
                     val voiceRoomBean = currentRoomMap[room.roomId]
@@ -110,8 +115,8 @@ object VoiceRoomListModel {
     }
 
     fun queryRoomInfoFromServer(roomId: String): Single<VoiceRoomInfoBean> {
-        return RetrofitManager
-            .commonService
+        return VoiceRoomNetManager
+            .aRoomApi
             .getVoiceRoomInfo(roomId)
             .observeOn(loadSchedulers)
             .subscribeOn(loadSchedulers)
@@ -124,9 +129,11 @@ object VoiceRoomListModel {
                     } else {
                         val indexOf = currentRoomList.indexOf(currentRoom)
                         if (indexOf >= 0) {
-                            currentRoomList[indexOf] = it.room
-                            currentRoomMap[roomId] = it.room
-                            roomInfoChangeSubject.onNext(it.room)
+                            it.room?.let { room ->
+                                currentRoomList[indexOf] = room
+                                currentRoomMap[roomId] = room
+                                roomInfoChangeSubject.onNext(room)
+                            }
                         }
                     }
                 } else {
@@ -158,6 +165,18 @@ object VoiceRoomListModel {
                     })
             }
         }
+    }
+
+    override fun onCreate() {
+    }
+
+    override fun onDestroy() {
+    }
+
+    fun addRoomInfo(roomInfo: VoiceRoomBean) {
+        currentRoomList.add(0, roomInfo)
+        currentRoomMap.put(roomInfo.roomId, roomInfo)
+        roomListSubject.onNext(currentRoomList)
     }
 
 

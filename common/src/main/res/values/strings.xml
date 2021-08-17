@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<resources>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+
+    <string name="please_setting_four_number_password">请设置 4 位数字密码</string>
+    <string name="please_input_four_number_password">请输入 4 位数字密码</string>
+</resources>

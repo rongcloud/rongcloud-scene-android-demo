@@ -13,14 +13,17 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.LocalDataStore
-import cn.rongcloud.voiceroomdemo.common.loadImageView
-import cn.rongcloud.voiceroomdemo.common.showToast
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseBottomSheetDialogFragment
-import cn.rongcloud.voiceroomdemo.ui.dialog.InputPasswordDialog
-import cn.rongcloud.voiceroomdemo.utils.MaxLengthWithEmojiFilter
+import com.rongcloud.common.extension.showToast
+import com.rongcloud.common.base.BaseBottomSheetDialogFragment
+import com.rongcloud.common.ui.dialog.InputPasswordDialog
+import com.rongcloud.common.utils.MaxLengthWithEmojiFilter
+import com.rongcloud.common.extension.loadImageView
+import com.rongcloud.common.utils.LocalDataStore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_create_room.*
+import javax.inject.Inject
 
 /**
  * @author gusd
@@ -30,8 +33,10 @@ private const val TAG = "CreateVoiceRoomDialogFr"
 
 private const val PICTURE_SELECTED_RESULT_CODE = 10001
 
+@HiltBinding(value = ICreateVoiceRoomView::class)
+@AndroidEntryPoint
 class CreateVoiceRoomDialogFragment(view: ICreateVoiceRoomView) :
-    BaseBottomSheetDialogFragment<CreateVoiceRoomPresenter, ICreateVoiceRoomView>(R.layout.layout_create_room),
+    BaseBottomSheetDialogFragment(R.layout.layout_create_room),
     ICreateVoiceRoomView by view {
 
     private lateinit var backgroundImages: List<ImageView>
@@ -43,10 +48,9 @@ class CreateVoiceRoomDialogFragment(view: ICreateVoiceRoomView) :
     private var roomPassword: String? = null
     private var inputPasswordDialog: InputPasswordDialog? = null
 
+    @Inject
+    lateinit var presenter: CreateVoiceRoomPresenter
 
-    override fun initPresenter(): CreateVoiceRoomPresenter {
-        return CreateVoiceRoomPresenter(this, requireContext())
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -78,7 +82,7 @@ class CreateVoiceRoomDialogFragment(view: ICreateVoiceRoomView) :
             R.drawable.test_background
         )
 
-        et_room_name.filters = arrayOf(MaxLengthWithEmojiFilter(10, et_room_name))
+        et_room_name.filters = arrayOf(MaxLengthWithEmojiFilter(10))
     }
 
     override fun initListener() {

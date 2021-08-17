@@ -5,21 +5,25 @@
 package cn.rongcloud.voiceroomdemo.mvp.presenter
 
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
-import cn.rongcloud.voiceroomdemo.common.isNotNullOrEmpty
+import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.IVoiceRoomView
+import cn.rongcloud.mvoiceroom.message.*
+import cn.rongcloud.mvoiceroom.net.VoiceRoomNetManager
+import cn.rongcloud.mvoiceroom.utils.AudioEffectManager
+import cn.rongcloud.mvoiceroom.utils.RCChatRoomMessageManager
 import cn.rongcloud.voiceroomdemo.mvp.model.*
-import cn.rongcloud.voiceroomdemo.mvp.model.message.*
-import cn.rongcloud.voiceroomdemo.net.RetrofitManager
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMemberModel
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiRoomModel
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiSeatModel
-import cn.rongcloud.voiceroomdemo.utils.AudioEffectManager
-import cn.rongcloud.voiceroomdemo.utils.AudioManagerUtil
-import cn.rongcloud.voiceroomdemo.utils.RCChatRoomMessageManager
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMemberModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiRoomModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiSeatModel
+import com.rongcloud.common.utils.AudioManagerUtil
+import cn.rongcloud.voiceroomdemo.utils.DefaultConfigConstant
+import com.rongcloud.common.base.BaseLifeCyclePresenter
+import com.rongcloud.common.extension.isNotNullOrEmpty
+import com.rongcloud.common.net.ApiConstant
+import com.rongcloud.common.utils.AccountStore
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.rong.imlib.IRongCoreListener
 import io.rong.imlib.model.Message
@@ -28,6 +32,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author gusd
@@ -39,13 +45,14 @@ const val STATUS_ON_SEAT = 0
 const val STATUS_NOT_ON_SEAT = 1
 const val STATUS_WAIT_FOR_SEAT = 2
 
-class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
-    BaseLifeCyclePresenter<IVoiceRoomView>(view), IRongCoreListener.OnReceiveMessageListener {
-
-
-    private val roomModel: VoiceRoomModel by lazy {
-        getVoiceRoomModelByRoomId(roomId)
-    }
+class VoiceRoomPresenter @Inject constructor(
+    val view: IVoiceRoomView,
+    @Named("roomId") private val roomId: String,
+    @Named("isCreate") private val isCreate: Boolean,
+    val roomModel: VoiceRoomModel,
+    activity: AppCompatActivity
+) :
+    BaseLifeCyclePresenter(activity), IRongCoreListener.OnReceiveMessageListener {
 
     var currentStatus = STATUS_NOT_ON_SEAT
 
@@ -53,6 +60,7 @@ class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
 
 
     private var hasInit = false
+    private var currentRoomInfo: UiRoomModel? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -62,12 +70,12 @@ class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { roomInfo ->
+                    currentRoomInfo = roomInfo
                     if (!hasInit) {
                         hasInit = true
                         view.initRoleView(roomInfo)
                         initRoomEventListener()
                         joinRoom()
-                        afterInitView()
                         currentUserId = AccountStore.getUserId() ?: ""
                     } else {
                         view.refreshRoomInfo(roomInfo)
@@ -105,6 +113,7 @@ class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
         addDisposable(roomModel
             .obSeatInfoChange()
             .subscribe { info ->
+                Log.d(TAG, "onCreate: obSeatInfoChange")
                 if ((info.member?.member == null) && !info.userId.isNullOrEmpty()) {
                     val memberInfo =
                         roomModel.getMemberInfoByUserIdOnlyLocal(info.userId)
@@ -149,12 +158,16 @@ class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
             .obMemberInfoChange()
             .subscribe {
                 Log.d(TAG, "onCreate: obMemberInfoChange")
-                roomModel.getSeatInfoByUserId(it.userId)?.member = it
-                if (it.userId == AccountStore.getUserId()) {
-                    // 监听当前用户是否为管理员
-                    if (roomModel.currentUIRoomInfo.roomBean?.createUser?.userId != AccountStore.getUserId()) {
-                        view.switchToAdminRole(it.isAdmin, roomModel.currentUIRoomInfo)
+                roomModel.getSeatInfoByUserId(it.userId)?.let { seatModel ->
+                    seatModel?.member = it
+                    if (it.userId == AccountStore.getUserId()) {
+                        // 监听当前用户是否为管理员
+                        if (roomModel.currentUIRoomInfo.roomBean?.createUser?.userId != AccountStore.getUserId()) {
+                            view.switchToAdminRole(it.isAdmin, roomModel.currentUIRoomInfo)
+                        }
                     }
+                    //同步修改麦位上的管理员角色
+                    view.onSeatInfoChange(seatModel.index, seatModel)
                 }
             })
 
@@ -315,7 +328,6 @@ class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
 
     override fun onDestroy() {
         super.onDestroy()
-        roomModel.onDestroy()
         RCVoiceRoomEngine.getInstance().setVoiceRoomEventListener(null)
         RCVoiceRoomEngine.getInstance().removeMessageReceiveListener(this)
         AudioManagerUtil.dispose()
@@ -337,22 +349,66 @@ class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
 
     fun joinRoom() {
         Log.d(TAG, "joinRoom: ${roomId}")
-        RCVoiceRoomEngine.getInstance().joinRoom(roomId, object : RCVoiceRoomCallback {
-            override fun onError(code: Int, message: String?) {
-                view.showError(code, message)
-            }
-
-            override fun onSuccess() {
-                view.onJoinRoomSuccess()
-                roomModel.getOnLineUsersCount()
-                roomModel.refreshAllMemberInfoList()
-                sendSystemMessage()
-                GlobalScope.launch(Dispatchers.IO) {
-                    AudioEffectManager.init()
+        if (isCreate) {
+            currentRoomInfo?.roomBean?.let { roomBean ->
+//                val info = RCVoiceRoomInfo().apply {
+//                    roomName = roomBean.roomName
+//                    seatCount = DefaultConfigConstant.DEFAULT_SEAT_COUNT
+//                    isFreeEnterSeat = false
+//                    isLockAll = false
+//                    isMuteAll = false
+//                }
+//                RCVoiceRoomEngine.getInstance()
+//                    .createAndJoinRoom(roomId, info, object : RCVoiceRoomCallback {
+//                        override fun onError(code: Int, message: String?) {
+//                            view.showError(code, message)
+//                        }
+//
+//                        override fun onSuccess() {
+//                            afterJoinRoomSuccess()
+//                        }
+//                    })
+                val info = RCVoiceRoomInfo().apply {
+                    roomName = roomBean.roomName
+                    seatCount = DefaultConfigConstant.DEFAULT_SEAT_COUNT
+                    isFreeEnterSeat = false
+                    isLockAll = false
+                    isMuteAll = false
                 }
-                AudioManagerUtil.choiceAudioModel()
+                RCVoiceRoomEngine.getInstance()
+                    .createAndJoinRoom(roomId, info, object : RCVoiceRoomCallback {
+                        override fun onError(code: Int, message: String?) {
+                            view.showError(code, message)
+                        }
+
+                        override fun onSuccess() {
+                            afterJoinRoomSuccess()
+                        }
+                    })
             }
-        })
+        } else {
+            RCVoiceRoomEngine.getInstance().joinRoom(roomId, object : RCVoiceRoomCallback {
+                override fun onError(code: Int, message: String?) {
+                    view.showError(code, message)
+                }
+
+                override fun onSuccess() {
+                    afterJoinRoomSuccess()
+                }
+            })
+        }
+    }
+
+    private fun afterJoinRoomSuccess() {
+        view.onJoinRoomSuccess()
+        afterInitView()
+        roomModel.getOnLineUsersCount()
+        roomModel.refreshAllMemberInfoList()
+        sendSystemMessage()
+        GlobalScope.launch(Dispatchers.IO) {
+            AudioEffectManager.init()
+        }
+        AudioManagerUtil.choiceAudioModel()
     }
 
     private fun sendSystemMessage() {
@@ -375,23 +431,6 @@ class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
 
     fun leaveRoom() {
         roomModel.onLeaveRoom()
-        val index = roomModel.isInSeat(currentUserId)
-        if (index > -1) {
-            RCVoiceRoomEngine.getInstance().leaveSeat(object : RCVoiceRoomCallback {
-                override fun onError(code: Int, message: String?) {
-                    leaveRTCRoom()
-                }
-
-                override fun onSuccess() {
-                    leaveRTCRoom()
-                }
-            })
-        } else {
-            leaveRTCRoom()
-        }
-    }
-
-    private fun leaveRTCRoom() {
         RCVoiceRoomEngine.getInstance().leaveRoom(object : RCVoiceRoomCallback {
             override fun onError(code: Int, message: String?) {
                 view.showError(code, message)
@@ -407,13 +446,13 @@ class VoiceRoomPresenter(val view: IVoiceRoomView, val roomId: String) :
     fun closeRoom() {
         view.showWaitingDialog()
         RCVoiceRoomEngine.getInstance().notifyVoiceRoom(EVENT_ROOM_CLOSE, "")
-        RetrofitManager
-            .commonService
+        VoiceRoomNetManager
+            .aRoomApi
             .deleteRoom(roomId)
             .delay(2, TimeUnit.SECONDS)
             .subscribe({ result ->
                 view.hideWaitingDialog()
-                if (result.code == 10000) {
+                if (result.code == ApiConstant.REQUEST_SUCCESS_CODE) {
                     leaveRoom()
                 } else {
                     view.showError(result.code, result.msg)

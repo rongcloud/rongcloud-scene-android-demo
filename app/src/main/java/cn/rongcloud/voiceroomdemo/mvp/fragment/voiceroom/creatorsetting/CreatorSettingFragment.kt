@@ -4,25 +4,31 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.creatorsetting
 
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.loadPortrait
-import cn.rongcloud.voiceroomdemo.common.ui
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseBottomSheetDialogFragment
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.ui.dialog.ConfirmDialog
+import com.rongcloud.common.base.BaseBottomSheetDialogFragment
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import com.rongcloud.common.extension.loadPortrait
+import com.rongcloud.common.extension.ui
+import com.rongcloud.common.utils.AccountStore
+import dagger.hilt.android.AndroidEntryPoint
+import com.rongcloud.common.ui.dialog.ConfirmDialog
 import kotlinx.android.synthetic.main.fragmeng_creator_setting.*
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/28
  */
+@HiltBinding(value = ICreatorView::class)
+@AndroidEntryPoint
 class CreatorSettingFragment(view: ICreatorView, private val roomInfoBean: VoiceRoomBean) :
-    BaseBottomSheetDialogFragment<CreatorSettingPresenter, ICreatorView>(R.layout.fragmeng_creator_setting),
+    BaseBottomSheetDialogFragment(R.layout.fragmeng_creator_setting),
     ICreatorView by view {
-    override fun initPresenter(): CreatorSettingPresenter {
-        return CreatorSettingPresenter(this, roomInfoBean)
-    }
+
+    @Inject
+    lateinit var presenter: CreatorSettingPresenter
+
 
     fun showMusicPauseTip(confirmBlock: () -> Unit) {
         ConfirmDialog(

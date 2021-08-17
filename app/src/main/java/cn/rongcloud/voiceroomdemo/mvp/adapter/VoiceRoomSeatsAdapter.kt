@@ -11,8 +11,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.loadPortrait
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiSeatModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiSeatModel
+import com.rongcloud.common.extension.loadPortrait
 import kotlinx.android.synthetic.main.layout_seat_item.view.*
 
 /**

@@ -6,13 +6,14 @@ package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting.fu
 
 import cn.rongcloud.voiceroomdemo.R
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting.IRoomSettingView
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
 
 /**
  * @author gusd
  * @Date 2021/07/05
  */
-class MusicFunction(roomId: String, val view: IRoomSettingView) :
-    BaseRoomSettingFunctionModel(roomId) {
+class MusicFunction(val roomModel: VoiceRoomModel, val view: IRoomSettingView) :
+    BaseRoomSettingFunctionModel() {
     override fun onCreate() {
         onDataChange(R.drawable.ic_room_setting_music, "音乐") {
             view.showMusicSettingFragment()

@@ -83,6 +83,7 @@
                 android:id="@+id/bg2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:src="@drawable/ic_video_call" />
 
             <TextView
@@ -90,6 +91,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="COMING\nSOON"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </FrameLayout>
@@ -132,6 +134,7 @@
                 android:id="@+id/bg3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:src="@drawable/ic_audio_call" />
 
             <TextView
@@ -139,6 +142,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="COMING\nSOON"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </FrameLayout>

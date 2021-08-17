@@ -5,6 +5,13 @@
 package cn.rongcloud.voiceroomdemo.mvp.model
 
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import cn.rongcloud.mvoiceroom.message.*
+import cn.rongcloud.mvoiceroom.net.VoiceRoomNetManager
+import cn.rongcloud.mvoiceroom.net.bean.request.*
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import cn.rongcloud.mvoiceroom.ui.uimodel.*
+import cn.rongcloud.mvoiceroom.utils.RCChatRoomMessageManager
 import cn.rongcloud.rtc.api.RCRTCAudioMixer
 import cn.rongcloud.rtc.api.callback.RCRTCAudioMixingStateChangeListener
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
@@ -15,20 +22,17 @@ import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
 import cn.rongcloud.voiceroomdemo.MyApp
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.showToast
-import cn.rongcloud.voiceroomdemo.mvp.model.message.*
-import cn.rongcloud.voiceroomdemo.net.RetrofitManager
+import cn.rongcloud.voiceroomdemo.mvp.bean.Present
 import cn.rongcloud.voiceroomdemo.net.api.bean.request.*
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.ui.uimodel.*
-import cn.rongcloud.voiceroomdemo.utils.AudioManagerUtil
-import cn.rongcloud.voiceroomdemo.utils.LocalUserInfoManager
-import cn.rongcloud.voiceroomdemo.utils.RCChatRoomMessageManager
+import cn.rongcloud.mvoiceroom.utils.LocalUserInfoManager
+import com.rongcloud.common.base.BaseLifeCycleModel
+import com.rongcloud.common.extension.showToast
+import com.rongcloud.common.net.ApiConstant
+import com.rongcloud.common.utils.AccountStore
+import com.rongcloud.common.utils.AudioManagerUtil
+import dagger.hilt.android.scopes.ActivityScoped
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.*
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -39,18 +43,14 @@ import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.Message
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author gusd
  * @Date 2021/06/18
  */
 
-private val map = HashMap<String, VoiceRoomModel>()
-fun getVoiceRoomModelByRoomId(roomId: String): VoiceRoomModel {
-    return map[roomId] ?: VoiceRoomModel(roomId).apply {
-        map[roomId] = this
-    }
-}
 
 val EMPTY_ROOM_INFO: VoiceRoomBean = VoiceRoomBean(roomId = "")
 
@@ -67,14 +67,18 @@ const val EVENT_REQUEST_SEAT_REFUSE = "EVENT_REQUEST_SEAT_REFUSE"
 const val EVENT_REQUEST_SEAT_AGREE = "EVENT_REQUEST_SEAT_AGREE"
 
 const val EVENT_REQUEST_SEAT_CANCEL = "EVENT_REQUEST_SEAT_CANCEL"
+const val EVENT_USER_LEFT_SEAT = "EVENT_USER_LEFT_SEAT"
 
 
 const val EVENT_KICKED_OUT_OF_ROOM = "EVENT_KICKED_OUT_OF_ROOM"
 
+@ActivityScoped
+class VoiceRoomModel @Inject constructor(
+    @Named("roomId") val roomId: String,
+    private val voiceRoomListModel: VoiceRoomListModel,
+    activity: AppCompatActivity
+) : BaseLifeCycleModel(activity), RCVoiceRoomEventListener {
 
-class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
-
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val roomMemberInfoList = arrayListOf<UiMemberModel>()
 
@@ -85,10 +89,6 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
     private val systemMusicList = arrayListOf<UiMusicModel>()
 
     private var isInitRoomSetting = false
-
-    private val voiceRoomListModel by lazy {
-        VoiceRoomListModel
-    }
 
     private val dataModifyScheduler by lazy {
         Schedulers.computation()
@@ -234,9 +234,11 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
         voiceRoomListModel
             .getRoomInfo(roomId)
             .subscribe({
+                Log.e(TAG, "getRoomInfo success: ")
                 currentUIRoomInfo.roomBean = it
+                roomInfoSubject.onNext(currentUIRoomInfo)
             }, {
-                Log.e(TAG, "getRoomInfoError: ")
+                Log.e(TAG, "getRoomInfo Error: ")
                 roomInfoSubject.onError(it)
             })
 
@@ -271,6 +273,16 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                 }
             })
 
+        addDisposable(refreshAllMemberList
+            .debounce(30L, TimeUnit.MILLISECONDS)
+            .subscribe {
+                queryAllUserInfo()
+            })
+
+    }
+
+    override fun onCreate() {
+        super.onCreate()
         RCRTCAudioMixer.getInstance().setAudioMixingStateChangeListener(object :
             RCRTCAudioMixingStateChangeListener() {
             override fun onMixEnd() {
@@ -296,7 +308,7 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                         }
                     }
                     RCRTCAudioMixer.MixingState.STOPPED -> {
-                        currentPlayMusic = null
+//                        currentPlayMusic = null
                         userMusicList.forEach {
                             it.isPlaying = false
                         }
@@ -309,23 +321,16 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
             }
 
         })
-
-        addDisposable(refreshAllMemberList
-            .debounce(30L, TimeUnit.MILLISECONDS)
-            .subscribe {
-                queryAllUserInfo()
-            })
-
     }
 
 
     fun setAdmin(userId: String, isAdmin: Boolean): Single<Boolean> {
-        return RetrofitManager
-            .commonService
+        return VoiceRoomNetManager
+            .aRoomApi
             .setAdmin(SettingAdminRequest(roomId, userId, isAdmin))
             .observeOn(dataModifyScheduler)
             .map {
-                if (it.code == 10000) {
+                if (it.code == ApiConstant.REQUEST_SUCCESS_CODE) {
                     RCChatRoomMessageManager.sendChatMessage(roomId, RCChatroomAdmin()
                         .apply {
                             this.userId = userId
@@ -339,26 +344,26 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                     }
                     RCVoiceRoomEngine.getInstance().notifyVoiceRoom(EVENT_MANAGER_LIST_CHANGE, "")
                 }
-                return@map it.code == 10000
+                return@map it.code == ApiConstant.REQUEST_SUCCESS_CODE
             }
     }
 
     fun setRoomLock(lock: Boolean, password: String?): Single<Boolean> {
-        return RetrofitManager
-            .commonService
+        return VoiceRoomNetManager
+            .aRoomApi
             .setRoomPasswordRequest(
                 RoomPasswordRequest(if (lock) 1 else 0, password, roomId)
             )
             .doOnSuccess {
                 queryRoomInfoFromServer()
             }.map {
-                return@map it.code == 10000
+                return@map it.code == ApiConstant.REQUEST_SUCCESS_CODE
             }
     }
 
     fun setRoomBackground(backgroundUrl: String): Single<Boolean> {
-        return RetrofitManager
-            .commonService
+        return VoiceRoomNetManager
+            .aRoomApi
             .setRoomBackgroundRequest(
                 RoomBackgroundRequest(
                     backgroundUrl,
@@ -369,13 +374,13 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                 RCVoiceRoomEngine.getInstance()
                     .notifyVoiceRoom(EVENT_BACKGROUND_CHANGE, backgroundUrl)
             }.map {
-                return@map it.code == 10000
+                return@map it.code == ApiConstant.REQUEST_SUCCESS_CODE
             }
     }
 
     fun setRoomName(newName: String): Single<Boolean> {
-        return RetrofitManager
-            .commonService
+        return VoiceRoomNetManager
+            .aRoomApi
             .setRoomName(RoomNameRequest(newName, roomId))
             .doOnSuccess {
                 refreshRoomInfo()
@@ -392,7 +397,7 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                     })
                 }
             }.map {
-                return@map it.code == 10000
+                return@map it.code == ApiConstant.REQUEST_SUCCESS_CODE
             }
     }
 
@@ -413,7 +418,7 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
     }
 
     private fun doOnDataScheduler(block: () -> Unit) {
-        dataModifyWorker.schedule{
+        dataModifyWorker.schedule {
             try {
                 block()
             } catch (e: Exception) {
@@ -435,15 +440,9 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
     }
 
 
-    fun addDisposable(vararg disposable: Disposable) {
-        compositeDisposable.addAll(*disposable)
-    }
-
-
-    fun onDestroy() {
+    override fun onDestroy() {
         dataModifyWorker.dispose()
-        map.remove(roomId)
-        compositeDisposable.dispose()
+        RCRTCAudioMixer.getInstance().setAudioMixingStateChangeListener(null)
     }
 
     fun kickSeat(
@@ -541,11 +540,11 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
     override fun onRoomInfoUpdate(rcRoomInfo: RCVoiceRoomInfo) {
         Log.d(TAG, "onRoomInfoChanged: $rcRoomInfo")
         currentUIRoomInfo.rcRoomInfo = rcRoomInfo
-        if (!isInitRoomSetting) {
-            isInitRoomSetting = true
+//        if (!isInitRoomSetting) {
+//            isInitRoomSetting = true
             refreshRoomInfo()
 //            refreshRoomSetting()
-        }
+//        }
     }
 
     override fun onSeatInfoUpdate(seatInfoList: MutableList<RCVoiceSeatInfo>) {
@@ -561,6 +560,7 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                 uiSeatModel.member = getMemberInfoByUserIdOnlyLocal(uiSeatModel.userId)
                 return@mapIndexed uiSeatModel
             }
+            Log.d(TAG, "onSeatInfoUpdate list : $list")
             currentUISeatInfoList.clear()
             currentUISeatInfoList.addAll(list)
             seatListChangeSubject.onNext(currentUISeatInfoList)
@@ -586,6 +586,7 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
 //                    model.userId = null
                     model.member = null
                 }
+            memberListChangeSubject.onNext(roomMemberInfoList)
         }
 
     }
@@ -615,7 +616,6 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
         doOnDataScheduler {
             Log.d(TAG, "onAudienceEnter: userId = $userId")
 //            refreshAllMemberInfoList()
-
             getOnLineUsersCount()
         }
     }
@@ -781,11 +781,13 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
     }
 
     private fun queryRoomInfoFromServer() {
-        addDisposable(RetrofitManager
-            .commonService
+        addDisposable(VoiceRoomNetManager
+            .aRoomApi
             .getVoiceRoomInfo(roomId)
             .subscribe { bean ->
+                Log.e(TAG, "queryRoomInfoFromServer :")
                 currentUIRoomInfo.roomBean = bean.room
+                roomInfoSubject.onNext(currentUIRoomInfo)
             })
     }
 
@@ -805,15 +807,15 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
             setSeatNumber
         )
         addDisposable(
-            RetrofitManager
-                .commonService
+            VoiceRoomNetManager
+                .aRoomApi
                 .setRoomSetting(setting).subscribe()
         )
     }
 
     fun refreshAdminList() {
-        addDisposable(RetrofitManager
-            .commonService
+        addDisposable(VoiceRoomNetManager
+            .aRoomApi
             .getAdminList(roomId)
             .observeOn(dataModifyScheduler)
             .subscribeOn(Schedulers.io())
@@ -829,8 +831,9 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
     }
 
     fun refreshGift() {
-        addDisposable(RetrofitManager
-            .commonService
+        Log.e(TAG, "refreshGift")
+        addDisposable(VoiceRoomNetManager
+            .giftService
             .getGiftList(roomId)
             .observeOn(dataModifyScheduler)
             .subscribeOn(Schedulers.io())
@@ -841,9 +844,17 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                             roomMemberInfoList.firstOrNull { member ->
                                 member.userId == entry.key
                             }?.giftCount = entry.value
+                            // 刷新gifcount
+                            currentUISeatInfoList.firstOrNull {
+                                it.userId == entry.key
+                            }?.let { seat ->
+                                seatInfoChangeSubject.onNext(seat)
+                            }
                         }
                     }
                 }
+
+
             })
     }
 
@@ -863,8 +874,9 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
         needRefreshRequestSeatUserList: Boolean = false,
         onComplete: (() -> Unit)? = null
     ) {
-        addDisposable(RetrofitManager
-            .commonService
+        Log.d(TAG, "queryAllUserInfo: ")
+        addDisposable(VoiceRoomNetManager
+            .aRoomApi
             .getMembersList(roomId)
             .observeOn(dataModifyScheduler)
             .subscribeOn(Schedulers.io())
@@ -899,7 +911,7 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                 memberListChangeSubject.onNext(roomMemberInfoList)
                 return@map roomId
             }.flatMap {
-                return@flatMap RetrofitManager.commonService.getAdminList(it)
+                return@flatMap VoiceRoomNetManager.aRoomApi.getAdminList(it)
             }.map {
                 it.data?.let { adminList ->
                     roomMemberInfoList.forEach { member ->
@@ -909,7 +921,9 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                 }
                 return@map roomId
             }.flatMap {
-                return@flatMap RetrofitManager.commonService.getGiftList(it)
+                return@flatMap VoiceRoomNetManager
+                    .giftService
+                    .getGiftList(it)
             }.map {
                 it.data?.let { listMap ->
                     listMap.forEach { map ->
@@ -917,6 +931,12 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                             roomMemberInfoList.firstOrNull { member ->
                                 member.userId == entry.key
                             }?.giftCount = entry.value
+                            // 刷新gifcount
+                            currentUISeatInfoList.firstOrNull {
+                                it.userId == entry.key
+                            }?.let { seat ->
+                                seatInfoChangeSubject.onNext(seat)
+                            }
                         }
                     }
                 }
@@ -1227,18 +1247,20 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
         val result = arrayListOf<UiMemberModel>()
 
         val publisherList = members.map { model ->
-            RetrofitManager.commonService.sendGifts(
-                SendGiftsRequest(
-                    present.index,
-                    num,
-                    roomId,
-                    model.userId
-                )
-            ).doOnSuccess {
-                if (it.code == 10000) {
-                    result.add(model)
-                }
-            }.toFlowable()
+            VoiceRoomNetManager
+                .giftService
+                .sendGifts(
+                    SendGiftsRequest(
+                        present.index,
+                        num,
+                        roomId,
+                        model.userId
+                    )
+                ).doOnSuccess {
+                    if (it.code == ApiConstant.REQUEST_SUCCESS_CODE) {
+                        result.add(model)
+                    }
+                }.toFlowable()
         }.toTypedArray()
 
 
@@ -1313,8 +1335,8 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
     }
 
     private fun queryMusicListByType(type: Int): Single<List<UiMusicModel>> {
-        return RetrofitManager
-            .commonService
+        return VoiceRoomNetManager
+            .musicService
             .getMusicList(MusicListRequest(roomId, type))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -1364,8 +1386,8 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
         Log.d(TAG, "addMusic: name = $name,author = $author,type = $type,url = $url")
         return Completable.create { emitter ->
             addDisposable(
-                RetrofitManager
-                    .commonService
+                VoiceRoomNetManager
+                    .musicService
                     .addMusic(
                         AddMusicRequest(
                             name = name,
@@ -1376,7 +1398,7 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                             size = size
                         )
                     ).subscribe({ result ->
-                        if (result.code == 10000) {
+                        if (result.code == ApiConstant.REQUEST_SUCCESS_CODE) {
                             refreshMusicList {
                                 if (userMusicList.size == 1) {
                                     Log.d(TAG, "addMusic: list only one music,start play")
@@ -1399,11 +1421,11 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
 
     fun deleteMusic(url: String, id: Int): Completable {
         return Completable.create { emitter ->
-            RetrofitManager
-                .commonService
+            VoiceRoomNetManager
+                .musicService
                 .musicDelete(DeleteMusicRequest(id, roomId))
                 .subscribe({
-                    if (it.code == 10000) {
+                    if (it.code == ApiConstant.REQUEST_SUCCESS_CODE) {
                         if (url == currentPlayMusic) {
 
                             try {
@@ -1492,18 +1514,20 @@ class VoiceRoomModel(val roomId: String) : RCVoiceRoomEventListener {
                 val currentMusic = userMusicList.lastOrNull {
                     it.url == currentPlayMusic
                 }
-                RetrofitManager.commonService.modifyMusicOrder(
-                    MusicOrderRequest(roomId, model.id, currentMusic?.id ?: 0)
-                ).subscribe({
-                    if (it.code == 10000) {
-                        refreshMusicList()
-                        emitter.onComplete()
-                    } else {
-                        emitter.onError(Throwable(it.msg))
-                    }
-                }, {
-                    emitter.onError(it)
-                })
+                VoiceRoomNetManager
+                    .musicService
+                    .modifyMusicOrder(
+                        MusicOrderRequest(roomId, model.id, currentMusic?.id ?: 0)
+                    ).subscribe({
+                        if (it.code == ApiConstant.REQUEST_SUCCESS_CODE) {
+                            refreshMusicList()
+                            emitter.onComplete()
+                        } else {
+                            emitter.onError(Throwable(it.msg))
+                        }
+                    }, {
+                        emitter.onError(it)
+                    })
             }
         }
     }

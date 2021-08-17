@@ -4,26 +4,28 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.emptyseatsetting
 
+import androidx.fragment.app.Fragment
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import com.rongcloud.common.base.BaseLifeCyclePresenter
 import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
-import cn.rongcloud.voiceroomdemo.mvp.model.getVoiceRoomModelByRoomId
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiSeatModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiSeatModel
+import dagger.hilt.android.scopes.FragmentScoped
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author gusd
  * @Date 2021/06/28
  */
-class EmptySeatPresenter(
+@FragmentScoped
+class EmptySeatPresenter @Inject constructor(
     val view: IEmptySeatView,
-    var uiSeatModel: UiSeatModel,
-    val roomId: String
+    @Named("EmptySeatSetting") var uiSeatModel: UiSeatModel,
+    val roomModel: VoiceRoomModel,
+    fragment: Fragment
 ) :
-    BaseLifeCyclePresenter<IEmptySeatView>(view) {
+    BaseLifeCyclePresenter(fragment) {
 
-    private val roomModel: VoiceRoomModel by lazy {
-        getVoiceRoomModelByRoomId(roomId)
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -52,12 +54,17 @@ class EmptySeatPresenter(
             roomModel.setSeatLock(
                 uiSeatModel.index,
                 uiSeatModel.seatStatus != RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking
-            )
-                .subscribe({
-
-                }, {
-                    view.showError(it.message)
-                })
+            ).subscribe({
+                view.showMessage(
+                    if (uiSeatModel.seatStatus != RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking) {
+                        "座位已开启"
+                    } else {
+                        "座位已关闭"
+                    }
+                )
+            }, {
+                view.showError(it.message)
+            })
         )
     }
 

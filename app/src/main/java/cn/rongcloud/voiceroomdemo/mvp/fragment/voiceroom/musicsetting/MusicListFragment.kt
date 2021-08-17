@@ -9,23 +9,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseFragment
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMusicModel
+import com.rongcloud.common.base.BaseFragment
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMusicModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_music_list.*
 import kotlinx.android.synthetic.main.layout_music_play_item.view.*
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/07/06
  */
-class MusicListFragment(val view: IMusicListView, val roomId: String) :
-    BaseFragment<MusicListPresenter, IMusicListView>(
+@HiltBinding(value = IMusicListView::class)
+@AndroidEntryPoint
+class MusicListFragment(val view: IMusicListView) :
+    BaseFragment(
         R.layout.fragment_music_list
     ), IMusicListView by view {
-    override fun initPresenter(): MusicListPresenter {
-        return MusicListPresenter(this, roomId)
-    }
+
+    @Inject
+    lateinit var presenter: MusicListPresenter
+
 
     override fun initView() {
         rv_list.adapter = MyAdapter()

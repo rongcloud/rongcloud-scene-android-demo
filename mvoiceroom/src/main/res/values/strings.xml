@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<resources>
+    <string name="leave_room">离开房间</string>
+    <string name="close_room">关闭房间</string>
+</resources>

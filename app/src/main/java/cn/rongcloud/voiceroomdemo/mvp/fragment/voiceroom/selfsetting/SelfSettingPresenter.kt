@@ -4,23 +4,28 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.selfsetting
 
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
-import cn.rongcloud.voiceroomdemo.mvp.model.getVoiceRoomModelByRoomId
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiSeatModel
+import androidx.fragment.app.Fragment
+import com.rongcloud.common.base.BaseLifeCyclePresenter
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiSeatModel
+import com.rongcloud.common.utils.AccountStore
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author gusd
  * @Date 2021/06/28
  */
-class SelfSettingPresenter(val view: ISelfSettingView, var seatInfo: UiSeatModel, roomId: String) :
-    BaseLifeCyclePresenter<ISelfSettingView>(view) {
+class SelfSettingPresenter @Inject constructor(
+    val view: ISelfSettingView,
+    @Named("SelfSeatSetting") var seatInfo: UiSeatModel,
+    val roomModel: VoiceRoomModel,
+    fragment: Fragment
+) :
+    BaseLifeCyclePresenter(fragment) {
 
     private var isLeaveSeating = false
-    private val roomModel by lazy {
-        getVoiceRoomModelByRoomId(roomId)
-    }
 
     override fun onCreate() {
         super.onCreate()

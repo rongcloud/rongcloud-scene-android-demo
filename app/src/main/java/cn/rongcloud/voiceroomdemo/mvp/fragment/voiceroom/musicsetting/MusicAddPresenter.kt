@@ -10,14 +10,16 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import androidx.fragment.app.Fragment
+import com.rongcloud.common.base.BaseLifeCyclePresenter
 import cn.rongcloud.voiceroomdemo.mvp.model.FileModel
-import cn.rongcloud.voiceroomdemo.mvp.model.getVoiceRoomModelByRoomId
-import cn.rongcloud.voiceroomdemo.ui.uimodel.MUSIC_FROM_TYPE_LOCAL
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMusicModel
-import cn.rongcloud.voiceroomdemo.utils.RealPathFromUriUtils
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.MUSIC_FROM_TYPE_LOCAL
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMusicModel
+import com.rongcloud.common.utils.RealPathFromUriUtils
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.io.File
+import javax.inject.Inject
 
 /**
  * @author gusd
@@ -25,15 +27,13 @@ import java.io.File
  */
 private const val TAG = "MusicAddPresenter"
 
-class MusicAddPresenter(val view: IMusicAddView, roomId: String) :
-    BaseLifeCyclePresenter<IMusicAddView>(view) {
-    private val roomModel by lazy {
-        getVoiceRoomModelByRoomId(roomId)
-    }
+class MusicAddPresenter @Inject constructor(
+    val view: IMusicAddView,
+    val roomModel: VoiceRoomModel,
+    fragment: Fragment
+) :
+    BaseLifeCyclePresenter(fragment) {
 
-    private val fileModel by lazy {
-        FileModel
-    }
 
     override fun onStart() {
         super.onStart()

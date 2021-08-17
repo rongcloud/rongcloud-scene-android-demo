@@ -6,21 +6,27 @@ package cn.rongcloud.voiceroomdemo.mvp.fragment.createroom
 
 import android.content.Context
 import android.net.Uri
-import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import androidx.fragment.app.Fragment
+import cn.rongcloud.mvoiceroom.net.VoiceRoomNetManager
+import com.rongcloud.common.base.BaseLifeCyclePresenter
 import cn.rongcloud.voiceroomdemo.mvp.model.FileModel
-import cn.rongcloud.voiceroomdemo.net.RetrofitManager
-import cn.rongcloud.voiceroomdemo.net.api.ApiConstant
-import cn.rongcloud.voiceroomdemo.net.api.bean.request.CreateRoomRequestBean
-import cn.rongcloud.voiceroomdemo.net.api.bean.request.Kv
-import cn.rongcloud.voiceroomdemo.utils.RealPathFromUriUtils
+import com.rongcloud.common.net.ApiConstant
+import cn.rongcloud.mvoiceroom.net.bean.request.CreateRoomRequestBean
+import cn.rongcloud.mvoiceroom.net.bean.request.Kv
+import com.rongcloud.common.utils.RealPathFromUriUtils
+import dagger.hilt.android.qualifiers.ActivityContext
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/15
  */
-class CreateVoiceRoomPresenter(val view: ICreateVoiceRoomView, val context: Context) :
-    BaseLifeCyclePresenter<ICreateVoiceRoomView>(view) {
+class CreateVoiceRoomPresenter @Inject constructor(
+    val view: ICreateVoiceRoomView,
+    @ActivityContext val context: Context,
+    fragment:Fragment
+) :
+    BaseLifeCyclePresenter(fragment) {
 
     fun createVoiceRoom(
         roomCover: Uri? = null,
@@ -32,28 +38,25 @@ class CreateVoiceRoomPresenter(val view: ICreateVoiceRoomView, val context: Cont
         view.showWaitingDialog()
         val intPrivate = if (isPrivate) 1 else 0
         val password = if (isPrivate) roomPassword else ""
-        val rcRoomInfo: RCVoiceRoomInfo = RCVoiceRoomInfo().apply {
-            this.roomName = roomName
-            this.isFreeEnterSeat = false
-            this.seatCount = 9
-        }
-        val kvList = ArrayList<Kv>().apply {
-            add(Kv("RCRoomInfoKey", rcRoomInfo.toJson()))
-        }
+
+        val kvList = ArrayList<Kv>()
         if (roomCover != null) {
             addDisposable(FileModel
-                .imageUpload(RealPathFromUriUtils.getRealPathFromUri(context,roomCover), context)
+                .imageUpload(
+                    RealPathFromUriUtils.getRealPathFromUri(context, roomCover),
+                    context
+                )
                 .flatMap {
-                    return@flatMap RetrofitManager
-                        .commonService
+                    return@flatMap VoiceRoomNetManager
+                        .aRoomApi
                         .createVoiceRoom(
                             CreateRoomRequestBean(
                                 intPrivate,
-                                kvList,
                                 roomName,
                                 password,
                                 "${ApiConstant.FILE_URL}$it",
-                                roomBackground
+                                roomBackground,
+                                kvList
                             )
                         )
                 }.subscribe({ respond ->
@@ -76,8 +79,8 @@ class CreateVoiceRoomPresenter(val view: ICreateVoiceRoomView, val context: Cont
             )
         } else {
             addDisposable(
-                RetrofitManager
-                    .commonService
+                VoiceRoomNetManager
+                    .aRoomApi
                     .createVoiceRoom(
                         CreateRoomRequestBean(
                             isPrivate = intPrivate,

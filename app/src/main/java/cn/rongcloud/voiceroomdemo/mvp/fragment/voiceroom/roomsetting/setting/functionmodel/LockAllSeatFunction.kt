@@ -6,13 +6,14 @@ package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting.fu
 
 import cn.rongcloud.voiceroomdemo.R
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.roomsetting.setting.IRoomSettingView
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
 
 /**
  * @author gusd
  * @Date 2021/06/24
  */
-class LockAllSeatFunction(roomId: String, val view: IRoomSettingView) :
-    BaseRoomSettingFunctionModel(roomId) {
+class LockAllSeatFunction(val roomModel: VoiceRoomModel, val view: IRoomSettingView) :
+    BaseRoomSettingFunctionModel() {
     override fun onCreate() {
         addDisposable(roomModel
             .obRoomInfoChange()

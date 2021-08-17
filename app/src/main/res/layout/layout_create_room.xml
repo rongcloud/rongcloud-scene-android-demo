@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <cn.rongcloud.voiceroomdemo.ui.widget.RadiusImageView
+    <com.rongcloud.common.ui.widget.RadiusImageView
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_fold" />
 
-    <cn.rongcloud.voiceroomdemo.ui.widget.RadiusImageView
+    <com.rongcloud.common.ui.widget.RadiusImageView
         android:id="@+id/iv_room_cover"
         android:layout_width="110dp"
         android:layout_height="110dp"
@@ -97,7 +97,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <cn.rongcloud.voiceroomdemo.ui.widget.RadiusImageView
+            <com.rongcloud.common.ui.widget.RadiusImageView
                 android:id="@+id/iv_voice_room_bg_0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -136,7 +136,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <cn.rongcloud.voiceroomdemo.ui.widget.RadiusImageView
+            <com.rongcloud.common.ui.widget.RadiusImageView
                 android:id="@+id/iv_voice_room_bg_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -174,7 +174,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <cn.rongcloud.voiceroomdemo.ui.widget.RadiusImageView
+            <com.rongcloud.common.ui.widget.RadiusImageView
                 android:id="@+id/iv_voice_room_bg_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -212,7 +212,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <cn.rongcloud.voiceroomdemo.ui.widget.RadiusImageView
+            <com.rongcloud.common.ui.widget.RadiusImageView
                 android:id="@+id/iv_voice_room_bg_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

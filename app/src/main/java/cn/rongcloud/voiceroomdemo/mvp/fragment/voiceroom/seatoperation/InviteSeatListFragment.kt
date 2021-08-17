@@ -6,23 +6,29 @@ package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.seatoperation
 
 import android.view.View
 import android.view.ViewGroup
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.loadPortrait
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseFragment
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMemberModel
+import com.rongcloud.common.base.BaseFragment
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMemberModel
+import com.rongcloud.common.extension.loadPortrait
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_list.*
 import kotlinx.android.synthetic.main.layout_request_seat_item.view.*
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/24
  */
-class InviteSeatListFragment(view: IInviteSeatListView, val roomId: String) :
-    BaseFragment<InviteSeatListPresenter, IInviteSeatListView>(R.layout.layout_list),
+@HiltBinding(value = IInviteSeatListView::class)
+@AndroidEntryPoint
+class InviteSeatListFragment(view: IInviteSeatListView) :
+    BaseFragment(R.layout.layout_list),
     IInviteSeatListView by view {
-    override fun initPresenter(): InviteSeatListPresenter {
-        return InviteSeatListPresenter(this, roomId)
-    }
+
+    @Inject
+    lateinit var  presenter: InviteSeatListPresenter
+
 
     override fun initView() {
         rv_list.adapter = MyAdapter()

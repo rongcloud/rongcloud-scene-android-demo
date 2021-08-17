@@ -4,25 +4,36 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.selfsetting
 
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.loadPortrait
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseBottomSheetDialogFragment
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiSeatModel
+import com.rongcloud.common.base.BaseBottomSheetDialogFragment
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiSeatModel
+import com.rongcloud.common.extension.loadPortrait
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_self_setting.*
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/28
  */
-class SelfSettingFragment(view: ISelfSettingView,var seatInfo:UiSeatModel,val roomId:String) :BaseBottomSheetDialogFragment<SelfSettingPresenter,ISelfSettingView>(
-    R.layout.fragment_self_setting),ISelfSettingView by view {
-    override fun initPresenter(): SelfSettingPresenter {
-        return SelfSettingPresenter(this,seatInfo,roomId)
+@HiltBinding(value = ISelfSettingView::class)
+@AndroidEntryPoint
+class SelfSettingFragment(view: ISelfSettingView, var seatInfo: UiSeatModel, val roomId: String) :
+    BaseBottomSheetDialogFragment(
+        R.layout.fragment_self_setting
+    ), ISelfSettingView by view {
+
+    @Inject
+    lateinit var presenter: SelfSettingPresenter
+
+    override fun getUiSeatModel(): UiSeatModel {
+        return seatInfo
     }
 
     override fun initView() {
         iv_member_portrait.loadPortrait(seatInfo.portrait)
-        tv_member_name.text  = seatInfo.userName
+        tv_member_name.text = seatInfo.userName
         btn_mute_self.setOnClickListener {
             presenter.muteSelf()
         }
@@ -43,10 +54,10 @@ class SelfSettingFragment(view: ISelfSettingView,var seatInfo:UiSeatModel,val ro
         dismiss()
     }
 
-    override fun onRecordStatusChange(isRecording:Boolean) {
-        if(!isRecording){
+    override fun onRecordStatusChange(isRecording: Boolean) {
+        if (!isRecording) {
             btn_mute_self.text = "打开麦克风"
-        }else{
+        } else {
             btn_mute_self.text = "关闭麦克风"
         }
     }

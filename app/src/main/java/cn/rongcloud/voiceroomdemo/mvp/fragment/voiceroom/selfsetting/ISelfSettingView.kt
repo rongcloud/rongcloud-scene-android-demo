@@ -4,17 +4,23 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.selfsetting
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiSeatModel
+import com.rongcloud.common.base.IBaseView
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiSeatModel
 
 /**
  * @author gusd
  * @Date 2021/06/28
  */
-interface ISelfSettingView:IBaseView {
+interface ISelfSettingView: IBaseView {
     fun refreshView(uiSeatModel: UiSeatModel){}
     fun fragmentDismiss() {}
     fun onRecordStatusChange(isRecording:Boolean) {
 
     }
+
+    fun getUiSeatModel():UiSeatModel?{
+        return null
+    }
+
+
 }

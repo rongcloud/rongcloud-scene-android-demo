@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <cn.rongcloud.voiceroomdemo.ui.widget.RadiusImageView
+    <com.rongcloud.common.ui.widget.RadiusImageView
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"

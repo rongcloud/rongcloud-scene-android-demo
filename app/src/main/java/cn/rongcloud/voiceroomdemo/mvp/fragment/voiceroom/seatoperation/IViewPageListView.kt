@@ -4,10 +4,10 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.seatoperation
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
+import com.rongcloud.common.base.IBaseView
 
 /**
  * @author gusd
  * @Date 2021/06/24
  */
-interface IViewPageListView:IBaseView
+interface IViewPageListView: IBaseView

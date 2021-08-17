@@ -12,9 +12,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.loadImageView
-import cn.rongcloud.voiceroomdemo.common.loadPortrait
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import com.rongcloud.common.extension.loadImageView
+import com.rongcloud.common.extension.loadPortrait
 import kotlinx.android.synthetic.main.layout_voice_room_list_item.view.*
 
 /**

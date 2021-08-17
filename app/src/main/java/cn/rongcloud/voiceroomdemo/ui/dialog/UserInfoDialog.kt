@@ -7,7 +7,12 @@ package cn.rongcloud.voiceroomdemo.ui.dialog
 import android.content.Context
 import android.net.Uri
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.*
+import com.rongcloud.common.extension.getString
+import com.rongcloud.common.extension.loadLocalPortrait
+import com.rongcloud.common.extension.loadPortrait
+import com.rongcloud.common.extension.showToast
+import com.rongcloud.common.ui.dialog.BaseDialog
+import com.rongcloud.common.utils.AccountStore
 import kotlinx.android.synthetic.main.layout_user_info_popup_window.*
 
 /**

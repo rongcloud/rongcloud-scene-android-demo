@@ -4,24 +4,25 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.creatorsetting
 
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import androidx.fragment.app.Fragment
+import com.rongcloud.common.base.BaseLifeCyclePresenter
 import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
-import cn.rongcloud.voiceroomdemo.mvp.model.getVoiceRoomModelByRoomId
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.ui.dialog.ConfirmDialog
+import com.rongcloud.common.utils.AccountStore
+import dagger.hilt.android.scopes.FragmentScoped
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/28
  */
-class CreatorSettingPresenter(val view: ICreatorView, roomInfoBean: VoiceRoomBean) :
-    BaseLifeCyclePresenter<ICreatorView>(view) {
-
-    private val roomModel: VoiceRoomModel by lazy {
-        getVoiceRoomModelByRoomId(roomInfoBean.roomId)
-    }
+@FragmentScoped
+class CreatorSettingPresenter @Inject constructor(
+    val view: ICreatorView,
+    val roomModel: VoiceRoomModel,
+    fragment: Fragment
+) :
+    BaseLifeCyclePresenter(fragment) {
 
     override fun onCreate() {
         super.onCreate()

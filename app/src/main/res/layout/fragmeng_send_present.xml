@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <cn.rongcloud.voiceroomdemo.ui.widget.RealtimeBlurView
+    <com.rongcloud.common.ui.widget.RealtimeBlurView
         android:id="@+id/bg_top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -15,7 +15,7 @@
         app:realtimeBlurRadius="14pt"
         app:realtimeOverlayColor="#29FFFFFF" />
 
-    <cn.rongcloud.voiceroomdemo.ui.widget.RealtimeBlurView
+    <com.rongcloud.common.ui.widget.RealtimeBlurView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

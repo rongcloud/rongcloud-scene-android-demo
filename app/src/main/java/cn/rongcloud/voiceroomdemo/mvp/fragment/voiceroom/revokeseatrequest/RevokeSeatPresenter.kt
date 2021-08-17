@@ -4,20 +4,23 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.revokeseatrequest
 
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
-import cn.rongcloud.voiceroomdemo.mvp.model.getVoiceRoomModelByRoomId
+import androidx.fragment.app.Fragment
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
+import com.rongcloud.common.base.BaseLifeCyclePresenter
+import com.rongcloud.common.utils.AccountStore
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/29
  */
-class RevokeSeatPresenter(val view: IRevokeSeatView, roomId: String) :
-    BaseLifeCyclePresenter<IRevokeSeatView>(view) {
-    val roomModel by lazy {
-        getVoiceRoomModelByRoomId(roomId)
-    }
+class RevokeSeatPresenter @Inject constructor(
+    val view: IRevokeSeatView,
+    val roomModel: VoiceRoomModel,
+    fragment: Fragment
+) :
+    BaseLifeCyclePresenter(fragment) {
 
     var cancel: Boolean = false
     override fun onCreate() {
@@ -30,7 +33,7 @@ class RevokeSeatPresenter(val view: IRevokeSeatView, roomId: String) :
                     if (it.seatIndex > 0) {
                         view.showMessage("您已经在麦上了哦")
                         view.fragmentDismiss()
-                    }else if (cancel) {
+                    } else if (cancel) {
                         view.showMessage("已撤回连线申请")
                         cancel = false
                     }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright © 2021 RongCloud. All rights reserved.
   -->
 
@@ -86,4 +85,36 @@
         app:layout_constraintStart_toStartOf="@+id/cl_phone_number"
         app:layout_constraintTop_toBottomOf="@+id/cl_verification_code" />
 
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新登录用户即注册开通融云开发者账号"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/bottom_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="且表示同意《注册条款》"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/bottom_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.0.0"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

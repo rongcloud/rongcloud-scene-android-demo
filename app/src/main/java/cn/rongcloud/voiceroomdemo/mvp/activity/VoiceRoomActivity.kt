@@ -14,10 +14,9 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
-import cn.rongcloud.rtc.utils.AudioUtil
-import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
+import cn.rong.combusis.feedback.FeedbackHelper
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.*
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.IVoiceRoomView
 import cn.rongcloud.voiceroomdemo.mvp.adapter.VoiceRoomMessageAdapter
 import cn.rongcloud.voiceroomdemo.mvp.adapter.VoiceRoomSeatsAdapter
@@ -45,54 +44,69 @@ import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.seatoperation.IViewPage
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.seatoperation.SeatOrderOperationFragment
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.selfsetting.ISelfSettingView
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.selfsetting.SelfSettingFragment
+import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
 import cn.rongcloud.voiceroomdemo.mvp.presenter.STATUS_NOT_ON_SEAT
 import cn.rongcloud.voiceroomdemo.mvp.presenter.STATUS_ON_SEAT
 import cn.rongcloud.voiceroomdemo.mvp.presenter.STATUS_WAIT_FOR_SEAT
 import cn.rongcloud.voiceroomdemo.mvp.presenter.VoiceRoomPresenter
-import cn.rongcloud.voiceroomdemo.ui.dialog.ConfirmDialog
-import cn.rongcloud.voiceroomdemo.ui.dialog.TipDialog
-import cn.rongcloud.voiceroomdemo.ui.popupwindow.ExitRoomPopupWindow
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMemberModel
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiRoomModel
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiSeatModel
-import cn.rongcloud.voiceroomdemo.utils.AudioManagerUtil
+import com.rongcloud.common.ui.dialog.ConfirmDialog
+import com.rongcloud.common.ui.dialog.TipDialog
+import cn.rongcloud.mvoiceroom.ui.popup.ExitRoomPopupWindow
+import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMemberModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiRoomModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiSeatModel
+import com.rongcloud.common.base.BaseActivity
+import com.rongcloud.common.extension.loadImageView
+import com.rongcloud.common.extension.loadPortrait
+import com.rongcloud.common.extension.showToast
+import com.rongcloud.common.extension.ui
+import com.rongcloud.common.utils.AccountStore
 import com.vanniktech.emoji.EmojiPopup
+import dagger.hilt.android.AndroidEntryPoint
+import io.rong.callkit.RongCallKit
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.MessageContent
 import kotlinx.android.synthetic.main.activity_voice_room.*
 import kotlinx.android.synthetic.main.activity_voice_room.view.*
+import javax.inject.Inject
 
 
 private const val TAG = "VoiceRoomActivity"
 private const val KEY_ROOM_ID = "KEY_ROOM_INFO_BEAN"
 private const val KEY_CREATOR_ID = "KEY_CREATOR_ID"
+private const val KEY_IS_CREATE = "KEY_IS_CREATE"
 
-class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IVoiceRoomView,
+@HiltBinding(value = IVoiceRoomView::class)
+@AndroidEntryPoint
+class VoiceRoomActivity : BaseActivity(), IVoiceRoomView,
     IMemberListView, IRoomSettingView, IBackgroundSettingView, IViewPageListView, ICreatorView,
     IMemberSettingView, IEmptySeatView, ISelfSettingView, IRevokeSeatView, ISendPresentView,
     IMusicSettingView {
 
 
     companion object {
-        fun startActivity(context: Context, roomId: String, createUserId: String) {
+        fun startActivity(
+            context: Context,
+            roomId: String,
+            createUserId: String,
+            isCreate: Boolean = false
+        ) {
             Intent(context, VoiceRoomActivity::class.java).apply {
                 putExtra(KEY_ROOM_ID, roomId)
                 putExtra(KEY_CREATOR_ID, createUserId)
+                putExtra(KEY_IS_CREATE, isCreate)
                 context.startActivity(this)
             }
         }
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        super.onCreate(intent?.extras)
     }
 
     private lateinit var currentRole: Role
 
     private lateinit var roomId: String
     private lateinit var creatorId: String
+    private var isCreate: Boolean = false
 
     private var memberSettingFragment: MemberSettingFragment? = null
 
@@ -115,13 +129,21 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
 
     private var roomSettingFragment: RoomSettingFragment? = null
 
-    override fun initPresenter(): VoiceRoomPresenter {
-        return VoiceRoomPresenter(this, roomId)
+    @Inject
+    lateinit var presenter: VoiceRoomPresenter
+
+
+    fun getVoiceRoomModel(): VoiceRoomModel {
+        return presenter.roomModel
     }
 
     override fun isLightThemeActivity(): Boolean {
         return false
     }
+
+    fun getRoomId(): String = roomId
+
+    fun isCreate(): Boolean = isCreate
 
     val favAnimation: FavAnimation by lazy {
         return@lazy FavAnimation(this).apply {
@@ -174,6 +196,8 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
     override fun getContentView(): Int = R.layout.activity_voice_room
 
     override fun initView() {
+        // 忽略来电
+        RongCallKit.ignoreIncomingCall(true)
         detector = GestureDetector(this, simpleGestureListener).apply {
             this.setIsLongpressEnabled(false)
             this.setOnDoubleTapListener(simpleGestureListener)
@@ -195,7 +219,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
             Audience(mRootView)
         }
 
-        rv_message_list.adapter = VoiceRoomMessageAdapter(roomId) { userId ->
+        rv_message_list.adapter = VoiceRoomMessageAdapter(presenter.roomModel) { userId ->
             if (userId == AccountStore.getUserId()) {
                 return@VoiceRoomMessageAdapter
             }
@@ -239,6 +263,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
     override fun beforeInitView() {
         roomId = intent.getStringExtra(KEY_ROOM_ID)!!
         creatorId = intent.getStringExtra(KEY_CREATOR_ID)!!
+        isCreate = intent.getBooleanExtra(KEY_IS_CREATE, false)!!
     }
 
     override fun initRoleView(roomInfo: UiRoomModel) {
@@ -255,13 +280,13 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
         }
         iv_room_setting.setOnClickListener {
             roomInfo.roomBean?.let {
-                roomSettingFragment = RoomSettingFragment(this, it)
+                roomSettingFragment = RoomSettingFragment(this)
                 roomSettingFragment?.show(supportFragmentManager)
             }
         }
         btn_seat_order.setOnClickListener {
             roomInfo.roomBean?.let {
-                SeatOrderOperationFragment(this, it).show(supportFragmentManager)
+                SeatOrderOperationFragment(this).show(supportFragmentManager)
             }
         }
 
@@ -274,7 +299,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
         }
         iv_send_gift.setOnClickListener {
             roomInfo.roomBean?.let {
-                SendPresentFragment(this, it.roomId).show(supportFragmentManager)
+                SendPresentFragment(this).show(supportFragmentManager)
             }
         }
     }
@@ -303,7 +328,6 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
 
     @SuppressLint("SetTextI18n")
     override fun refreshRoomInfo(roomInfo: UiRoomModel) {
-        Log.d(TAG, "refreshRoomInfo: $roomInfo")
         currentRole.refreshRoomInfo(roomInfo)
         roomInfo.roomBean?.backgroundUrl?.let {
             iv_background.loadImageView(it, R.drawable.default_room_background)
@@ -313,6 +337,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
     }
 
     override fun onSeatInfoChange(index: Int, uiSeatModel: UiSeatModel) {
+        Log.d(TAG, "onSeatInfoChange: $index  giftCount = ${uiSeatModel.giftCount}")
         if (index == 0) {
             refreshRoomOwner(uiSeatModel)
         } else {
@@ -378,7 +403,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
 
     override fun showInviteUserView() {
         presenter.getCurrentRoomInfo().roomBean?.let {
-            SeatOrderOperationFragment(this, it, 1).show(supportFragmentManager)
+            SeatOrderOperationFragment(this, 1).show(supportFragmentManager)
         }
     }
 
@@ -487,6 +512,10 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
 
     override fun onDestroy() {
         super.onDestroy()
+        // 统计打分
+        FeedbackHelper.getHelper().statistics()
+        // 取消 忽略来电
+        RongCallKit.ignoreIncomingCall(false)
         favAnimation.let {
             it.release()
         }
@@ -527,7 +556,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
         roomSettingFragment?.dismiss()
         val roomInfoBean = presenter.getCurrentRoomInfo().roomBean
         roomInfoBean?.let {
-            BackgroundSettingFragment(it, this).show(supportFragmentManager)
+            BackgroundSettingFragment(this).show(supportFragmentManager)
         }
     }
 
@@ -535,7 +564,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
         roomSettingFragment?.dismiss()
         val roomInfoBean = presenter.getCurrentRoomInfo().roomBean
         roomInfoBean?.let {
-            MusicSettingFragment(it.roomId, this).show(supportFragmentManager)
+            MusicSettingFragment(this).show(supportFragmentManager)
         }
     }
 
@@ -551,7 +580,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
     override fun sendGift(userId: String) {
         memberSettingFragment?.dismiss()
         memberListFragment?.dismiss()
-        SendPresentFragment(this, roomId, arrayListOf<String>(userId)).show(supportFragmentManager)
+        SendPresentFragment(this, arrayListOf<String>(userId)).show(supportFragmentManager)
     }
 
 
@@ -561,7 +590,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
 
             }
             STATUS_WAIT_FOR_SEAT -> {
-                RevokeSeatRequestFragment(this@VoiceRoomActivity, roomId).show(
+                RevokeSeatRequestFragment(this@VoiceRoomActivity).show(
                     supportFragmentManager
                 )
             }
@@ -570,18 +599,19 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
             }
         }
     }
+
     ///////////////////////////////////////////////////////////////////////////
     // 以下为不同角色的状态类
     ///////////////////////////////////////////////////////////////////////////
+    var lastOnlineCount: Int = 0//记录上次 处理切换角色的默认0的问题
 
     abstract inner class Role(val view: View) {
-        lateinit var roomInfo: UiRoomModel
         open fun initView(roomInfo: UiRoomModel) {
             this.roomInfo = roomInfo
-            with(view) {
-                setOnlineUsersNumber(0)
-            }
+            setOnlineUsersNumber(lastOnlineCount)
         }
+
+        lateinit var roomInfo: UiRoomModel
 
         open fun initListener() {
             with(view) {
@@ -622,6 +652,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
         open fun setOnlineUsersNumber(number: Int) {
             with(view) {
                 tv_room_members_count.text = "在线 $number"
+                lastOnlineCount = number
             }
         }
 
@@ -689,8 +720,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
                             MemberSettingFragment(
                                 this@VoiceRoomActivity,
                                 roomInfo,
-                                memberInfo,
-                                true
+                                memberInfo
                             ).show(supportFragmentManager)
                         }
                     }
@@ -710,8 +740,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
             memberSettingFragment = MemberSettingFragment(
                 this@VoiceRoomActivity,
                 roomBean,
-                member,
-                false
+                member
             ).apply {
                 show(supportFragmentManager)
             }
@@ -769,7 +798,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
 
         override fun onSeatClick(seatModel: UiSeatModel, position: Int) {
             when (seatModel.seatStatus) {
-                RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusEmpty,RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking -> {
+                RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusEmpty, RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking -> {
                     roomInfo.roomBean?.let { roomBean ->
                         emptySeatFragment = EmptySeatFragment(
                             this@VoiceRoomActivity,
@@ -786,8 +815,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
                             memberSettingFragment = MemberSettingFragment(
                                 this@VoiceRoomActivity,
                                 roomBean,
-                                member,
-                                true
+                                member
                             ).apply {
                                 show(supportFragmentManager)
                             }
@@ -856,8 +884,7 @@ class VoiceRoomActivity : BaseActivity<VoiceRoomPresenter, IVoiceRoomView>(), IV
                                 memberSettingFragment = MemberSettingFragment(
                                     this@VoiceRoomActivity,
                                     roomBean,
-                                    member,
-                                    true
+                                    member
                                 ).apply {
                                     show(supportFragmentManager)
                                 }

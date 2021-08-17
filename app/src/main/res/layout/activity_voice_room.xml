@@ -94,7 +94,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <cn.rongcloud.voiceroomdemo.ui.widget.WaveView
+        <com.rongcloud.common.ui.widget.WaveView
             android:id="@+id/wv_creator_background"
             android:layout_width="140dp"
             android:layout_height="140dp"
@@ -295,7 +295,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <cn.rongcloud.voiceroomdemo.ui.widget.CustomConstraintLayout
+        <com.rongcloud.common.ui.widget.CustomConstraintLayout
             android:id="@+id/cl_input_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -344,7 +344,7 @@
                 android:text="发送"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent" />
-        </cn.rongcloud.voiceroomdemo.ui.widget.CustomConstraintLayout>
+        </com.rongcloud.common.ui.widget.CustomConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

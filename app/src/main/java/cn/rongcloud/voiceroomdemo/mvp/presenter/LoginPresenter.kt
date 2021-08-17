@@ -5,28 +5,32 @@
 package cn.rongcloud.voiceroomdemo.mvp.presenter
 
 import android.app.Application
-import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback
 import cn.rongcloud.voiceroomdemo.MyApp
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import com.rongcloud.common.base.BaseLifeCyclePresenter
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.ILoginView
 import cn.rongcloud.voiceroomdemo.mvp.model.LoginModel
+import com.rongcloud.common.net.ApiConstant
+import com.rongcloud.common.utils.AccountStore
+import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/04
  */
-class LoginPresenter(val view: ILoginView, private val context: Context) :
-    BaseLifeCyclePresenter<ILoginView>(view) {
-
-    private val loginModel: LoginModel by lazy {
-        LoginModel()
-    }
+@ActivityScoped
+class LoginPresenter @Inject constructor(
+    val view: ILoginView,
+    private val loginModel: LoginModel,
+    activity: AppCompatActivity
+) :
+    BaseLifeCyclePresenter(activity) {
 
     override fun onCreate() {
     }
@@ -46,7 +50,7 @@ class LoginPresenter(val view: ILoginView, private val context: Context) :
                     .subscribe({ bean ->
                         view.apply {
 
-                            if (bean.code == 10000) {
+                            if (bean.code == ApiConstant.REQUEST_SUCCESS_CODE) {
                                 setNextVerificationDuring(60 * 1000L)
                             } else {
                                 view.showError(bean.code, bean.msg)
@@ -71,8 +75,10 @@ class LoginPresenter(val view: ILoginView, private val context: Context) :
                         view.hideWaitingDialog()
                     }
                     .subscribe({ bean ->
-                        if (bean.code == 10000) {
-                            AccountStore.saveAccountInfo(bean.data)
+                        if (bean.code == ApiConstant.REQUEST_SUCCESS_CODE) {
+                            AccountStore.saveAccountInfo(bean.data?.apply {
+                                this.phone = phoneNumber
+                            })
                             if (!AccountStore.getImToken().isNullOrBlank()) {
                                 RCVoiceRoomEngine
                                     .getInstance()

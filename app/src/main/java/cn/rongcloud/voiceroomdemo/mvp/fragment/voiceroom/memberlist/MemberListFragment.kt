@@ -5,14 +5,17 @@
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.memberlist
 
 import android.util.Log
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseBottomSheetDialogFragment
+import com.rongcloud.common.base.BaseBottomSheetDialogFragment
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.membersetting.IMemberSettingView
 import cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.membersetting.MemberSettingFragment
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMemberModel
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMemberModel
+import com.rongcloud.common.utils.AccountStore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_member_list.*
+import javax.inject.Inject
 
 /**
  * @author gusd
@@ -20,18 +23,19 @@ import kotlinx.android.synthetic.main.layout_member_list.*
  */
 private const val TAG = "MemberListFragment"
 
+@HiltBinding(value = IMemberListView::class)
+@AndroidEntryPoint
 class MemberListFragment(
     view: IMemberListView,
     private val memberSettingView: IMemberSettingView,
     private val roomInfoBean: VoiceRoomBean
 ) :
-    BaseBottomSheetDialogFragment<MemberListPresenter, IMemberListView>(R.layout.layout_member_list),
+    BaseBottomSheetDialogFragment(R.layout.layout_member_list),
     IMemberListView by view{
 
+    @Inject
+    lateinit var presenter: MemberListPresenter
 
-    override fun initPresenter(): MemberListPresenter {
-        return MemberListPresenter(this, requireContext(), roomInfoBean)
-    }
 
 
     override fun initData() {
@@ -55,7 +59,7 @@ class MemberListFragment(
                 // 点击自己不做任何反应
                 return@MemberListAdapter
             }
-            MemberSettingFragment(memberSettingView, roomInfoBean, it,false).show(childFragmentManager)
+            MemberSettingFragment(memberSettingView, roomInfoBean, it).show(childFragmentManager)
 
         }
 

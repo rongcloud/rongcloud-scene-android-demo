@@ -5,31 +5,40 @@
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.membersetting
 
 import androidx.core.view.isVisible
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.loadPortrait
-import cn.rongcloud.voiceroomdemo.common.ui
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseBottomSheetDialogFragment
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMemberModel
+import com.rongcloud.common.base.BaseBottomSheetDialogFragment
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMemberModel
+import com.rongcloud.common.extension.loadPortrait
+import com.rongcloud.common.extension.ui
+import com.rongcloud.common.utils.AccountStore
+import dagger.hilt.android.AndroidEntryPoint
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.layout_member_setting.*
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/21
  */
+@HiltBinding(value = IMemberSettingView::class)
+@AndroidEntryPoint
 class MemberSettingFragment(
     val view: IMemberSettingView,
     private val roomInfoBean: VoiceRoomBean,
-    private val member: UiMemberModel,
-    private val isFromSeat: Boolean = false // 麦位上点击  管理员管理非管理员 可以闭麦和关闭座位  列表中点击不可以操作
+    val member: UiMemberModel,
 ) :
-    BaseBottomSheetDialogFragment<MemberSettingPresenter, IMemberSettingView>(R.layout.layout_member_setting),
+    BaseBottomSheetDialogFragment(R.layout.layout_member_setting),
     IMemberSettingView by view {
-    override fun initPresenter(): MemberSettingPresenter {
-        return MemberSettingPresenter(this, roomInfoBean, member)
+
+    @Inject
+    lateinit var presenter: MemberSettingPresenter
+
+
+    override fun getMemberInfo(): UiMemberModel? {
+        return member
     }
 
     override fun initView() {

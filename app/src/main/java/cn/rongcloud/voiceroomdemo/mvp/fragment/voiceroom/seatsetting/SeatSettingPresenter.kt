@@ -4,13 +4,15 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.seatsetting
 
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import androidx.fragment.app.Fragment
+import com.rongcloud.common.base.BaseLifeCyclePresenter
 
 /**
  * @author gusd
  * @Date 2021/06/22
  */
-class SeatSettingPresenter(view: ISeatSettingView) : BaseLifeCyclePresenter<ISeatSettingView>(view) {
+class SeatSettingPresenter(view: ISeatSettingView, fragment: Fragment) :
+    BaseLifeCyclePresenter(fragment) {
 
     override fun onCreate() {
 

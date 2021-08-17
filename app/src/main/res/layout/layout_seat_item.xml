@@ -11,7 +11,7 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
-    <cn.rongcloud.voiceroomdemo.ui.widget.WaveView
+    <com.rongcloud.common.ui.widget.WaveView
         android:id="@+id/wv_seat_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"

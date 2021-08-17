@@ -12,14 +12,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.ui
-import cn.rongcloud.voiceroomdemo.mvp.fragment.BaseFragment
-import cn.rongcloud.voiceroomdemo.ui.uimodel.MUSIC_FROM_TYPE_SYSTEM
-import cn.rongcloud.voiceroomdemo.ui.uimodel.MUSIC_FUNCTION_LOCAL_ADD
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMusicModel
+import com.rongcloud.common.base.BaseFragment
+import cn.rongcloud.mvoiceroom.ui.uimodel.MUSIC_FROM_TYPE_SYSTEM
+import cn.rongcloud.mvoiceroom.ui.uimodel.MUSIC_FUNCTION_LOCAL_ADD
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMusicModel
+import com.rongcloud.common.extension.ui
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_music_add.*
 import kotlinx.android.synthetic.main.layout_add_music_item.view.*
+import javax.inject.Inject
 
 /**
  * @author gusd
@@ -28,13 +31,15 @@ import kotlinx.android.synthetic.main.layout_add_music_item.view.*
 private const val TAG = "MusicAddFragment"
 private const val MUSIC_PICK_REQUEST_CODE = 10000
 
-class MusicAddFragment(view: IMusicAddView, val roomId: String) :
-    BaseFragment<MusicAddPresenter, IMusicAddView>(R.layout.fragment_music_add),
+@HiltBinding(IMusicAddView::class)
+@AndroidEntryPoint
+class MusicAddFragment(view: IMusicAddView) :
+    BaseFragment(R.layout.fragment_music_add),
     IMusicAddView by view {
 
-    override fun initPresenter(): MusicAddPresenter {
-        return MusicAddPresenter(this, roomId)
-    }
+    @Inject
+    lateinit var presenter: MusicAddPresenter
+
 
     override fun initView() {
         rv_list.adapter = MyAdapter()
@@ -80,7 +85,7 @@ class MusicAddFragment(view: IMusicAddView, val roomId: String) :
             val uri = data?.data
             uri?.let {
                 Log.d(TAG, "onActivityResult: ${uri.path}")
-                presenter.addMusicFromLocal(requireContext(),uri)
+                presenter.addMusicFromLocal(requireContext(), uri)
             }
         }
     }

@@ -87,7 +87,7 @@
             android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_delete_music" />
 
-        <cn.rongcloud.voiceroomdemo.ui.widget.MusicPlayView
+        <com.rongcloud.common.ui.widget.MusicPlayView
             android:id="@+id/mpv_music_playing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -5,27 +5,30 @@
 package cn.rongcloud.voiceroomdemo.mvp.presenter
 
 import android.content.Context
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import androidx.appcompat.app.AppCompatActivity
 import cn.rongcloud.voiceroomdemo.mvp.activity.VoiceRoomActivity
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.IVoiceRoomListView
 import cn.rongcloud.voiceroomdemo.mvp.model.EMPTY_ROOM_INFO
 import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomListModel
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
+import cn.rongcloud.mvoiceroom.net.bean.respond.VoiceRoomBean
+import com.rongcloud.common.base.BaseLifeCyclePresenter
+import com.rongcloud.common.utils.AccountStore
+import dagger.hilt.android.scopes.ActivityScoped
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/09
  */
-class VoiceRoomListPresenter(
-    val view: IVoiceRoomListView
+@ActivityScoped
+class VoiceRoomListPresenter @Inject constructor(
+    val view: IVoiceRoomListView,
+    private val voiceRoomListMode: VoiceRoomListModel,
+    activity: AppCompatActivity
 ) :
-    BaseLifeCyclePresenter<IVoiceRoomListView>(view) {
+    BaseLifeCyclePresenter(activity) {
 
-    private val voiceRoomListMode: VoiceRoomListModel by lazy {
-        VoiceRoomListModel
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -61,7 +64,11 @@ class VoiceRoomListPresenter(
         voiceRoomListMode.loadMoreData()
     }
 
-    fun gotoVoiceRoomActivity(context: Context, roomId: String) {
+    fun gotoVoiceRoomActivity(context: Context, roomId: String, isCreate: Boolean = false) {
+        if (isCreate) {
+            VoiceRoomActivity.startActivity(context, roomId, AccountStore.getUserId()!!, isCreate)
+            return
+        }
         view.showWaitingDialog()
         voiceRoomListMode
             .queryRoomInfoFromServer(roomId)
@@ -74,8 +81,8 @@ class VoiceRoomListPresenter(
                 if (info.room == null || info.room == EMPTY_ROOM_INFO) {
                     view.showError("房间不存在")
                 } else {
-                    if (info.room.isPrivate == 1 && info.room.createUser?.userId != AccountStore.getUserId()) {
-                        view.showInputPasswordDialog(info.room)
+                    if (info.room?.isPrivate == 1 && info.room?.createUser?.userId != AccountStore.getUserId()) {
+                        view.showInputPasswordDialog(info.room!!)
                     } else {
                         turnToRoom(context, info.room)
                     }
@@ -86,9 +93,13 @@ class VoiceRoomListPresenter(
 
     }
 
-    fun turnToRoom(context: Context, info: VoiceRoomBean) {
-        info.createUser?.let {
-            VoiceRoomActivity.startActivity(context, info.roomId, info.createUser.userId)
+    fun turnToRoom(context: Context, info: VoiceRoomBean?) {
+        info?.createUser?.let {
+            VoiceRoomActivity.startActivity(context, info.roomId, it.userId)
         } ?: view.showError("房间数据错误")
+    }
+
+    fun addRoomInfo(roomInfo: VoiceRoomBean) {
+        voiceRoomListMode.addRoomInfo(roomInfo)
     }
 }

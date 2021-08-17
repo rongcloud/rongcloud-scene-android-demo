@@ -4,10 +4,13 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.musicsetting
 
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
+import androidx.fragment.app.Fragment
+import com.rongcloud.common.base.BaseLifeCyclePresenter
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/07/06
  */
-class MusicControlPresenter(view:IMusicControlView):BaseLifeCyclePresenter<IMusicControlView>(view)
+class MusicControlPresenter @Inject constructor(view: IMusicControlView,fragment: Fragment) :
+    BaseLifeCyclePresenter(fragment)

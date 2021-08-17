@@ -38,18 +38,18 @@ public class RTCNotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e(CHANNEL_ID,"onCreate");
+        Log.e(CHANNEL_ID, "onCreate");
         init();
-        Intent intent = new Intent(this, VoiceRoomActivityKt.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        Notification.Builder builder = new Notification.Builder(this)
-                .setSmallIcon(R.mipmap.app_icon)
-                .setContentTitle("语聊房")
-                .setContentText("正在语聊中...")
-                .setContentIntent(pendingIntent);
-
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                new Intent("io.rong.intent.action.voice_room")
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                0);
+        Notification.Builder builder =
+                new Notification.Builder(this)
+                        .setSmallIcon(R.mipmap.app_icon)
+                        .setContentTitle("语聊房")
+                        .setContentText("正在语聊中...")
+                        .setContentIntent(pendingIntent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setCategory(Notification.CATEGORY_EVENT);
         }
@@ -63,21 +63,20 @@ public class RTCNotificationService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e(CHANNEL_ID,"onBind");
+        Log.e(CHANNEL_ID, "onBind");
         return null;
 
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e(CHANNEL_ID,"onStartCommand");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e(CHANNEL_ID,"onDestroy");
+        Log.e(CHANNEL_ID, "onDestroy");
         manager.cancel(notifyId);
         stopForeground(true);
     }

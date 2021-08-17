@@ -4,10 +4,10 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.musicsetting
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
+import com.rongcloud.common.base.IBaseView
 
 /**
  * @author gusd
  * @Date 2021/07/05
  */
-interface IMusicSettingView:IBaseView
+interface IMusicSettingView: IBaseView

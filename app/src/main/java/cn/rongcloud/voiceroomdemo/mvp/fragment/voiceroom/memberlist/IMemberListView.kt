@@ -4,13 +4,13 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.memberlist
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMemberModel
+import com.rongcloud.common.base.IBaseView
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMemberModel
 
 /**
  * @author gusd
  * @Date 2021/06/21
  */
-interface IMemberListView :IBaseView{
+interface IMemberListView : IBaseView {
     fun showMemberList(data: List<UiMemberModel>?){}
 }

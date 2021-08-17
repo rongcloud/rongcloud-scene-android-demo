@@ -4,13 +4,13 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.fragment.voiceroom.creatorsetting
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
+import com.rongcloud.common.base.IBaseView
 
 /**
  * @author gusd
  * @Date 2021/06/28
  */
-interface ICreatorView:IBaseView {
+interface ICreatorView: IBaseView {
     fun fragmentDismiss(){}
     fun onMuteChange(isMute: Boolean) {
 

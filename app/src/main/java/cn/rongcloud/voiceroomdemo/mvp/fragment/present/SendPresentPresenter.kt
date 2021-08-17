@@ -5,31 +5,31 @@
 package cn.rongcloud.voiceroomdemo.mvp.fragment.present
 
 import android.util.Log
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
-import cn.rongcloud.voiceroomdemo.mvp.model.Present
+import androidx.fragment.app.Fragment
+import com.rongcloud.common.base.BaseLifeCyclePresenter
+import cn.rongcloud.voiceroomdemo.mvp.bean.Present
 import cn.rongcloud.voiceroomdemo.mvp.model.VoiceRoomModel
-import cn.rongcloud.voiceroomdemo.mvp.model.getVoiceRoomModelByRoomId
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiMemberModel
+import cn.rongcloud.mvoiceroom.ui.uimodel.UiMemberModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author gusd
  * @Date 2021/06/28
  */
 
-class SendPresentPresenter(
+class SendPresentPresenter @Inject constructor(
     val view: ISendPresentView,
-    roomId: String,
-    private val selectedIds: List<String>
+    private val roomModel: VoiceRoomModel,
+    fragment: Fragment
 ) :
-    BaseLifeCyclePresenter<ISendPresentView>(view) {
+    BaseLifeCyclePresenter(fragment) {
 
-    private val roomModel: VoiceRoomModel by lazy {
-        getVoiceRoomModelByRoomId(roomId)
-    }
 
-    fun initeialObserve() {
+    fun initeialObserve(selectedIds: List<String>) {
         view.onPresentInited(roomModel.presents)
+        // 礼物信息：图标 名称和 价值
         currentPresent = roomModel.presents.first()
         addDisposable(roomModel
             .obMemberListChange()
@@ -40,19 +40,36 @@ class SendPresentPresenter(
                 return@map it
             }.observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                //移出已下麦
-                var filts = selects.filter { mem ->
-                    !it.contains(mem)
-                }
-                selects.clear()
-                selects.addAll(filts)
-                // 处理默认选中
-                it.forEach {
-                    if (selectedIds.contains(it.userId)) {
-                        selects.add(it)
+//                //移出已下麦
+//                var filts = selects.filter { mem ->
+//                    !it.contains(mem)
+//                }
+//                selects.clear()
+//                selects.addAll(filts)
+//                // 处理默认选中
+//                it.forEach {
+//                    if (selectedIds.contains(it.userId)) {
+//                        selects.add(it)
+//                    }
+//                }
+                var filts: List<UiMemberModel>
+                if (!selectedIds.isEmpty()) {
+                    // 个人设置过来 只过滤选中的人
+                    filts = it.filter { mem ->
+                        selectedIds.contains(mem.userId)
                     }
+                    selects.clear()
+                    selects.addAll(filts)
+                    // 只显示 选中人
+                    view.onMemberModify(filts)
+                } else {
+                    filts = selects.filter { mem ->
+                        !it.contains(mem)
+                    }
+                    selects.clear()
+                    selects.addAll(filts)
+                    view.onMemberModify(it)
                 }
-                view.onMemberModify(it)
                 checkEnableSend()
             })
     }
