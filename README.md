@@ -72,3 +72,57 @@ const val HOME_PAGE = "https://docs.rongcloud.cn/v4/5X/views/scene/voiceroom/and
 // 默认头像的地址
 const val DEFAULT_PORTRAIT_ULR = "https://cdn.ronghub.com/demo/default/rce_default_avatar.png"
 ```
+## voiceroom1.5 更新
+#### setting.gradle个module功能简介
+```java
+ include ':app'
+
+ include ':callkit'
+ // 语聊房
+ include ':mvoiceroom'
+ // module形式依赖 语聊房SDK
+ include ':rcvoiceroom'
+
+ //公共业务模块:评价反馈
+ include ':combusis'
+ // 公共模块
+ include ':common'
+
+ // 编译模块
+ include ':processor'
+ include ':annotation'
+```
+- 详情见setting.gradle
+#### app/build.gradle修改配置注意事项
+特别注意：
+- 1.替换key是 一定保留两侧的转义符"",
+- 2.替换base url是格式是以"/"结尾
+- 3.key不可修改
+- 详情见app/build.gradle下的productFlavors节点
+```java
+productFlavors {
+        // 特别注意：
+        // 1.替换key是 一定保留两侧的转义符"",
+        // 2.替换base url是格式是以"/"结尾
+        // 3. key不可修改
+
+        //开发环境
+        developerEnvironment {
+            dimension 'environment'
+            applicationId "cn.rongcloud.voiceroomdemo.dev" // 包名，确保切换环境时不会因为缓存导致出现问题
+            buildConfigField("String", "APP_KEY", "\"替换你的融云appkey\"")// 融云appkey
+            buildConfigField("String", "UM_APP_KEY", "\"替换你的友盟统计appkey\"")// 盟统计appkey
+            //http://192.168.1.9:8080/ 注意："/"结尾
+            buildConfigField("String", "BASE_SERVER_ADDRES", "\"替换你的服务器地址\"")
+        }
+
+        releaseEnvironment {// 正式环境
+            dimension 'environment'
+            applicationId "cn.rongcloud.voiceroomdemo" //包名
+            buildConfigField("String", "APP_KEY", "\"替换你的融云appkey\"") // 融云appkey
+            buildConfigField("String", "UM_APP_KEY", "\"替换你的友盟统计appkey\"")// 友盟统计key
+            //格式：http://192.168.1.9:8080/ 注意："/"结尾
+            buildConfigField("String", "BASE_SERVER_ADDRES", "\"替换你的服务器地址\"")
+        }
+    }
+```
