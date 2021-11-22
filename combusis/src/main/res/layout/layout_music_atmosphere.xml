@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="54dp"
+    android:background="@color/transparent">
+
+    <cn.rong.combusis.common.ui.widget.RealtimeBlurView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        app:radius="6dp"
+        app:realtimeBlurRadius="14dp"
+        app:realtimeOverlayColor="#1AFFFFFF" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_music_atmosphere_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_music_atmosphere_selector"
+        android:gravity="center"
+        android:minWidth="64dp"
+        android:text="进场"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_music_atmosphere_clap"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_music_atmosphere_selector"
+        android:gravity="center"
+        android:minWidth="64dp"
+        android:text="鼓掌"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_music_atmosphere_enter" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_music_atmosphere_cheer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_music_atmosphere_selector"
+        android:gravity="center"
+        android:minWidth="64dp"
+        android:text="欢呼"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_music_atmosphere_clap" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

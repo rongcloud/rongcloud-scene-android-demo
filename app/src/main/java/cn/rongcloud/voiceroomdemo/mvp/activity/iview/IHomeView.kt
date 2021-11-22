@@ -4,13 +4,13 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.activity.iview
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
+import com.rongcloud.common.base.IBaseView
 
 /**
  * @author gusd
  * @Date 2021/06/04
  */
-interface IHomeView:IBaseView {
+public interface IHomeView : IBaseView {
 
     fun modifyInfoSuccess()
 }

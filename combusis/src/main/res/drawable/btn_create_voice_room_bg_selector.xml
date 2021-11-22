@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_create_room_bg_selected" android:state_checked="true" />
+    <item android:drawable="@drawable/ic_create_room_bg_unselect" android:state_checked="false" />
+</selector>

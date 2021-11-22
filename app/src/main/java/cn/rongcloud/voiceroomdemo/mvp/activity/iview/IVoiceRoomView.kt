@@ -5,9 +5,9 @@
 package cn.rongcloud.voiceroomdemo.mvp.activity.iview
 
 import android.graphics.Point
-import cn.rongcloud.voiceroomdemo.common.IBaseView
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiRoomModel
-import cn.rongcloud.voiceroomdemo.ui.uimodel.UiSeatModel
+import cn.rongcloud.voiceroom.ui.uimodel.UiRoomModel
+import cn.rongcloud.voiceroom.ui.uimodel.UiSeatModel
+import com.rongcloud.common.base.IBaseView
 import io.rong.imlib.model.MessageContent
 
 /**
@@ -46,5 +46,6 @@ interface IVoiceRoomView : IBaseView {
     fun showRevokeSeatRequest()
     fun showRoomClose()
     fun onMemberInfoChange()
+    fun showSingalInfo(int: Int)
 
 }

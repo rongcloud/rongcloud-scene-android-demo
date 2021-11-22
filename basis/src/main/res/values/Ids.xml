@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--refreshView的id-->
+    <item name="basis_refresh" type="id" />
+    <!--有数据显示的所有控件根布局id -->
+    <item name="basis_show_content" type="id" />
+    <item name="basis_no_data" type="id" />
+</resources>

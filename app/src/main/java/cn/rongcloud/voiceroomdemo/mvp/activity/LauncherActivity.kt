@@ -5,13 +5,14 @@
 package cn.rongcloud.voiceroomdemo.mvp.activity
 
 import android.os.Bundle
+import cn.rong.combusis.common.base.PermissionActivity
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.setAndroidNativeLightStatusBar
-import cn.rongcloud.voiceroomdemo.common.showToast
+import com.rongcloud.common.extension.setAndroidNativeLightStatusBar
+import com.rongcloud.common.extension.showToast
+import com.rongcloud.common.utils.AccountStore
 
 
-class LauncherActivity : cn.rongcloud.voiceroomdemo.mvp.activity.PermissionActivity() {
+class LauncherActivity : PermissionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +20,10 @@ class LauncherActivity : cn.rongcloud.voiceroomdemo.mvp.activity.PermissionActiv
         setContentView(R.layout.activity_launcher)
     }
 
-    override fun onSetPermissions(): Array<String> {
-        return PERMISSIONS
+    override fun onSetPermissions(): Array<String>? {
+        // 移到主界面申请
+//        return LAUNCHER_PERMISSIONS
+        return null
     }
 
     override fun onAccept(accept: Boolean) {
@@ -28,7 +31,6 @@ class LauncherActivity : cn.rongcloud.voiceroomdemo.mvp.activity.PermissionActiv
             turnToActivity()
         } else {
             showToast("请赋予必要权限！")
-            finish()
         }
     }
 

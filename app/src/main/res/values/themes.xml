@@ -51,9 +51,4 @@
         <item name="editTextStyle">@style/LoginEditTextStyle</item>
     </style>
 
-    <style name="Theme.VoiceRoomActivityTheme" parent="Theme.AppTheme.LauncherActivity">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
-
 </resources>
