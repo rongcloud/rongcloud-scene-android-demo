@@ -10,4 +10,6 @@ local.properties
 /.idea/
 gradlew
 gradlew.bat
-/rtcvoiceroom/build
+/RCVoiceRoomLib/build
+/common/build
+/callkit/build

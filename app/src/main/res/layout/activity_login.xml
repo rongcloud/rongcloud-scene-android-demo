@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright © 2021 RongCloud. All rights reserved.
   -->
 
@@ -86,4 +85,40 @@
         app:layout_constraintStart_toStartOf="@+id/cl_phone_number"
         app:layout_constraintTop_toBottomOf="@+id/cl_verification_code" />
 
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_version"
+        app:layout_constraintEnd_toEndOf="@+id/cl_phone_number"
+        app:layout_constraintStart_toStartOf="@+id/cl_phone_number">
+
+        <ImageView
+            android:id="@+id/iv_checked"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/shape_checkbox_inner" />
+
+        <TextView
+            android:id="@+id/bottom_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《注册条款》"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bottom_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="1.0.0"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

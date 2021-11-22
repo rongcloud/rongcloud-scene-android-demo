@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_pk_close" android:state_selected="true" />
+    <item android:drawable="@drawable/ic_request_pk" android:state_selected="false" />
+    <item android:drawable="@drawable/ic_request_pk" />
+</selector>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@id/rc_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:gravity="center"
+            android:text="@string/rc_dialog_cancel"
+            android:textColor="@color/rc_voip_check_disable"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@id/rc_btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="14dp"
+            android:gravity="center"
+            android:text="@string/rc_dialog_ok"
+            android:textColor="@color/rc_voip_check_disable"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|top"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="@string/rc_voip_select_member"
+            android:textColor="@color/rc_voip_check_disable"
+            android:textSize="18sp" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <!--rce_ic_search.png-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#3333" />
+
+        <EditText
+            android:id="@+id/edit_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="9dp"
+            android:background="@drawable/bg_search"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:hint="搜索"
+            android:inputType="text"
+            android:singleLine="false"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/rc_listview_select_member"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#595e6b"
+        android:dividerHeight="0.5dp"
+        android:paddingLeft="18dp">
+
+    </ListView>
+
+</LinearLayout>
+
+

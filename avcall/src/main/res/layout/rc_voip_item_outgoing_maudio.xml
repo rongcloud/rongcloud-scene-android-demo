@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rc_voip_background_color">
+
+    <!--多人语音通话中顶部布局-->
+    <FrameLayout
+        android:id="@+id/rc_voip_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/rc_voip_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:padding="20dp"
+            android:src="@drawable/rc_voip_icon_add" />
+
+        <ImageView
+            android:id="@+id/rc_voip_minimize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:padding="20dp"
+            android:src="@drawable/rc_voip_minimize"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/rc_voip_audio"
+                android:textColor="#FFFFFFFF"
+                android:textSize="@dimen/callkit_textsize18sp" />
+
+            <TextView
+                android:id="@+id/rc_voip_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="11.5dp"
+                android:text="00:00"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+    </FrameLayout>
+    <!--多人语音主叫方顶部布局-->
+    <RelativeLayout
+        android:id="@+id/reltive_voip_outgoing_audio_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/rc_voip_minimize_outgoing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:onClick="onMinimizeClick"
+            android:paddingLeft="17.5dp"
+            android:paddingTop="11.5dp"
+            android:paddingBottom="11.5dp"
+            android:src="@drawable/rc_voip_minimize"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="@string/rc_voip_audio"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/callkit_textsize18sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_scrollviewTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginRight="20dp">
+
+        <io.rong.callkit.util.CallVerticalScrollView
+            android:id="@+id/rc_voip_members_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"></io.rong.callkit.util.CallVerticalScrollView>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rc_voip_remind"
+        style="@style/callkit_voip_text_style_18spWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rc_voip_control_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="@string/rc_voip_call_waiting" />
+
+    <FrameLayout
+        android:id="@+id/rc_voip_control_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+    </FrameLayout>
+
+
+</RelativeLayout>

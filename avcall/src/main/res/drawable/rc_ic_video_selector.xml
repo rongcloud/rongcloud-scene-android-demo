@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/rc_voip_icon_input_video_pressed" android:state_pressed="true" />
+    <item android:drawable="@drawable/rc_voip_icon_input_video" />
+</selector>

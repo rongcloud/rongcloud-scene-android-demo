@@ -1,9 +1,24 @@
 /*
  * Copyright © 2021 RongCloud. All rights reserved.
  */
-
-rootProject.name = "VoiceRoomDemo"
+rootProject.name = "RongRTCDemo"
 include ':app'
 
+//语聊房SDK
+include ':voiceroom'
 
+//音视频呼叫
+include ':avcall'
 
+//公共业务模块:评价反馈
+include ':combusis'
+
+//公共模块 依赖
+include ':basis'
+
+//编译插件
+include ':processor'
+include ':annotation'
+
+//电台模块
+include ':radioroom'

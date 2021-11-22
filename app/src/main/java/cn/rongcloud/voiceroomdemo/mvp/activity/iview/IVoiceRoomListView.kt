@@ -4,14 +4,14 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.activity.iview
 
-import cn.rongcloud.voiceroomdemo.common.IBaseView
-import cn.rongcloud.voiceroomdemo.net.api.bean.respond.VoiceRoomBean
+import cn.rongcloud.voiceroom.net.bean.respond.VoiceRoomBean
+import com.rongcloud.common.base.IBaseView
 
 /**
  * @author gusd
  * @Date 2021/06/09
  */
-interface IVoiceRoomListView :IBaseView {
+interface IVoiceRoomListView : IBaseView {
     fun onDataChange(list: List<VoiceRoomBean>?)
     fun onLoadError(throwable: Throwable?)
     fun showInputPasswordDialog(bean: VoiceRoomBean)
