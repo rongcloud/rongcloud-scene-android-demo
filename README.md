@@ -9,7 +9,7 @@ https://www.rongcloud.cn/solution/audio_social
 融云场景Demo的主要代码模块有以下几类。
 
 * 常规业务： `RxJava` 实现 `MVP` 架构。
-* 静态资源：使用 `DataStore` 和 `Room` 配个 `RxJava` 持久化本地数据。
+* 静态资源：使用 `DataStore` 和 `Room` 配合 `RxJava` 持久化本地数据。
 * 网络请求： `Retrofit` 和 `OkHttp` 进行 Http 请求。
 * 列表数据源：使用 `RecyclerView` 进行数据列表展示。
 * 核心业务开发： 为了提高兼容性，语聊房的核心 `SDK` 基于 Java 1.7 开始，上层业务以 `kotlin` 为主。
