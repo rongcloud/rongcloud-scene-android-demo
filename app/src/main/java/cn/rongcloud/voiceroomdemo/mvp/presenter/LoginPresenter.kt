@@ -4,29 +4,32 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.presenter
 
-import android.app.Application
-import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback
-import cn.rongcloud.voiceroomdemo.MyApp
-import cn.rongcloud.voiceroomdemo.common.AccountStore
-import cn.rongcloud.voiceroomdemo.common.BaseLifeCyclePresenter
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.ILoginView
 import cn.rongcloud.voiceroomdemo.mvp.model.LoginModel
+import com.kit.cache.GsonUtil
+import com.rongcloud.common.base.BaseLifeCyclePresenter
+import com.rongcloud.common.net.ApiConstant
+import com.rongcloud.common.utils.AccountStore
+import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author gusd
  * @Date 2021/06/04
  */
-class LoginPresenter(val view: ILoginView, private val context: Context) :
-    BaseLifeCyclePresenter<ILoginView>(view) {
-
-    private val loginModel: LoginModel by lazy {
-        LoginModel()
-    }
+@ActivityScoped
+class LoginPresenter @Inject constructor(
+    val view: ILoginView,
+    private val loginModel: LoginModel,
+    activity: AppCompatActivity
+) :
+    BaseLifeCyclePresenter(activity) {
 
     override fun onCreate() {
     }
@@ -46,7 +49,7 @@ class LoginPresenter(val view: ILoginView, private val context: Context) :
                     .subscribe({ bean ->
                         view.apply {
 
-                            if (bean.code == 10000) {
+                            if (bean.code == ApiConstant.REQUEST_SUCCESS_CODE) {
                                 setNextVerificationDuring(60 * 1000L)
                             } else {
                                 view.showError(bean.code, bean.msg)
@@ -71,28 +74,33 @@ class LoginPresenter(val view: ILoginView, private val context: Context) :
                         view.hideWaitingDialog()
                     }
                     .subscribe({ bean ->
-                        if (bean.code == 10000) {
-                            AccountStore.saveAccountInfo(bean.data)
-                            if (!AccountStore.getImToken().isNullOrBlank()) {
-                                RCVoiceRoomEngine
-                                    .getInstance()
-                                    .connectWithToken(
-                                        MyApp.context as Application,
-                                        AccountStore.getImToken(),
-                                        object : RCVoiceRoomCallback {
-                                            override fun onError(code: Int, message: String?) {
-                                                view.hideWaitingDialog()
-                                                view.showError(code, message)
-                                            }
-
-                                            override fun onSuccess() {
-                                                view.hideWaitingDialog()
-                                                view.onLoginSuccess()
-                                            }
-                                        })
-                            }
+                        com.kit.utils.Logger.e(TAG, GsonUtil.obj2Json(bean))
+                        if (null == bean) {
                         } else {
-                            view.showError(bean.code, bean.msg)
+                            if (bean.code == ApiConstant.REQUEST_SUCCESS_CODE) {
+                                AccountStore.saveAccountInfo(bean.data?.apply {
+                                    this.phone = phoneNumber
+                                })
+                                if (!AccountStore.getImToken().isNullOrBlank()) {
+                                    RCVoiceRoomEngine
+                                        .getInstance()
+                                        .connectWithToken(
+                                            AccountStore.getImToken(),
+                                            object : RCVoiceRoomCallback {
+                                                override fun onError(code: Int, message: String?) {
+                                                    view.hideWaitingDialog()
+                                                    view.showError(code, message)
+                                                }
+
+                                                override fun onSuccess() {
+                                                    view.hideWaitingDialog()
+                                                    view.onLoginSuccess()
+                                                }
+                                            })
+                                }
+                            } else {
+                                view.showError(bean.code, bean.msg)
+                            }
                         }
                     }, { throwable ->
                         view.showError(-1, throwable.message)

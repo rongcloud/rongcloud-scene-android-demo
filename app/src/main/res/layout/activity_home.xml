@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <LinearLayout
             android:id="@id/iv_voice_room"
@@ -46,6 +47,41 @@
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/fl_radio"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintDimensionRatio="w,225:160"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_voice_room"
+            app:layout_constraintWidth_percent="0.475">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_radio_room"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radio_room"
+                    android:textColor="@color/app_color_white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/radio_room_des"
+                    android:textColor="@color/app_color_white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/iv_video_call"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -53,7 +89,7 @@
             app:layout_constraintDimensionRatio="w,225:160"
             app:layout_constraintLeft_toLeftOf="@+id/iv_audio_call"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_voice_room"
+            app:layout_constraintTop_toBottomOf="@+id/fl_radio"
             app:layout_constraintWidth_percent="0.475">
 
             <LinearLayout
@@ -83,6 +119,7 @@
                 android:id="@+id/bg2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:src="@drawable/ic_video_call" />
 
             <TextView
@@ -90,6 +127,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="COMING\nSOON"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </FrameLayout>
@@ -101,7 +139,7 @@
             android:layout_marginTop="20dp"
             app:layout_constraintDimensionRatio="w,225:160"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/iv_video_call"
+            app:layout_constraintLeft_toRightOf="@+id/fl_radio"
             app:layout_constraintTop_toBottomOf="@+id/iv_voice_room"
             app:layout_constraintWidth_percent="0.475">
 
@@ -132,6 +170,7 @@
                 android:id="@+id/bg3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:src="@drawable/ic_audio_call" />
 
             <TextView
@@ -139,9 +178,23 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="COMING\nSOON"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_new_roomList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/rc_blue"
+            android:padding="20dp"
+            android:text="新版本语聊房入口"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@+id/iv_video_call"
+            app:layout_constraintTop_toBottomOf="@+id/iv_audio_call"
+            tools:ignore="MissingConstraints" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

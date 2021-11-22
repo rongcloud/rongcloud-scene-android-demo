@@ -1,0 +1,99 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+}
+apply from: rootProject.file("ext.gradle")
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    resourcePrefix "basis_"//前缀的名字
+
+}
+
+dependencies {
+//    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')//photoview-release.aar
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.core:core:1.3.0'
+
+    api("com.squareup.okhttp3:okhttp:4.9.0")
+    api 'com.google.code.gson:gson:2.8.6'
+
+    api 'com.github.lbasis:kit:1.0.0'
+    api 'com.github.lbasis:refresh:1.0.1'
+    api 'com.github.lbasis:photo:1.0.0'
+
+    // rxjava 相关
+    api "io.reactivex.rxjava3:rxjava:3.0.2"
+    api 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    api 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+
+    // retrofit 相关
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    api "com.squareup.retrofit2:converter-gson:2.9.0"
+    // 权限相关
+    api 'pub.devrel:easypermissions:3.0.0'
+    // okhttp
+//    api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    // datastore
+    api("androidx.datastore:datastore-preferences:1.0.0-beta01")
+    api("androidx.datastore:datastore-preferences-rxjava3:1.0.0-beta01")
+    // 圆形图片
+    api 'de.hdodenhof:circleimageview:3.1.0'
+    // glide
+    api 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    // paging
+    api("androidx.paging:paging-runtime-ktx:3.0.0")
+    api("androidx.paging:paging-rxjava3:3.0.0")
+    // gif 支持
+    api 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
+
+    // 图片压缩
+    api 'top.zibin:Luban:1.1.8'
+    // recyclerview 下拉刷新和加载更多
+    api 'com.yanzhenjie.recyclerview:x:1.3.2'
+    // 表情
+    api 'com.vanniktech:emoji-ios:0.7.0'
+    api 'com.vdurmont:emoji-java:5.1.1'
+    //悬浮窗
+    api 'com.github.yhaolpz:FloatWindow:1.0.9'
+
+    // 友盟统计相关
+    api 'com.umeng.umsdk:common:9.4.0'// 必选
+    api 'com.umeng.umsdk:asms:1.2.3'// 必选
+    api 'com.umeng.umsdk:apm:1.3.1' // 错误分析升级为独立SDK，看crash数据请一定集成，可选
+    api 'com.umeng.umsdk:abtest:1.0.0'//使用U-App中ABTest能力，可选
+
+    // rongcloud
+    api "cn.rongcloud.sdk:im_lib:$rongcloudSdkVersion"
+    api "cn.rongcloud.sdk:im_kit:$rongcloudSdkVersion"
+//    api "cn.rongcloud.sdk:call_lib:$rongcloudSdkVersion"
+    api "cn.rongcloud.sdk:call_lib:5.1.10"
+    api "cn.rongcloud.sdk:player:5.1.10"
+
+    api 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    api 'com.tencent.bugly:nativecrashreport:latest.release'
+}

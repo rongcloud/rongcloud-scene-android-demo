@@ -6,8 +6,14 @@ package cn.rongcloud.voiceroomdemo.ui.dialog
 
 import android.content.Context
 import android.net.Uri
+import cn.rong.combusis.common.ui.dialog.BaseDialog
+import cn.rong.combusis.common.utils.ChineseLengthFilter
 import cn.rongcloud.voiceroomdemo.R
-import cn.rongcloud.voiceroomdemo.common.*
+import com.rongcloud.common.extension.getString
+import com.rongcloud.common.extension.loadLocalPortrait
+import com.rongcloud.common.extension.loadPortrait
+import com.rongcloud.common.extension.showToast
+import com.rongcloud.common.utils.AccountStore
 import kotlinx.android.synthetic.main.layout_user_info_popup_window.*
 
 /**
@@ -18,7 +24,8 @@ class UserInfoDialog(
     context: Context,
     private val logoutBlock: (() -> Unit)? = null,
     private val saveBlock: ((userName: String, portrait: Uri?) -> Unit)? = null,
-    private val showPictureSelectBlock: (() -> Unit)? = null
+    private val showPictureSelectBlock: (() -> Unit)? = null,
+    private val unregisterBlock: (() -> Unit)? = null
 ) : BaseDialog(
     context, R.layout.layout_user_info_popup_window,
     false
@@ -32,6 +39,7 @@ class UserInfoDialog(
 
     override fun initView() {
         iv_portrait.loadPortrait(AccountStore.getUserPortrait() ?: "")
+        et_user_name.filters = arrayOf(ChineseLengthFilter(20))
         AccountStore.getUserName()?.let {
             et_user_name.setText(it)
         }
@@ -54,7 +62,10 @@ class UserInfoDialog(
         tv_logout.setOnClickListener {
             logoutBlock?.invoke()
         }
-
+        tv_unregister.setOnClickListener {
+            dismiss()
+            unregisterBlock?.invoke()
+        }
     }
 
     fun setUserPortrait(picturePath: Uri) {
