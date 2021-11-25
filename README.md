@@ -34,17 +34,23 @@ https://www.rongcloud.cn/solution/audio_social
 * `语聊房列表`：VoiceRoomListActivity.java
 * `语聊房`：VoiceRoomActivity.java,VoiceRoomPresenter.java,VoiceRoomModel.java
 
-## 项目配置
+## 如何运行？
 
-首先，确保融云的appkey中，已经开启了`音视频功能` 和 `直播` 功能。 如果没有开启会出现 `join rtc room failed` 的错误。
+1. 为了方便您快速运行项目，我们为您预置了融云 `appkey` 和对应的测试服务器 `url`，您不需要自己部署测试服务器即可运行。
 
-项目正确运行需要配置`url` 与融云的 `appkey`. 在 `app` 项目的 `build.gradle`文件中。填写设置您的 `APP_KEY` ，`UM_APP_KEY `
-，`BASE_SERVER_ADDRES ` ，`BUGLY_ID `等，其中友盟和Bugly的配置项目中不使用可移除。
+2. 申请 BusinessToken
+
+- BusinessToken 主要是防止滥用 demo 里的测试 `appKey`，我们为接口做了限制，一个 BusinessToken
+  最多可以支持10个用户注册，20天使用时长。点击此处 [获取BusinessToken](https://rcrtc-api.rongcloud.net/code)
+
+3. 申请完 BusinessToken 后,请在项目 `app` 下 `build.gradle` 文件中替换即可，其中友盟 `UM_APP_KEY` 和 Bugly `BUGLY_ID`
+   不使用可删除。
 
 ```
-buildConfigField("String", "APP_KEY", "\"这里填写AppKey\"")
-buildConfigField("String", "BASE_SERVER_ADDRES", "\"这里是您服务器地址\"")
-buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
-buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
+developerEnvironment {
+    buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请\"")
+    buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
+    buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
+}
 ```
 
