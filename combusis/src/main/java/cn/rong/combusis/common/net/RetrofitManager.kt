@@ -5,6 +5,7 @@
 package com.rongcloud.common.net
 
 import com.kit.utils.NetUtil
+import com.rongcloud.common.AppConfig
 import com.rongcloud.common.utils.AccountStore
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -65,7 +66,7 @@ object RetrofitManager {
             if (!authorization.isNullOrBlank()) {
                 requestBuilder.addHeader("Authorization", authorization)
             }
-            requestBuilder.addHeader("BusinessToken", "vStHYPdrQoImm-7Ur0ks1g")
+            requestBuilder.addHeader("BusinessToken", AppConfig.BUSINESS_TOKEN!!)
             val request = requestBuilder.build()
             chain.proceed(request)
         }

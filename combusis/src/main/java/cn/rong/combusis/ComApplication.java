@@ -7,6 +7,7 @@ import com.basis.net.oklib.net.Page;
 import com.basis.net.oklib.wrapper.OkHelper;
 import com.basis.net.oklib.wrapper.interfaces.IHeader;
 import com.kit.utils.Logger;
+import com.rongcloud.common.AppConfig;
 import com.rongcloud.common.utils.AccountStore;
 
 import java.util.HashMap;
@@ -75,7 +76,7 @@ public class ComApplication extends Application {
             public Map<String, String> onAddHeader() {
                 Map map = new HashMap<String, String>();
                 map.put("Authorization", AccountStore.INSTANCE.getAuthorization());
-                map.put("BusinessToken", "vStHYPdrQoImm-7Ur0ks1g");
+                map.put("BusinessToken", AppConfig.INSTANCE.getBUSINESS_TOKEN());
                 return map;
             }
 
