@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 
 import com.basis.mvp.BaseModel;
@@ -37,6 +38,7 @@ import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine;
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback;
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomEventListener;
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomResultCallback;
+import cn.rongcloud.voiceroom.model.RCPKInfo;
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo;
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo;
 import cn.rongcloud.voiceroom.net.VoiceRoomNetManager;
@@ -477,35 +479,35 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
             present.onNetworkStatus(i);
     }
 
-//    @Override
-//    public void onPKConnect(@NonNull RCPKInfo rcpkInfo) {
-//
-//    }
-//
-//    @Override
-//    public void onPKFinish() {
-//
-//    }
-//
-//    @Override
-//    public void onReveivePKInvitation(String s, String s1) {
-//
-//    }
-//
-//    @Override
-//    public void onPKInvitationCanceled(String s, String s1) {
-//
-//    }
-//
-//    @Override
-//    public void onPKInvitationRejected(String s, String s1) {
-//
-//    }
-//
-//    @Override
-//    public void onPKInvitationIgnored(String s, String s1) {
-//
-//    }
+    @Override
+    public void onPKGoing(@NonNull RCPKInfo rcpkInfo) {
+
+    }
+
+    @Override
+    public void onPKFinish() {
+
+    }
+
+    @Override
+    public void onReveivePKInvitation(String s, String s1) {
+
+    }
+
+    @Override
+    public void onPKInvitationCanceled(String s, String s1) {
+
+    }
+
+    @Override
+    public void onPKInvitationRejected(String s, String s1) {
+
+    }
+
+    @Override
+    public void onPKInvitationIgnored(String s, String s1) {
+
+    }
 
 
     /**

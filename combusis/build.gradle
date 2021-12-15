@@ -89,7 +89,7 @@ dependencies {
     kapt "org.xerial:sqlite-jdbc:3.34.0"
 
     api project(path: ':basis')
-    api "cn.rongcloud.sdk:voiceroom_lib:2.0.0"
+    api "cn.rongcloud.sdk:voiceroom_lib:2.0.2"
     // SmartRefreshLayout
     // https://github.com/scwang90/SmartRefreshLayout
     api "com.scwang.smart:refresh-layout-kernel:2.0.3"
