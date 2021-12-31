@@ -67,7 +67,7 @@ import io.rong.imlib.model.Message;
  */
 public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCVoiceRoomEventListener {
 
-    public UiRoomModel currentUIRoomInfo = new UiRoomModel(roomInfoSubject);
+
     //线程调度器
     Scheduler dataModifyScheduler = Schedulers.computation();
 
@@ -79,6 +79,8 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
 
     //房间信息发生改变订阅，比如房间被解散，上锁之类的
     private BehaviorSubject<UiRoomModel> roomInfoSubject = BehaviorSubject.create();
+
+    public UiRoomModel currentUIRoomInfo = new UiRoomModel(roomInfoSubject);
 
     //房间事件监听（麦位 进入 踢出等等）
     private BehaviorSubject<Pair<String, ArrayList<String>>> roomEventSubject = BehaviorSubject.create();

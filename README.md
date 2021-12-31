@@ -47,6 +47,8 @@ https://www.rongcloud.cn/solution/audio_social
 
 3. 申请完 BusinessToken 后,请在项目 `app` 下 `build.gradle` 文件中替换即可，其中友盟 `UM_APP_KEY` 和 Bugly `BUGLY_ID`
    不使用可删除。
+   
+4. 测试环境下登录时，验证码输入任意6位数字即可。
 
 ```
 developerEnvironment {
