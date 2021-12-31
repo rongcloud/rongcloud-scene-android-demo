@@ -2,11 +2,16 @@ package cn.rong.combusis.sdk;
 
 import android.text.TextUtils;
 
+import com.kit.utils.KToast;
 import com.kit.utils.Logger;
 import com.kit.wapper.IResultBack;
 
+import cn.rong.combusis.EventBus;
+import cn.rong.combusis.sdk.event.EventHelper;
 import cn.rong.combusis.sdk.event.wrapper.IEventHelp;
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine;
+import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback;
+import cn.rongcloud.voiceroom.model.PKResponse;
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo;
 
 public class VoiceRoomApi implements Api {
@@ -273,152 +278,152 @@ public class VoiceRoomApi implements Api {
                         resultBack));
     }
 
-//    @Override
-//    public void sendPKInvitation(String inviteeRoomId, String inviteeId, IResultBack<Boolean> resultBack) {
-//        //保存pk信息
-//        pkInvitee = new IEventHelp.PKInvitee();
-//        pkInvitee.inviteeRoomId = inviteeRoomId;
-//        pkInvitee.inviteeId = inviteeId;
-//        //邀请
-//        RCVoiceRoomEngine.getInstance().sendPKInvitation(
-//                inviteeRoomId,
-//                inviteeId,
-//                new RCVoiceRoomCallback() {
-//                    @Override
-//                    public void onSuccess() {
-//                        KToast.show("发送PK邀请成功");
-//                        // 邀请成功 修改pk状态
-//                        EventBus.get().emit(EventBus.TAG.PK_INVITE_QUIT, IEventHelp.Type.PK_INVITE);
-//                        if (null != resultBack) resultBack.onResult(true);
-//                    }
-//
-//                    @Override
-//                    public void onError(int i, String s) {
-//                        KToast.show("发送PK邀请失败");
-//                        Logger.e(TAG, "sendPKInvitation#onError [" + i + "]:" + s);
-//                        if (null != resultBack) resultBack.onResult(false);
-//                    }
-//                });
-//    }
-//
-//    @Override
-//    public void cancelPKInvitation(IResultBack<Boolean> resultBack) {
-//        if (null == pkInvitee) {
-//            KToast.show("您还未发出PK邀请");
-//            if (null != resultBack) resultBack.onResult(false);
-//            return;
-//        }
-//        RCVoiceRoomEngine.getInstance().cancelPKInvitation(
-//                pkInvitee.inviteeRoomId,
-//                pkInvitee.inviteeId,
-//                new RCVoiceRoomCallback() {
-//                    @Override
-//                    public void onSuccess() {
-//                        KToast.show("取消PK邀请成功");
-//                        // 邀请成功 修改pk状态
-//                        EventBus.get().emit(EventBus.TAG.PK_INVITE_QUIT, IEventHelp.Type.PK_NONE);
-//                        if (null != resultBack) resultBack.onResult(true);
-//                    }
-//
-//                    @Override
-//                    public void onError(int i, String s) {
-//                        KToast.show("取消PK邀请失败");
-//                        Logger.e(TAG, "cancelPKInvitation#onError [" + i + "]:" + s);
-//                        if (null != resultBack) resultBack.onResult(false);
-//                    }
-//                });
-//    }
-//
-//    @Override
-//    public void responsePKInvitation(String inviterRoomId, String inviterUserId, PKResponse pkState, IResultBack<Boolean> resultBack) {
-////        String action = (pkState == PKResponse.accept ? "PK同意" : pkState == PKResponse.reject ? "拒绝" : "忽略") + "PK邀请";
-//        RCVoiceRoomEngine.getInstance().responsePKInvitation(
-//                inviterRoomId,
-//                inviterUserId,
-//                pkState,
-//                new RCVoiceRoomCallback() {
-//                    @Override
-//                    public void onSuccess() {
-//                        if (PKResponse.accept == pkState) {
-//                            KToast.show("同意邀请");
-//                        } else if (PKResponse.reject == pkState) {
-//                            KToast.show("已拒绝PK邀请");
-//                        } else {
-//                            KToast.show("邀请被取消");
-//                        }
-//                        if (null != resultBack) resultBack.onResult(true);
-//                        // 当前邀请人信息
-//                        IEventHelp.PKInviter pkInviter = EventHelper.helper().getPKInviter();
-//                        //判断是否是当前正在邀请的信息
-//                        if (pkInviter.inviterId.equals(inviterUserId) && pkInviter.inviterRoomId.equals(inviterRoomId)) {
-//                            //处理成功后 该邀请流程结束 释放被邀请信息
-//                            EventHelper.helper().releasePKInviter();
-//                        }
-//                        //修改当前pk状态:拒绝和忽略需重置状态none
-//                        if (PKResponse.ignore == pkState || PKResponse.reject == pkState) {
-//                            EventBus.get().emit(EventBus.TAG.PK_INVITE_QUIT, IEventHelp.Type.PK_NONE);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(int i, String s) {
-//                        KToast.show("响应PK邀请失败");
-//                        Logger.e(TAG, "responsePKInvitation#onError [" + i + "]:" + s);
-//                        if (null != resultBack) resultBack.onResult(false);
-//                    }
-//                });
-//    }
-//
-//    @Override
-//    public void mutePKUser(boolean isMute, IResultBack<Boolean> resultBack) {
-//        RCVoiceRoomEngine.getInstance().mutePKUser(
-//                isMute,
-//                new DefaultRoomCallback("mutePKUser", isMute ? "屏蔽音频" : "取消屏蔽音频", resultBack));
-//    }
-//
-//    @Override
-//    public void quitPK(IResultBack<Boolean> resultBack) {
-//        RCVoiceRoomEngine.getInstance().quitPK(
-//                new RCVoiceRoomCallback() {
-//                    @Override
-//                    public void onSuccess() {
-//                        Logger.e(TAG, "quitPK#onSuccess ");
-//                        //修改pk状态
-//                        EventBus.get().emit(EventBus.TAG.PK_INVITE_QUIT, IEventHelp.Type.PK_NONE);
-//                        if (null != resultBack) resultBack.onResult(true);
-//                    }
-//
-//                    @Override
-//                    public void onError(int i, String s) {
-//                        Logger.e(TAG, "quitPK#onError [" + i + "]:" + s);
-//                        if (null != resultBack) resultBack.onResult(false);
-//                    }
-//                });
-//
-//    }
-//
-//    public void resumePk(String pkRoomId, String pkUserId, IResultBack<Boolean> resultBack) {
-//        RCVoiceRoomEngine.getInstance().resumePk(pkRoomId, pkUserId, new RCVoiceRoomCallback() {
-//            @Override
-//            public void onSuccess() {
-//                if (null != resultBack) resultBack.onResult(true);
-//            }
-//
-//            @Override
-//            public void onError(int i, String s) {
-//                Logger.e(TAG, "quickStartPk#onError [" + i + "]:" + s);
-//                if (null != resultBack) resultBack.onResult(false);
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void releasePKInvitee() {
-//        pkInvitee = null;
-//    }
-//
-//    @Override
-//    public IEventHelp.PKInvitee getPKInvitee() {
-//        return pkInvitee;
-//    }
+    @Override
+    public void sendPKInvitation(String inviteeRoomId, String inviteeId, IResultBack<Boolean> resultBack) {
+        //保存pk信息
+        pkInvitee = new IEventHelp.PKInvitee();
+        pkInvitee.inviteeRoomId = inviteeRoomId;
+        pkInvitee.inviteeId = inviteeId;
+        //邀请
+        RCVoiceRoomEngine.getInstance().sendPKInvitation(
+                inviteeRoomId,
+                inviteeId,
+                new RCVoiceRoomCallback() {
+                    @Override
+                    public void onSuccess() {
+                        KToast.show("发送PK邀请成功");
+                        // 邀请成功 修改pk状态
+                        EventBus.get().emit(EventBus.TAG.PK_INVITE_QUIT, IEventHelp.Type.PK_INVITE);
+                        if (null != resultBack) resultBack.onResult(true);
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        KToast.show("发送PK邀请失败");
+                        Logger.e(TAG, "sendPKInvitation#onError [" + i + "]:" + s);
+                        if (null != resultBack) resultBack.onResult(false);
+                    }
+                });
+    }
+
+    @Override
+    public void cancelPKInvitation(IResultBack<Boolean> resultBack) {
+        if (null == pkInvitee) {
+            KToast.show("您还未发出PK邀请");
+            if (null != resultBack) resultBack.onResult(false);
+            return;
+        }
+        RCVoiceRoomEngine.getInstance().cancelPKInvitation(
+                pkInvitee.inviteeRoomId,
+                pkInvitee.inviteeId,
+                new RCVoiceRoomCallback() {
+                    @Override
+                    public void onSuccess() {
+                        KToast.show("取消PK邀请成功");
+                        // 邀请成功 修改pk状态
+                        EventBus.get().emit(EventBus.TAG.PK_INVITE_QUIT, IEventHelp.Type.PK_NONE);
+                        if (null != resultBack) resultBack.onResult(true);
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        KToast.show("取消PK邀请失败");
+                        Logger.e(TAG, "cancelPKInvitation#onError [" + i + "]:" + s);
+                        if (null != resultBack) resultBack.onResult(false);
+                    }
+                });
+    }
+
+    @Override
+    public void responsePKInvitation(String inviterRoomId, String inviterUserId, PKResponse pkState, IResultBack<Boolean> resultBack) {
+//        String action = (pkState == PKResponse.accept ? "PK同意" : pkState == PKResponse.reject ? "拒绝" : "忽略") + "PK邀请";
+        RCVoiceRoomEngine.getInstance().responsePKInvitation(
+                inviterRoomId,
+                inviterUserId,
+                pkState,
+                new RCVoiceRoomCallback() {
+                    @Override
+                    public void onSuccess() {
+                        if (PKResponse.accept == pkState) {
+                            KToast.show("同意邀请");
+                        } else if (PKResponse.reject == pkState) {
+                            KToast.show("已拒绝PK邀请");
+                        } else {
+                            KToast.show("邀请被取消");
+                        }
+                        if (null != resultBack) resultBack.onResult(true);
+                        // 当前邀请人信息
+                        IEventHelp.PKInviter pkInviter = EventHelper.helper().getPKInviter();
+                        //判断是否是当前正在邀请的信息
+                        if (pkInviter.inviterId.equals(inviterUserId) && pkInviter.inviterRoomId.equals(inviterRoomId)) {
+                            //处理成功后 该邀请流程结束 释放被邀请信息
+                            EventHelper.helper().releasePKInviter();
+                        }
+                        //修改当前pk状态:拒绝和忽略需重置状态none
+                        if (PKResponse.ignore == pkState || PKResponse.reject == pkState) {
+                            EventBus.get().emit(EventBus.TAG.PK_INVITE_QUIT, IEventHelp.Type.PK_NONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        KToast.show("响应PK邀请失败");
+                        Logger.e(TAG, "responsePKInvitation#onError [" + i + "]:" + s);
+                        if (null != resultBack) resultBack.onResult(false);
+                    }
+                });
+    }
+
+    @Override
+    public void mutePKUser(boolean isMute, IResultBack<Boolean> resultBack) {
+        RCVoiceRoomEngine.getInstance().mutePKUser(
+                isMute,
+                new DefaultRoomCallback("mutePKUser", isMute ? "屏蔽音频" : "取消屏蔽音频", resultBack));
+    }
+
+    @Override
+    public void quitPK(IResultBack<Boolean> resultBack) {
+        RCVoiceRoomEngine.getInstance().quitPK(
+                new RCVoiceRoomCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Logger.e(TAG, "quitPK#onSuccess ");
+                        //修改pk状态
+                        EventBus.get().emit(EventBus.TAG.PK_INVITE_QUIT, IEventHelp.Type.PK_NONE);
+                        if (null != resultBack) resultBack.onResult(true);
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        Logger.e(TAG, "quitPK#onError [" + i + "]:" + s);
+                        if (null != resultBack) resultBack.onResult(false);
+                    }
+                });
+
+    }
+
+    public void resumePk(String pkRoomId, String pkUserId, IResultBack<Boolean> resultBack) {
+        RCVoiceRoomEngine.getInstance().resumePk(pkRoomId, pkUserId, new RCVoiceRoomCallback() {
+            @Override
+            public void onSuccess() {
+                if (null != resultBack) resultBack.onResult(true);
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Logger.e(TAG, "quickStartPk#onError [" + i + "]:" + s);
+                if (null != resultBack) resultBack.onResult(false);
+            }
+        });
+    }
+
+    @Override
+    public void releasePKInvitee() {
+        pkInvitee = null;
+    }
+
+    @Override
+    public IEventHelp.PKInvitee getPKInvitee() {
+        return pkInvitee;
+    }
 }

@@ -42,8 +42,6 @@ public class ActCommentWeb extends BaseActivity {
     private String reLoadUrl;
     //是否是https的请求
     private boolean isHttps = false;
-    private TextView tvTitle;
-    private Button btnRefresh, btnBack;
 
     /**
      * 加载url
@@ -63,6 +61,10 @@ public class ActCommentWeb extends BaseActivity {
     public int setLayoutId() {
         return R.layout.act_commment_web;
     }
+
+
+    private TextView tvTitle;
+    private Button btnRefresh, btnBack;
 
     public void init() {
         currnetUrl = getIntent().getStringExtra(KEY_URL);

@@ -4,9 +4,11 @@ import com.kit.wapper.IResultBack;
 
 import java.util.List;
 
+import cn.rong.combusis.provider.user.User;
 import cn.rong.combusis.sdk.event.listener.LeaveRoomCallBack;
 import cn.rong.combusis.sdk.event.listener.RoomListener;
 import cn.rong.combusis.sdk.event.listener.StatusListener;
+import cn.rong.combusis.ui.room.fragment.ClickCallback;
 import cn.rong.combusis.widget.miniroom.OnCloseMiniRoomListener;
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomEventListener;
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo;
@@ -67,9 +69,56 @@ public interface IEventHelp extends OnCloseMiniRoomListener {
     void removeRCVoiceRoomEventListener();
 
     /**
+     * 保存当前请求上麦的状态
+     */
+    void setCurrentStatus(int status);
+
+    /**
      * 离开房间
      */
     void leaveRoom(LeaveRoomCallBack callback);
+
+    /**
+     * 邀请上麦
+     */
+    void pickUserToSeat(String userId, ClickCallback<Boolean> callback);
+
+    /**
+     * 同意上麦
+     */
+    void acceptRequestSeat(String userId, ClickCallback<Boolean> callback);
+
+    /**
+     * 撤销麦位申请
+     */
+    void cancelRequestSeat(ClickCallback<Boolean> callback);
+
+    /**
+     * 锁麦
+     */
+    void lockSeat(int index, boolean isClose, ClickCallback<Boolean> callback);
+
+    /**
+     * 开麦或者静麦
+     *
+     * @param index
+     * @param isMute
+     * @param callback
+     */
+    void muteSeat(int index, boolean isMute, ClickCallback<Boolean> callback);
+
+    /**
+     * 踢出房间
+     */
+    void kickUserFromRoom(User user, ClickCallback<Boolean> callback);
+
+    /**
+     * 抱下麦位
+     *
+     * @param user
+     * @param callback
+     */
+    void kickUserFromSeat(User user, ClickCallback<Boolean> callback);
 
     /**
      * 更改所属于房间
@@ -82,11 +131,6 @@ public interface IEventHelp extends OnCloseMiniRoomListener {
      * 获取当前状态
      */
     int getCurrentStatus();
-
-    /**
-     * 保存当前请求上麦的状态
-     */
-    void setCurrentStatus(int status);
 
     /**
      * 添加网络延迟监听
@@ -126,12 +170,12 @@ public interface IEventHelp extends OnCloseMiniRoomListener {
      */
     void getRequestSeatUserIds(IResultBack<List<String>> resultBack);
 
-//    /**
-//     * 获取当前PK状态
-//     *
-//     * @return pk状态
-//     */
-//    Type getPKState();
+    /**
+     * 获取当前PK状态
+     *
+     * @return pk状态
+     */
+    Type getPKState();
 
     /**
      * 获取当前房间ID
@@ -154,14 +198,14 @@ public interface IEventHelp extends OnCloseMiniRoomListener {
     List<RCVoiceSeatInfo> getRCVoiceSeatInfoList();
 
     /**
-     * 是否静音
-     */
-    boolean getMuteAllRemoteStreams();
-
-    /**
      * 设置是否静音
      */
     void setMuteAllRemoteStreams(boolean isMute);
+
+    /**
+     * 是否静音
+     */
+    boolean getMuteAllRemoteStreams();
 
     /**
      * 获取可用麦位索引
@@ -173,12 +217,7 @@ public interface IEventHelp extends OnCloseMiniRoomListener {
     /**
      * 获取当前pk邀请者的信息
      */
-//    PKInviter getPKInviter();
-
-    /**
-     * 释放PK邀请者
-     */
-//    void releasePKInviter();
+    PKInviter getPKInviter();
 
     enum Type {
         PK_NONE,//默认状态
@@ -192,6 +231,10 @@ public interface IEventHelp extends OnCloseMiniRoomListener {
         PK_FINISH//pk关闭状态
     }
 
+    /**
+     * 释放PK邀请者
+     */
+    void releasePKInviter();
 
     /**
      * pk邀请者信息

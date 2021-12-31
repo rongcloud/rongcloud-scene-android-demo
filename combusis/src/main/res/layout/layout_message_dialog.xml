@@ -48,7 +48,6 @@
             android:background="@color/transparent"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent">
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_confirm"
                 android:layout_width="0dp"

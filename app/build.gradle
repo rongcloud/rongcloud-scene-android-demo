@@ -21,8 +21,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "2.0.0"
+        versionCode 4
+        versionName "4.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
@@ -96,18 +96,41 @@ android {
             applicationId "cn.rongcloud.voiceroomdemo.dev" // 配置不同的包名，确保切换环境时不会因为缓存导致出现问题
             buildConfigField("String", "APP_KEY", "\"pvxdm17jpw7ar\"")
             buildConfigField("String", "BASE_SERVER_ADDRES", "\"https://rcrtc-api.rongcloud.net/\"")
-            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请\"")
+            buildConfigField("String", "INTERIAL", "\"false\"")// 区分国内/国际 国内环境不显示UI 选择地区
+
+            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请https://rcrtc-api.rongcloud.net/code\"")
+            buildConfigField("String", "MH_APP_KEY", "\"这里是美狐美颜SDK的appkey，要想体验美颜功能需要去美狐官网申请http://www.facegl.com/\"")
             buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
             buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
+
+            manifestPlaceholders = [APP_NAME: "@string/app_name_test"]
         }
         releaseEnvironment {
             dimension 'environment'
             applicationId "cn.rongcloud.voiceroomdemo"
             buildConfigField("String", "APP_KEY", "\"这里填写AppKey\"")
-            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是服务器地址\"")
             buildConfigField("String", "BASE_SERVER_ADDRES", "\"这里是服务器地址\"")
+            buildConfigField("String", "INTERIAL", "\"false\"")
+
+            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请https://rcrtc-api.rongcloud.net/code\"")
+            buildConfigField("String", "MH_APP_KEY", "\"这里是美狐美颜SDK的appkey，要想体验美颜功能需要去美狐官网申请http://www.facegl.com/\"")
             buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
             buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
+            manifestPlaceholders = [APP_NAME: "@string/app_name"]
+        }
+        // 国际环境
+        interialEnvironment {
+            dimension 'environment'
+            applicationId "cn.rongcloud.voiceroomdemo.interial"
+            buildConfigField("String", "APP_KEY", "\"这里填写AppKey\"")
+            buildConfigField("String", "BASE_SERVER_ADDRES", "\"这里是服务器地址\"")
+            buildConfigField("String", "INTERIAL", "\"true\"")
+
+            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请https://rcrtc-api.rongcloud.net/code\"")
+            buildConfigField("String", "MH_APP_KEY", "\"这里是美狐美颜SDK的appkey，要想体验美颜功能需要去美狐官网申请http://www.facegl.com/\"")
+            buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
+            buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
+            manifestPlaceholders = [APP_NAME: "@string/app_name_interial"]
         }
     }
 }
@@ -132,13 +155,14 @@ dependencies {
     implementation project(path: ':annotation')
     implementation project(path: ':processor')
     implementation project(path: ':avcall')
-//    implementation project(path: ':common')
     implementation project(path: ':combusis')
     implementation project(path: ':voiceroom')
     implementation project(path: ':radioroom')
+    implementation project(path: ':liveroom')
 
     api "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.belerweb:pinyin4j:2.5.1'
 }

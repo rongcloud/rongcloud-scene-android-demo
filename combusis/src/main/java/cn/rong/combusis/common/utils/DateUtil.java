@@ -16,6 +16,50 @@ public class DateUtil {
     public final static long N_SECOND = 1000;
     public final static String[] WEEK_DAY = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
 
+    public enum DateFt {
+        yMd("yyyyMMdd"),// 20160927
+        ySMSd("yyyy/MM/dd"),// 2016/09/27
+        yLMLd("yyyy-MM-dd"),// 2016-09-27
+        yHMHdH("yyyy年MM月dd日"),//2016年09月27日
+        yM("yyyyMM"),// 201609
+        ySM("yyyy/MM"),// 2016/09
+        yLM("yyyy-MM"),// 2016-09
+        yHMH("yyyy年MM月"),//2016年09月
+        Md("MMdd"),//0927
+        MSd("MM/dd"),//09/27
+        MLd("MM-dd"),//09-27
+        MHdH("MM月dd日");//09月27日
+        private String value;
+
+        DateFt(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
+    public enum TimeFt {
+        HmsS("HHmmssSSS"),//150334999
+        Hms("HHmmss"),//150334
+        HHmHsH("HH时mm分ss秒"),//15时30分21秒
+        HCmCs("HH:mm:ss"),//15:03:34
+        Hm("HHmm"),//1503
+        HHmH("HH时mm分"),//15时30分
+        HCm("HH:mm");//15:03
+        //定义值
+        private String value;
+
+        TimeFt(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
     /**
      * 格式拼接
      *
@@ -217,49 +261,5 @@ public class DateUtil {
         int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
         if (w < 0) w = 0;
         return WEEK_DAY[w];
-    }
-
-    public enum DateFt {
-        yMd("yyyyMMdd"),// 20160927
-        ySMSd("yyyy/MM/dd"),// 2016/09/27
-        yLMLd("yyyy-MM-dd"),// 2016-09-27
-        yHMHdH("yyyy年MM月dd日"),//2016年09月27日
-        yM("yyyyMM"),// 201609
-        ySM("yyyy/MM"),// 2016/09
-        yLM("yyyy-MM"),// 2016-09
-        yHMH("yyyy年MM月"),//2016年09月
-        Md("MMdd"),//0927
-        MSd("MM/dd"),//09/27
-        MLd("MM-dd"),//09-27
-        MHdH("MM月dd日");//09月27日
-        private String value;
-
-        DateFt(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
-
-    public enum TimeFt {
-        HmsS("HHmmssSSS"),//150334999
-        Hms("HHmmss"),//150334
-        HHmHsH("HH时mm分ss秒"),//15时30分21秒
-        HCmCs("HH:mm:ss"),//15:03:34
-        Hm("HHmm"),//1503
-        HHmH("HH时mm分"),//15时30分
-        HCm("HH:mm");//15:03
-        //定义值
-        private String value;
-
-        TimeFt(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
     }
 }

@@ -69,9 +69,6 @@ public class GiftAnimationView extends FrameLayout {
 
             @Override
             public boolean onDown(MotionEvent e) {
-                if (mOnBottomOptionClickListener != null) {
-                    mOnBottomOptionClickListener.onSingleTap();
-                }
                 return true;
             }
         });
@@ -108,7 +105,5 @@ public class GiftAnimationView extends FrameLayout {
 
     public interface OnClickBackgroundListener {
         void onSendLikeMessage(RCChatroomLike rcChatroomLike);
-
-        void onSingleTap();
     }
 }

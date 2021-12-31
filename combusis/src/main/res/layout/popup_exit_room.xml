@@ -12,6 +12,7 @@
     tools:background="#000">
 
     <cn.rong.combusis.common.ui.widget.RealtimeBlurView
+        android:id="@+id/blur_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         app:layout_constraintBottom_toBottomOf="parent"

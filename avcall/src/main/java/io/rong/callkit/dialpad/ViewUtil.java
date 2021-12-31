@@ -46,6 +46,16 @@ public class ViewUtil {
     }
 
     /**
+     * Returns a boolean indicating whether or not the view's layout direction is RTL
+     *
+     * @param view - A valid view
+     * @return True if the view's layout direction is RTL
+     */
+    public static boolean isViewLayoutRtl(View view) {
+        return view.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+    }
+
+    /**
      * Returns the width as specified in the LayoutParams
      *
      * @throws IllegalStateException Thrown if the view's width is unknown before a layout pass
@@ -62,20 +72,9 @@ public class ViewUtil {
     }
 
     /**
-     * Returns a boolean indicating whether or not the view's layout direction is RTL
-     *
-     * @param view - A valid view
-     * @return True if the view's layout direction is RTL
-     */
-    public static boolean isViewLayoutRtl(View view) {
-        return view.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
-    }
-
-    /**
      * Configures the floating action button, clipping it to a circle and setting its translation z.
-     *
      * @param view The float action button's view.
-     * @param res  The resources file.
+     * @param res The resources file.
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void setupFloatingActionButton(View view, Resources res) {
@@ -89,7 +88,7 @@ public class ViewUtil {
      * does not obscure any content.
      *
      * @param listView to add the padding to
-     * @param res      valid resources object
+     * @param res valid resources object
      */
     public static void addBottomPaddingToListViewForFab(ListView listView, Resources res) {
         final int fabPadding = res.getDimensionPixelSize(

@@ -4,7 +4,6 @@
 
 package cn.rongcloud.radioroom.room;
 
-import android.app.Application;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Handler;
@@ -16,12 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.rong.combusis.common.utils.UIKit;
 import cn.rong.combusis.message.RCChatroomEnter;
 import cn.rong.combusis.message.RCChatroomLeave;
-import cn.rongcloud.messager.ConnectCallback;
-import cn.rongcloud.messager.IResultBack;
-import cn.rongcloud.messager.RCMessager;
-import cn.rongcloud.messager.VRKVStatusListener;
 import cn.rongcloud.radioroom.IRCRadioRoomEngine;
 import cn.rongcloud.radioroom.RCRadioRoomEngine;
 import cn.rongcloud.radioroom.callback.RCRadioRoomBaseCallback;
@@ -48,6 +44,8 @@ import cn.rongcloud.rtc.base.RCRTCLiveRole;
 import cn.rongcloud.rtc.base.RCRTCMediaType;
 import cn.rongcloud.rtc.base.RCRTCRoomType;
 import cn.rongcloud.rtc.base.RTCErrorCode;
+import cn.rongcloud.voiceroom.api.IMHelper;
+import cn.rongcloud.voiceroom.api.RCIMHelper;
 import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.IRongCoreListener;
@@ -57,7 +55,7 @@ import io.rong.imlib.model.Message;
 /**
  * 电台房的控制
  */
-public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements VRKVStatusListener,
+public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChatRoomClient.KVStatusListener,
         IRongCoreListener.OnReceiveMessageListener {
     private static final String TAG = "RCRadioRoomEngineImpl";
     private static final IRCRadioRoomEngine instance = new RCRadioRoomEngineImpl();
@@ -71,9 +69,9 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements VRKVStat
     private RCRadioEventListener listener;
 
     private RCRadioRoomEngineImpl() {
-        RCMessager.getInstance().addOnReceiveMessageListener(this);
-        RCMessager.getInstance().addMessageTypes(RCChatroomEnter.class, RCChatroomLeave.class);
-        RCMessager.getInstance().addKVStatusListener(this);
+        RCIMHelper.get().addMessageListener(this);
+        RCIMHelper.get().registerMessageTypes(RCChatroomEnter.class, RCChatroomLeave.class);
+        RCIMHelper.get().addKVStatusListener(this);
     }
 
     public static IRCRadioRoomEngine getInstance() {
@@ -115,15 +113,6 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements VRKVStat
         return callback != null;
     }
 
-    @Override
-    public void initWithAppKey(Application context, String appKey) {
-        RCMessager.getInstance().initWithAppKey(context, appKey);
-    }
-
-    @Override
-    public void connectWithToken(String token, ConnectCallback callback) {
-        RCMessager.getInstance().connectWithToken(token, callback);
-    }
 
     @Override
     public void setRadioEventListener(RCRadioEventListener listener) {
@@ -137,10 +126,6 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements VRKVStat
             return;
         }
         this.mRadioRoom = roomInfo;
-        if (!RCMessager.getInstance().isConnected()) {
-            onErrorWithCheck(callback, -2, "Not Connected ");
-            return;
-        }
         VMLog.v(TAG, "joinRoom:role = " + mRadioRoom.getRole());
         RongChatRoomClient.getInstance().joinChatRoom(mRadioRoom.getRoomId(), -1, new IRongCoreCallback.OperationCallback() {
             @Override
@@ -283,12 +268,11 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements VRKVStat
 
     @Override
     public void updateRadioRoomKV(final UpdateKey type, final String value, final RCRadioRoomCallback callback) {
-        RCMessager.getInstance().updateKV(mRadioRoom.getRoomId(), type.getValue(), value, false, false,
-                new IResultBack<String>() {
+        RCIMHelper.get().updateEntry(mRadioRoom.getRoomId(), type.getValue(), value, false, false,
+                new IMHelper.IResultBack<IRongCoreEnum.CoreErrorCode>() {
                     @Override
-                    public void onResult(int code, String data) {
-                        VMLog.v(TAG, "notifyRadioRoom#updateKV#onResult:[" + code + "] data = " + data);
-                        if (code == IResultBack.ok) {
+                    public void onResult(IRongCoreEnum.CoreErrorCode code) {
+                        if (code == IRongCoreEnum.CoreErrorCode.SUCCESS) {
                             onSuccessWithCheck(callback);
                             if (listener != null) {
                                 main.post(new Runnable() {
@@ -299,7 +283,7 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements VRKVStat
                                 });
                             }
                         } else {
-                            onErrorWithCheck(callback, code, data);
+                            onErrorWithCheck(callback, code.code, code.msg);
                         }
                     }
                 });
@@ -424,8 +408,8 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements VRKVStat
                     .enableLowLatencyRecording(true);
         }
         RCRTCConfig config = builder.build();
-        RCRTCEngine.getInstance().init(RCMessager.getInstance().getApplication(), config);
-        RCRTCAudioRouteManager.getInstance().init(RCMessager.getInstance().getApplication());
+        RCRTCEngine.getInstance().init(UIKit.getContext(), config);
+        RCRTCAudioRouteManager.getInstance().init(UIKit.getContext());
     }
 
     @Override
@@ -483,11 +467,6 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements VRKVStat
             }
         });
         return false;
-    }
-
-    @Override
-    public String getRoomId() {
-        return null == mRadioRoom ? "" : mRadioRoom.getRoomId();
     }
 
     public class StateListener extends IRCRTCStatusReportListener {

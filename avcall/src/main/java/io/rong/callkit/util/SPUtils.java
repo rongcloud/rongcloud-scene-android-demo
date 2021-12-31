@@ -17,15 +17,15 @@ import java.util.Map;
  * @version $Rev$
  */
 public class SPUtils {
-    /**
-     * 保存在手机里面的文件名
-     */
-    public static final String FILE_NAME = "doudou";
-
     public SPUtils() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
+
+    /**
+     * 保存在手机里面的文件名
+     */
+    public static final String FILE_NAME = "doudou";
 
     /**
      * 保存当前时间

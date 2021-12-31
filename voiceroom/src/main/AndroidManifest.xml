@@ -3,18 +3,18 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.rongcloud.voiceroom">
+    package="cn.rongcloud.voice">
 
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <application>
         <activity
-            android:name=".pk.TestPkActivity"
+            android:name="cn.rongcloud.voice.pk.TestPkActivity"
             android:theme="@style/BasisTheme" />
         <activity
-            android:name="cn.rongcloud.voiceroom.roomlist.VoiceRoomListActivity"
+            android:name="cn.rongcloud.voice.roomlist.VoiceRoomListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".room.VoiceRoomActivity"
+            android:name="cn.rongcloud.voice.room.VoiceRoomActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait">
             <intent-filter>

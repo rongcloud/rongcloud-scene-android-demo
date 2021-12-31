@@ -24,6 +24,10 @@ import io.rong.imlib.model.MessageContent;
  */
 @MessageTag(value = "RC:Chatroom:Enter")
 public class RCChatroomEnter extends MessageContent {
+    private static final String TAG = "RCChatroomEnter";
+    private String userId;
+    private String userName;
+
     public static final Creator<RCChatroomEnter> CREATOR = new Creator<RCChatroomEnter>() {
         @Override
         public RCChatroomEnter createFromParcel(Parcel source) {
@@ -35,36 +39,6 @@ public class RCChatroomEnter extends MessageContent {
             return new RCChatroomEnter[size];
         }
     };
-    private static final String TAG = "RCChatroomEnter";
-    private String userId;
-    private String userName;
-
-    public RCChatroomEnter(byte[] data) {
-        super(data);
-        String jsonStr = null;
-        jsonStr = new String(data, StandardCharsets.UTF_8);
-
-        try {
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            if (jsonObj.has("userId")) {
-                userId = jsonObj.getString("userId");
-            }
-
-            if (jsonObj.has("userName")) {
-                userName = jsonObj.getString("userName");
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getMessage());
-        }
-    }
-
-    public RCChatroomEnter() {
-    }
-
-    protected RCChatroomEnter(Parcel in) {
-        this.userId = in.readString();
-        this.userName = in.readString();
-    }
 
     @Override
     public byte[] encode() {
@@ -113,5 +87,32 @@ public class RCChatroomEnter extends MessageContent {
     public void readFromParcel(Parcel source) {
         this.userId = source.readString();
         this.userName = source.readString();
+    }
+
+    public RCChatroomEnter(byte[] data) {
+        super(data);
+        String jsonStr = null;
+        jsonStr = new String(data, StandardCharsets.UTF_8);
+
+        try {
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            if (jsonObj.has("userId")) {
+                userId = jsonObj.getString("userId");
+            }
+
+            if (jsonObj.has("userName")) {
+                userName = jsonObj.getString("userName");
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "JSONException " + e.getMessage());
+        }
+    }
+
+    public RCChatroomEnter() {
+    }
+
+    protected RCChatroomEnter(Parcel in) {
+        this.userId = in.readString();
+        this.userName = in.readString();
     }
 }

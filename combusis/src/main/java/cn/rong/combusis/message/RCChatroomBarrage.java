@@ -19,24 +19,13 @@ import io.rong.imlib.model.MessageContent;
 
 /**
  * 普通文本消息
- *
  * @author gusd
  * @Date 2021/06/17
  */
 @MessageTag(value = "RC:Chatroom:Barrage")
 public class RCChatroomBarrage extends MessageContent {
-    public static final Creator<RCChatroomBarrage> CREATOR = new Creator<RCChatroomBarrage>() {
-        @Override
-        public RCChatroomBarrage createFromParcel(Parcel source) {
-            return new RCChatroomBarrage(source);
-        }
-
-        @Override
-        public RCChatroomBarrage[] newArray(int size) {
-            return new RCChatroomBarrage[size];
-        }
-    };
     private static final String TAG = "RCChatroomBarrage";
+
     private String userId;
     private String userName;
     private String content;
@@ -61,15 +50,6 @@ public class RCChatroomBarrage extends MessageContent {
         } catch (JSONException e) {
             RLog.e(TAG, "JSONException " + e.getMessage());
         }
-    }
-
-    public RCChatroomBarrage() {
-    }
-
-    protected RCChatroomBarrage(Parcel in) {
-        this.userId = in.readString();
-        this.userName = in.readString();
-        this.content = in.readString();
     }
 
     @Override
@@ -116,6 +96,7 @@ public class RCChatroomBarrage extends MessageContent {
         this.content = content;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -132,5 +113,26 @@ public class RCChatroomBarrage extends MessageContent {
         this.userId = source.readString();
         this.userName = source.readString();
         this.content = source.readString();
+    }
+
+    public static final Creator<RCChatroomBarrage> CREATOR = new Creator<RCChatroomBarrage>() {
+        @Override
+        public RCChatroomBarrage createFromParcel(Parcel source) {
+            return new RCChatroomBarrage(source);
+        }
+
+        @Override
+        public RCChatroomBarrage[] newArray(int size) {
+            return new RCChatroomBarrage[size];
+        }
+    };
+
+    public RCChatroomBarrage() {
+    }
+
+    protected RCChatroomBarrage(Parcel in) {
+        this.userId = in.readString();
+        this.userName = in.readString();
+        this.content = in.readString();
     }
 }

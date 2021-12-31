@@ -2,6 +2,8 @@ package cn.rong.combusis.ui.roomlist;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.InputFilter;
@@ -17,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import com.basis.net.LoadTag;
 import com.basis.net.oklib.OkApi;
 import com.basis.net.oklib.WrapperCallBack;
+import com.basis.net.oklib.api.body.BitmapBody;
 import com.basis.net.oklib.api.body.FileBody;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.widget.BottomDialog;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import cn.rong.combusis.R;
 import cn.rong.combusis.api.VRApi;
@@ -58,6 +62,15 @@ public class CreateRoomDialog extends BottomDialog {
     private CreateRoomCallBack mCreateRoomCallBack;
     private InputPasswordDialog mInputPasswordDialog;
     private LoadTag mLoading;
+    private int[] themeArray = new int[]{
+            R.drawable.img_room_theme_1,
+            R.drawable.img_room_theme_2,
+            R.drawable.img_room_theme_3,
+            R.drawable.img_room_theme_4,
+            R.drawable.img_room_theme_5,
+            R.drawable.img_room_theme_6
+    };
+    private Bitmap themeBitmap;
 
     public CreateRoomDialog(Activity activity, ActivityResultLauncher launcher, RoomType roomType, CreateRoomCallBack createRoomCallBack) {
         super(activity);
@@ -83,6 +96,9 @@ public class CreateRoomDialog extends BottomDialog {
         mCoverImage.setOnClickListener(v -> {
             startPicSelectActivity();
         });
+        int themeId = themeArray[new Random().nextInt(themeArray.length)];
+        themeBitmap = BitmapFactory.decodeResource(getContentView().getResources(), themeId);
+        mCoverImage.setImageBitmap(themeBitmap);
         // 房间背景
         mRoomBackground = LocalDataStore.INSTANCE.getBackgroundByIndex(0);
         ImageView backgroundImage = getContentView().findViewById(R.id.iv_background);
@@ -170,6 +186,28 @@ public class CreateRoomDialog extends BottomDialog {
             mLoading.show();
             FileBody body = new FileBody("multipart/form-data", new File(mCoverUrl));
             OkApi.file(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
+                @Override
+                public void onResult(Wrapper result) {
+                    String url = result.getBody().getAsString();
+                    if (result.ok() && !TextUtils.isEmpty(url)) {
+                        createRoom(roomName, VRApi.FILE_PATH + url);
+                    } else {
+                        ToastUtils.s(mActivity, result.getMessage());
+                        mLoading.dismiss();
+                    }
+                }
+
+                @Override
+                public void onError(int code, String msg) {
+                    super.onError(code, msg);
+                    ToastUtils.s(mActivity, msg);
+                    mLoading.dismiss();
+                }
+            });
+        } else if (themeBitmap != null) {
+            mLoading.show();
+            BitmapBody body = new BitmapBody(null, themeBitmap);
+            OkApi.bitmap(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
                 @Override
                 public void onResult(Wrapper result) {
                     String url = result.getBody().getAsString();

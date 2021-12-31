@@ -42,9 +42,13 @@ import io.rong.callkit.dialpad.widget.FloatingActionButtonController;
  */
 public class DialpadFragment extends Fragment
         implements View.OnClickListener, View.OnKeyListener, TextWatcher, DialpadKeyButton.OnPressedListener {
-    public final static String DEFAU_INPUT = "defau_input";
     private static final String TAG = "DialpadFragment";
+    public final static String DEFAU_INPUT = "defau_input";
+    private static final String PREF_DIGITS_FILLED_BY_INTENT = "pref_digits_filled_by_intent";
+    // 添加166号段
+    private final static String telRegex = "^((1[3,5,6,7,8][0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
     private static final boolean DEBUG = true;
+
     // This is the amount of screen the dialpad fragment takes up when fully displayed
     private static final String EMPTY_NUMBER = "";
     /**
@@ -52,35 +56,36 @@ public class DialpadFragment extends Fragment
      */
     private static final int TONE_LENGTH_MS = 150;
     private static final int TONE_LENGTH_INFINITE = -1;
+
     /**
      * The DTMF tone volume relative to other sounds in the stream
      */
     private static final int TONE_RELATIVE_VOLUME = 80;
+
     /**
      * Stream type used to play the DTMF tones off call, and mapped to the volume control keys
      */
     private static final int DIAL_TONE_STREAM_TYPE = AudioManager.STREAM_DTMF;
-    private static final String PREF_DIGITS_FILLED_BY_INTENT = "pref_digits_filled_by_intent";
-    // 添加166号段
-    private final static String telRegex = "^((1[3,5,6,7,8][0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
-    public static WeakReference<DialpadListener> dialpadListener;
-    private final Object mToneGeneratorLock = new Object();
-    /**
-     * Set of dialpad keys that are currently being pressed
-     */
-    private final HashSet<View> mPressedDialpadKeys = new HashSet<View>(12);
-    private ImageButton mFloatingActionButton;
+
     private DialpadView mDialpadView;
     private EditText mDigits;
+
     /**
      * Remembers if we need to clear digits field when the screen is completely gone.
      */
     private boolean mClearDigitsOnStop;
     private View mDelete, mLeft;
     private ToneGenerator mToneGenerator;
+    public static WeakReference<DialpadListener> dialpadListener;
     private View mSpacer;
+
     private FloatingActionButtonController mFloatingActionButtonController;
+    private final Object mToneGeneratorLock = new Object();
     private boolean mDigitsFilledByIntent;
+    /**
+     * Set of dialpad keys that are currently being pressed
+     */
+    private final HashSet<View> mPressedDialpadKeys = new HashSet<View>(12);
 
     @Override
     public Context getContext() {
@@ -136,6 +141,9 @@ public class DialpadFragment extends Fragment
             mDigits.requestFocus();
         }
     }
+
+    private ImageButton mFloatingActionButton;
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -421,6 +429,19 @@ public class DialpadFragment extends Fragment
         }
     }
 
+    public interface DialpadListener {
+        // 拨号回调
+        void onDialpad(String num);
+
+        /**
+         * 输入过滤
+         *
+         * @param input
+         * @return 过滤后的string
+         */
+        void onInputFiltter(Editable input);
+    }
+
     private boolean isMobileNO(String mobiles) {
         if (TextUtils.isEmpty(mobiles)) {
             return false;
@@ -487,6 +508,7 @@ public class DialpadFragment extends Fragment
         return mDigits.length() == 0;
     }
 
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -499,19 +521,5 @@ public class DialpadFragment extends Fragment
         } else {
             mFloatingActionButtonController.scaleOut();
         }
-    }
-
-
-    public interface DialpadListener {
-        // 拨号回调
-        void onDialpad(String num);
-
-        /**
-         * 输入过滤
-         *
-         * @param input
-         * @return 过滤后的string
-         */
-        void onInputFiltter(Editable input);
     }
 }

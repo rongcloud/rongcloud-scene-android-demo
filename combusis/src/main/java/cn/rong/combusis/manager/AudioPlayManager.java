@@ -398,6 +398,10 @@ public class AudioPlayManager implements SensorEventListener {
         }
     }
 
+    private interface DownloadCallback {
+        void onResult(String path);
+    }
+
     private boolean isHeadphonesPlugged(AudioManager audioManager) {
         synchronized (mLock) {
             if (audioManager == null) {
@@ -523,10 +527,6 @@ public class AudioPlayManager implements SensorEventListener {
         synchronized (mLock) {
             return mMediaPlayer != null && mMediaPlayer.isPlaying();
         }
-    }
-
-    private interface DownloadCallback {
-        void onResult(String path);
     }
 
     static class SingletonHolder {

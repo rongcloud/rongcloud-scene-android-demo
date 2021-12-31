@@ -29,8 +29,8 @@ public class RCChatroomLeave extends MessageContent {
             return new RCChatroomLeave[size];
         }
     };
-    private static final String TAG = "RCChatroomLeave";
     private String userId;
+    private static final String TAG = "RCChatroomLeave";
     private String userName;
 
     public RCChatroomLeave(byte[] data) {
@@ -81,13 +81,13 @@ public class RCChatroomLeave extends MessageContent {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {

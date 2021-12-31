@@ -26,6 +26,8 @@ https://www.rongcloud.cn/solution/audio_social
 * `avcall`：视频通话模块相关业务逻辑及UI
 * `radioroom`：语音电台模块相关业务逻辑及UI
 * `voiceroom`：语聊房模块相关业务逻辑及UI
+* `liveroom`：视频直播模块相关业务逻辑及UI
+* `mhui`：美狐美颜模块
 
 ### 语聊房核心业务类
 
@@ -48,9 +50,10 @@ https://www.rongcloud.cn/solution/audio_social
 
 ```
 developerEnvironment {
-    buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请\"")
+    buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请https://rcrtc-api.rongcloud.net/code\"")
     buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
     buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
+    buildConfigField("String", "MH_APP_KEY", "\"这里是美狐美颜SDK的appkey，要想体验美颜功能需要去美狐官网申请http://www.facegl.com/\"")
 }
 ```
 

@@ -4,8 +4,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5E3E7E"
     android:keepScreenOn="true"
+    android:background="#5E3E7E"
     android:orientation="vertical">
 
     <FrameLayout
@@ -23,7 +23,7 @@
             android:gravity="center"
             android:text="语聊房麦位视图" />
 
-        <cn.rongcloud.voiceroom.pk.widget.PKView
+        <cn.rongcloud.voice.pk.widget.PKView
             android:id="@+id/pk_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

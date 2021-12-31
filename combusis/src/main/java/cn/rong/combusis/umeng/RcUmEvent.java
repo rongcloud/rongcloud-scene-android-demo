@@ -2,6 +2,7 @@ package cn.rong.combusis.umeng;
 
 public enum RcUmEvent {
     VoiceRoom,//语聊房
+    LiveRoom,//直播房
     VideoCall,// 视频
     AudioCall,// 语音
     AppraisalBanner,//点个赞

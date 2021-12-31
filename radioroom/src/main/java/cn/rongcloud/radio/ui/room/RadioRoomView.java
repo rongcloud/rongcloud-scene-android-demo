@@ -28,8 +28,6 @@ public interface RadioRoomView extends IBaseView {
 
     void addAllToMessageList(List<MessageContent> messageContents, boolean isRefresh);
 
-    void clearInput();
-
     void finish();
 
     void setSpeaking(boolean speaking);

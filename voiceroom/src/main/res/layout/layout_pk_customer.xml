@@ -139,7 +139,7 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <cn.rongcloud.voiceroom.pk.widget.PKProcessbar
+    <cn.rongcloud.voice.pk.widget.PKProcessbar
         android:id="@+id/pk_sb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

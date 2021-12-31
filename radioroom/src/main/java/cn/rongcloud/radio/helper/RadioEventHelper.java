@@ -35,12 +35,12 @@ import cn.rong.combusis.music.MusicManager;
 import cn.rong.combusis.widget.miniroom.MiniRoomManager;
 import cn.rong.combusis.widget.miniroom.OnCloseMiniRoomListener;
 import cn.rong.combusis.widget.miniroom.OnMiniRoomListener;
-import cn.rongcloud.messager.RCMessager;
-import cn.rongcloud.messager.SendMessageCallback;
 import cn.rongcloud.radioroom.IRCRadioRoomEngine;
 import cn.rongcloud.radioroom.RCRadioRoomEngine;
 import cn.rongcloud.radioroom.callback.RCRadioRoomCallback;
 import cn.rongcloud.radioroom.room.RCRadioEventListener;
+import cn.rongcloud.voiceroom.api.IMHelper;
+import cn.rongcloud.voiceroom.api.RCIMHelper;
 import io.rong.imkit.picture.tools.ToastUtils;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -57,6 +57,11 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
 
     // 是否发送了默认消息
     private boolean isSendDefaultMessage = false;
+
+    public static RadioEventHelper getInstance() {
+        return Holder.INSTANCE;
+    }
+
     private List<RadioRoomListener> listeners = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
     private OnMiniRoomListener onMiniRoomListener;
@@ -67,10 +72,6 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
     private boolean isSuspend = false;
     // 是否静音
     private boolean isMute = false;
-
-    public static RadioEventHelper getInstance() {
-        return Holder.INSTANCE;
-    }
 
     public void setSendDefaultMessage(boolean sendDefaultMessage) {
         isSendDefaultMessage = sendDefaultMessage;
@@ -208,11 +209,7 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
             onMessageReceived(message);
             return;
         }
-        RCMessager.getInstance().sendChatRoomMessage(roomId, messageContent, new SendMessageCallback() {
-            @Override
-            public void onAttached(Message message) {
-            }
-
+        RCIMHelper.get().sendChatRoomMessage(roomId, messageContent, new IMHelper.SendMessageCallback() {
             @Override
             public void onSuccess(Message message) {
                 onMessageReceived(message);

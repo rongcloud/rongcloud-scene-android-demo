@@ -4,9 +4,6 @@
 
 package cn.rongcloud.radioroom;
 
-import android.app.Application;
-
-import cn.rongcloud.messager.ConnectCallback;
 import cn.rongcloud.radioroom.callback.RCRadioRoomCallback;
 import cn.rongcloud.radioroom.callback.RCRadioRoomResultCallback;
 import cn.rongcloud.radioroom.room.RCRadioEventListener;
@@ -16,10 +13,6 @@ import cn.rongcloud.radioroom.room.RCRadioRoomInfo;
  * 语聊房引擎接口
  */
 public interface IRCRadioRoomEngine {
-
-    void initWithAppKey(Application context, String appKey);
-
-    void connectWithToken(String token, ConnectCallback callback);
 
     void setRadioEventListener(RCRadioEventListener listener);
 

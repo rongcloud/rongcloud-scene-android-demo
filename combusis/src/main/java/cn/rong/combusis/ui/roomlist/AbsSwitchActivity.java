@@ -22,10 +22,6 @@ import io.rong.imkit.utils.StatusBarUtil;
 
 public class AbsSwitchActivity extends BaseActivity implements View.OnClickListener {
 
-    private ViewPager2 vp_switch;
-    private TabLayout tab_switch;
-    private int currentIndex = 0;
-
     @Override
     public int setLayoutId() {
         return R.layout.activity_abs_switch;
@@ -35,6 +31,10 @@ public class AbsSwitchActivity extends BaseActivity implements View.OnClickListe
     public void init() {
         initView();
     }
+
+    private ViewPager2 vp_switch;
+    private TabLayout tab_switch;
+    private int currentIndex = 0;
 
     protected void initView() {
         StatusBarUtil.setStatusBarFontIconDark(this, StatusBarUtil.TYPE_M, true);

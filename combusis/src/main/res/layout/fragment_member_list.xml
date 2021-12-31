@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:realtimeBlurRadius="21dp"
-        app:realtimeOverlayColor="#29FFFFFF" />
+        app:realtimeOverlayColor="#5C5095" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_actionbar"

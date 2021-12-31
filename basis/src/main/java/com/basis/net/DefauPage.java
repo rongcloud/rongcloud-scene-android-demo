@@ -6,10 +6,10 @@ import com.basis.net.oklib.net.Page;
  * 网络请求分页设置的参数
  */
 public class DefauPage implements Page {
-    int size = 10;//每页显示的记录数据 默认15条
-    int first = 1;//第一页的索引 0 或者 1
     private String keySize = "pageSize";
     private String keyPage = "pageNo";
+    int size = 10;//每页显示的记录数据 默认15条
+    int first = 1;//第一页的索引 0 或者 1
 
     @Override
     public int getFirstIndex() {

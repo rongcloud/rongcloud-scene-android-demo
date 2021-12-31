@@ -29,9 +29,9 @@ import io.rong.imlib.model.Conversation;
 public class RongCallProxy implements IRongCallListener {
 
     private static final String TAG = "RongCallProxy";
-    private static RongCallProxy mInstance;
     private IRongCallListener mCallListener;
     private Queue<CallDisconnectedInfo> mCachedCallQueue;
+    private static RongCallProxy mInstance;
 
     private RongCallProxy() {
         mCachedCallQueue = new LinkedBlockingQueue<>();
@@ -92,6 +92,11 @@ public class RongCallProxy implements IRongCallListener {
         if (mCallListener != null) {
             mCallListener.onRemoteUserRinging(userId);
         }
+    }
+
+    @Override
+    public void onRemoteUserAccept(String userId, RongCallCommon.CallMediaType mediaType) {
+
     }
 
     @Override
@@ -207,6 +212,17 @@ public class RongCallProxy implements IRongCallListener {
         }
     }
 
+    private static class CallDisconnectedInfo {
+        RongCallSession mCallSession;
+        RongCallCommon.CallDisconnectedReason mReason;
+
+        public CallDisconnectedInfo(
+                RongCallSession callSession, RongCallCommon.CallDisconnectedReason reason) {
+            this.mCallSession = callSession;
+            this.mReason = reason;
+        }
+    }
+
     private String getDescription() {
         if (mCallListener != null) {
             return mCallListener.getClass().getSimpleName();
@@ -288,17 +304,6 @@ public class RongCallProxy implements IRongCallListener {
                                 insertTime,
                                 null);
             }
-        }
-    }
-
-    private static class CallDisconnectedInfo {
-        RongCallSession mCallSession;
-        RongCallCommon.CallDisconnectedReason mReason;
-
-        public CallDisconnectedInfo(
-                RongCallSession callSession, RongCallCommon.CallDisconnectedReason reason) {
-            this.mCallSession = callSession;
-            this.mReason = reason;
         }
     }
 }

@@ -82,15 +82,19 @@ import java.util.regex.Pattern;
  */
 public class PercentLayoutHelper {
     private static final String TAG = "PercentLayout";
+
     private static final String REGEX_PERCENT = "^(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)%([s]?[wh]?)$";
+
     private static int mWidthScreen;
     private static int mHeightScreen;
-    private final ViewGroup mHost;
 
     public PercentLayoutHelper(ViewGroup host) {
         mHost = host;
         getScreenSize();
     }
+
+    private final ViewGroup mHost;
+
 
     /**
      * Helper method to be called from {@link ViewGroup.LayoutParams#setBaseAttributes} override
@@ -101,6 +105,113 @@ public class PercentLayoutHelper {
                                            int widthAttr, int heightAttr) {
         params.width = array.getLayoutDimension(widthAttr, 0);
         params.height = array.getLayoutDimension(heightAttr, 0);
+    }
+
+    // TODO: 2020/6/2  androidx 适配
+    private static boolean shouldHandleMeasuredWidthTooSmall(View view, PercentLayoutInfo info) {
+        int state = view.getMeasuredWidthAndState() & View.MEASURED_STATE_MASK;
+        if (info == null || info.widthPercent == null) {
+            return false;
+        }
+        return state == View.MEASURED_STATE_TOO_SMALL && info.widthPercent.percent >= 0 &&
+                info.mPreservedParams.width == ViewGroup.LayoutParams.WRAP_CONTENT;
+    }
+
+    private static boolean shouldHandleMeasuredHeightTooSmall(View view, PercentLayoutInfo info) {
+        int state = view.getMeasuredHeightAndState() & View.MEASURED_STATE_MASK;
+        if (info == null || info.heightPercent == null) {
+            return false;
+        }
+        return state == View.MEASURED_STATE_TOO_SMALL && info.heightPercent.percent >= 0 &&
+                info.mPreservedParams.height == ViewGroup.LayoutParams.WRAP_CONTENT;
+    }
+
+    private void getScreenSize() {
+        WindowManager wm = (WindowManager) mHost.getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        mWidthScreen = outMetrics.widthPixels;
+        mHeightScreen = outMetrics.heightPixels;
+    }
+
+    /**
+     * Iterates over children and changes their width and height to one calculated from percentage
+     * values.
+     *
+     * @param widthMeasureSpec  Width MeasureSpec of the parent ViewGroup.
+     * @param heightMeasureSpec Height MeasureSpec of the parent ViewGroup.
+     */
+    public void adjustChildren(int widthMeasureSpec, int heightMeasureSpec) {
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, "adjustChildren: " + mHost + " widthMeasureSpec: "
+                    + View.MeasureSpec.toString(widthMeasureSpec) + " heightMeasureSpec: "
+                    + View.MeasureSpec.toString(heightMeasureSpec));
+        }
+        int widthHint = View.MeasureSpec.getSize(widthMeasureSpec);
+        int heightHint = View.MeasureSpec.getSize(heightMeasureSpec);
+
+        if (Log.isLoggable(TAG, Log.DEBUG))
+            Log.d(TAG, "widthHint = " + widthHint + " , heightHint = " + heightHint);
+
+        for (int i = 0, N = mHost.getChildCount(); i < N; i++) {
+            View view = mHost.getChildAt(i);
+            ViewGroup.LayoutParams params = view.getLayoutParams();
+
+            if (Log.isLoggable(TAG, Log.DEBUG)) {
+                Log.d(TAG, "should adjust " + view + " " + params);
+            }
+
+            if (params instanceof PercentLayoutParams) {
+                PercentLayoutInfo info =
+                        ((PercentLayoutParams) params).getPercentLayoutInfo();
+                if (Log.isLoggable(TAG, Log.DEBUG)) {
+                    Log.d(TAG, "using " + info);
+                }
+                if (info != null) {
+                    supportTextSize(widthHint, heightHint, view, info);
+                    supportPadding(widthHint, heightHint, view, info);
+                    supportMinOrMaxDimesion(widthHint, heightHint, view, info);
+
+                    if (params instanceof ViewGroup.MarginLayoutParams) {
+                        info.fillMarginLayoutParams((ViewGroup.MarginLayoutParams) params,
+                                widthHint, heightHint);
+                    } else {
+                        info.fillLayoutParams(params, widthHint, heightHint);
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private void supportPadding(int widthHint, int heightHint, View view, PercentLayoutInfo info) {
+        int left = view.getPaddingLeft(), right = view.getPaddingRight(), top = view.getPaddingTop(), bottom = view.getPaddingBottom();
+        PercentLayoutInfo.PercentVal percentVal = info.paddingLeftPercent;
+        if (percentVal != null) {
+            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
+            left = (int) (base * percentVal.percent);
+        }
+        percentVal = info.paddingRightPercent;
+        if (percentVal != null) {
+            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
+            right = (int) (base * percentVal.percent);
+        }
+
+        percentVal = info.paddingTopPercent;
+        if (percentVal != null) {
+            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
+            top = (int) (base * percentVal.percent);
+        }
+
+        percentVal = info.paddingBottomPercent;
+        if (percentVal != null) {
+            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
+            bottom = (int) (base * percentVal.percent);
+        }
+        view.setPadding(left, top, right, bottom);
+
+
     }
 
     private static int getBaseByModeAndVal(int widthHint, int heightHint, PercentLayoutInfo.BASEMODE basemode) {
@@ -116,6 +227,7 @@ public class PercentLayoutHelper {
         }
         return 0;
     }
+
 
     /**
      * Constructs a PercentLayoutInfo from attributes associated with a View. Call this method from
@@ -353,10 +465,29 @@ public class PercentLayoutHelper {
         return percentVal;
     }
 
+
     @NonNull
     private static PercentLayoutInfo checkForInfoExists(PercentLayoutInfo info) {
         info = info != null ? info : new PercentLayoutInfo();
         return info;
+    }
+
+    private void supportMinOrMaxDimesion(int widthHint, int heightHint, View view, PercentLayoutInfo info) {
+        try {
+            Class clazz = view.getClass();
+            invokeMethod("setMaxWidth", widthHint, heightHint, view, clazz, info.maxWidthPercent);
+            invokeMethod("setMaxHeight", widthHint, heightHint, view, clazz, info.maxHeightPercent);
+            invokeMethod("setMinWidth", widthHint, heightHint, view, clazz, info.minWidthPercent);
+            invokeMethod("setMinHeight", widthHint, heightHint, view, clazz, info.minHeightPercent);
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -407,175 +538,6 @@ public class PercentLayoutHelper {
 
         return percentVal;
     }
-
-    // TODO: 2020/6/2  androidx 适配
-    private static boolean shouldHandleMeasuredWidthTooSmall(View view, PercentLayoutInfo info) {
-        int state = view.getMeasuredWidthAndState() & View.MEASURED_STATE_MASK;
-        if (info == null || info.widthPercent == null) {
-            return false;
-        }
-        return state == View.MEASURED_STATE_TOO_SMALL && info.widthPercent.percent >= 0 &&
-                info.mPreservedParams.width == ViewGroup.LayoutParams.WRAP_CONTENT;
-    }
-
-    private static boolean shouldHandleMeasuredHeightTooSmall(View view, PercentLayoutInfo info) {
-        int state = view.getMeasuredHeightAndState() & View.MEASURED_STATE_MASK;
-        if (info == null || info.heightPercent == null) {
-            return false;
-        }
-        return state == View.MEASURED_STATE_TOO_SMALL && info.heightPercent.percent >= 0 &&
-                info.mPreservedParams.height == ViewGroup.LayoutParams.WRAP_CONTENT;
-    }
-
-    private void getScreenSize() {
-        WindowManager wm = (WindowManager) mHost.getContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        mWidthScreen = outMetrics.widthPixels;
-        mHeightScreen = outMetrics.heightPixels;
-    }
-
-    /**
-     * Iterates over children and changes their width and height to one calculated from percentage
-     * values.
-     *
-     * @param widthMeasureSpec  Width MeasureSpec of the parent ViewGroup.
-     * @param heightMeasureSpec Height MeasureSpec of the parent ViewGroup.
-     */
-    public void adjustChildren(int widthMeasureSpec, int heightMeasureSpec) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "adjustChildren: " + mHost + " widthMeasureSpec: "
-                    + View.MeasureSpec.toString(widthMeasureSpec) + " heightMeasureSpec: "
-                    + View.MeasureSpec.toString(heightMeasureSpec));
-        }
-        int widthHint = View.MeasureSpec.getSize(widthMeasureSpec);
-        int heightHint = View.MeasureSpec.getSize(heightMeasureSpec);
-
-        if (Log.isLoggable(TAG, Log.DEBUG))
-            Log.d(TAG, "widthHint = " + widthHint + " , heightHint = " + heightHint);
-
-        for (int i = 0, N = mHost.getChildCount(); i < N; i++) {
-            View view = mHost.getChildAt(i);
-            ViewGroup.LayoutParams params = view.getLayoutParams();
-
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "should adjust " + view + " " + params);
-            }
-
-            if (params instanceof PercentLayoutParams) {
-                PercentLayoutInfo info =
-                        ((PercentLayoutParams) params).getPercentLayoutInfo();
-                if (Log.isLoggable(TAG, Log.DEBUG)) {
-                    Log.d(TAG, "using " + info);
-                }
-                if (info != null) {
-                    supportTextSize(widthHint, heightHint, view, info);
-                    supportPadding(widthHint, heightHint, view, info);
-                    supportMinOrMaxDimesion(widthHint, heightHint, view, info);
-
-                    if (params instanceof ViewGroup.MarginLayoutParams) {
-                        info.fillMarginLayoutParams((ViewGroup.MarginLayoutParams) params,
-                                widthHint, heightHint);
-                    } else {
-                        info.fillLayoutParams(params, widthHint, heightHint);
-                    }
-                }
-            }
-        }
-
-
-    }
-
-    private void supportPadding(int widthHint, int heightHint, View view, PercentLayoutInfo info) {
-        int left = view.getPaddingLeft(), right = view.getPaddingRight(), top = view.getPaddingTop(), bottom = view.getPaddingBottom();
-        PercentLayoutInfo.PercentVal percentVal = info.paddingLeftPercent;
-        if (percentVal != null) {
-            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
-            left = (int) (base * percentVal.percent);
-        }
-        percentVal = info.paddingRightPercent;
-        if (percentVal != null) {
-            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
-            right = (int) (base * percentVal.percent);
-        }
-
-        percentVal = info.paddingTopPercent;
-        if (percentVal != null) {
-            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
-            top = (int) (base * percentVal.percent);
-        }
-
-        percentVal = info.paddingBottomPercent;
-        if (percentVal != null) {
-            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
-            bottom = (int) (base * percentVal.percent);
-        }
-        view.setPadding(left, top, right, bottom);
-
-
-    }
-
-    private void supportMinOrMaxDimesion(int widthHint, int heightHint, View view, PercentLayoutInfo info) {
-        try {
-            Class clazz = view.getClass();
-            invokeMethod("setMaxWidth", widthHint, heightHint, view, clazz, info.maxWidthPercent);
-            invokeMethod("setMaxHeight", widthHint, heightHint, view, clazz, info.maxHeightPercent);
-            invokeMethod("setMinWidth", widthHint, heightHint, view, clazz, info.minWidthPercent);
-            invokeMethod("setMinHeight", widthHint, heightHint, view, clazz, info.minHeightPercent);
-
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void invokeMethod(String methodName, int widthHint, int heightHint, View view, Class clazz, PercentLayoutInfo.PercentVal percentVal) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        if (Log.isLoggable(TAG, Log.DEBUG))
-            Log.d(TAG, methodName + " ==> " + percentVal);
-        if (percentVal != null) {
-            Method setMaxWidthMethod = clazz.getMethod(methodName, int.class);
-            setMaxWidthMethod.setAccessible(true);
-            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
-            setMaxWidthMethod.invoke(view, (int) (base * percentVal.percent));
-        }
-    }
-
-    private void supportTextSize(int widthHint, int heightHint, View view, PercentLayoutInfo info) {
-        //textsize percent support
-
-        PercentLayoutInfo.PercentVal textSizePercent = info.textSizePercent;
-        if (textSizePercent == null) return;
-
-        int base = getBaseByModeAndVal(widthHint, heightHint, textSizePercent.basemode);
-        float textSize = (int) (base * textSizePercent.percent);
-
-        //Button 和 EditText 是TextView的子类
-        if (view instanceof TextView) {
-            ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-        }
-    }
-
-//    private static boolean shouldHandleMeasuredWidthTooSmall(View view, PercentLayoutInfo info) {
-//        int state = ViewCompat.getMeasuredWidthAndState(view)& View.MEASURED_STATE_MASK;
-//        if (info == null || info.widthPercent == null) {
-//            return false;
-//        }
-//        return state == ViewCompat.MEASURED_STATE_TOO_SMALL && info.widthPercent.percent >= 0 &&
-//                info.mPreservedParams.width == ViewGroup.LayoutParams.WRAP_CONTENT;
-//    }
-//
-//    private static boolean shouldHandleMeasuredHeightTooSmall(View view, PercentLayoutInfo info) {
-//        int state = ViewCompat.getMeasuredHeightAndState(view) & ViewCompat.MEASURED_STATE_MASK;
-//        if (info == null || info.heightPercent == null) {
-//            return false;
-//        }
-//        return state == ViewCompat.MEASURED_STATE_TOO_SMALL && info.heightPercent.percent >= 0 &&
-//                info.mPreservedParams.height == ViewGroup.LayoutParams.WRAP_CONTENT;
-//    }
 
     /**
      * Iterates over children and restores their original dimensions that were changed for
@@ -650,6 +612,50 @@ public class PercentLayoutHelper {
         return needsSecondMeasure;
     }
 
+//    private static boolean shouldHandleMeasuredWidthTooSmall(View view, PercentLayoutInfo info) {
+//        int state = ViewCompat.getMeasuredWidthAndState(view)& View.MEASURED_STATE_MASK;
+//        if (info == null || info.widthPercent == null) {
+//            return false;
+//        }
+//        return state == ViewCompat.MEASURED_STATE_TOO_SMALL && info.widthPercent.percent >= 0 &&
+//                info.mPreservedParams.width == ViewGroup.LayoutParams.WRAP_CONTENT;
+//    }
+//
+//    private static boolean shouldHandleMeasuredHeightTooSmall(View view, PercentLayoutInfo info) {
+//        int state = ViewCompat.getMeasuredHeightAndState(view) & ViewCompat.MEASURED_STATE_MASK;
+//        if (info == null || info.heightPercent == null) {
+//            return false;
+//        }
+//        return state == ViewCompat.MEASURED_STATE_TOO_SMALL && info.heightPercent.percent >= 0 &&
+//                info.mPreservedParams.height == ViewGroup.LayoutParams.WRAP_CONTENT;
+//    }
+
+    private void invokeMethod(String methodName, int widthHint, int heightHint, View view, Class clazz, PercentLayoutInfo.PercentVal percentVal) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        if (Log.isLoggable(TAG, Log.DEBUG))
+            Log.d(TAG, methodName + " ==> " + percentVal);
+        if (percentVal != null) {
+            Method setMaxWidthMethod = clazz.getMethod(methodName, int.class);
+            setMaxWidthMethod.setAccessible(true);
+            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
+            setMaxWidthMethod.invoke(view, (int) (base * percentVal.percent));
+        }
+    }
+
+    private void supportTextSize(int widthHint, int heightHint, View view, PercentLayoutInfo info) {
+        //textsize percent support
+
+        PercentLayoutInfo.PercentVal textSizePercent = info.textSizePercent;
+        if (textSizePercent == null) return;
+
+        int base = getBaseByModeAndVal(widthHint, heightHint, textSizePercent.basemode);
+        float textSize = (int) (base * textSizePercent.percent);
+
+        //Button 和 EditText 是TextView的子类
+        if (view instanceof TextView) {
+            ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        }
+    }
+
     /**
      * If a layout wants to support percentage based dimensions and use this helper class, its
      * {@code LayoutParams} subclass must implement this interface.
@@ -668,25 +674,79 @@ public class PercentLayoutHelper {
     public static class PercentLayoutInfo {
 
         /* package */ final ViewGroup.MarginLayoutParams mPreservedParams;
+
+        private enum BASEMODE {
+
+            BASE_WIDTH, BASE_HEIGHT, BASE_SCREEN_WIDTH, BASE_SCREEN_HEIGHT;
+
+            /**
+             * width_parent
+             */
+            public static final String PERCENT = "%";
+            /**
+             * width_parent
+             */
+            public static final String W = "w";
+            /**
+             * height_parent
+             */
+            public static final String H = "h";
+            /**
+             * width_screen
+             */
+            public static final String SW = "sw";
+            /**
+             * height_screen
+             */
+            public static final String SH = "sh";
+        }
+
         public PercentVal widthPercent;
         public PercentVal heightPercent;
+
         public PercentVal leftMarginPercent;
         public PercentVal topMarginPercent;
         public PercentVal rightMarginPercent;
         public PercentVal bottomMarginPercent;
         public PercentVal startMarginPercent;
         public PercentVal endMarginPercent;
+
         public PercentVal textSizePercent;
+
         //1.0.4 those attr for some views' setMax/min Height/Width method
         public PercentVal maxWidthPercent;
         public PercentVal maxHeightPercent;
         public PercentVal minWidthPercent;
         public PercentVal minHeightPercent;
+
         //1.0.6 add padding supprot
         public PercentVal paddingLeftPercent;
         public PercentVal paddingRightPercent;
         public PercentVal paddingTopPercent;
         public PercentVal paddingBottomPercent;
+
+        public static class PercentVal {
+
+            public float percent = -1;
+            public BASEMODE basemode;
+
+            public PercentVal() {
+            }
+
+            public PercentVal(float percent, BASEMODE baseMode) {
+                this.percent = percent;
+                this.basemode = baseMode;
+            }
+
+            @Override
+            public String toString() {
+                return "PercentVal{" +
+                        "percent=" + percent +
+                        ", basemode=" + basemode.name() +
+                        '}';
+            }
+        }
+
 
         public PercentLayoutInfo() {
             mPreservedParams = new ViewGroup.MarginLayoutParams(0, 0);
@@ -814,54 +874,6 @@ public class PercentLayoutHelper {
         public void restoreLayoutParams(ViewGroup.LayoutParams params) {
             params.width = mPreservedParams.width;
             params.height = mPreservedParams.height;
-        }
-
-        private enum BASEMODE {
-
-            BASE_WIDTH, BASE_HEIGHT, BASE_SCREEN_WIDTH, BASE_SCREEN_HEIGHT;
-
-            /**
-             * width_parent
-             */
-            public static final String PERCENT = "%";
-            /**
-             * width_parent
-             */
-            public static final String W = "w";
-            /**
-             * height_parent
-             */
-            public static final String H = "h";
-            /**
-             * width_screen
-             */
-            public static final String SW = "sw";
-            /**
-             * height_screen
-             */
-            public static final String SH = "sh";
-        }
-
-        public static class PercentVal {
-
-            public float percent = -1;
-            public BASEMODE basemode;
-
-            public PercentVal() {
-            }
-
-            public PercentVal(float percent, BASEMODE baseMode) {
-                this.percent = percent;
-                this.basemode = baseMode;
-            }
-
-            @Override
-            public String toString() {
-                return "PercentVal{" +
-                        "percent=" + percent +
-                        ", basemode=" + basemode.name() +
-                        '}';
-            }
         }
     }
 }

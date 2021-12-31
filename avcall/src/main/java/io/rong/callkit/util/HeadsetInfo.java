@@ -33,13 +33,9 @@ public class HeadsetInfo {
     }
 
     public enum HeadsetType {
-        /**
-         * 有线耳机
-         */
+        /** 有线耳机 */
         WiredHeadset(0),
-        /**
-         * 蓝牙耳机
-         */
+        /** 蓝牙耳机 */
         BluetoothA2dp(1);
 
         int value;

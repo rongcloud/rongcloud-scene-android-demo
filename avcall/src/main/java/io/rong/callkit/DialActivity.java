@@ -57,7 +57,6 @@ public class DialActivity extends BaseActionBarActivity implements View.OnClickL
     public static final String KEY_ID = "user_id";
     public static final String KEY_TOKEN = "token";
     public static final String TAG_DIALPAD_FRAGMENT = "dialpad";
-    boolean mIsDialpadShown;
     private FloatingActionButtonController mFloatingActionButtonController;
     private ImageButton floatingActionButton;
     private RecyclerView recyclerView;
@@ -66,7 +65,6 @@ public class DialActivity extends BaseActionBarActivity implements View.OnClickL
     private boolean isVideo = false;
     private String userId;
     private List<DialInfo> records = new ArrayList<>();
-    private DialpadFragment dialpadFragment;
 
     public static void openDilapadPage(Activity activity, boolean video) {
         activity.startActivity(new Intent(activity, DialActivity.class)
@@ -196,6 +194,8 @@ public class DialActivity extends BaseActionBarActivity implements View.OnClickL
         }
     }
 
+    boolean mIsDialpadShown;
+
     @Override
     public void onClick(View view) {
         int resId = view.getId();
@@ -322,6 +322,8 @@ public class DialActivity extends BaseActionBarActivity implements View.OnClickL
                     }
                 }));
     }
+
+    private DialpadFragment dialpadFragment;
 
     private void showDialpadFragment(String defInput) {
         if (mIsDialpadShown) {

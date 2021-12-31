@@ -12,8 +12,8 @@
         android:id="@+id/rc_voip_user_portrait"
         android:layout_width="@dimen/userhead90dp"
         android:layout_height="@dimen/userhead90dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="82.5dp"
+        android:layout_centerHorizontal="true"
         android:visibility="gone" />
 
     <TextView
@@ -25,9 +25,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -44,16 +44,16 @@
             style="@style/callkit_voip_text_style_18spWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="8dp"
+            android:layout_centerHorizontal="true"
             android:text="@string/rc_voip_call_waiting" />
 
         <ImageView
             android:id="@+id/rc_voip_signal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginLeft="5dp"
             android:src="@drawable/rc_voip_signal_1"
             android:visibility="gone" />
     </LinearLayout>
@@ -63,8 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
         android:onClick="onMoreButtonClick"
         android:src="@drawable/rc_voip_more" />
 
@@ -72,8 +72,8 @@
         android:id="@+id/rc_voip_switch_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
         android:layout_toLeftOf="@+id/rc_voip_call_more"
         android:onClick="onSwitchCameraClick"
         android:src="@drawable/rc_voip_switch_camera" />
@@ -83,9 +83,9 @@
         android:id="@+id/rc_voip_call_minimize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="11.5dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="17.5dp"
-        android:layout_marginTop="11.5dp"
         android:src="@drawable/rc_voip_minimize" />
 
 </RelativeLayout>

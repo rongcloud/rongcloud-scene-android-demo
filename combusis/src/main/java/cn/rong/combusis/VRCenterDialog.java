@@ -33,6 +33,24 @@ public class VRCenterDialog extends Dialog {
     private TextView title, cancel, confirm;
 
 
+    public boolean enable() {
+        return null != reference.get();
+    }
+
+    public void showToast(String message) {
+        if (null != reference.get()) {
+            Toast.makeText(reference.get(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public boolean startActivty(Intent intent) {
+        if (null != reference.get()) {
+            reference.get().startActivity(intent);
+            return true;
+        }
+        return false;
+    }
+
     public VRCenterDialog(Activity activity, OnDismissListener onDismissListener) {
         super(activity, R.style.CustomDialog);
         setOnDismissListener(onDismissListener);
@@ -52,24 +70,6 @@ public class VRCenterDialog extends Dialog {
         wl.width = (int) (scPoint.x * 0.74);
         onWindowAttributesChanged(wl);
         init(view);
-    }
-
-    public boolean enable() {
-        return null != reference.get();
-    }
-
-    public void showToast(String message) {
-        if (null != reference.get()) {
-            Toast.makeText(reference.get(), message, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public boolean startActivty(Intent intent) {
-        if (null != reference.get()) {
-            reference.get().startActivity(intent);
-            return true;
-        }
-        return false;
     }
 
     private void init(View view) {

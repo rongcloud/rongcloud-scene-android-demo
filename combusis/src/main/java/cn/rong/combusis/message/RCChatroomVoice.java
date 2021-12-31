@@ -19,24 +19,13 @@ import io.rong.imlib.model.MessageContent;
 
 /**
  * 普通语音消息
- *
  * @author gusd
  * @Date 2021/06/17
  */
 @MessageTag(value = "RC:VRVoiceMsg")
 public class RCChatroomVoice extends MessageContent {
-    public static final Creator<RCChatroomVoice> CREATOR = new Creator<RCChatroomVoice>() {
-        @Override
-        public RCChatroomVoice createFromParcel(Parcel source) {
-            return new RCChatroomVoice(source);
-        }
-
-        @Override
-        public RCChatroomVoice[] newArray(int size) {
-            return new RCChatroomVoice[size];
-        }
-    };
     private static final String TAG = "RCChatroomVoice";
+
     private String userId;
     private String userName;
     private String path;
@@ -65,16 +54,6 @@ public class RCChatroomVoice extends MessageContent {
         } catch (JSONException e) {
             RLog.e(TAG, "JSONException " + e.getMessage());
         }
-    }
-
-    public RCChatroomVoice() {
-    }
-
-    protected RCChatroomVoice(Parcel in) {
-        this.userId = in.readString();
-        this.userName = in.readString();
-        this.path = in.readString();
-        this.duration = in.readString();
     }
 
     @Override
@@ -150,5 +129,27 @@ public class RCChatroomVoice extends MessageContent {
         this.userName = source.readString();
         this.path = source.readString();
         this.duration = source.readString();
+    }
+
+    public static final Creator<RCChatroomVoice> CREATOR = new Creator<RCChatroomVoice>() {
+        @Override
+        public RCChatroomVoice createFromParcel(Parcel source) {
+            return new RCChatroomVoice(source);
+        }
+
+        @Override
+        public RCChatroomVoice[] newArray(int size) {
+            return new RCChatroomVoice[size];
+        }
+    };
+
+    public RCChatroomVoice() {
+    }
+
+    protected RCChatroomVoice(Parcel in) {
+        this.userId = in.readString();
+        this.userName = in.readString();
+        this.path = in.readString();
+        this.duration = in.readString();
     }
 }

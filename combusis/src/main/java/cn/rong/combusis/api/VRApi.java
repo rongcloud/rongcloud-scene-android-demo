@@ -13,18 +13,6 @@ public class VRApi {
      */
     public final static String ROOM_CREATE = HOST + "mic/room/create";
     /**
-     * 文件上传
-     */
-    public final static String FILE_UPLOAD = HOST + "file/upload";
-    /**
-     * 上传文件后，文件的前缀
-     */
-    public static final String FILE_PATH = HOST + "file/show?path=";
-    /**
-     * pk状态上报
-     */
-    public static final String PK_STATE = HOST + "mic/room/pk";
-    /**
      * 操作管理员
      */
     public static final String ADMIN_MANAGE = HOST + "mic/room/manage";
@@ -53,52 +41,21 @@ public class VRApi {
      */
     public static final String GET_USER = HOST + "user/batch";
     /**
-     * 发送全服广播的礼物
+     * 文件上传
      */
-    public static final String GIFT_BROADCAST = HOST + "mic/room/message/broadcast";
+    public final static String FILE_UPLOAD = HOST + "file/upload";
     /**
-     * 检查是否创建了房间
+     * 上传文件后，文件的前缀
      */
-    public static final String ROOM_CREATE_CHECK = HOST + "mic/room/create/check";
+    public static final String FILE_PATH = HOST + "file/show?path=";
+
     /**
-     * 注册或者注销，注销不传任何参数
+     * pk状态上报
      */
-    public static final String RESIGN = HOST + "user/resign";
+    public static final String PK_STATE = HOST + "mic/room/pk";
+
     //    private static final String PK_INFO = HOST + "mic/room/pk/info/";
     private static final String PK_INFO = HOST + "mic/room/pk/detail/";
-    /**
-     * 房间列表
-     */
-    public static String ROOM_LIST = HOST + "mic/room/list";
-    /**
-     * 在线房主
-     */
-    public static String ONLINE_CREATER = HOST + "mic/room/online/created/list";
-    /**
-     * 更改用户所属房间
-     */
-    public static String USER_ROOM_CHANGE = HOST + "user/change";
-    /**
-     * 检查当前用户所属房间
-     */
-    public static String USER_ROOM_CHECK = HOST + "user/check";
-    /**
-     * 关注或取消关注
-     */
-    private static String FOLLOW = HOST + "user/follow/";
-
-    public static String followUrl(String userId) {
-        return FOLLOW + userId;
-    }
-
-    /**
-     * 删除房间
-     *
-     * @return link
-     */
-    public static String deleteRoom(String roomId) {
-        return HOST + "mic/room/" + roomId + "/delete";
-    }
 
     // pk/{roomId}/isPk
     public static String isPkState(String roomId) {
@@ -114,6 +71,11 @@ public class VRApi {
     public static String getPKInfo(String roomId) {
         return PK_INFO + roomId;
     }
+
+    /**
+     * 发送全服广播的礼物
+     */
+    public static final String GIFT_BROADCAST = HOST + "mic/room/message/broadcast";
 
     /**
      * 获取房间内成员列表
@@ -134,6 +96,23 @@ public class VRApi {
     public static String getAdminMembers(String roomId) {
         return HOST + "mic/room/" + roomId + "/manage/list";
     }
+
+    /**
+     * 检查是否创建了房间
+     */
+    public static final String ROOM_CREATE_CHECK = HOST + "mic/room/create/check";
+    /**
+     * 注册或者注销，注销不传任何参数
+     */
+    public static final String RESIGN = HOST + "user/resign";
+    /**
+     * 房间列表
+     */
+    public static String ROOM_LIST = HOST + "mic/room/list";
+    /**
+     * 在线房主
+     */
+    public static String ONLINE_CREATER = HOST + "mic/room/online/created/list";
 
     /**
      * 获取房间信息
@@ -166,6 +145,15 @@ public class VRApi {
     }
 
     /**
+     * 更改用户所属房间
+     */
+    public static String USER_ROOM_CHANGE = HOST + "user/change";
+    /**
+     * 检查当前用户所属房间
+     */
+    public static String USER_ROOM_CHECK = HOST + "user/check";
+
+    /**
      * 获取房间内礼物列表
      *
      * @param roomId
@@ -173,6 +161,24 @@ public class VRApi {
      */
     public static String getGiftList(String roomId) {
         return HOST + "mic/room/" + roomId + "/gift/list";
+    }
+
+    /**
+     * 关注或取消关注
+     */
+    private static String FOLLOW = HOST + "user/follow/";
+
+    public static String followUrl(String userId) {
+        return FOLLOW + userId;
+    }
+
+    /**
+     * 删除房间
+     *
+     * @return link
+     */
+    public static String deleteRoom(String roomId) {
+        return HOST + "mic/room/" + roomId + "/delete";
     }
 
     /**

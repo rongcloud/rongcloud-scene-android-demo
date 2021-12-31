@@ -4,6 +4,7 @@
 
 package cn.rongcloud.voiceroomdemo.mvp.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -20,7 +21,10 @@ import cn.rongcloud.annotation.HiltBinding
 import cn.rongcloud.voiceroomdemo.R
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.ILoginView
 import cn.rongcloud.voiceroomdemo.mvp.presenter.LoginPresenter
+import cn.rongcloud.voiceroomdemo.region.Region
+import cn.rongcloud.voiceroomdemo.region.RegionActivity
 import cn.rongcloud.voiceroomdemo.webview.ActCommentWeb
+import com.rongcloud.common.AppConfig
 import com.rongcloud.common.base.BaseActivity
 import com.rongcloud.common.extension.showToast
 import com.rongcloud.common.extension.ui
@@ -62,7 +66,9 @@ class LoginActivity : BaseActivity(), ILoginView {
                 showToast("请勾选同意注册条款")
                 return@setOnClickListener
             }
-            presenter.getVerificationCode(et_phone_number.text.toString())
+
+            var reg = region?.region ?: "86"
+            presenter.getVerificationCode(reg, et_phone_number.text.toString())
         }
         et_verification_code.addTextChangedListener {
             btn_login.isEnabled =
@@ -73,8 +79,35 @@ class LoginActivity : BaseActivity(), ILoginView {
                 showToast("请勾选同意注册条款")
                 return@setOnClickListener
             }
-            presenter.login(et_phone_number.text.toString(), et_verification_code.text.toString())
+            var reg = region?.region ?: "86"
+            presenter.login(
+                reg,
+                et_phone_number.text.toString(),
+                et_verification_code.text.toString()
+            )
         }
+        tv_region.setOnClickListener {
+            RegionActivity.openRegionPage(this)
+        }
+        // 国际环境才选择显示地区
+        if (AppConfig.INTERIAL) {
+            tv_region.visibility = View.VISIBLE
+        } else {
+            tv_region.visibility = View.GONE
+        }
+    }
+
+    var region: Region? = null
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (Activity.RESULT_OK == resultCode && RegionActivity.CODE_REGION == requestCode) {
+            data?.let {
+                region = data.getSerializableExtra("region") as Region
+                region?.let {
+                    tv_region.text = "+" + region?.region
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun initData() {
@@ -89,7 +122,7 @@ class LoginActivity : BaseActivity(), ILoginView {
             override fun onClick(widget: View) {
                 ActCommentWeb.openCommentWeb(
                     this@LoginActivity,
-                    "file:///android_asset/agreement_zh.html", "注册条款"
+                    "https://cdn.ronghub.com/term_of_service_zh.html", "注册条款"
                 )
             }
 
@@ -102,7 +135,7 @@ class LoginActivity : BaseActivity(), ILoginView {
             override fun onClick(widget: View) {
                 ActCommentWeb.openCommentWeb(
                     this@LoginActivity,
-                    "file:///android_asset/privacy_zh.html", "隐私政策"
+                    "https://cdn.ronghub.com/Privacy_agreement_zh.html", "隐私政策"
                 )
             }
 

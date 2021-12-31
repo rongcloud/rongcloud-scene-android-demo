@@ -33,6 +33,10 @@ public class Controller<ND, AD, VH extends IHolder> extends NetRefresher<ND> imp
     private IAdapte<AD, VH> mAdapter;
     private IRHolder holder;
 
+    protected RecyclerView.LayoutManager onSetLayoutManager() {
+        return new LinearLayoutManager(UIKit.getContext());
+    }
+
     public Controller(IRHolder holder, Class<ND> tclazz, IOperator<ND, AD, VH> operator) {
         this(holder, tclazz, operator, BasisHelper.getPage());
     }
@@ -42,10 +46,6 @@ public class Controller<ND, AD, VH extends IHolder> extends NetRefresher<ND> imp
         this.holder = holder;
         this.operator = operator;
         initialize();
-    }
-
-    protected RecyclerView.LayoutManager onSetLayoutManager() {
-        return new LinearLayoutManager(UIKit.getContext());
     }
 
     private void initialize() {

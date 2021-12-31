@@ -18,28 +18,16 @@ import io.rong.imlib.model.MessageContent;
 
 /**
  * 设置或取消管理员时发送
- *
  * @author gusd
  * @Date 2021/06/17
  */
 @MessageTag(value = "RC:Chatroom:Admin", flag = MessageTag.NONE)
 public class RCChatroomAdmin extends MessageContent {
-    public static final Creator<RCChatroomAdmin> CREATOR = new Creator<RCChatroomAdmin>() {
-        @Override
-        public RCChatroomAdmin createFromParcel(Parcel source) {
-            return new RCChatroomAdmin(source);
-        }
-
-        @Override
-        public RCChatroomAdmin[] newArray(int size) {
-            return new RCChatroomAdmin[size];
-        }
-    };
     private static final String TAG = "RCChatroomAdmin";
+
     private String userId;
     private String userName;
     private boolean isAdmin;
-
 
     public RCChatroomAdmin(byte[] data) {
         super(data);
@@ -65,14 +53,6 @@ public class RCChatroomAdmin extends MessageContent {
         }
     }
 
-    public RCChatroomAdmin() {
-    }
-
-    protected RCChatroomAdmin(Parcel in) {
-        this.userId = in.readString();
-        this.userName = in.readString();
-        this.isAdmin = in.readByte() != 0;
-    }
 
     public String getUserId() {
         return userId;
@@ -116,6 +96,7 @@ public class RCChatroomAdmin extends MessageContent {
         return null;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -132,5 +113,26 @@ public class RCChatroomAdmin extends MessageContent {
         this.userId = source.readString();
         this.userName = source.readString();
         this.isAdmin = source.readByte() != 0;
+    }
+
+    public static final Creator<RCChatroomAdmin> CREATOR = new Creator<RCChatroomAdmin>() {
+        @Override
+        public RCChatroomAdmin createFromParcel(Parcel source) {
+            return new RCChatroomAdmin(source);
+        }
+
+        @Override
+        public RCChatroomAdmin[] newArray(int size) {
+            return new RCChatroomAdmin[size];
+        }
+    };
+
+    public RCChatroomAdmin() {
+    }
+
+    protected RCChatroomAdmin(Parcel in) {
+        this.userId = in.readString();
+        this.userName = in.readString();
+        this.isAdmin = in.readByte() != 0;
     }
 }

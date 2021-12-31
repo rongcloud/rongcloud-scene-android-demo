@@ -20,6 +20,7 @@ import cn.rong.combusis.api.VRApi;
 import cn.rongcloud.voiceroomdemo.R;
 import cn.rongcloud.voiceroomdemo.ui.dialog.UnregisterDialog;
 import cn.rongcloud.voiceroomdemo.ui.dialog.UserInfoDialog;
+import cn.rongcloud.voiceroomdemo.update.VersionHelper;
 import cn.rongcloud.voiceroomdemo.webview.ActCommentWeb;
 
 public class ProfileActivity extends BaseActivity implements View.OnClickListener {
@@ -46,6 +47,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         getView(R.id.ll_item_second).setOnClickListener(this);
         getView(R.id.ll_item_third).setOnClickListener(this);
         getView(R.id.ll_item_fourth).setOnClickListener(this);
+        getView(R.id.ll_item_fivth).setOnClickListener(this);
     }
 
 
@@ -53,15 +55,18 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_item_first:
-                ActCommentWeb.openCommentWeb(activity, "file:///android_asset/agreement_zh.html", "注册条款");
+                ActCommentWeb.openCommentWeb(activity, "https://cdn.ronghub.com/term_of_service_zh.html", "注册条款");
                 break;
             case R.id.ll_item_second:
-                ActCommentWeb.openCommentWeb(activity, "file:///android_asset/privacy_zh.html", "隐私政策");
+                ActCommentWeb.openCommentWeb(activity, "https://cdn.ronghub.com/Privacy_agreement_zh.html", "隐私政策");
                 break;
-            case R.id.ll_item_third:
+            case R.id.ll_item_third:// 注销
                 showUnregisterDialog();
                 break;
-            case R.id.ll_item_fourth:
+            case R.id.ll_item_fourth:// 检查更新
+                VersionHelper.checkVersion(activity, true);
+                break;
+            case R.id.ll_item_fivth:// 登出
                 AccountStore.INSTANCE.logout();
                 break;
         }

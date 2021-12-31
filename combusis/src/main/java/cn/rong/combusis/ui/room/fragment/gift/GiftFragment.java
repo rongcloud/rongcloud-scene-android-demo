@@ -85,6 +85,7 @@ public class GiftFragment extends BaseBottomSheetDialogFragment {
         if (!TextUtils.isEmpty(selectUserId)) {
             mSelectUserIds.add(selectUserId);
         }
+        mCurrentGift = giftList.get(0);
     }
 
     public void refreshMember(List<Member> members) {
@@ -138,7 +139,7 @@ public class GiftFragment extends BaseBottomSheetDialogFragment {
                 String name = "观众";
                 if (TextUtils.equals(mVoiceRoomBean.getCreateUserId(), member.getUserId())) {
                     name = "房主";
-                } else if (member.getSeatIndex() > 0 && member.getSeatIndex() < Integer.MAX_VALUE) {
+                } else if (member.getSeatIndex() >= 0 && member.getSeatIndex() < Integer.MAX_VALUE) {
                     name = member.getSeatIndex() + "";
                 }
                 holder.setText(R.id.tv_member_name, name);

@@ -2,6 +2,8 @@ package cn.rong.combusis.sdk;
 
 import com.kit.wapper.IResultBack;
 
+import cn.rong.combusis.sdk.event.wrapper.IEventHelp;
+import cn.rongcloud.voiceroom.model.PKResponse;
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo;
 
 /**
@@ -188,61 +190,61 @@ public interface Api {
      */
     void setSeatCount(int seatCount, IResultBack<Boolean> resultBack);
 
-//    /**
-//     * 发送PK邀请
-//     *
-//     * @param inviteeRoomId 被邀请用户所在的房间id
-//     * @param inviteeUserId 被邀请人的用户id
-//     * @param resultBack    结果回调
-//     */
-//    void sendPKInvitation(String inviteeRoomId, String inviteeUserId, IResultBack<Boolean> resultBack);
-//
-//    /**
-//     * 取消PK邀请
-//     *
-//     * @param resultBack 结果回调
-//     */
-//    void cancelPKInvitation(IResultBack<Boolean> resultBack);
-//
-//    /**
-//     * 回复邀请人是否接受邀请
-//     *
-//     * @param inviterRoomId 邀请人所在的房间id
-//     * @param inviterUserId 邀请人的用户id
-//     * @param pkState       pk邀请的响应状态
-//     * @param resultBack    结果回调
-//     */
-//    void responsePKInvitation(String inviterRoomId, String inviterUserId, PKResponse pkState, IResultBack<Boolean> resultBack);
-//
-//    /**
-//     * 屏蔽PK对象的语音
-//     *
-//     * @param isMute     是否静音
-//     * @param resultBack 结果回调
-//     */
-//    void mutePKUser(boolean isMute, IResultBack<Boolean> resultBack);
-//
-//    /**
-//     * 退出PK
-//     */
-//    void quitPK(IResultBack<Boolean> resultBack);
-//
-//    /**
-//     * 快速加入pk
-//     *
-//     * @param pkRoomId   pk房间
-//     * @param pkUserId   pkId
-//     * @param resultBack 结果回调
-//     */
-//    void resumePk(String pkRoomId, String pkUserId, IResultBack<Boolean> resultBack);
-//
-//    /**
-//     * 释放pk被邀请者
-//     */
-//    void releasePKInvitee();
-//
-//    /**
-//     * 获取当前被邀请人的信息
-//     */
-//    IEventHelp.PKInvitee getPKInvitee();
+    /**
+     * 发送PK邀请
+     *
+     * @param inviteeRoomId 被邀请用户所在的房间id
+     * @param inviteeUserId 被邀请人的用户id
+     * @param resultBack    结果回调
+     */
+    void sendPKInvitation(String inviteeRoomId, String inviteeUserId, IResultBack<Boolean> resultBack);
+
+    /**
+     * 取消PK邀请
+     *
+     * @param resultBack 结果回调
+     */
+    void cancelPKInvitation(IResultBack<Boolean> resultBack);
+
+    /**
+     * 回复邀请人是否接受邀请
+     *
+     * @param inviterRoomId 邀请人所在的房间id
+     * @param inviterUserId 邀请人的用户id
+     * @param pkState       pk邀请的响应状态
+     * @param resultBack    结果回调
+     */
+    void responsePKInvitation(String inviterRoomId, String inviterUserId, PKResponse pkState, IResultBack<Boolean> resultBack);
+
+    /**
+     * 屏蔽PK对象的语音
+     *
+     * @param isMute     是否静音
+     * @param resultBack 结果回调
+     */
+    void mutePKUser(boolean isMute, IResultBack<Boolean> resultBack);
+
+    /**
+     * 退出PK
+     */
+    void quitPK(IResultBack<Boolean> resultBack);
+
+    /**
+     * 快速加入pk
+     *
+     * @param pkRoomId   pk房间
+     * @param pkUserId   pkId
+     * @param resultBack 结果回调
+     */
+    void resumePk(String pkRoomId, String pkUserId, IResultBack<Boolean> resultBack);
+
+    /**
+     * 释放pk被邀请者
+     */
+    void releasePKInvitee();
+
+    /**
+     * 获取当前被邀请人的信息
+     */
+    IEventHelp.PKInvitee getPKInvitee();
 }

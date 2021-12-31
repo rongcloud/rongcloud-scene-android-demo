@@ -6,6 +6,8 @@ import com.bcq.refresh.IRefresh;
 
 public interface IRHolder {
 
+    enum Type {show, none}
+
     IRefresh getRefresh();
 
     View getNone();
@@ -13,6 +15,4 @@ public interface IRHolder {
     View getShow();
 
     void showType(Type type);
-
-    enum Type {show, none}
 }

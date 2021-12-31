@@ -17,6 +17,13 @@ public interface IDialog<T extends IDialog> {
     void show();
 
     /**
+     * 是否正在显示
+     *
+     * @return true 显示，false 没显示
+     */
+    boolean isShowing();
+
+    /**
      * 设置点击外部区域取消弹框
      *
      * @param outsideCancele

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:background="#000">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_option"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        tools:background="#000"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <RelativeLayout
@@ -136,64 +136,11 @@
             android:layout_marginTop="7dp"
             android:layout_marginEnd="@dimen/dimen_room_padding"
             android:layout_marginBottom="7dp"
+            android:visibility="invisible"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/iv_send_gift"
             app:srcCompat="@drawable/selector_pk" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.rongcloud.common.ui.widget.CustomConstraintLayout
-        android:id="@+id/cl_input_bar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_input_bar"
-        android:clickable="true"
-        android:elevation="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:visibility="gone">
-
-        <com.vanniktech.emoji.EmojiEditText
-            android:id="@+id/et_message"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dimen_room_padding"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/dimen_room_padding"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/bg_voice_room_message_edit"
-            android:imeOptions="actionSend"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:singleLine="true"
-            android:textColor="@color/defaultTextColor"
-            app:layout_constraintEnd_toStartOf="@+id/btn_emoji_keyboard"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_emoji_keyboard"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/dimen_room_padding"
-            android:layout_marginBottom="10dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/btn_send_message"
-            app:srcCompat="@drawable/ic_voice_room_emoji" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_send_message"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/dimen_room_padding"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/bg_voice_room_send_button"
-            android:gravity="center"
-            android:text="发送"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </com.rongcloud.common.ui.widget.CustomConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

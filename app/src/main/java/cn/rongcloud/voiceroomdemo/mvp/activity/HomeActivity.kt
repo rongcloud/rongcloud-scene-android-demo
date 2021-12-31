@@ -17,13 +17,16 @@ import cn.rong.combusis.umeng.RcUmEvent
 import cn.rong.combusis.umeng.UmengHelper
 import cn.rong.combusis.widget.miniroom.MiniRoomManager
 import cn.rongcloud.annotation.HiltBinding
+import cn.rongcloud.live.roomlist.LiveRoomListActivity
 import cn.rongcloud.radio.ui.roomlist.RadioRoomListActivity
+import cn.rongcloud.voice.roomlist.VoiceRoomListActivity
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback
 import cn.rongcloud.voiceroomdemo.R
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.IHomeView
 import cn.rongcloud.voiceroomdemo.mvp.presenter.HomePresenter
 import cn.rongcloud.voiceroomdemo.ui.dialog.UserInfoDialog
+import cn.rongcloud.voiceroomdemo.update.VersionHelper
 import com.basis.UIStack
 import com.basis.ui.IBasis
 import com.rongcloud.common.base.BaseActivity
@@ -34,6 +37,7 @@ import com.rongcloud.common.utils.AccountStore
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
 import io.rong.callkit.DialActivity
+import io.rong.imkit.RongIM
 import io.rong.imkit.manager.UnReadMessageManager
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imkit.utils.StatusBarUtil
@@ -84,22 +88,21 @@ class HomeActivity : BaseActivity(), IHomeView, UnReadMessageManager.IUnReadMess
 
     override fun initView() {
         StatusBarUtil.setStatusBarFontIconDark(this, StatusBarUtil.TYPE_M, true)
-//        iv_voice_room.setOnClickListener {
-//            checkAndRequestPermissions(VOICE_PERMISSIONS) { accept ->
-//                if (accept) {
-//                    UmengHelper.get().event(RcUmEvent.VoiceRoom)
-//                    VoiceRoomListActivity.startActivity(this)
-//                } else {
-//                    showToast("请赋予必要权限！")
-//                }
-//            }
-//        }
-        tv_new_roomList.visibility = View.GONE;
+        iv_video_live.setOnClickListener {
+            checkAndRequestPermissions(CALL_PERMISSIONS) {
+                if (it) {
+                    UmengHelper.get().event(RcUmEvent.LiveRoom)
+                    LiveRoomListActivity.startActivity(this)
+                } else {
+                    showToast("请赋予必要权限！")
+                }
+            }
+        }
         iv_voice_room.setOnClickListener {
             checkAndRequestPermissions(VOICE_PERMISSIONS) { accept ->
                 if (accept) {
                     UmengHelper.get().event(RcUmEvent.VoiceRoom)
-                    cn.rongcloud.voiceroom.roomlist.VoiceRoomListActivity.startActivity(this)
+                    VoiceRoomListActivity.startActivity(this)
                 } else {
                     showToast("请赋予必要权限！")
                 }
@@ -144,6 +147,7 @@ class HomeActivity : BaseActivity(), IHomeView, UnReadMessageManager.IUnReadMess
                 }
             }
         }
+        VersionHelper.checkVersion(this, false)
     }
 
     override fun getActionTitle(): CharSequence? {
@@ -178,7 +182,7 @@ class HomeActivity : BaseActivity(), IHomeView, UnReadMessageManager.IUnReadMess
     }
 
     fun logout() {
-        RCVoiceRoomEngine.getInstance().disconnect(false)
+        RongIM.getInstance().disconnect()
         super.onLogout()
     }
 
@@ -211,6 +215,7 @@ class HomeActivity : BaseActivity(), IHomeView, UnReadMessageManager.IUnReadMess
 
     override fun onResume() {
         super.onResume()
+        portrait.loadPortrait(AccountStore.getUserPortrait() ?: "")
     }
 
     override fun initData() {

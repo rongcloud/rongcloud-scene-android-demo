@@ -3,7 +3,6 @@
   -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <style name="rc_voip_text_style_style" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">13sp</item>

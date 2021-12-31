@@ -66,4 +66,5 @@ public interface IProvider<T> {
      * @param resultBack
      */
     void provideFromService(@NonNull List<String> ids, @Nullable IResultBack<List<T>> resultBack);
+
 }

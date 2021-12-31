@@ -16,6 +16,18 @@ import io.rong.imlib.model.MessageContent;
 @MessageTag(value = "RC:Chatroom:Like")
 public class RCChatroomLike extends MessageContent {
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    public void readFromParcel(Parcel source) {
+    }
+
     public static final Creator<RCChatroomLike> CREATOR = new Creator<RCChatroomLike>() {
         @Override
         public RCChatroomLike createFromParcel(Parcel source) {
@@ -31,27 +43,15 @@ public class RCChatroomLike extends MessageContent {
     public RCChatroomLike() {
     }
 
+    @Override
+    public byte[] encode() {
+        return new byte[0];
+    }
+
     public RCChatroomLike(byte[] data) {
 
     }
 
     protected RCChatroomLike(Parcel in) {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
-
-    public void readFromParcel(Parcel source) {
-    }
-
-    @Override
-    public byte[] encode() {
-        return new byte[0];
     }
 }

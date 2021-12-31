@@ -36,15 +36,6 @@ public class AnimUtils {
     public static final Interpolator EASE_OUT_EASE_IN = PathInterpolatorCompat.create(
             0.4f, 0, 0.2f, 1);
 
-    public static void crossFadeViews(View fadeIn, View fadeOut, int duration) {
-        fadeIn(fadeIn, duration);
-        fadeOut(fadeOut, duration);
-    }
-
-    public static void fadeOut(View fadeOut, int duration) {
-        fadeOut(fadeOut, duration, null);
-    }
-
     public static void fadeOut(final View fadeOut, int durationMs,
                                final AnimationCallback callback) {
         fadeOut.setAlpha(1);
@@ -74,8 +65,13 @@ public class AnimUtils {
         animator.start();
     }
 
-    public static void fadeIn(View fadeIn, int durationMs) {
-        fadeIn(fadeIn, durationMs, NO_DELAY, null);
+    public static void crossFadeViews(View fadeIn, View fadeOut, int duration) {
+        fadeIn(fadeIn, duration);
+        fadeOut(fadeOut, duration);
+    }
+
+    public static void fadeOut(View fadeOut, int duration) {
+        fadeOut(fadeOut, duration, null);
     }
 
     public static void fadeIn(final View fadeIn, int durationMs, int delay,
@@ -112,6 +108,10 @@ public class AnimUtils {
         animator.start();
     }
 
+    public static void fadeIn(View fadeIn, int durationMs) {
+        fadeIn(fadeIn, durationMs, NO_DELAY, null);
+    }
+
     /**
      * Scales in the view from scale of 0 to actual dimensions.
      *
@@ -138,8 +138,7 @@ public class AnimUtils {
 
     /**
      * Scales out the view from actual dimensions to 0.
-     *
-     * @param view       The view to scale.
+     * @param view The view to scale.
      * @param durationMs The duration of the scaling in milliseconds.
      */
     public static void scaleOut(final View view, int durationMs) {
@@ -186,9 +185,8 @@ public class AnimUtils {
 
     /**
      * Animates a view to the new specified dimensions.
-     *
-     * @param view      The view to change the dimensions of.
-     * @param newWidth  The new width of the view.
+     * @param view The view to change the dimensions of.
+     * @param newWidth The new width of the view.
      * @param newHeight The new height of the view.
      */
     public static void changeDimensions(final View view, final int newWidth, final int newHeight) {
@@ -216,7 +214,6 @@ public class AnimUtils {
         public void onAnimationEnd() {
         }
 
-        public void onAnimationCancel() {
-        }
+        public void onAnimationCancel() {}
     }
 }

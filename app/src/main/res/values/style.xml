@@ -5,6 +5,7 @@
 <resources>
 
 
+
     <declare-styleable name="SpannedGridLayoutManager">
         <attr name="android:orientation" />
         <attr name="spanCount" />

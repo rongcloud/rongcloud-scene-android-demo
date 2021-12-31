@@ -143,9 +143,9 @@
 -keep class cn.rongcloud.rtc.RongRTCExtensionModule {*;}
 -keep class cn.rongcloud.rtc.RongRTCMessageRouter {*;}
 # voiceroom 保留api相关保
--keep class cn.rongcloud.voiceroom.api.** {*;}
--keep class cn.rongcloud.voiceroom.model.** {*;}
--keep class cn.rongcloud.voiceroom.utils.** {*;}
+-keep class cn.rongcloud.voice.api.** {*;}
+-keep class cn.rongcloud.voice.model.** {*;}
+-keep class cn.rongcloud.voice.utils.** {*;}
 -keep class cn.rongcloud.messager.** {*;}
 
 # test

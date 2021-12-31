@@ -13,6 +13,7 @@ import com.rongcloud.common.extension.*
 import com.rongcloud.common.model.AccountInfo
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.rong.imkit.RongIM
 
 /**
  * @author gusd
@@ -73,6 +74,7 @@ object AccountStore {
     // 登出
     fun logout() {
         saveAccountInfo(EMPTY_ACCOUNT)
+        RongIM.getInstance().disconnect()
     }
 
     // 监听账号信息发生变化

@@ -54,9 +54,6 @@ import io.rong.imlib.model.UserInfo;
 public class SingleCallActivity_NoDelete extends BaseCallActivity implements Handler.Callback {
     private static final String TAG = "VoIPSingleActivity";
     private static final int LOSS_RATE_ALARM = 20;
-    int userType;
-    SurfaceView remoteVideo;
-    String remoteUserId;
     private LayoutInflater inflater;
     private RongCallSession callSession;
     private RelativeLayout mLPreviewContainer;
@@ -72,20 +69,11 @@ public class SingleCallActivity_NoDelete extends BaseCallActivity implements Han
     private boolean isReceiveLost = false;
     private boolean isSendLost = false;
     private SoundPool mSoundPool = null;
+
     private int EVENT_FULL_SCREEN = 1;
+
     private String targetId = null;
     private RongCallCommon.CallMediaType mediaType;
-    private RongCallCommon.CallMediaType remoteMediaType;
-    private Runnable mCheckConnectionStableTask =
-            new Runnable() {
-                @Override
-                public void run() {
-                    boolean isConnectionStable = !isSendLost && !isReceiveLost;
-                    if (isConnectionStable) {
-                        mConnectionStateTextView.setVisibility(View.GONE);
-                    }
-                }
-            };
 
     @Override
     public final boolean handleMessage(Message msg) {
@@ -599,6 +587,11 @@ public class SingleCallActivity_NoDelete extends BaseCallActivity implements Han
         super.onDestroy();
     }
 
+    int userType;
+    SurfaceView remoteVideo;
+    String remoteUserId;
+    private RongCallCommon.CallMediaType remoteMediaType;
+
     @Override
     public void onRemoteUserJoined(
             final String userId,
@@ -1022,6 +1015,17 @@ public class SingleCallActivity_NoDelete extends BaseCallActivity implements Han
                     }
                 });
     }
+
+    private Runnable mCheckConnectionStableTask =
+            new Runnable() {
+                @Override
+                public void run() {
+                    boolean isConnectionStable = !isSendLost && !isReceiveLost;
+                    if (isConnectionStable) {
+                        mConnectionStateTextView.setVisibility(View.GONE);
+                    }
+                }
+            };
 
     private void refreshConnectionState() {
         if (isSendLost || isReceiveLost) {

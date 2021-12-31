@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#03062F"
+    android:orientation="vertical">
+
+    <com.meihu.beauty.custom.TextSeekBar
+        android:id="@+id/seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/title_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:overScrollMode="never" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray2" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mh_meiyan_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_beauty_viewpager"
+            android:overScrollMode="never" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -22,6 +22,11 @@ import io.rong.imlib.model.MessageContent;
  */
 @MessageTag(value = "RC:Chatroom:User:UnBan")
 public class RCChatroomUserUnBan extends MessageContent {
+    private static final String TAG = "RCChatroomUserUnBan";
+
+    private String id;
+    private String extra;
+
     public static final Creator<RCChatroomUserUnBan> CREATOR = new Creator<RCChatroomUserUnBan>() {
         @Override
         public RCChatroomUserUnBan createFromParcel(Parcel source) {
@@ -33,9 +38,6 @@ public class RCChatroomUserUnBan extends MessageContent {
             return new RCChatroomUserUnBan[size];
         }
     };
-    private static final String TAG = "RCChatroomUserUnBan";
-    private String id;
-    private String extra;
 
     public RCChatroomUserUnBan(byte[] data) {
         super(data);
@@ -55,6 +57,39 @@ public class RCChatroomUserUnBan extends MessageContent {
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getMessage());
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.extra);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.id = source.readString();
+        this.extra = source.readString();
     }
 
     public RCChatroomUserUnBan() {
@@ -80,37 +115,5 @@ public class RCChatroomUserUnBan extends MessageContent {
             Log.e(TAG, "JSONException " + e.getMessage());
         }
         return null;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getExtra() {
-        return extra;
-    }
-
-    public void setExtra(String extra) {
-        this.extra = extra;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.extra);
-    }
-
-    public void readFromParcel(Parcel source) {
-        this.id = source.readString();
-        this.extra = source.readString();
     }
 }

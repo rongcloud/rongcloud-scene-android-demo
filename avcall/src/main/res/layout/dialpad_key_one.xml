@@ -28,13 +28,13 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/dialpad_key_voicemail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:paddingTop="@dimen/dialpad_voicemail_icon_padding_top"
-                android:scaleType="fitCenter"
+                android:id="@+id/dialpad_key_voicemail"
                 android:src="@drawable/ic_dialpad_voicemail"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
                 app:tint="?attr/dialpad_voicemail_tint" />
             <!-- Place empty text view so vertical height is same as other dialpad keys. -->
             <TextView style="@style/DialpadKeyLettersStyle" />

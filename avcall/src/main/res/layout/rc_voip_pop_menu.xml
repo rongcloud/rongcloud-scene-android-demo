@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:maxLines="1"
-            android:text="@string/rc_voip_add_member"
             android:textColor="@color/rc_voip_white"
+            android:text="@string/rc_voip_add_member"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -54,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:maxLines="1"
-            android:text="@string/rc_voip_whiteboard"
             android:textColor="@color/rc_voip_white"
+            android:text="@string/rc_voip_whiteboard"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -79,8 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:maxLines="1"
-            android:text="@string/rc_voip_hand_up"
             android:textColor="@color/rc_voip_white"
+            android:text="@string/rc_voip_hand_up"
             android:textSize="14sp" />
     </LinearLayout>
 

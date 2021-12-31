@@ -52,8 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@drawable/shape_answer_bg"
-            android:onClick="onReceiveBtnClick"
             android:padding="10dp"
+            android:onClick="onReceiveBtnClick"
             android:scaleType="center"
             android:src="@drawable/ic_call_video_answer" />
 

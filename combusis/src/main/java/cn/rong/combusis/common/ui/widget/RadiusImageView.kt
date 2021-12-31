@@ -81,7 +81,7 @@ class RadiusImageView @JvmOverloads constructor(
         val maxTop = max(leftTopRadius, rightTopRadius)
         val maxBottom = max(leftBottomRadius, rightBottomRadius)
         val minHeight = maxTop + maxBottom
-        if (width >= minWidth && height > minHeight) {
+        if (width >= minWidth && height >= minHeight) {
             val path = Path()
             //四个角：右上，右下，左下，左上
             path.moveTo(leftTopRadius.toFloat(), 0f)
