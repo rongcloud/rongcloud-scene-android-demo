@@ -129,6 +129,9 @@ public abstract class AbsRoomActivity extends BaseActivity {
             case VOICE_ROOM:
                 intent.putExtra(RTCNotificationService.ACTION, IntentWrap.getVoiceRoomAction(activity));
                 break;
+            case LIVE_ROOM:
+                intent.putExtra(RTCNotificationService.ACTION, IntentWrap.getLiveRoomAction(activity));
+                break;
         }
         this.startService(intent);
     }

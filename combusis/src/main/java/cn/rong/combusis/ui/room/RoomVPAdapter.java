@@ -28,14 +28,6 @@ public class RoomVPAdapter extends FragmentStateAdapter {
         return mRoomList;
     }
 
-    public void setData(List<String> roomList) {
-        if (roomList != null) {
-            this.mRoomList.clear();
-            this.mRoomList.addAll(roomList);
-            notifyDataSetChanged();
-        }
-    }
-
     public void addData(List<String> roomList) {
         if (roomList != null) {
             this.mRoomList.addAll(roomList);
@@ -69,5 +61,13 @@ public class RoomVPAdapter extends FragmentStateAdapter {
 
     public int getItemPosition(String roomId) {
         return mRoomList.indexOf(roomId);
+    }
+
+    public void setData(List<String> roomList) {
+        if (roomList != null) {
+            this.mRoomList.clear();
+            this.mRoomList.addAll(roomList);
+            notifyDataSetChanged();
+        }
     }
 }

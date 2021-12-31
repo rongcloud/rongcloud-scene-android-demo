@@ -3,11 +3,11 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:callgridview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
     android:background="@color/rc_voip_background_color"
+    xmlns:callgridview="http://schemas.android.com/apk/res-auto"
+    android:layout_alignParentBottom="true"
     android:orientation="vertical">
 
     <!--多人视频inComing-->
@@ -16,9 +16,9 @@
         android:id="@+id/rc_voip_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_alignParentTop="true"
         android:orientation="vertical">
 
         <ImageView
@@ -32,35 +32,35 @@
             android:id="@id/rc_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/callkit_userNameMarginTop17dp"
             android:gravity="center"
+            android:layout_marginTop="@dimen/callkit_userNameMarginTop17dp"
             android:textColor="#ffffff"
             android:textSize="@dimen/callkit_textsize18sp" />
 
         <TextView
             android:id="@+id/tv_invite_incoming_audio"
-            style="@style/callkit_voip_text_style_18spWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56.5dp"
             android:gravity="center"
+            style="@style/callkit_voip_text_style_18spWhite"
+            android:layout_marginTop="56.5dp"
             android:text="@string/rc_voip_audio_call_inviting" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/rc_voip_control_layout"
+        android:layout_width="match_parent"
         android:layout_marginBottom="45dp"
+        android:layout_above="@+id/rc_voip_control_layout"
         android:orientation="vertical">
 
         <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
             android:text="@string/rc_voip_participant_users"
+            android:layout_marginBottom="20dp"
             android:textColor="@color/callkit_groupchatmembers"
             android:textSize="16sp" />
 
@@ -69,9 +69,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fadingEdge="none"
-            android:listSelector="@android:color/transparent"
             android:scrollbars="none"
             callgridview:CallGridViewChildrenPerLine="5"
+            android:listSelector="@android:color/transparent"
             callgridview:CallGridViewOrientation="true">
 
         </io.rong.callkit.CallUserGridView>
@@ -79,9 +79,9 @@
 
 
     <FrameLayout
+        android:layout_height="wrap_content"
         android:id="@+id/rc_voip_control_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
     </FrameLayout>

@@ -61,7 +61,6 @@ public class AudioRecordManager implements Handler.Callback {
     IAudioState sendingState = new SendingState();
     IAudioState cancelState = new CancelState();
     IAudioState timerState = new TimerState();
-    boolean isRecording = false;
     private int RECORD_INTERVAL = 60;
     private SamplingRate mSampleRate = SamplingRate.RC_SAMPLE_RATE_8000;
     private IAudioState mCurAudioState;
@@ -79,7 +78,6 @@ public class AudioRecordManager implements Handler.Callback {
     private ImageView mStateIV;
     private TextView mStateTV;
     private TextView mTimerTV;
-    private OnSendVoiceMessageClickListener onSendVoiceMessageClickListener;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public AudioRecordManager() {
@@ -88,6 +86,9 @@ public class AudioRecordManager implements Handler.Callback {
         mCurAudioState = idleState;
         idleState.enter();
     }
+
+
+    boolean isRecording = false;
 
     private void initView(View root) {
 
@@ -379,41 +380,7 @@ public class AudioRecordManager implements Handler.Callback {
         }
     }
 
-    private void sendAudioFile() {
-        RLog.d(TAG, "sendAudioFile path = " + mAudioPath);
-        if (mAudioPath != null) {
-            File file = new File(mAudioPath.getPath());
-            if (!file.exists() || file.length() == 0) {
-                RLog.e(TAG, "sendAudioFile fail cause of file length 0 or audio permission denied");
-                return;
-            }
-            //上传音频
-            FileBody body = new FileBody("multipart/form-data", file);
-            int duration = (int) (SystemClock.elapsedRealtime() - smStartRecTime) / 1000;
-            OkApi.file(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
-                @Override
-                public void onResult(Wrapper result) {
-                    String url = result.getBody().getAsString();
-                    if (result.ok() && !TextUtils.isEmpty(url)) {
-                        Log.e(TAG, "onResult: ");
-                        //自定义msg，然后发送
-                        String path = VRApi.FILE_PATH + url;
-                        RCChatroomVoice rcvrVoiceMessage = new RCChatroomVoice();
-                        rcvrVoiceMessage.setDuration(duration + "");
-                        rcvrVoiceMessage.setPath(path);
-                        rcvrVoiceMessage.setUserName(AccountStore.INSTANCE.getUserName());
-                        rcvrVoiceMessage.setUserId(AccountStore.INSTANCE.getUserId());
-                        if (onSendVoiceMessageClickListener != null) {
-                            onSendVoiceMessageClickListener.onSendVoiceMessage(rcvrVoiceMessage);
-                        }
-                    } else {
-                        Log.e(TAG, "onResult: ");
-                    }
-                }
-            });
-
-        }
-    }
+    private OnSendVoiceMessageClickListener onSendVoiceMessageClickListener;
 
     /**
      * 判断是否正在录音中
@@ -495,14 +462,6 @@ public class AudioRecordManager implements Handler.Callback {
         this.mSampleRate = sampleRate;
     }
 
-//    static class SingletonHolder {
-//        static AudioRecordManager sInstance = new AudioRecordManager();
-//    }
-
-    public void setOnSendVoiceMessageClickListener(OnSendVoiceMessageClickListener onSendVoiceMessageClickListener) {
-        this.onSendVoiceMessageClickListener = onSendVoiceMessageClickListener;
-    }
-
     /**
      * 语音消息采样率
      */
@@ -528,10 +487,9 @@ public class AudioRecordManager implements Handler.Callback {
         }
     }
 
-    public interface OnSendVoiceMessageClickListener {
-
-        void onSendVoiceMessage(RCChatroomVoice rcChatroomVoice);
-    }
+//    static class SingletonHolder {
+//        static AudioRecordManager sInstance = new AudioRecordManager();
+//    }
 
     class IdleState extends IAudioState {
         public IdleState() {
@@ -753,6 +711,51 @@ public class AudioRecordManager implements Handler.Callback {
                     break;
             }
         }
+    }
+
+    private void sendAudioFile() {
+        RLog.d(TAG, "sendAudioFile path = " + mAudioPath);
+        if (mAudioPath != null) {
+            File file = new File(mAudioPath.getPath());
+            if (!file.exists() || file.length() == 0) {
+                RLog.e(TAG, "sendAudioFile fail cause of file length 0 or audio permission denied");
+                return;
+            }
+            //上传音频
+            int duration = (int) (SystemClock.elapsedRealtime() - smStartRecTime) / 1000;
+            FileBody body = new FileBody("multipart/form-data", file);
+            OkApi.file(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
+                @Override
+                public void onResult(Wrapper result) {
+                    String url = result.getBody().getAsString();
+                    if (result.ok() && !TextUtils.isEmpty(url)) {
+                        Log.e(TAG, "onResult: ");
+                        //自定义msg，然后发送
+                        String path = VRApi.FILE_PATH + url;
+                        RCChatroomVoice rcvrVoiceMessage = new RCChatroomVoice();
+                        rcvrVoiceMessage.setDuration(duration + "");
+                        rcvrVoiceMessage.setPath(path);
+                        rcvrVoiceMessage.setUserName(AccountStore.INSTANCE.getUserName());
+                        rcvrVoiceMessage.setUserId(AccountStore.INSTANCE.getUserId());
+                        if (onSendVoiceMessageClickListener != null) {
+                            onSendVoiceMessageClickListener.onSendVoiceMessage(rcvrVoiceMessage);
+                        }
+                    } else {
+                        Log.e(TAG, "onResult: ");
+                    }
+                }
+            });
+
+        }
+    }
+
+    public void setOnSendVoiceMessageClickListener(OnSendVoiceMessageClickListener onSendVoiceMessageClickListener) {
+        this.onSendVoiceMessageClickListener = onSendVoiceMessageClickListener;
+    }
+
+    public interface OnSendVoiceMessageClickListener {
+
+        void onSendVoiceMessage(RCChatroomVoice rcChatroomVoice);
     }
 
     abstract class IAudioState {

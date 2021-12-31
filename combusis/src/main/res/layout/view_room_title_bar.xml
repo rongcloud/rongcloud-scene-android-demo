@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:background="@drawable/bg_room_title_left"
-        android:paddingStart="@dimen/dimen_room_padding"
         android:paddingEnd="6dp"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,6 +20,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_creater_id"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/default_portrait"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tv_room_name"
             android:layout_width="wrap_content"
@@ -29,10 +38,11 @@
             android:maxWidth="200dp"
             android:maxLines="1"
             android:textColor="@color/white"
+            android:paddingStart="@dimen/dimen_room_padding"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tv_room_id"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_creater_id"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Lily的房间aaaaaaaaaaaaaaaaaaaaaaa" />
 
@@ -45,34 +55,40 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_room_name"
             app:layout_constraintTop_toBottomOf="@id/tv_room_name"
+            android:paddingStart="@dimen/dimen_room_padding"
+            android:visibility="visible"
             tools:text="ID 1234567" />
 
         <TextView
             android:id="@+id/tv_room_online"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:drawableLeft="@drawable/shape_online_icon"
             android:drawablePadding="3dp"
             android:text="在线 1"
             android:textColor="@color/white"
             android:textSize="9sp"
+            android:layout_marginStart="@dimen/dimen_room_padding"
             app:layout_constraintStart_toEndOf="@id/tv_room_id"
-            app:layout_constraintTop_toTopOf="@id/tv_room_id"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_room_name"
             tools:text="在线 648" />
 
         <TextView
             android:id="@+id/tv_room_delay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:drawableStart="@drawable/ic_room_delay_1"
             android:drawablePadding="3dp"
             android:text="0"
             android:textColor="@color/white"
             android:textSize="9sp"
+            android:layout_marginStart="@dimen/dimen_room_padding"
             app:layout_constraintStart_toEndOf="@id/tv_room_online"
-            app:layout_constraintTop_toTopOf="@id/tv_room_id"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_room_name"
             tools:text="100" />
 
         <androidx.constraintlayout.widget.Barrier
@@ -111,6 +127,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_room_online_count"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_marginEnd="6dp"
+        android:background="@drawable/bg_live_room_online_count"
+        android:drawableStart="@drawable/ic_line_count"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="0"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_menu"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

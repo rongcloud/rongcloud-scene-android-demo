@@ -94,29 +94,6 @@ public abstract class AnimationLayout extends FrameLayout implements IAnimationL
         this.mViewHeight = getMeasuredHeight();
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        // 销毁资源
-        this.destroy();
-    }
-
-    /**
-     * 销毁资源
-     */
-    public void destroy() {
-        // 取消动画 释放资源
-        for (AnimatorSet animatorSet : mAnimatorSets) {
-            // 初始化回调方法
-            animatorSet.getListeners().clear();
-            // 取消动画
-            animatorSet.cancel();
-        }
-        // 释放集合资源
-        this.mAnimatorSets.clear();
-        this.mEvaluatorRecord.destroy();
-    }
-
     /**
      * 贝塞尔曲线路径更新事件
      */
@@ -161,5 +138,28 @@ public abstract class AnimationLayout extends FrameLayout implements IAnimationL
             // 从集合中移除
             mAnimatorSets.remove(mAnimatorSet);
         }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        // 销毁资源
+        this.destroy();
+    }
+
+    /**
+     * 销毁资源
+     */
+    public void destroy() {
+        // 取消动画 释放资源
+        for (AnimatorSet animatorSet : mAnimatorSets) {
+            // 初始化回调方法
+            animatorSet.getListeners().clear();
+            // 取消动画
+            animatorSet.cancel();
+        }
+        // 释放集合资源
+        this.mAnimatorSets.clear();
+        this.mEvaluatorRecord.destroy();
     }
 }

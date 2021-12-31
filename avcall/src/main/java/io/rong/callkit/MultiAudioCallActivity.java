@@ -65,20 +65,22 @@ import io.rong.imlib.model.UserInfo;
  */
 public class MultiAudioCallActivity extends BaseCallActivity {
     private static final String TAG = "VoIPMultiAudioCallActivity";
-    private final String KEY_MUTED = "muted";
-    private final String KEY_HAND_FREE = "handFree";
     LinearLayout audioContainer;
     ICallScrollView memberContainer;
+
     RelativeLayout incomingLayout;
     RelativeLayout outgoingLayout;
     RelativeLayout outgoingController;
     RelativeLayout incomingController;
     RongCallAction callAction;
     RongCallSession callSession;
+
     boolean shouldShowFloat = true;
     boolean startForCheckPermissions = false;
     private boolean handFree = false;
     private boolean muted = false;
+    private final String KEY_MUTED = "muted";
+    private final String KEY_HAND_FREE = "handFree";
 
     @Override
     @TargetApi(23)

@@ -41,12 +41,12 @@
         android:id="@id/rc_user_name"
         android:layout_width="55dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
-        android:ellipsize="end"
         android:gravity="center"
-        android:singleLine="true"
-        android:text="Susan"
         android:textColor="@color/rc_voip_white"
+        android:text="Susan"
         android:textSize="12sp" />
 </LinearLayout>

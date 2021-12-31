@@ -18,24 +18,13 @@ import io.rong.imlib.model.MessageContent;
 
 /**
  * 人到人送礼物
- *
  * @author gusd
  * @Date 2021/06/17
  */
 @MessageTag(value = "RC:Chatroom:Gift")
 public class RCChatroomGift extends MessageContent {
-    public static final Creator<RCChatroomGift> CREATOR = new Creator<RCChatroomGift>() {
-        @Override
-        public RCChatroomGift createFromParcel(Parcel source) {
-            return new RCChatroomGift(source);
-        }
-
-        @Override
-        public RCChatroomGift[] newArray(int size) {
-            return new RCChatroomGift[size];
-        }
-    };
     private static final String TAG = "RCChatroomGift";
+
     private String userId;
     private String userName;
     private String targetId;
@@ -82,21 +71,6 @@ public class RCChatroomGift extends MessageContent {
         }
     }
 
-
-    public RCChatroomGift() {
-    }
-
-    protected RCChatroomGift(Parcel in) {
-        this.userId = in.readString();
-        this.userName = in.readString();
-        this.targetId = in.readString();
-        this.targetName = in.readString();
-        this.giftId = in.readString();
-        this.giftName = in.readString();
-        this.number = in.readString();
-        this.price = in.readInt();
-    }
-
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
         try {
@@ -129,6 +103,7 @@ public class RCChatroomGift extends MessageContent {
         }
         return null;
     }
+
 
     public String getUserId() {
         return userId;
@@ -194,6 +169,7 @@ public class RCChatroomGift extends MessageContent {
         this.price = price;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -220,5 +196,31 @@ public class RCChatroomGift extends MessageContent {
         this.giftName = source.readString();
         this.number = source.readString();
         this.price = source.readInt();
+    }
+
+    public static final Creator<RCChatroomGift> CREATOR = new Creator<RCChatroomGift>() {
+        @Override
+        public RCChatroomGift createFromParcel(Parcel source) {
+            return new RCChatroomGift(source);
+        }
+
+        @Override
+        public RCChatroomGift[] newArray(int size) {
+            return new RCChatroomGift[size];
+        }
+    };
+
+    public RCChatroomGift() {
+    }
+
+    protected RCChatroomGift(Parcel in) {
+        this.userId = in.readString();
+        this.userName = in.readString();
+        this.targetId = in.readString();
+        this.targetName = in.readString();
+        this.giftId = in.readString();
+        this.giftName = in.readString();
+        this.number = in.readString();
+        this.price = in.readInt();
     }
 }

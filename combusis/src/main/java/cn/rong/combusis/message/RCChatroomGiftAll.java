@@ -17,23 +17,14 @@ import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 
 /**
+ *
  * @author gusd
  * @Date 2021/06/17
  */
 @MessageTag(value = "RC:Chatroom:GiftAll")
 public class RCChatroomGiftAll extends MessageContent {
-    public static final Creator<RCChatroomGiftAll> CREATOR = new Creator<RCChatroomGiftAll>() {
-        @Override
-        public RCChatroomGiftAll createFromParcel(Parcel source) {
-            return new RCChatroomGiftAll(source);
-        }
-
-        @Override
-        public RCChatroomGiftAll[] newArray(int size) {
-            return new RCChatroomGiftAll[size];
-        }
-    };
     private static final String TAG = "RCChatroomGiftAll";
+
     private String userId;
     private String userName;
     private String giftId;
@@ -72,18 +63,6 @@ public class RCChatroomGiftAll extends MessageContent {
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getMessage());
         }
-    }
-
-    public RCChatroomGiftAll() {
-    }
-
-    protected RCChatroomGiftAll(Parcel in) {
-        this.userId = in.readString();
-        this.userName = in.readString();
-        this.giftId = in.readString();
-        this.giftName = in.readString();
-        this.number = in.readInt();
-        this.price = in.readInt();
     }
 
     @Override
@@ -183,5 +162,29 @@ public class RCChatroomGiftAll extends MessageContent {
         this.giftName = source.readString();
         this.number = source.readInt();
         this.price = source.readInt();
+    }
+
+    public static final Creator<RCChatroomGiftAll> CREATOR = new Creator<RCChatroomGiftAll>() {
+        @Override
+        public RCChatroomGiftAll createFromParcel(Parcel source) {
+            return new RCChatroomGiftAll(source);
+        }
+
+        @Override
+        public RCChatroomGiftAll[] newArray(int size) {
+            return new RCChatroomGiftAll[size];
+        }
+    };
+
+    public RCChatroomGiftAll() {
+    }
+
+    protected RCChatroomGiftAll(Parcel in) {
+        this.userId = in.readString();
+        this.userName = in.readString();
+        this.giftId = in.readString();
+        this.giftName = in.readString();
+        this.number = in.readInt();
+        this.price = in.readInt();
     }
 }

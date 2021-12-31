@@ -30,11 +30,12 @@ import io.rong.imlib.model.UserInfo;
  * 竖向滑动 多人语音——主叫方和通话中
  */
 public class CallVerticalScrollView extends ScrollView implements ICallScrollView {
-    private static final int CHILDREN_SPACE = 18;
-    private static int CHILDREN_PER_LINE = 4;
     private Context context;
     private boolean enableTitle;
     private LinearLayout linearLayout;
+    private static final int CHILDREN_SPACE = 18;
+    private static int CHILDREN_PER_LINE = 4;
+
     private int portraitSize;
 
     public CallVerticalScrollView(Context context) {

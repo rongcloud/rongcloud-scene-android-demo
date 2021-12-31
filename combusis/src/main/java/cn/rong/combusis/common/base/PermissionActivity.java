@@ -51,8 +51,8 @@ public abstract class PermissionActivity extends AppCompatActivity {
             Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH_ADMIN,
             Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.RECORD_AUDIO,
     };
-    private IResultBack resultBack;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +62,9 @@ public abstract class PermissionActivity extends AppCompatActivity {
         checkAndRequestPermissions(permissions, null);
 
     }
+
+    private IResultBack resultBack;
+
 
     /**
      * 检查并申请权限

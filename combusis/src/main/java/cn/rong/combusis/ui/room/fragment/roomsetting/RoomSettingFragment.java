@@ -80,7 +80,12 @@ public class RoomSettingFragment extends BaseBottomSheetDialogFragment {
                 || baseFun instanceof RoomMuteAllFun
                 || baseFun instanceof RoomLockAllSeatFun
                 || baseFun instanceof RoomSeatSizeFun
-                || baseFun instanceof RoomSeatModeFun) {
+                || baseFun instanceof RoomSeatModeFun
+                || baseFun instanceof RoomTagsFun
+                || baseFun instanceof RoomBeautyFun
+                || baseFun instanceof RoomBeautyMakeUpFun
+                || baseFun instanceof RoomSpecialEffectsFun
+                || baseFun instanceof RoomVideoSetFun) {
             return true;
         }
         return false;

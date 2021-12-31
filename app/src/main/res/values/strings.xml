@@ -4,6 +4,8 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">融云 RTC</string>
+    <string name="app_name_interial">RC RTC</string>
+    <string name="app_name_test">融云 RTC-Test</string>
     <string name="please_input_phone_number">请输入手机号</string>
     <string name="please_input_verification_code">请输入验证码</string>
     <string name="get_verification_code">获取验证码</string>
@@ -25,6 +27,10 @@
     <string name="str_rejster_coms" tools:ignore="ExtraTranslation">注册条款</string>
     <string name="str_privite_coms" tools:ignore="ExtraTranslation">隐身政策</string>
     <string name="str_uninit_coms" tools:ignore="ExtraTranslation">账号注销</string>
+    <string name="str_check_version" tools:ignore="ExtraTranslation">检查版本</string>
     <string name="str_logout" tools:ignore="ExtraTranslation">退出登录</string>
+
+    <string name="live_video_call">视频直播</string>
+    <string name="live_video_des">视频直播间，支持高级美颜、观众连麦互动</string>
 
 </resources>

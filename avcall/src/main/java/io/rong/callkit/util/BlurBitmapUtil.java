@@ -18,17 +18,10 @@ import android.renderscript.ScriptIntrinsicBlur;
  */
 public class BlurBitmapUtil {
 
-    private BlurBitmapUtil() {
-    }
-
-    public static BlurBitmapUtil instance() {
-        return SingletonHolder.sInstance;
-    }
-
     /**
-     * @param context   上下文对象
-     * @param image     需要模糊的图片
-     * @param outWidth  输入出的宽度
+     * @param context 上下文对象
+     * @param image 需要模糊的图片
+     * @param outWidth 输入出的宽度
      * @param outHeight 输出的高度
      * @return 模糊处理后的Bitmap
      */
@@ -58,6 +51,13 @@ public class BlurBitmapUtil {
         // 将数据填充到Allocation中
         tmpOut.copyTo(outputBitmap);
         return outputBitmap;
+    }
+
+    private BlurBitmapUtil() {
+    }
+
+    public static BlurBitmapUtil instance() {
+        return SingletonHolder.sInstance;
     }
 
     private static class SingletonHolder {

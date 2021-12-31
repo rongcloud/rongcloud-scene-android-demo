@@ -21,19 +21,10 @@ import io.rong.imlib.model.MessageContent;
  */
 @MessageTag(value = "RC:Chatroom:Seats")
 public class RCChatroomSeats extends MessageContent {
-    public static final Creator<RCChatroomSeats> CREATOR = new Creator<RCChatroomSeats>() {
-        @Override
-        public RCChatroomSeats createFromParcel(Parcel source) {
-            return new RCChatroomSeats(source);
-        }
-
-        @Override
-        public RCChatroomSeats[] newArray(int size) {
-            return new RCChatroomSeats[size];
-        }
-    };
     private static final String TAG = "RCChatroomSeats";
+
     private int count;
+
 
     public RCChatroomSeats(byte[] data) {
         super(data);
@@ -49,13 +40,6 @@ public class RCChatroomSeats extends MessageContent {
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getMessage());
         }
-    }
-
-    public RCChatroomSeats() {
-    }
-
-    protected RCChatroomSeats(Parcel in) {
-        this.count = in.readInt();
     }
 
     @Override
@@ -90,5 +74,24 @@ public class RCChatroomSeats extends MessageContent {
 
     public void readFromParcel(Parcel source) {
         this.count = source.readInt();
+    }
+
+    public static final Creator<RCChatroomSeats> CREATOR = new Creator<RCChatroomSeats>() {
+        @Override
+        public RCChatroomSeats createFromParcel(Parcel source) {
+            return new RCChatroomSeats(source);
+        }
+
+        @Override
+        public RCChatroomSeats[] newArray(int size) {
+            return new RCChatroomSeats[size];
+        }
+    };
+
+    public RCChatroomSeats() {
+    }
+
+    protected RCChatroomSeats(Parcel in) {
+        this.count = in.readInt();
     }
 }

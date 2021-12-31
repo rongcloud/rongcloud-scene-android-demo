@@ -19,21 +19,13 @@ import android.renderscript.ScriptIntrinsicBlur;
 
 
 public class AndroidXBlurImpl implements BlurImpl {
-    static Boolean DEBUG = null;
     private RenderScript mRenderScript;
     private ScriptIntrinsicBlur mBlurScript;
     private Allocation mBlurInput;
     private Allocation mBlurOutput;
+    static Boolean DEBUG = null;
 
     public AndroidXBlurImpl() {
-    }
-
-    static boolean isDebug(Context ctx) {
-        if (DEBUG == null && ctx != null) {
-            DEBUG = (ctx.getApplicationInfo().flags & 2) != 0;
-        }
-
-        return DEBUG == Boolean.TRUE;
     }
 
     public boolean prepare(Context context, Bitmap buffer, float radius) {
@@ -87,5 +79,13 @@ public class AndroidXBlurImpl implements BlurImpl {
             this.mBlurScript.forEach(this.mBlurOutput);
             this.mBlurOutput.copyTo(output);
         }
+    }
+
+    static boolean isDebug(Context ctx) {
+        if (DEBUG == null && ctx != null) {
+            DEBUG = (ctx.getApplicationInfo().flags & 2) != 0;
+        }
+
+        return DEBUG == Boolean.TRUE;
     }
 }

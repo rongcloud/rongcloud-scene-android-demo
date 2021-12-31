@@ -30,14 +30,18 @@ public class AudioRecorder {
     private final static int AUDIO_CHANNEL = AudioFormat.CHANNEL_IN_MONO;
     //编码
     private final static int AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
-    //文件名
-    public static String fileName;
     // 缓冲区字节大小
     private int bufferSizeInBytes = 0;
+
     //录音对象
     private AudioRecord audioRecord;
+
     //录音状态
     private Status status = Status.STATUS_NO_READY;
+
+    //文件名
+    public static String fileName;
+
     //录音文件
     private List<String> filesName = new ArrayList<>();
     private AudioRecordListener audioRecordListener;
@@ -179,7 +183,6 @@ public class AudioRecorder {
         status = Status.STATUS_NO_READY;
     }
 
-
     /**
      * 将音频信息写入文件
      *
@@ -316,6 +319,17 @@ public class AudioRecorder {
     }
 
     /**
+     * 类级的内部类，也就是静态类的成员式内部类，该内部类的实例与外部类的实例
+     * 没有绑定关系，而且只有被调用时才会装载，从而实现了延迟加载
+     */
+    private static class AudioRecorderHolder {
+        /**
+         * 静态初始化器，由JVM来保证线程安全
+         */
+        private static AudioRecorder instance = new AudioRecorder();
+    }
+
+    /**
      * 将单个pcm文件转化为wav文件
      */
     private void makePCMFileToWAVFile() {
@@ -366,17 +380,6 @@ public class AudioRecorder {
         STATUS_PAUSE,
         //停止
         STATUS_STOP
-    }
-
-    /**
-     * 类级的内部类，也就是静态类的成员式内部类，该内部类的实例与外部类的实例
-     * 没有绑定关系，而且只有被调用时才会装载，从而实现了延迟加载
-     */
-    private static class AudioRecorderHolder {
-        /**
-         * 静态初始化器，由JVM来保证线程安全
-         */
-        private static AudioRecorder instance = new AudioRecorder();
     }
 
 }

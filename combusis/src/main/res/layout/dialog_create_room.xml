@@ -40,6 +40,14 @@
         app:radius="12dp"
         app:srcCompat="@drawable/ic_create_voice_room_default_cover" />
 
+    <ImageView
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_select_room_theme"
+        app:layout_constraintBottom_toBottomOf="@id/iv_room_cover"
+        app:layout_constraintEnd_toEndOf="@id/iv_room_cover" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_select_cover"

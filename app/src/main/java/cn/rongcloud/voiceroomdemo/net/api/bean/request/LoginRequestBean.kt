@@ -13,5 +13,6 @@ data class LoginRequestBean(
     val verifyCode: String,
     val userName: String? = null,
     val portrait: String? = null,
-    val deviceId: String
+    val deviceId: String,
+    val region: String
 )

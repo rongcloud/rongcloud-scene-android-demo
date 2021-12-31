@@ -21,10 +21,10 @@ import java.util.List;
  * @Description: 相关工具类
  */
 public class OkUtil {
+    protected static boolean debug = true;
     public final static String TAG = "OkUtil";
     public final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:SSS";
     private final static Gson gson = new GsonBuilder().setDateFormat(DATE_FORMAT).enableComplexMapKeySerialization().create();
-    protected static boolean debug = true;
 
     public static void i(String tag, Object obj) {
         if (null == obj || !debug) return;

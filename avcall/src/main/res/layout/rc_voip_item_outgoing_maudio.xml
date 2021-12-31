@@ -9,26 +9,26 @@
 
     <!--多人语音通话中顶部布局-->
     <FrameLayout
+        android:layout_height="wrap_content"
         android:id="@+id/rc_voip_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:visibility="gone">
 
         <ImageView
             android:id="@+id/rc_voip_add_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
             android:padding="20dp"
+            android:layout_gravity="right|center_vertical"
             android:src="@drawable/rc_voip_icon_add" />
 
         <ImageView
-            android:id="@+id/rc_voip_minimize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
             android:padding="20dp"
+            android:id="@+id/rc_voip_minimize"
             android:src="@drawable/rc_voip_minimize"
+            android:layout_gravity="left|center_vertical"
             android:visibility="gone" />
 
         <LinearLayout
@@ -40,17 +40,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/rc_voip_audio"
                 android:textColor="#FFFFFFFF"
+                android:layout_gravity="center"
                 android:textSize="@dimen/callkit_textsize18sp" />
 
             <TextView
-                android:id="@+id/rc_voip_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:id="@+id/rc_voip_time"
                 android:layout_marginTop="11.5dp"
+                android:layout_gravity="center"
                 android:text="00:00"
                 android:textColor="#ffffff" />
 
@@ -64,15 +64,15 @@
         android:visibility="gone">
 
         <ImageView
-            android:id="@+id/rc_voip_minimize_outgoing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/rc_voip_minimize_outgoing"
+            android:paddingLeft="17.5dp"
+            android:paddingBottom="11.5dp"
             android:layout_gravity="left|center_vertical"
             android:onClick="onMinimizeClick"
-            android:paddingLeft="17.5dp"
-            android:paddingTop="11.5dp"
-            android:paddingBottom="11.5dp"
             android:src="@drawable/rc_voip_minimize"
+            android:paddingTop="11.5dp"
             android:visibility="gone" />
 
 
@@ -81,8 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="@string/rc_voip_audio"
             android:textColor="#FFFFFFFF"
+            android:text="@string/rc_voip_audio"
             android:textSize="@dimen/callkit_textsize18sp" />
 
     </RelativeLayout>
@@ -102,20 +102,20 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_gravity="center_horizontal"
-            android:gravity="center"
             android:listSelector="@android:color/transparent"
+            android:gravity="center"
             android:scrollbars="none"></io.rong.callkit.util.CallVerticalScrollView>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/rc_voip_remind"
-        style="@style/callkit_voip_text_style_18spWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/rc_voip_remind"
+        style="@style/callkit_voip_text_style_18spWhite"
         android:layout_above="@+id/rc_voip_control_layout"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/rc_voip_call_waiting" />
 

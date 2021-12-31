@@ -248,6 +248,10 @@ public class VerifyEditText extends LinearLayout {
         }
     }
 
+    public interface InputCompleteListener {
+        void complete(String content);
+    }
+
     private int px2sp(Context context, float pxValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
@@ -256,9 +260,5 @@ public class VerifyEditText extends LinearLayout {
     private int sp2px(Context context, float spValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
-    }
-
-    public interface InputCompleteListener {
-        void complete(String content);
     }
 }

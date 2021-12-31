@@ -22,13 +22,13 @@
 
         <ImageView
             android:id="@+id/iv_up"
-            style="@style/main_primary_17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_score_up"
             android:scaleType="center"
+            style="@style/main_primary_17"
             app:layout_constraintBottom_toBottomOf="@+id/up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,11 +36,11 @@
 
         <TextView
             android:id="@+id/up"
-            style="@style/main_primary_17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="点个赞"
+            style="@style/main_primary_17"
             android:textColor="#020037"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"

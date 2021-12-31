@@ -18,6 +18,10 @@ import androidx.annotation.NonNull;
 
 public class BasePopupWindow extends PopupWindow {
 
+    protected void initView(@NonNull View content) {
+
+    }
+
     public BasePopupWindow(Context context, @LayoutRes int layoutId, int width, int height, boolean b) {
         this(LayoutInflater.from(context).inflate(layoutId, null), width, height, false);
     }
@@ -27,9 +31,6 @@ public class BasePopupWindow extends PopupWindow {
         initView(contentView);
     }
 
-    protected void initView(@NonNull View content) {
-
-    }
 
     @Override
     public void showAtLocation(View parent, int gravity, int x, int y) {

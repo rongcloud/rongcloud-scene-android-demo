@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:radius="10dp"
         app:realtimeBlurRadius="21dp"
-        app:realtimeOverlayColor="#29FFFFFF" />
+        app:realtimeOverlayColor="#5C5095" />
 
     <TextView
         android:id="@+id/tv_title"

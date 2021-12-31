@@ -36,9 +36,8 @@ import cn.rong.combusis.umeng.UmengHelper;
 public class FeedbackHelper implements IFeedback {
     private final static String TAG = "FeedbackHelper";
     private final static IFeedback helper = new FeedbackHelper();
-    private final List<Integer> selectedDowns = new ArrayList();
     private FeedbackListener feedbackListener;
-    private cn.rong.combusis.VRCenterDialog VRCenterDialog;
+
 
     private FeedbackHelper() {
     }
@@ -99,6 +98,7 @@ public class FeedbackHelper implements IFeedback {
                 SharedPreferUtil.get(KEY_TIME, 0) >= LIMT;
     }
 
+
     /**
      * 清空统计：取消评价后清空
      */
@@ -119,6 +119,8 @@ public class FeedbackHelper implements IFeedback {
         }
         VRCenterDialog = null;
     }
+
+    private final List<Integer> selectedDowns = new ArrayList();
 
     private void showFeedbackDialog(Activity activity) {
         if (null == VRCenterDialog || !VRCenterDialog.enable()) {
@@ -245,6 +247,8 @@ public class FeedbackHelper implements IFeedback {
                     }
                 }, initDownView());
     }
+
+    private cn.rong.combusis.VRCenterDialog VRCenterDialog;
 
     private View initDownView() {
         View view = VRCenterDialog.getLayoutInflater().inflate(R.layout.layout_score_down, null);

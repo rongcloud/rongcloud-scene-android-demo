@@ -25,7 +25,7 @@ import android.widget.RelativeLayout;
 /**
  * Subclass of {@link RelativeLayout} that supports percentage based dimensions and
  * margins.
- * <p>
+ *
  * You can specify dimension or a margin of child by using attributes with "Percent" suffix. Follow
  * this example:
  *
@@ -42,7 +42,7 @@ import android.widget.RelativeLayout;
  *         app:layout_marginLeftPercent="25%"/&gt
  * &lt;/android.support.percent.PercentFrameLayout/&gt
  * </pre>
- * <p>
+ *
  * The attributes that you can use are:
  * <ul>
  *     <li>{@code layout_widthPercent}
@@ -55,7 +55,7 @@ import android.widget.RelativeLayout;
  *     <li>{@code layout_marginStartPercent}
  *     <li>{@code layout_marginEndPercent}
  * </ul>
- * <p>
+ *
  * It is not necessary to specify {@code layout_width/height} if you specify {@code
  * layout_widthPercent.} However, if you want the view to be able to take up more space than what
  * percentage value permits, you can add {@code layout_width/height="wrap_content"}. In that case

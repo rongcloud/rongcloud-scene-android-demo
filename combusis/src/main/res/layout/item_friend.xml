@@ -37,8 +37,8 @@
             android:layout_width="84dp"
             android:layout_height="32dp"
             android:background="@drawable/selector_follow_button"
-            android:button="@null"
             android:gravity="center"
+            android:button="@null"
             android:text="关注"
             android:textColor="@color/selector_follow_button"
             android:textSize="@dimen/basis_14sp" />

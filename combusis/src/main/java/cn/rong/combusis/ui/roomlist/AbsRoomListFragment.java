@@ -165,29 +165,37 @@ public abstract class AbsRoomListFragment extends BaseFragment
                     public void onResult(Wrapper result) {
                         dismissLoading();
                         if (result.ok()) {
-                            mCreateRoomDialog =
-                                    new CreateRoomDialog(
-                                            requireActivity(),
-                                            mLauncher,
-                                            getRoomType(),
-                                            AbsRoomListFragment.this);
-                            mCreateRoomDialog.show();
+                            showCreateRoomDialog();
                         } else if (result.getCode() == 30016) {
                             VoiceRoomBean voiceRoomBean = result.get(VoiceRoomBean.class);
                             if (voiceRoomBean != null) {
                                 onCreateExist(voiceRoomBean);
                             } else {
-                                mCreateRoomDialog =
-                                        new CreateRoomDialog(
-                                                requireActivity(),
-                                                mLauncher,
-                                                getRoomType(),
-                                                AbsRoomListFragment.this);
-                                mCreateRoomDialog.show();
+                                showCreateRoomDialog();
                             }
                         }
                     }
                 });
+    }
+
+    /**
+     * 展示创建房间弹窗
+     */
+    private void showCreateRoomDialog() {
+        if (getRoomType() != RoomType.LIVE_ROOM) {
+            mCreateRoomDialog =
+                    new CreateRoomDialog(
+                            requireActivity(),
+                            mLauncher,
+                            getRoomType(),
+                            AbsRoomListFragment.this);
+            mCreateRoomDialog.show();
+        } else {
+            //如果是直播房，是直接进入直播间界面的
+            ArrayList list = new ArrayList();
+            list.add("-1");
+            launchRoomActivity("", list, 0, true);
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="cn.rongcloud.voiceroomdemo">
 
     <uses-feature android:name="android.hardware.camera" />
@@ -30,15 +31,20 @@
         android:name="cn.rongcloud.voiceroomdemo.MyApp"
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
-        android:label="@string/app_name"
+        android:label="${APP_NAME}"
         android:networkSecurityConfig="@xml/httpsupport"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:label">
 
         <activity
             android:name="cn.rongcloud.voiceroomdemo.mvp.activity.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".region.RegionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BasisTheme" />
         <activity

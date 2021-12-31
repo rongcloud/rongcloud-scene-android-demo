@@ -36,8 +36,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private boolean needModefy = false;
     private UnregisterDialog unregisterDialog;
     private SettingPresenter presenter;
-    private ImageView iv_portrait;
-    private TextView tv_name;
 
     public static void startActivity(Activity activity, int code) {
         if (code > 0) {
@@ -58,6 +56,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public int setLayoutId() {
         return R.layout.activity_setting;
     }
+
+    private ImageView iv_portrait;
+    private TextView tv_name;
 
     @Override
     public void init() {

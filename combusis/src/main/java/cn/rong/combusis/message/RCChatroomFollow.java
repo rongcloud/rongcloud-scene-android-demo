@@ -17,28 +17,18 @@ import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 
 /**
+ *
  * @author gusd
  * @Date 2021/06/17
  */
 @MessageTag(value = "RC:Chatroom:Follow")
 public class RCChatroomFollow extends MessageContent {
-    public static final Creator<RCChatroomFollow> CREATOR = new Creator<RCChatroomFollow>() {
-        @Override
-        public RCChatroomFollow createFromParcel(Parcel source) {
-            return new RCChatroomFollow(source);
-        }
-
-        @Override
-        public RCChatroomFollow[] newArray(int size) {
-            return new RCChatroomFollow[size];
-        }
-    };
     private static final String TAG = "RCChatroomFollow";
+
     private String id;
     private int rank;
     private int level;
     private String extra;
-
 
     public RCChatroomFollow(byte[] data) {
         super(data);
@@ -65,15 +55,6 @@ public class RCChatroomFollow extends MessageContent {
         }
     }
 
-    public RCChatroomFollow() {
-    }
-
-    protected RCChatroomFollow(Parcel in) {
-        this.id = in.readString();
-        this.rank = in.readInt();
-        this.level = in.readInt();
-        this.extra = in.readString();
-    }
 
     @Override
     public byte[] encode() {
@@ -126,6 +107,7 @@ public class RCChatroomFollow extends MessageContent {
         this.extra = extra;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -144,5 +126,27 @@ public class RCChatroomFollow extends MessageContent {
         this.rank = source.readInt();
         this.level = source.readInt();
         this.extra = source.readString();
+    }
+
+    public static final Creator<RCChatroomFollow> CREATOR = new Creator<RCChatroomFollow>() {
+        @Override
+        public RCChatroomFollow createFromParcel(Parcel source) {
+            return new RCChatroomFollow(source);
+        }
+
+        @Override
+        public RCChatroomFollow[] newArray(int size) {
+            return new RCChatroomFollow[size];
+        }
+    };
+
+    public RCChatroomFollow() {
+    }
+
+    protected RCChatroomFollow(Parcel in) {
+        this.id = in.readString();
+        this.rank = in.readInt();
+        this.level = in.readInt();
+        this.extra = in.readString();
     }
 }

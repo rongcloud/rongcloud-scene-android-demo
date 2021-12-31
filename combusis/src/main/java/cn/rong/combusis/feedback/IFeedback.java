@@ -15,6 +15,10 @@ public interface IFeedback {
             "交互体验"
     };
 
+    interface FeedbackListener {
+        void onFeedback();
+    }
+
     /**
      * 注销反馈监听
      */
@@ -27,13 +31,9 @@ public interface IFeedback {
      */
     void registeFeedbackObservice(@NonNull Activity activity);
 
+
     /**
      * 统计体验次数 累加
      */
     void statistics();
-
-
-    interface FeedbackListener {
-        void onFeedback();
-    }
 }

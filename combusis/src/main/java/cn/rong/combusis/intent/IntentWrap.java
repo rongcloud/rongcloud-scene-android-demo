@@ -19,6 +19,7 @@ public class IntentWrap {
     // actions
     private static final String ACTION_RADIO_ROOM = ".RadioRoomActivity";
     private static final String ACTION_VOICE_ROOM = ".VoiceRoomActivity";
+    private static final String ACTION_LIVE_ROOM = ".LiveRoomActivity";
 
     public static String getRadioRoomAction(Context context) {
         return context.getPackageName() + ACTION_RADIO_ROOM;
@@ -26,6 +27,10 @@ public class IntentWrap {
 
     public static String getVoiceRoomAction(Context context) {
         return context.getPackageName() + ACTION_VOICE_ROOM;
+    }
+
+    public static String getLiveRoomAction(Context context) {
+        return context.getPackageName() + ACTION_LIVE_ROOM;
     }
 
     /**
@@ -43,7 +48,7 @@ public class IntentWrap {
             intent.putExtra(KEY_ROOM_POSITION, position);
             context.startActivity(intent);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -64,9 +69,26 @@ public class IntentWrap {
             intent.putExtra(KEY_IS_CREATE, isCreate);
             context.startActivity(intent);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
+
+    /**
+     * 打开直播房
+     */
+    public static void launchLiveRoom(Context context, ArrayList<String> roomIds, int position, boolean isCreate) {
+        try {
+            Intent intent = new Intent();
+            intent.setAction(getLiveRoomAction(context));
+            intent.putExtra(KEY_ROOM_IDS, roomIds);
+            intent.putExtra(KEY_ROOM_POSITION, position);
+            intent.putExtra(KEY_IS_CREATE, isCreate);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 根据房间类型，id，跳转到相应的房间
@@ -84,6 +106,10 @@ public class IntentWrap {
             ArrayList<String> ids = new ArrayList<>();
             ids.add(roomId);
             launchVoiceRoom(context, ids, 0, false);
+        } else if (roomType == RoomType.LIVE_ROOM.getType()) {
+            ArrayList<String> ids = new ArrayList<>();
+            ids.add(roomId);
+            launchLiveRoom(context, ids, 0, false);
         }
     }
 
@@ -101,6 +127,8 @@ public class IntentWrap {
             launchRadioRoom(context, roomIds, position);
         } else if (roomType == RoomType.VOICE_ROOM) {
             launchVoiceRoom(context, roomIds, position, isCreate);
+        } else if (roomType == RoomType.LIVE_ROOM) {
+            launchLiveRoom(context, roomIds, position, isCreate);
         }
     }
 }

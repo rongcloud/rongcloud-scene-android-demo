@@ -23,6 +23,11 @@ import io.rong.imlib.model.MessageContent;
  */
 @MessageTag(value = "RC:Chatroom:User:UnBlock")
 public class RCChatroomUserUnBlock extends MessageContent {
+    private static final String TAG = "RCChatroomUserUnBlock";
+
+    private String id;
+    private String extra;
+
     public static final Parcelable.Creator<RCChatroomUserUnBlock> CREATOR = new Parcelable.Creator<RCChatroomUserUnBlock>() {
         @Override
         public RCChatroomUserUnBlock createFromParcel(Parcel source) {
@@ -34,37 +39,6 @@ public class RCChatroomUserUnBlock extends MessageContent {
             return new RCChatroomUserUnBlock[size];
         }
     };
-    private static final String TAG = "RCChatroomUserUnBlock";
-    private String id;
-    private String extra;
-
-    public RCChatroomUserUnBlock(byte[] data) {
-        super(data);
-        String jsonStr = null;
-        jsonStr = new String(data, StandardCharsets.UTF_8);
-
-        try {
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            if (jsonObj.has("id")) {
-                id = jsonObj.getString("id");
-            }
-
-            if (jsonObj.has("extra")) {
-                extra = jsonObj.getString("extra");
-            }
-
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getMessage());
-        }
-    }
-
-    public RCChatroomUserUnBlock() {
-    }
-
-    protected RCChatroomUserUnBlock(Parcel in) {
-        this.id = in.readString();
-        this.extra = in.readString();
-    }
 
     @Override
     public byte[] encode() {
@@ -113,5 +87,34 @@ public class RCChatroomUserUnBlock extends MessageContent {
     public void readFromParcel(Parcel source) {
         this.id = source.readString();
         this.extra = source.readString();
+    }
+
+    public RCChatroomUserUnBlock(byte[] data) {
+        super(data);
+        String jsonStr = null;
+        jsonStr = new String(data, StandardCharsets.UTF_8);
+
+        try {
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            if (jsonObj.has("id")) {
+                id = jsonObj.getString("id");
+            }
+
+            if (jsonObj.has("extra")) {
+                extra = jsonObj.getString("extra");
+            }
+
+        } catch (JSONException e) {
+            Log.e(TAG, "JSONException " + e.getMessage());
+        }
+    }
+
+
+    public RCChatroomUserUnBlock() {
+    }
+
+    protected RCChatroomUserUnBlock(Parcel in) {
+        this.id = in.readString();
+        this.extra = in.readString();
     }
 }

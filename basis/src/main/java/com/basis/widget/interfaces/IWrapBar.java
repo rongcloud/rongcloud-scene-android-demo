@@ -50,10 +50,6 @@ public interface IWrapBar<T extends IWrapBar> {
             return index;
         }
 
-        public void setIndex(int index) {
-            this.index = index;
-        }
-
         public int getIcon() {
             return icon;
         }
@@ -64,6 +60,10 @@ public interface IWrapBar<T extends IWrapBar> {
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
         }
     }
 }

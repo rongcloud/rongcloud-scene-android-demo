@@ -7,8 +7,10 @@ package cn.rong.combusis.common.ui.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import cn.rong.combusis.R
 
 /**
@@ -30,6 +32,18 @@ abstract class BaseDialog(
         setContentView(rootView)
         initView()
         initListener()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        val window: Window? = window
+        if (hasFocus && window != null) {
+            val decorView: View = window.decorView
+            if (decorView.height == 0 || decorView.width == 0) {
+                decorView.requestLayout()
+                Log.d("TAG", "布局异常，重新布局")
+            }
+        }
     }
 
 

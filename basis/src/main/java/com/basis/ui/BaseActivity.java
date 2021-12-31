@@ -30,6 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasis {
     protected BaseActivity activity;
     private View layout;
     private IWrapBar wrapBar;
+    private WXDialog networkDialog;
 
     @Override
     protected void onDestroy() {
@@ -90,7 +91,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasis {
     @Override
     public void onNetChange() {
         if (!NetUtil.isNetworkAvailable()) {
-            WXDialog.showDefaultDialog(activity, "网络异常进行检查", null);
+            if (networkDialog == null || !networkDialog.isShowing()) {
+                networkDialog = new WXDialog(activity)
+                        .setMessage("网络异常进行检查")
+                        .defalutStyle(true, null);
+                networkDialog.show();
+            }
         }
     }
 

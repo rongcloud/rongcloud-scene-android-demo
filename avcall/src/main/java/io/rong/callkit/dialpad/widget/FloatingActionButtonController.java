@@ -73,10 +73,6 @@ public class FloatingActionButtonController {
         mScreenWidth = screenWidth;
     }
 
-    public boolean isVisible() {
-        return mFloatingActionButtonContainer.getVisibility() == View.VISIBLE;
-    }
-
     /**
      * Sets FAB as View.VISIBLE or View.GONE.
      *
@@ -84,6 +80,10 @@ public class FloatingActionButtonController {
      */
     public void setVisible(boolean visible) {
         mFloatingActionButtonContainer.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    public boolean isVisible() {
+        return mFloatingActionButtonContainer.getVisibility() == View.VISIBLE;
     }
 
     public void changeIcon(Drawable icon, String description) {
@@ -119,7 +119,7 @@ public class FloatingActionButtonController {
     /**
      * Aligns the FAB to the described location plus specified additional offsets.
      *
-     * @param align   One of ALIGN_MIDDLE, ALIGN_QUARTER_RIGHT, or ALIGN_RIGHT.
+     * @param align One of ALIGN_MIDDLE, ALIGN_QUARTER_RIGHT, or ALIGN_RIGHT.
      * @param offsetX Additional offsetX to translate by.
      * @param offsetY Additional offsetY to translate by.
      * @param animate Whether or not to animate the transition.
@@ -147,9 +147,8 @@ public class FloatingActionButtonController {
 
     /**
      * Resizes width and height of the floating action bar container.
-     *
      * @param dimension The new dimensions for the width and height.
-     * @param animate   Whether to animate this change.
+     * @param animate Whether to animate this change.
      */
     public void resize(int dimension, boolean animate) {
         if (animate) {
@@ -164,7 +163,6 @@ public class FloatingActionButtonController {
     /**
      * Scales the floating action button from no height and width to its actual dimensions. This is
      * an animation for showing the floating action button.
-     *
      * @param delayMs The delay for the effect, in milliseconds.
      */
     public void scaleIn(int delayMs) {

@@ -16,8 +16,9 @@ import io.rong.push.notification.RongNotificationInterface;
  * 适配 Android 10 以上不允许后台启动 Activity 的工具类
  */
 public class IncomingCallExtraHandleUtil {
-    public final static int VOIP_REQUEST_CODE = 30001;
     public static int VOIP_NOTIFICATION_ID = 3000; //VoIP类型的通知消息。
+    public final static int VOIP_REQUEST_CODE = 30001;
+
     private static RongCallSession cachedCallSession = null;
     private static boolean checkPermissions = false;
 

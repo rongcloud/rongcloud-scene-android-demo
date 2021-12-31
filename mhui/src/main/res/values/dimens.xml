@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="view_beauty_viewpager">180dp</dimen>
+    <dimen name="view_beauty_capture_bottom">10dp</dimen>
+    <dimen name="view_beauty_height">230dp</dimen>
+
+    <dimen name="view_beauty_height_2">160dp</dimen>
+
+</resources>

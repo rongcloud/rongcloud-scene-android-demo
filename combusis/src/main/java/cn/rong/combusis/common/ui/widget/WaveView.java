@@ -30,11 +30,13 @@ public class WaveView extends View {
     private float mMaxRadius = 0;   // 最大波纹半径
     private long mDuration = 3200; // 一个波纹从创建到消失的持续时间
     private int mSpeed = 800;   // 波纹的创建速度，每500ms创建一个
-    private final List<Circle> mCircleList = new ArrayList<>((int) (mDuration / mSpeed + 1));
     private float mMaxRadiusRate = 1.0f;
     private boolean mMaxRadiusSet;
+
     private boolean mIsRunning;
     private long mLastCreateTime;
+    private final List<Circle> mCircleList = new ArrayList<>((int) (mDuration / mSpeed + 1));
+
     private final Runnable mCreateCircle = new Runnable() {
         @Override
         public void run() {
@@ -57,13 +59,13 @@ public class WaveView extends View {
         this(context, attrs, -1);
     }
 
+    public void setStyle(Paint.Style style) {
+        mPaint.setStyle(style);
+    }
+
     public WaveView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
-    }
-
-    public void setStyle(Paint.Style style) {
-        mPaint.setStyle(style);
     }
 
     private void init(AttributeSet attrs) {
@@ -181,13 +183,6 @@ public class WaveView extends View {
         mLastCreateTime = currentTime;
     }
 
-    public void setInterpolator(Interpolator interpolator) {
-        mInterpolator = interpolator;
-        if (mInterpolator == null) {
-            mInterpolator = new LinearInterpolator();
-        }
-    }
-
     private class Circle {
         private final long mCreateTime;
 
@@ -204,6 +199,13 @@ public class WaveView extends View {
         float getCurrentRadius() {
             float percent = (System.currentTimeMillis() - mCreateTime) * 1.0f / mDuration;
             return mInitialRadius + mInterpolator.getInterpolation(percent) * (mMaxRadius - mInitialRadius);
+        }
+    }
+
+    public void setInterpolator(Interpolator interpolator) {
+        mInterpolator = interpolator;
+        if (mInterpolator == null) {
+            mInterpolator = new LinearInterpolator();
         }
     }
 }

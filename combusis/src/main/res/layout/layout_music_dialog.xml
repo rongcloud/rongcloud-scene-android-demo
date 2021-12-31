@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:realtimeBlurRadius="14dp"
-                app:realtimeOverlayColor="#29FFFFFF" />
+                app:realtimeOverlayColor="#5C5095" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_music_list"
@@ -86,7 +86,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/vp_page"
             app:layout_constraintTop_toTopOf="@+id/vp_page"
             app:realtimeBlurRadius="14dp"
-            app:realtimeOverlayColor="#1AFFFFFF" />
+            app:realtimeOverlayColor="#5C5095" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_page"

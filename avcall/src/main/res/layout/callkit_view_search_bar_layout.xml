@@ -35,14 +35,14 @@
         android:layout_marginRight="5dp"
         android:layout_toStartOf="@id/iv_clear"
         android:layout_toLeftOf="@id/iv_clear"
-        android:layout_toEndOf="@id/iv_icon"
         android:layout_toRightOf="@id/iv_icon"
+        android:layout_toEndOf="@id/iv_icon"
         android:background="@null"
         android:hint="@string/rc_search"
+        android:textColor="@color/callkit_search_text_color"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:maxLines="1"
-        android:textColor="@color/callkit_search_text_color"
         android:textColorHint="@color/callkit_search_text_color_hint"
         android:textSize="16sp" />
 

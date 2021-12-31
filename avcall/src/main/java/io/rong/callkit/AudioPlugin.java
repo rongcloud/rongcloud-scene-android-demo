@@ -37,9 +37,10 @@ import io.rong.imlib.model.Conversation;
  */
 public class AudioPlugin implements IPluginModule, IPluginRequestPermissionResultCallback {
     private static final String TAG = "AudioPlugin";
-    private static final int REQEUST_CODE_RECORD_AUDIO_PERMISSION = 101;
     private ArrayList<String> allMembers;
     private Context context;
+    private static final int REQEUST_CODE_RECORD_AUDIO_PERMISSION = 101;
+
     private Conversation.ConversationType conversationType;
     private String targetId;
 

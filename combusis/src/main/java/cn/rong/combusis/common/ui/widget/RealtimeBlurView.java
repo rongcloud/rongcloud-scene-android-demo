@@ -38,71 +38,25 @@ import cn.rong.combusis.common.ui.widget.blurImpl.SupportLibraryBlurImpl;
  */
 public class RealtimeBlurView extends View {
 
-    private static final StopException STOP_EXCEPTION = new StopException();
-    private static int RENDERING_COUNT;
-    private static int BLUR_IMPL;
-    private final BlurImpl mBlurImpl;
-    private final Paint mPaint;
-    private final Rect mRectSrc = new Rect(), mRectDst = new Rect();
     private float mDownsampleFactor; // default 4
     private int mOverlayColor; // default #aaffffff
     private float mBlurRadius; // default 10dp (0 < r <= 25)
+
+    private static final StopException STOP_EXCEPTION = new StopException();
     private boolean mDirty;
     private Bitmap mBitmapToBlur, mBlurredBitmap;
     private Canvas mBlurringCanvas;
     private boolean mIsRendering;
+    private static int RENDERING_COUNT;
+    private static int BLUR_IMPL;
     // mDecorView should be the root view of the activity (even if you are on a different window like a dialog)
     private View mDecorView;
     // If the view is on different root view (usually means we are on a PopupWindow),
     // we need to manually call invalidate() in onPreDraw(), otherwise we will not be able to see the changes
     private boolean mDifferentRoot;
-    private final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-        @Override
-        public boolean onPreDraw() {
-            final int[] locations = new int[2];
-            Bitmap oldBmp = mBlurredBitmap;
-            View decor = mDecorView;
-            if (decor != null && isShown() && prepare()) {
-                boolean redrawBitmap = mBlurredBitmap != oldBmp;
-                oldBmp = null;
-                decor.getLocationOnScreen(locations);
-                int x = -locations[0];
-                int y = -locations[1];
+    private final BlurImpl mBlurImpl;
+    private final Paint mPaint;
 
-                getLocationOnScreen(locations);
-                x += locations[0];
-                y += locations[1];
-
-                // just erase transparent
-                mBitmapToBlur.eraseColor(mOverlayColor & 0xffffff);
-
-                int rc = mBlurringCanvas.save();
-                mIsRendering = true;
-                RENDERING_COUNT++;
-                try {
-                    mBlurringCanvas.scale(1.f * mBitmapToBlur.getWidth() / getWidth(), 1.f * mBitmapToBlur.getHeight() / getHeight());
-                    mBlurringCanvas.translate(-x, -y);
-                    if (decor.getBackground() != null) {
-                        decor.getBackground().draw(mBlurringCanvas);
-                    }
-                    decor.draw(mBlurringCanvas);
-                } catch (StopException e) {
-                } finally {
-                    mIsRendering = false;
-                    RENDERING_COUNT--;
-                    mBlurringCanvas.restoreToCount(rc);
-                }
-
-                blur(mBitmapToBlur, mBlurredBitmap);
-
-                if (redrawBitmap || mDifferentRoot) {
-                    invalidate();
-                }
-            }
-
-            return true;
-        }
-    };
     private float radius = 0;
     private float leftTopRadius = 0;
     private float rightTopRadius = 0;
@@ -110,6 +64,7 @@ public class RealtimeBlurView extends View {
     private float leftBottomRadius = 0;
     private float width = 0;
     private float height = 0;
+
 
     public RealtimeBlurView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -320,6 +275,8 @@ public class RealtimeBlurView extends View {
         }
     }
 
+    private final Rect mRectSrc = new Rect(), mRectDst = new Rect();
+
     protected View getActivityDecorView() {
         Context ctx = getContext();
         for (int i = 0; i < 4 && ctx != null && !(ctx instanceof Activity) && ctx instanceof ContextWrapper; i++) {
@@ -424,4 +381,52 @@ public class RealtimeBlurView extends View {
 
     private static class StopException extends RuntimeException {
     }
+
+    private final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+        @Override
+        public boolean onPreDraw() {
+            final int[] locations = new int[2];
+            Bitmap oldBmp = mBlurredBitmap;
+            View decor = mDecorView;
+            if (decor != null && isShown() && prepare()) {
+                boolean redrawBitmap = mBlurredBitmap != oldBmp;
+                oldBmp = null;
+                decor.getLocationOnScreen(locations);
+                int x = -locations[0];
+                int y = -locations[1];
+
+                getLocationOnScreen(locations);
+                x += locations[0];
+                y += locations[1];
+
+                // just erase transparent
+                mBitmapToBlur.eraseColor(mOverlayColor & 0xffffff);
+
+                int rc = mBlurringCanvas.save();
+                mIsRendering = true;
+                RENDERING_COUNT++;
+                try {
+                    mBlurringCanvas.scale(1.f * mBitmapToBlur.getWidth() / getWidth(), 1.f * mBitmapToBlur.getHeight() / getHeight());
+                    mBlurringCanvas.translate(-x, -y);
+                    if (decor.getBackground() != null) {
+                        decor.getBackground().draw(mBlurringCanvas);
+                    }
+                    decor.draw(mBlurringCanvas);
+                } catch (StopException e) {
+                } finally {
+                    mIsRendering = false;
+                    RENDERING_COUNT--;
+                    mBlurringCanvas.restoreToCount(rc);
+                }
+
+                blur(mBitmapToBlur, mBlurredBitmap);
+
+                if (redrawBitmap || mDifferentRoot) {
+                    invalidate();
+                }
+            }
+
+            return true;
+        }
+    };
 }

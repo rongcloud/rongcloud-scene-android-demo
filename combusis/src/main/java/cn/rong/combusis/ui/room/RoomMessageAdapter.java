@@ -42,6 +42,7 @@ import cn.rong.combusis.message.RCChatroomSeats;
 import cn.rong.combusis.message.RCChatroomVoice;
 import cn.rong.combusis.message.RCFollowMsg;
 import cn.rong.combusis.provider.user.User;
+import cn.rong.combusis.provider.voiceroom.RoomType;
 import cn.rong.combusis.ui.room.model.MemberCache;
 import cn.rong.combusis.widget.CenterAlignImageSpan;
 import io.rong.imlib.model.MessageContent;
@@ -55,11 +56,13 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
     OnClickMessageUserListener mOnClickMessageUserListener;
     private String mRoomCreateId = "";
     private int iconSize = 0;
+    private RoomType roomType;
 
-    public RoomMessageAdapter(Context context, OnClickMessageUserListener onClickMessageUserListener) {
+    public RoomMessageAdapter(Context context, OnClickMessageUserListener onClickMessageUserListener, RoomType roomType) {
         this(context, R.layout.item_message_system, R.layout.item_message_normal, R.layout.item_message_voice);
         this.mOnClickMessageUserListener = onClickMessageUserListener;
         iconSize = UiUtils.INSTANCE.dp2Px(context, 11);
+        this.roomType = roomType;
     }
 
     public RoomMessageAdapter(Context context, int... itemLayoutId) {
@@ -100,8 +103,14 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
      */
     private void setSystemMessage(RcyHolder holder, MessageContent messageContent) {
         if (messageContent instanceof RCChatroomLocationMessage) {
+            holder.setTextColor(R.id.tv_message_system, Color.parseColor("#6A9FFF"));
             holder.setText(R.id.tv_message_system, ((RCChatroomLocationMessage) messageContent).getContent());
         } else if (messageContent instanceof TextMessage) {
+            if (!TextUtils.isEmpty(messageContent.getExtra()) && messageContent.getExtra().equals("mixTypeChange")) {
+                holder.setTextColor(R.id.tv_message_system, Color.parseColor("#EF499A"));
+            } else {
+                holder.setTextColor(R.id.tv_message_system, Color.parseColor("#6A9FFF"));
+            }
             holder.setText(R.id.tv_message_system, ((TextMessage) messageContent).getContent());
         }
 
@@ -183,13 +192,15 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
         } else if (message instanceof RCChatroomGiftAll) {
             list.add(new MsgInfo(String.format("%s ", ((RCChatroomGiftAll) message).getUserName()), ((RCChatroomGiftAll) message).getUserId(), true, 0, 0));
             list.add(new MsgInfo(String.format("全麦打赏 %s x%s", ((RCChatroomGiftAll) message).getGiftName(), ((RCChatroomGiftAll) message).getNumber()), "", false, 0, 0));
-            messageTextView.setBackgroundResource(R.drawable.bg_voice_room_gift_message_item);
+            if (roomType != RoomType.LIVE_ROOM)
+                messageTextView.setBackgroundResource(R.drawable.bg_voice_room_gift_message_item);
         } else if (message instanceof RCChatroomGift) {
             list.add(new MsgInfo(String.format("%s ", ((RCChatroomGift) message).getUserName()), ((RCChatroomGift) message).getUserId(), true, 0, 0));
             list.add(new MsgInfo(" 送给 ", "", false, 0, 0));
             list.add(new MsgInfo(String.format("%s ", ((RCChatroomGift) message).getTargetName()), ((RCChatroomGift) message).getTargetId(), true, 0, 0));
             list.add(new MsgInfo(String.format(" %s x%s", ((RCChatroomGift) message).getGiftName(), ((RCChatroomGift) message).getNumber()), "", false, 0, 0));
-            messageTextView.setBackgroundResource(R.drawable.bg_voice_room_gift_message_item);
+            if (roomType != RoomType.LIVE_ROOM)
+                messageTextView.setBackgroundResource(R.drawable.bg_voice_room_gift_message_item);
         } else if (message instanceof RCChatroomAdmin) {
             list.add(new MsgInfo(String.format("%s ", ((RCChatroomAdmin) message).getUserName()), ((RCChatroomAdmin) message).getUserId(), true, 0, 0));
             if (((RCChatroomAdmin) message).isAdmin()) {

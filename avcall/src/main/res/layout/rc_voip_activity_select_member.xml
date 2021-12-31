@@ -20,18 +20,18 @@
             android:layout_gravity="left"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="14dp"
-            android:gravity="center"
             android:text="@string/rc_dialog_cancel"
             android:textColor="#ffffff"
+            android:gravity="center"
             android:textSize="14sp" />
 
 
         <TextView
             android:id="@id/rc_btn_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_marginTop="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginRight="14dp"
             android:gravity="center"
             android:text="@string/rc_dialog_ok"
@@ -39,23 +39,23 @@
             android:textSize="14sp" />
 
         <TextView
+            android:layout_gravity="center_horizontal|top"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal|top"
-            android:gravity="center"
-            android:paddingTop="10dp"
             android:text="@string/rc_voip_select_member"
             android:textColor="#ffffff"
+            android:gravity="center"
+            android:paddingTop="10dp"
             android:textSize="18sp" />
 
     </FrameLayout>
 
     <ListView
-        android:id="@+id/rc_listview_select_member"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/rc_listview_select_member"
         android:divider="#595e6b"
         android:dividerHeight="0.5px"
+        android:layout_height="match_parent"
         android:paddingLeft="18dp">
 
     </ListView>

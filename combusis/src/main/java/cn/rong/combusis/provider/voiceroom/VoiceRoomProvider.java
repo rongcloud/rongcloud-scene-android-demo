@@ -133,12 +133,16 @@ public class VoiceRoomProvider extends AbsProvider<VoiceRoomBean> implements ILi
         if (TextUtils.equals(userId, voiceRoomBean.getCreateUser().getUserId())) {
             if (voiceRoomBean.getRoomType() == RoomType.VOICE_ROOM.getType()) {
                 return RoomOwnerType.VOICE_OWNER;
+            } else if (voiceRoomBean.getRoomType() == RoomType.LIVE_ROOM.getType()) {
+                return RoomOwnerType.LIVE_OWNER;
             } else {
                 return RoomOwnerType.RADIO_OWNER;
             }
         } else {
             if (voiceRoomBean.getRoomType() == RoomType.VOICE_ROOM.getType()) {
                 return RoomOwnerType.VOICE_VIEWER;
+            } else if (voiceRoomBean.getRoomType() == RoomType.LIVE_ROOM.getType()) {
+                return RoomOwnerType.LIVE_VIEWER;
             } else {
                 return RoomOwnerType.RADIO_VIEWER;
             }

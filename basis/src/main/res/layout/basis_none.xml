@@ -3,8 +3,8 @@
     android:id="@+id/basis_no_data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:gravity="center"
     android:visibility="gone">
 
     <ImageView

@@ -15,13 +15,6 @@ import android.text.TextUtils;
 import io.rong.callkit.RongCallModule;
 
 public class ActivityStartCheckUtils {
-    private static final int TIME_DELAY = 3000;
-    private boolean mPostDelayIsRunning;
-    private String mClassName;
-    private Handler mHandler = new Handler();
-    private Activity topActivity;
-    private Context mAppContext;
-    private ActivityStartResultCallback activityStartResultCallback;
     private final Runnable mRunnable =
             new Runnable() {
                 @Override
@@ -33,6 +26,18 @@ public class ActivityStartCheckUtils {
                     }
                 }
             };
+
+    private static final int TIME_DELAY = 3000;
+    private boolean mPostDelayIsRunning;
+    private String mClassName;
+    private Handler mHandler = new Handler();
+    private Activity topActivity;
+    private Context mAppContext;
+    private ActivityStartResultCallback activityStartResultCallback;
+
+    public interface ActivityStartResultCallback {
+        void onStartActivityResult(boolean isActivityStarted);
+    }
 
     private ActivityStartCheckUtils() {
     }
@@ -122,6 +127,11 @@ public class ActivityStartCheckUtils {
         return result;
     }
 
+    private static class SingletonHolder {
+
+        static ActivityStartCheckUtils sInstance = new ActivityStartCheckUtils();
+    }
+
     /**
      * Android 10 以上禁止后台启动 Activity
      * callKit 适配方案是后台来电时弹通知栏通知，但是如果用户不点击通知栏，
@@ -135,14 +145,5 @@ public class ActivityStartCheckUtils {
                     IncomingCallExtraHandleUtil.isCheckPermissions()));
             IncomingCallExtraHandleUtil.clear();
         }
-    }
-
-    public interface ActivityStartResultCallback {
-        void onStartActivityResult(boolean isActivityStarted);
-    }
-
-    private static class SingletonHolder {
-
-        static ActivityStartCheckUtils sInstance = new ActivityStartCheckUtils();
     }
 }

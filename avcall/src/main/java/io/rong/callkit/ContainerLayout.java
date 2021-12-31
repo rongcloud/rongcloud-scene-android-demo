@@ -20,16 +20,27 @@ import cn.rongcloud.rtc.utils.FinLog;
  * Created by Administrator on 2017/3/30.
  */
 public class ContainerLayout extends RelativeLayout {
-    private static boolean isNeedFillScrren = true;
     private final String TAG = ContainerLayout.class.getSimpleName();
-    SurfaceView currentView;
     private Context context;
-    private int screenWidth;
-    private int screenHeight;
+    private static boolean isNeedFillScrren = true;
+    SurfaceView currentView;
 
     public ContainerLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+    }
+
+    private int screenWidth;
+    private int screenHeight;
+
+    public void setIsNeedFillScrren(boolean isNeed) {
+        isNeedFillScrren = isNeed;
+    }
+
+    @Override
+    public void removeAllViews() {
+        if (currentView != null) ((RCRTCVideoView) currentView).setOnSizeChangedListener(null);
+        super.removeAllViews();
     }
 
     public void addView(final SurfaceView videoView) {
@@ -104,15 +115,5 @@ public class ContainerLayout extends RelativeLayout {
         }
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         return layoutParams;
-    }
-
-    public void setIsNeedFillScrren(boolean isNeed) {
-        isNeedFillScrren = isNeed;
-    }
-
-    @Override
-    public void removeAllViews() {
-        if (currentView != null) ((RCRTCVideoView) currentView).setOnSizeChangedListener(null);
-        super.removeAllViews();
     }
 }

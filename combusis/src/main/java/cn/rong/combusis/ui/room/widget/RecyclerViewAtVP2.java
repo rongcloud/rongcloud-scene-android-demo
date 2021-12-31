@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewAtVP2 extends RecyclerView {
     final static String TAG = "RecyclerViewAtVP2";
-    private int startX, startY;
 
     public RecyclerViewAtVP2(@NonNull Context context) {
         super(context);
@@ -23,6 +22,8 @@ public class RecyclerViewAtVP2 extends RecyclerView {
     public RecyclerViewAtVP2(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+
+    private int startX, startY;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

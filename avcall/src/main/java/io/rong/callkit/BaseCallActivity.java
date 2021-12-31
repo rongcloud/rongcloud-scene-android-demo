@@ -82,6 +82,9 @@ import io.rong.push.notification.RongNotificationInterface;
 public class BaseCallActivity extends BaseNoActionBarActivity
         implements IRongCallListener, PickupDetector.PickupDetectListener, RongUserInfoManager.UserDataObserver {
 
+    private static final String TAG = "BaseCallActivity";
+    private static final String MEDIAPLAYERTAG = "MEDIAPLAYERTAG";
+    private static final long DELAY_TIME = 1000;
     public static final int CALL_NOTIFICATION_ID = 4000;
     /**
      * 融云 SDK 默认麦克风、摄像头流唯一标识，和 RongCallClient#publishCustomVideoStream(tag, PublishCallBack) 方法中 tag 用法一致;
@@ -90,6 +93,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity
      * @see RongCallClient#publishCustomVideoStream(String, PublishCallBack)
      */
     public static final String RONG_TAG_CALL = "RongCloudRTC";
+    public final int REQUEST_CODE_ADD_MEMBER_NONE = 120;
     public static final String EXTRA_BUNDLE_KEY_MUTECAMERA = "muteCamera";
     public static final String EXTRA_BUNDLE_KEY_MUTEMIC = "muteMIC";
     public static final String EXTRA_BUNDLE_KEY_LOCALVIEWUSERID = "localViewUserId";
@@ -97,6 +101,16 @@ public class BaseCallActivity extends BaseNoActionBarActivity
     public static final String EXTRA_BUNDLE_KEY_MEDIATYPE = "mediaType";
     public static final String EXTRA_BUNDLE_KEY_USER_TOP_NAME = "rc_voip_user_top_name";
     public static final String EXTRA_BUNDLE_KEY_USER_TOP_NAME_TAG = "rc_voip_user_top_name_tag";
+    protected Handler handler;
+    /**
+     * 表示是否正在挂断
+     */
+    protected boolean isFinishing;
+
+    protected PickupDetector pickupDetector;
+    protected PowerManager powerManager;
+    protected PowerManager.WakeLock wakeLock;
+    protected PowerManager.WakeLock screenLock;
     static final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 100;
     static final int REQUEST_CODE_ADD_MEMBER = 110;
     static final int VOIP_MAX_NORMAL_COUNT = 6;
@@ -104,34 +118,15 @@ public class BaseCallActivity extends BaseNoActionBarActivity
             Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA
     };
     static final String[] AUDIO_CALL_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
-    private static final String TAG = "BaseCallActivity";
-    private static final String MEDIAPLAYERTAG = "MEDIAPLAYERTAG";
-    private static final long DELAY_TIME = 1000;
-    public final int REQUEST_CODE_ADD_MEMBER_NONE = 120;
-    protected Handler handler;
-    /**
-     * 表示是否正在挂断
-     */
-    protected boolean isFinishing;
-    protected PickupDetector pickupDetector;
-    protected PowerManager powerManager;
-    protected PowerManager.WakeLock wakeLock;
-    protected PowerManager.WakeLock screenLock;
+    private MediaPlayer mMediaPlayer;
+
     RelativeLayout.LayoutParams mLargeLayoutParams =
             new RelativeLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-    private MediaPlayer mMediaPlayer;
     private Vibrator mVibrator;
     private long time = 0;
     private Runnable updateTimeRunnable;
-    private boolean shouldRestoreFloat;
-    // 是否是请求开启悬浮窗权限的过程中
-    private boolean checkingOverlaysPermission;
-    private boolean isMuteCamera = false;
-    /**
-     * 判断是拨打界面还是接听界面
-     */
-    private boolean isIncoming;
+
     /**
      * 监听情景模式（Ringer Mode）发生改变后，切换为铃声或振动
      */
@@ -171,8 +166,17 @@ public class BaseCallActivity extends BaseNoActionBarActivity
                     }
                 }
             };
+
     private HeadsetPlugReceiver headsetPlugReceiver = null;
     private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener;
+    private boolean shouldRestoreFloat;
+    // 是否是请求开启悬浮窗权限的过程中
+    private boolean checkingOverlaysPermission;
+    private boolean isMuteCamera = false;
+    /**
+     * 判断是拨打界面还是接听界面
+     */
+    private boolean isIncoming;
 
     public void setShouldShowFloat(boolean ssf) {
         CallKitUtils.shouldShowFloat = ssf;
@@ -401,6 +405,11 @@ public class BaseCallActivity extends BaseNoActionBarActivity
 
     @Override
     public void onRemoteUserRinging(String userId) {
+    }
+
+    @Override
+    public void onRemoteUserAccept(String userId, RongCallCommon.CallMediaType mediaType) {
+
     }
 
     @Override
@@ -746,6 +755,27 @@ public class BaseCallActivity extends BaseNoActionBarActivity
 
     }
 
+    private class UpdateTimeRunnable implements Runnable {
+        private TextView timeView;
+
+        public UpdateTimeRunnable(TextView timeView) {
+            this.timeView = timeView;
+        }
+
+        @Override
+        public void run() {
+            time++;
+            if (time >= 3600) {
+                timeView.setText(
+                        String.format(
+                                "%d:%02d:%02d", time / 3600, (time % 3600) / 60, (time % 60)));
+            } else {
+                timeView.setText(String.format("%02d:%02d", (time % 3600) / 60, (time % 60)));
+            }
+            handler.postDelayed(this, 1000);
+        }
+    }
+
     void onMinimizeClick(View view) {
         if (checkDrawOverlaysPermission(true)) {
             finish();
@@ -901,26 +931,6 @@ public class BaseCallActivity extends BaseNoActionBarActivity
 
     }
 
-    private class UpdateTimeRunnable implements Runnable {
-        private TextView timeView;
-
-        public UpdateTimeRunnable(TextView timeView) {
-            this.timeView = timeView;
-        }
-
-        @Override
-        public void run() {
-            time++;
-            if (time >= 3600) {
-                timeView.setText(
-                        String.format(
-                                "%d:%02d:%02d", time / 3600, (time % 3600) / 60, (time % 60)));
-            } else {
-                timeView.setText(String.format("%02d:%02d", (time % 3600) / 60, (time % 60)));
-            }
-            handler.postDelayed(this, 1000);
-        }
-    }
 
     public class HeadsetPlugReceiver extends BroadcastReceiver {
 

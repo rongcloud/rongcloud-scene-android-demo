@@ -62,6 +62,28 @@ public class QlWebView extends WebView {
         }
     }
 
+    public class QlWebChromeClient extends WebChromeClient {
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            if (null != onQlListener) onQlListener.onTitle(title);
+        }
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            if (newProgress == 100) {
+                progressbar.setVisibility(GONE);
+//				progressbar.setProgress(50);
+            } else {
+                if (progressbar.getVisibility() == GONE)
+                    progressbar.setVisibility(VISIBLE);
+                progressbar.setProgress(newProgress);
+            }
+            super.onProgressChanged(view, newProgress);
+        }
+    }
+
     /**
      * 不建议使用 会覆盖内部设置
      *
@@ -93,28 +115,6 @@ public class QlWebView extends WebView {
             return;
         }
         super.goBack();
-    }
-
-    public class QlWebChromeClient extends WebChromeClient {
-
-        @Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-            if (null != onQlListener) onQlListener.onTitle(title);
-        }
-
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            if (newProgress == 100) {
-                progressbar.setVisibility(GONE);
-//				progressbar.setProgress(50);
-            } else {
-                if (progressbar.getVisibility() == GONE)
-                    progressbar.setVisibility(VISIBLE);
-                progressbar.setProgress(newProgress);
-            }
-            super.onProgressChanged(view, newProgress);
-        }
     }
 
     /**

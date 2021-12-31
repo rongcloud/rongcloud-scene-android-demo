@@ -23,15 +23,14 @@ public class UIStack {
     private final static String TAG = "UIStack";
     private final static UIStack instance = new UIStack();
     private static ArrayList<String> actions = new ArrayList<String>(4);
-
-    static {
-        actions.add(ConnectivityManager.CONNECTIVITY_ACTION);
-    }
-
     //全局广播
     private BroadcastReceiver bdReceiver;
     private CustomerReceiver customerReceiver;
     private LinkedList<IBasis> ibasiss = new LinkedList<>();
+
+    static {
+        actions.add(ConnectivityManager.CONNECTIVITY_ACTION);
+    }
 
     private UIStack() {
     }
@@ -142,18 +141,6 @@ public class UIStack {
         }
     }
 
-    private void setResultForAll() {
-        for (IBasis a : ibasiss) {
-            if (a instanceof Activity) {
-                a.onNetChange();
-            }
-        }
-    }
-
-    private void onCustomerReceive(Context context, Intent intent) {
-        if (null != customerReceiver) customerReceiver.onReceive(context, intent);
-    }
-
     public static class UIReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -164,5 +151,16 @@ public class UIStack {
                 instance.onCustomerReceive(context, intent);
             }
         }
+    }
+
+    private void setResultForAll() {
+        Activity activity = getTopActivity();
+        if (activity instanceof IBasis) {
+            ((IBasis) activity).onNetChange();
+        }
+    }
+
+    private void onCustomerReceive(Context context, Intent intent) {
+        if (null != customerReceiver) customerReceiver.onReceive(context, intent);
     }
 }

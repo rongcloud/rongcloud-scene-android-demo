@@ -48,130 +48,18 @@ import io.rong.push.notification.PushNotificationMessage;
  */
 public class RongCallModule implements IExtensionModule {
     private static final String TAG = "RongCallModule";
-    private static boolean mViewLoaded = true;
-    private static RongCallMissedListener missedListener;
-    private static ArrayList<String> mActivities;
+
     private RongCallSession mCallSession;
     private boolean mStartForCheckPermissions;
+    private static boolean mViewLoaded = true;
     private Context mContext;
+    private static RongCallMissedListener missedListener;
     // 替换成 AVManager-> ignoreIncomingCall
 //    private static boolean ignoreIncomingCall;
     private Application mApplication;
-    private ActivityLifecycleCallbacks myActivityLifecycleCallbacks = new ActivityLifecycleCallbacks() {
-        @Override
-        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-            RLog.d(TAG, "onActivityCreated ---- : " + activity);
-
-            if (mActivities == null || mActivities.size() == 0) {
-                RLog.d(TAG, "onActivityCreated . mainPageClass is empty.");
-                return;
-            }
-            String className1 = activity.getClass().getName();
-            mActivities.remove(className1);
-            if (mActivities.size() == 0) {
-                retryStartVoIPActivity();
-            }
-        }
-
-        @Override
-        public void onActivityStarted(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityResumed(Activity activity) {
-        }
-
-        @Override
-        public void onActivityPaused(Activity activity) {
-        }
-
-        @Override
-        public void onActivityStopped(Activity activity) {
-        }
-
-        @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        }
-
-        @Override
-        public void onActivityDestroyed(Activity activity) {
-        }
-    };
 
     public RongCallModule() {
         RLog.i(TAG, "Constructor");
-    }
-
-    public static void setMissedCallListener(RongCallMissedListener listener) {
-        missedListener = listener;
-    }
-
-    public static void ignoreIncomingCall(boolean ignore) {
-        DataShareManager.get().setIgnoreIncomingCall(ignore);
-    }
-
-    public static Intent createVoIPIntent(
-            Context context, RongCallSession callSession, boolean startForCheckPermissions) {
-        Intent intent;
-        String action;
-        if (callSession.getConversationType().equals(Conversation.ConversationType.DISCUSSION)
-                || callSession.getConversationType().equals(Conversation.ConversationType.GROUP)
-                || callSession.getConversationType().equals(Conversation.ConversationType.NONE)) {
-            if (callSession.getMediaType().equals(RongCallCommon.CallMediaType.VIDEO)) {
-                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_MULTIVIDEO;
-            } else {
-                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_MULTIAUDIO;
-            }
-            intent = new Intent(action);
-            intent.putExtra("callSession", callSession);
-            intent.putExtra("callAction", RongCallAction.ACTION_INCOMING_CALL.getName());
-            if (startForCheckPermissions) {
-                intent.putExtra("checkPermissions", true);
-            } else {
-                intent.putExtra("checkPermissions", false);
-            }
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setPackage(context.getPackageName());
-        } else {
-
-            if (callSession.getMediaType().equals(RongCallCommon.CallMediaType.VIDEO)) {
-                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_SINGLEVIDEO;
-            } else {
-                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_SINGLEAUDIO;
-            }
-            RLog.e(TAG, "createVoIPIntent:action = " + action);
-            intent = new Intent(action);
-            intent.putExtra("callSession", callSession);
-            intent.putExtra("callAction", RongCallAction.ACTION_INCOMING_CALL.getName());
-            if (startForCheckPermissions) {
-                intent.putExtra("checkPermissions", true);
-            } else {
-                intent.putExtra("checkPermissions", false);
-            }
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setPackage(context.getPackageName());
-        }
-        return intent;
-    }
-
-    public static boolean isIgnoreIncomingCall() {
-        return DataShareManager.get().isIgnoreIncomingCall();
-    }
-
-    /**
-     * 设置可能会覆盖音视频通话页面的类，比如主页面。设置后，如果此页面尚未打开，即使收到音视频呼叫，也会暂缓唤起页面，会再设置的页面启动成功后，再尝试启动音视频通话页面。
-     */
-    public static void setMainPageActivity(String[] className) {
-        if (className != null && className.length > 0) {
-            int length = className.length;
-            RLog.i(TAG, "setMainPageActivity.length :" + length);
-            mActivities = new ArrayList<>();
-            mViewLoaded = false;
-            for (int i = 0; i < length; i++) {
-                mActivities.add(className[i]);
-            }
-        }
     }
 
     private void initMissedCallListener() {
@@ -262,6 +150,49 @@ public class RongCallModule implements IExtensionModule {
                 });
     }
 
+    private static ArrayList<String> mActivities;
+    private ActivityLifecycleCallbacks myActivityLifecycleCallbacks = new ActivityLifecycleCallbacks() {
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            RLog.d(TAG, "onActivityCreated ---- : " + activity);
+
+            if (mActivities == null || mActivities.size() == 0) {
+                RLog.d(TAG, "onActivityCreated . mainPageClass is empty.");
+                return;
+            }
+            String className1 = activity.getClass().getName();
+            mActivities.remove(className1);
+            if (mActivities.size() == 0) {
+                retryStartVoIPActivity();
+            }
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+        }
+    };
+
     private void onSendBroadcast(Context context, RongCallSession callSession, boolean startForCheckPermissions) {
         RLog.d(TAG, "onSendBroadcast");
         Intent intent = new Intent();
@@ -272,6 +203,10 @@ public class RongCallModule implements IExtensionModule {
         intent.putExtra("checkPermissions", startForCheckPermissions);
         intent.setAction(VoIPBroadcastReceiver.ACTION_CALLINVITEMESSAGE);
         context.sendBroadcast(intent);
+    }
+
+    public static void setMissedCallListener(RongCallMissedListener listener) {
+        missedListener = listener;
     }
 
     /**
@@ -324,6 +259,10 @@ public class RongCallModule implements IExtensionModule {
                     == app.importance) return true;
         }
         return false;
+    }
+
+    public static void ignoreIncomingCall(boolean ignore) {
+        DataShareManager.get().setIgnoreIncomingCall(ignore);
     }
 
     /**
@@ -422,6 +361,50 @@ public class RongCallModule implements IExtensionModule {
         mApplication.registerActivityLifecycleCallbacks(myActivityLifecycleCallbacks);
     }
 
+    public static Intent createVoIPIntent(
+            Context context, RongCallSession callSession, boolean startForCheckPermissions) {
+        Intent intent;
+        String action;
+        if (callSession.getConversationType().equals(Conversation.ConversationType.DISCUSSION)
+                || callSession.getConversationType().equals(Conversation.ConversationType.GROUP)
+                || callSession.getConversationType().equals(Conversation.ConversationType.NONE)) {
+            if (callSession.getMediaType().equals(RongCallCommon.CallMediaType.VIDEO)) {
+                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_MULTIVIDEO;
+            } else {
+                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_MULTIAUDIO;
+            }
+            intent = new Intent(action);
+            intent.putExtra("callSession", callSession);
+            intent.putExtra("callAction", RongCallAction.ACTION_INCOMING_CALL.getName());
+            if (startForCheckPermissions) {
+                intent.putExtra("checkPermissions", true);
+            } else {
+                intent.putExtra("checkPermissions", false);
+            }
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setPackage(context.getPackageName());
+        } else {
+
+            if (callSession.getMediaType().equals(RongCallCommon.CallMediaType.VIDEO)) {
+                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_SINGLEVIDEO;
+            } else {
+                action = RongVoIPIntent.RONG_INTENT_ACTION_VOIP_SINGLEAUDIO;
+            }
+            RLog.e(TAG, "createVoIPIntent:action = " + action);
+            intent = new Intent(action);
+            intent.putExtra("callSession", callSession);
+            intent.putExtra("callAction", RongCallAction.ACTION_INCOMING_CALL.getName());
+            if (startForCheckPermissions) {
+                intent.putExtra("checkPermissions", true);
+            } else {
+                intent.putExtra("checkPermissions", false);
+            }
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setPackage(context.getPackageName());
+        }
+        return intent;
+    }
+
     private void retryStartVoIPActivity() {
         RLog.i(TAG, "Find the exact class, change mViewLoaded  as true . mCallSession ==null ?" + (mCallSession == null));
         mViewLoaded = true;
@@ -470,5 +453,24 @@ public class RongCallModule implements IExtensionModule {
     @Override
     public void onDisconnect() {
         RLog.d(TAG, "onDisconnect");
+    }
+
+    public static boolean isIgnoreIncomingCall() {
+        return DataShareManager.get().isIgnoreIncomingCall();
+    }
+
+    /**
+     * 设置可能会覆盖音视频通话页面的类，比如主页面。设置后，如果此页面尚未打开，即使收到音视频呼叫，也会暂缓唤起页面，会再设置的页面启动成功后，再尝试启动音视频通话页面。
+     */
+    public static void setMainPageActivity(String[] className) {
+        if (className != null && className.length > 0) {
+            int length = className.length;
+            RLog.i(TAG, "setMainPageActivity.length :" + length);
+            mActivities = new ArrayList<>();
+            mViewLoaded = false;
+            for (int i = 0; i < length; i++) {
+                mActivities.add(className[i]);
+            }
+        }
     }
 }

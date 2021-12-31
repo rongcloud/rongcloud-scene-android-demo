@@ -9,9 +9,9 @@
     <ImageView
         android:id="@+id/iv_large_preview_mutilvideo"
         android:layout_width="match_parent"
+        android:scaleType="centerCrop"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:scaleType="centerCrop"
         android:visibility="invisible" />
 
 </RelativeLayout>

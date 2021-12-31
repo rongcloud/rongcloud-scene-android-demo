@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:realtimeBlurRadius="14pt"
-        app:realtimeOverlayColor="#29FFFFFF" />
+        app:realtimeOverlayColor="#5C5095" />
 
     <cn.rong.combusis.common.ui.widget.RealtimeBlurView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bg_top"
         app:realtimeBlurRadius="14pt"
-        app:realtimeOverlayColor="#1AFFFFFF" />
+        app:realtimeOverlayColor="#5C5095" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/send"

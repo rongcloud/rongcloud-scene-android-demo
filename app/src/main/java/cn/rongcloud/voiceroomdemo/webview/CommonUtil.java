@@ -23,6 +23,28 @@ public class CommonUtil {
     private static long lastClickTime;
 
     /**
+     * 判断当前网络是否为wifi状态
+     *
+     * @return wifi状态true，非wifi状态false
+     * @date: 2017-1-16 下午17:52
+     */
+
+    public static boolean isWifi(Context context) {
+        // 判断是否为wifi的状态
+        boolean isWifi = false;
+        if (isNetworkConnected(context)) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+
+            if (activeNetInfo != null && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+
+                isWifi = true;
+            }
+        }
+        return isWifi;
+    }
+
+    /**
      * 是否连接上网络
      *
      * @return 连接上true，未连接上false
@@ -47,28 +69,6 @@ public class CommonUtil {
         }
         return isConnected;
 
-    }
-
-    /**
-     * 判断当前网络是否为wifi状态
-     *
-     * @return wifi状态true，非wifi状态false
-     * @date: 2017-1-16 下午17:52
-     */
-
-    public static boolean isWifi(Context context) {
-        // 判断是否为wifi的状态
-        boolean isWifi = false;
-        if (isNetworkConnected(context)) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-
-            if (activeNetInfo != null && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-
-                isWifi = true;
-            }
-        }
-        return isWifi;
     }
 
     /**

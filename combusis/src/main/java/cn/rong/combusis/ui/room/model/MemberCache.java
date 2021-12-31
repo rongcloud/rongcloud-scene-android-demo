@@ -12,6 +12,7 @@ import java.util.List;
 import cn.rong.combusis.api.VRApi;
 import cn.rong.combusis.provider.user.User;
 import cn.rong.combusis.provider.user.UserProvider;
+import cn.rong.combusis.ui.room.fragment.ClickCallback;
 
 /**
  * @author gyn
@@ -44,12 +45,16 @@ public class MemberCache {
         refreshAdminData(roomId);
     }
 
+    public void refreshMemberData(String roomId) {
+        refreshMemberData(roomId, null);
+    }
+
     /**
      * 拉取成员列表
      *
      * @param roomId
      */
-    private void refreshMemberData(String roomId) {
+    public void refreshMemberData(String roomId, ClickCallback<Boolean> callback) {
         OkApi.get(VRApi.getMembers(roomId), null, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
@@ -61,6 +66,7 @@ public class MemberCache {
                     for (User user : list) {
                         UserProvider.provider().update(user.toUserInfo());
                     }
+                    if (callback != null) callback.onResult(result.ok(), "");
                 }
             }
         });

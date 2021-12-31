@@ -144,7 +144,6 @@ public class SearchLayout extends LinearLayout {
             et_search.setInputType(inputType);
         return this;
     }
-
     public SearchLayout clear() {
         if (null != et_search) {
             et_search.setText("");

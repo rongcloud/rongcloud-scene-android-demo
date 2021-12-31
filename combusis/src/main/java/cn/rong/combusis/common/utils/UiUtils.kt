@@ -61,7 +61,7 @@ object UiUtils {
     fun getScreenWidth(context: Context): Int {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val outMetrics = DisplayMetrics()
-        windowManager.defaultDisplay.getRealMetrics(outMetrics)
+        windowManager.getDefaultDisplay().getRealMetrics(outMetrics)
         return outMetrics.widthPixels
     }
 

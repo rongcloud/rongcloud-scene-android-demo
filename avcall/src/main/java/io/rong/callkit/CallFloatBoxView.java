@@ -58,7 +58,6 @@ import io.rong.message.InformationNotificationMessage;
  * Created by weiqinxiao on 16/3/17.
  */
 public class CallFloatBoxView {
-    private static final String TAG = "CallFloatBoxView";
     private static Context mContext;
     private static Timer timer;
     private static long mTime;
@@ -66,6 +65,7 @@ public class CallFloatBoxView {
     private static Boolean isShown = false;
     private static WindowManager wm;
     private static Bundle mBundle;
+    private static final String TAG = "CallFloatBoxView";
     private static TextView showFBCallTime = null;
     private static FrameLayout remoteVideoContainer = null;
     private static boolean activityResuming = false;
@@ -161,6 +161,11 @@ public class CallFloatBoxView {
                             @Override
                             public void onRemoteUserRinging(String userId) {
                                 Log.i(TAG, "onRemoteUserRinging");
+                            }
+
+                            @Override
+                            public void onRemoteUserAccept(String userId, RongCallCommon.CallMediaType mediaType) {
+
                             }
 
                             @Override
@@ -669,6 +674,11 @@ public class CallFloatBoxView {
 
                             @Override
                             public void onRemoteUserRinging(String userId) {
+                            }
+
+                            @Override
+                            public void onRemoteUserAccept(String userId, RongCallCommon.CallMediaType mediaType) {
+
                             }
 
                             @Override

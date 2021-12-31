@@ -32,13 +32,20 @@ import io.rong.imlib.model.UserInfo;
  */
 public class CallUserGridView extends HorizontalScrollView implements ICallScrollView {
 
-    private static final int CHILDREN_SPACE = 13;
-    private static int CHILDREN_PER_LINE = 5;
     private Context context;
     private boolean enableTitle;
     private LinearLayout linearLayout;
+
+    private static final int CHILDREN_SPACE = 13;
+    private static int CHILDREN_PER_LINE = 5;
+
     private int portraitSize;
     private boolean isHorizontal = true;
+
+    @Override
+    public int getChildrenSpace() {
+        return CHILDREN_SPACE;
+    }
 
     public CallUserGridView(Context context) {
         super(context);
@@ -53,11 +60,6 @@ public class CallUserGridView extends HorizontalScrollView implements ICallScrol
                 a.getInteger(R.styleable.CallUserGridView_CallGridViewChildrenPerLine, 4);
         init(context);
         a.recycle();
-    }
-
-    @Override
-    public int getChildrenSpace() {
-        return CHILDREN_SPACE;
     }
 
     private void init(Context context) {
