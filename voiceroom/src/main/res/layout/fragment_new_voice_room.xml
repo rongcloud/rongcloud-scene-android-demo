@@ -55,7 +55,7 @@
             app:layout_constraintBottom_toTopOf="@id/rv_message"
             app:layout_constraintTop_toBottomOf="@id/room_title_bar">
 
-            <cn.rongcloud.voiceroom.pk.widget.PKView
+            <cn.rongcloud.voice.pk.widget.PKView
                 android:id="@+id/pk_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,10 +98,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fl_seat"
             app:layout_constraintVertical_bias="0"
-            app:layout_constraintVertical_weight="1"
             app:layout_constraintWidth_percent="0.7">
 
             <cn.rong.combusis.ui.room.widget.RecyclerViewAtVP2

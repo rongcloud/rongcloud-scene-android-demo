@@ -22,21 +22,14 @@ import io.rong.imlib.model.MessageContent;
  */
 @MessageTag(value = "RC:Chatroom:KickOut")
 public class RCChatroomKickOut extends MessageContent {
-    public static final Creator<RCChatroomKickOut> CREATOR = new Creator<RCChatroomKickOut>() {
-        @Override
-        public RCChatroomKickOut createFromParcel(Parcel source) {
-            return new RCChatroomKickOut(source);
-        }
-
-        @Override
-        public RCChatroomKickOut[] newArray(int size) {
-            return new RCChatroomKickOut[size];
-        }
-    };
     private static final String TAG = "RCChatroomKickOut";
+
     private String userId;
+
     private String userName;
+
     private String targetId;
+
     private String targetName;
 
     public RCChatroomKickOut(byte[] data) {
@@ -65,17 +58,6 @@ public class RCChatroomKickOut extends MessageContent {
         }
     }
 
-
-    public RCChatroomKickOut() {
-    }
-
-    protected RCChatroomKickOut(Parcel in) {
-        this.userId = in.readString();
-        this.userName = in.readString();
-        this.targetId = in.readString();
-        this.targetName = in.readString();
-    }
-
     @Override
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
@@ -100,6 +82,7 @@ public class RCChatroomKickOut extends MessageContent {
         }
         return null;
     }
+
 
     public String getUserId() {
         return userId;
@@ -151,5 +134,27 @@ public class RCChatroomKickOut extends MessageContent {
         this.userName = source.readString();
         this.targetId = source.readString();
         this.targetName = source.readString();
+    }
+
+    public static final Creator<RCChatroomKickOut> CREATOR = new Creator<RCChatroomKickOut>() {
+        @Override
+        public RCChatroomKickOut createFromParcel(Parcel source) {
+            return new RCChatroomKickOut(source);
+        }
+
+        @Override
+        public RCChatroomKickOut[] newArray(int size) {
+            return new RCChatroomKickOut[size];
+        }
+    };
+
+    public RCChatroomKickOut() {
+    }
+
+    protected RCChatroomKickOut(Parcel in) {
+        this.userId = in.readString();
+        this.userName = in.readString();
+        this.targetId = in.readString();
+        this.targetName = in.readString();
     }
 }

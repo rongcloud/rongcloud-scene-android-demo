@@ -42,6 +42,33 @@ public class SwitchButton extends View implements Checkable {
     private final int ANIMATE_STATE_PENDING_RESET = 3;
     private final int ANIMATE_STATE_PENDING_SETTLE = 4;
     private final int ANIMATE_STATE_SWITCH = 5;
+
+    public SwitchButton(Context context) {
+        super(context);
+        init(context, null);
+    }
+
+    public SwitchButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context, attrs);
+    }
+
+    public SwitchButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public SwitchButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs);
+    }
+
+    @Override
+    public final void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding(0, 0, 0, 0);
+    }
+
     private final android.animation.ArgbEvaluator argbEvaluator
             = new android.animation.ArgbEvaluator();
     /**
@@ -64,6 +91,86 @@ public class SwitchButton extends View implements Checkable {
      * 按钮半径
      */
     private float buttonRadius;
+
+
+    /**
+     * 绘制选中状态指示器
+     *
+     * @param canvas
+     */
+    protected void drawCheckedIndicator(Canvas canvas) {
+        drawCheckedIndicator(canvas,
+                viewState.checkedLineColor,
+                checkLineWidth,
+                left + viewRadius - checkedLineOffsetX, centerY - checkLineLength,
+                left + viewRadius - checkedLineOffsetY, centerY + checkLineLength,
+                paint);
+    }
+
+
+    /**
+     * 绘制选中状态指示器
+     *
+     * @param canvas
+     * @param color
+     * @param lineWidth
+     * @param sx
+     * @param sy
+     * @param ex
+     * @param ey
+     * @param paint
+     */
+    protected void drawCheckedIndicator(Canvas canvas,
+                                        int color,
+                                        float lineWidth,
+                                        float sx, float sy, float ex, float ey,
+                                        Paint paint) {
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(color);
+        paint.setStrokeWidth(lineWidth);
+        canvas.drawLine(
+                sx, sy, ex, ey,
+                paint);
+    }
+
+    /**
+     * 绘制关闭状态指示器
+     *
+     * @param canvas
+     */
+    private void drawUncheckIndicator(Canvas canvas) {
+        drawUncheckIndicator(canvas,
+                uncheckCircleColor,
+                uncheckCircleWidth,
+                right - uncheckCircleOffsetX, centerY,
+                uncheckCircleRadius,
+                paint);
+    }
+
+
+    /**
+     * 绘制关闭状态指示器
+     *
+     * @param canvas
+     * @param color
+     * @param lineWidth
+     * @param centerX
+     * @param centerY
+     * @param radius
+     * @param paint
+     */
+    protected void drawUncheckIndicator(Canvas canvas,
+                                        int color,
+                                        float lineWidth,
+                                        float centerX, float centerY,
+                                        float radius,
+                                        Paint paint) {
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(color);
+        paint.setStrokeWidth(lineWidth);
+        canvas.drawCircle(centerX, centerY, radius, paint);
+    }
+
     /**
      * 背景高
      */
@@ -78,6 +185,21 @@ public class SwitchButton extends View implements Checkable {
     private float left;
     private float top;
     private float right;
+
+    @Override
+    public void toggle() {
+        toggle(true);
+    }
+
+    /**
+     * 切换状态
+     *
+     * @param animate
+     */
+    public void toggle(boolean animate) {
+        toggle(animate, true);
+    }
+
     private float bottom;
     private float centerX;
     private float centerY;
@@ -114,23 +236,23 @@ public class SwitchButton extends View implements Checkable {
      */
     private int uncheckCircleColor;
     /**
-     * 关闭圆圈线宽
+     *关闭圆圈线宽
      */
     private int uncheckCircleWidth;
     /**
-     * 关闭圆圈位移X
+     *关闭圆圈位移X
      */
     private float uncheckCircleOffsetX;
     /**
-     * 关闭圆圈半径
+     *关闭圆圈半径
      */
     private float uncheckCircleRadius;
     /**
-     * 打开指示线位移X
+     *打开指示线位移X
      */
     private float checkedLineOffsetX;
     /**
-     * 打开指示线位移Y
+     *打开指示线位移Y
      */
     private float checkedLineOffsetY;
     /**
@@ -157,6 +279,7 @@ public class SwitchButton extends View implements Checkable {
      * 背景画笔
      */
     private Paint paint;
+    /*******************************************************/
     /**
      * 当前状态
      */
@@ -173,7 +296,7 @@ public class SwitchButton extends View implements Checkable {
      */
     private ValueAnimator valueAnimator;
     /**
-     * 是否选中
+     *是否选中
      */
     private boolean isChecked;
     /**
@@ -192,7 +315,6 @@ public class SwitchButton extends View implements Checkable {
      * 收拾是否按下
      */
     private boolean isTouchingDown = false;
-    /*******************************************************/
     /**
      *
      */
@@ -331,27 +453,6 @@ public class SwitchButton extends View implements Checkable {
         }
     };
 
-    public SwitchButton(Context context) {
-        super(context);
-        init(context, null);
-    }
-
-    public SwitchButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public SwitchButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context, attrs);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public SwitchButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs);
-    }
-
     /*******************************************************/
     private static float dp2px(float dp) {
         Resources r = Resources.getSystem();
@@ -365,51 +466,36 @@ public class SwitchButton extends View implements Checkable {
     private static int optInt(TypedArray typedArray,
                               int index,
                               int def) {
-        if (typedArray == null) {
-            return def;
-        }
+        if(typedArray == null){return def;}
         return typedArray.getInt(index, def);
     }
 
     private static float optPixelSize(TypedArray typedArray,
                                       int index,
                                       float def) {
-        if (typedArray == null) {
-            return def;
-        }
+        if(typedArray == null){return def;}
         return typedArray.getDimension(index, def);
     }
 
     private static int optPixelSize(TypedArray typedArray,
                                     int index,
                                     int def) {
-        if (typedArray == null) {
-            return def;
-        }
+        if(typedArray == null){return def;}
         return typedArray.getDimensionPixelOffset(index, def);
     }
 
     private static int optColor(TypedArray typedArray,
                                 int index,
                                 int def) {
-        if (typedArray == null) {
-            return def;
-        }
+        if(typedArray == null){return def;}
         return typedArray.getColor(index, def);
     }
 
     private static boolean optBoolean(TypedArray typedArray,
                                       int index,
                                       boolean def) {
-        if (typedArray == null) {
-            return def;
-        }
+        if(typedArray == null){return def;}
         return typedArray.getBoolean(index, def);
-    }
-
-    @Override
-    public final void setPadding(int left, int top, int right, int bottom) {
-        super.setPadding(0, 0, 0, 0);
     }
 
     /**
@@ -672,82 +758,6 @@ public class SwitchButton extends View implements Checkable {
     }
 
     /**
-     * 绘制选中状态指示器
-     *
-     * @param canvas
-     */
-    protected void drawCheckedIndicator(Canvas canvas) {
-        drawCheckedIndicator(canvas,
-                viewState.checkedLineColor,
-                checkLineWidth,
-                left + viewRadius - checkedLineOffsetX, centerY - checkLineLength,
-                left + viewRadius - checkedLineOffsetY, centerY + checkLineLength,
-                paint);
-    }
-
-    /**
-     * 绘制选中状态指示器
-     *
-     * @param canvas
-     * @param color
-     * @param lineWidth
-     * @param sx
-     * @param sy
-     * @param ex
-     * @param ey
-     * @param paint
-     */
-    protected void drawCheckedIndicator(Canvas canvas,
-                                        int color,
-                                        float lineWidth,
-                                        float sx, float sy, float ex, float ey,
-                                        Paint paint) {
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(color);
-        paint.setStrokeWidth(lineWidth);
-        canvas.drawLine(
-                sx, sy, ex, ey,
-                paint);
-    }
-
-    /**
-     * 绘制关闭状态指示器
-     *
-     * @param canvas
-     */
-    private void drawUncheckIndicator(Canvas canvas) {
-        drawUncheckIndicator(canvas,
-                uncheckCircleColor,
-                uncheckCircleWidth,
-                right - uncheckCircleOffsetX, centerY,
-                uncheckCircleRadius,
-                paint);
-    }
-
-    /**
-     * 绘制关闭状态指示器
-     *
-     * @param canvas
-     * @param color
-     * @param lineWidth
-     * @param centerX
-     * @param centerY
-     * @param radius
-     * @param paint
-     */
-    protected void drawUncheckIndicator(Canvas canvas,
-                                        int color,
-                                        float lineWidth,
-                                        float centerX, float centerY,
-                                        float radius,
-                                        Paint paint) {
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(color);
-        paint.setStrokeWidth(lineWidth);
-        canvas.drawCircle(centerX, centerY, radius, paint);
-    }
-
-    /**
      * @param canvas
      * @param left
      * @param top
@@ -798,8 +808,8 @@ public class SwitchButton extends View implements Checkable {
 
     /**
      * @param canvas
-     * @param x      px
-     * @param y      px
+     * @param x px
+     * @param y px
      */
     private void drawButton(Canvas canvas, float x, float y) {
         canvas.drawCircle(x, y, buttonRadius, buttonPaint);
@@ -822,20 +832,6 @@ public class SwitchButton extends View implements Checkable {
             return;
         }
         toggle(enableEffect, false);
-    }
-
-    @Override
-    public void toggle() {
-        toggle(true);
-    }
-
-    /**
-     * 切换状态
-     *
-     * @param animate
-     */
-    public void toggle(boolean animate) {
-        toggle(animate, true);
     }
 
     private void toggle(boolean animate, boolean broadcast) {
@@ -1014,12 +1010,10 @@ public class SwitchButton extends View implements Checkable {
 
     /**
      * 设置是否启用阴影效果
-     *
      * @param shadowEffect true.启用
      */
     public void setShadowEffect(boolean shadowEffect) {
-        if (this.shadowEffect == shadowEffect) {
-            return;
+        if(this.shadowEffect == shadowEffect){return;
         }
         this.shadowEffect = shadowEffect;
 
@@ -1036,7 +1030,7 @@ public class SwitchButton extends View implements Checkable {
         }
     }
 
-    public void setEnableEffect(boolean enable) {
+    public void setEnableEffect(boolean enable){
         this.enableEffect = enable;
     }
 
@@ -1098,7 +1092,7 @@ public class SwitchButton extends View implements Checkable {
      * 动画-设置新的状态
      */
     private void pendingSettleState() {
-        if (valueAnimator.isRunning()) {
+        if (valueAnimator.isRunning()){
             valueAnimator.cancel();
         }
 
@@ -1134,7 +1128,7 @@ public class SwitchButton extends View implements Checkable {
 
     /**
      * 保存动画状态
-     */
+     * */
     private static class ViewState {
         /**
          * 按钮x位置[buttonMinX-buttonMaxX]

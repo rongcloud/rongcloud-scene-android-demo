@@ -35,7 +35,7 @@ import cn.rong.combusis.message.RCChatroomUserUnBlock;
 import cn.rong.combusis.message.RCChatroomVoice;
 import cn.rong.combusis.message.RCFollowMsg;
 import cn.rong.combusis.message.RCRRCloseMessage;
-import cn.rongcloud.messager.RCMessager;
+import cn.rongcloud.voiceroom.api.RCIMHelper;
 import cn.rongcloud.voiceroom.utils.VMLog;
 import okhttp3.Headers;
 
@@ -86,7 +86,7 @@ public class ComApplication extends Application {
             }
         });
 
-        RCMessager.getInstance().addMessageTypes(
+        RCIMHelper.get().registerMessageTypes(
                 RCChatroomAdmin.class,
                 RCChatroomBarrage.class,
                 RCChatroomEnter.class,

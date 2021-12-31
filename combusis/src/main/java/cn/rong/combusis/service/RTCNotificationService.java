@@ -23,8 +23,8 @@ import cn.rong.combusis.R;
  */
 public class RTCNotificationService extends Service {
 
-    public static final String ACTION = "ACTION";
     private static final String CHANNEL_ID = "RTCNotificationService";
+    public static final String ACTION = "ACTION";
     private final int notifyId = 20200202;
     private NotificationManager manager;
 

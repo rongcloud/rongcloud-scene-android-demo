@@ -25,6 +25,29 @@ public class CallPromptDialog extends AlertDialog {
     private int positiveTxtColor = 0;
     private int negativeTxtColor = 0;
 
+    public static CallPromptDialog newInstance(
+            final Context context, String title, String message) {
+        return new CallPromptDialog(context, title, message);
+    }
+
+    public static CallPromptDialog newInstance(final Context context, String message) {
+        return new CallPromptDialog(context, message);
+    }
+
+    public static CallPromptDialog newInstance(
+            final Context context, String title, String message, String positiveButton) {
+        return new CallPromptDialog(context, title, message, positiveButton);
+    }
+
+    public static CallPromptDialog newInstance(
+            final Context context,
+            String title,
+            String message,
+            String positiveButton,
+            String negativeButton) {
+        return new CallPromptDialog(context, title, message, positiveButton, negativeButton);
+    }
+
     public CallPromptDialog(
             final Context context,
             String title,
@@ -51,29 +74,6 @@ public class CallPromptDialog extends AlertDialog {
 
     public CallPromptDialog(final Context context, String message) {
         this(context, "", message);
-    }
-
-    public static CallPromptDialog newInstance(
-            final Context context, String title, String message) {
-        return new CallPromptDialog(context, title, message);
-    }
-
-    public static CallPromptDialog newInstance(final Context context, String message) {
-        return new CallPromptDialog(context, message);
-    }
-
-    public static CallPromptDialog newInstance(
-            final Context context, String title, String message, String positiveButton) {
-        return new CallPromptDialog(context, title, message, positiveButton);
-    }
-
-    public static CallPromptDialog newInstance(
-            final Context context,
-            String title,
-            String message,
-            String positiveButton,
-            String negativeButton) {
-        return new CallPromptDialog(context, title, message, positiveButton, negativeButton);
     }
 
     @Override
@@ -161,6 +161,12 @@ public class CallPromptDialog extends AlertDialog {
         negativeTxtColor = color;
     }
 
+    public interface OnPromptButtonClickedListener {
+        void onPositiveButtonClicked();
+
+        void onNegativeButtonClicked();
+    }
+
     private int gePopupWidth() {
         int distanceToBorder = (int) mContext.getResources().getDimension(R.dimen.callkit_dimen_size_40);
         return getScreenWidth() - 2 * (distanceToBorder);
@@ -170,11 +176,5 @@ public class CallPromptDialog extends AlertDialog {
         return ((WindowManager) (mContext.getSystemService(Context.WINDOW_SERVICE)))
                 .getDefaultDisplay()
                 .getWidth();
-    }
-
-    public interface OnPromptButtonClickedListener {
-        void onPositiveButtonClicked();
-
-        void onNegativeButtonClicked();
     }
 }

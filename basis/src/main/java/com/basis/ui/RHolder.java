@@ -16,6 +16,28 @@ public class RHolder implements IRHolder {
     protected View show;
     protected IRefresh refresh;
 
+    @Override
+    public IRefresh getRefresh() {
+        return refresh;
+    }
+
+    @Override
+    public View getNone() {
+        return none;
+    }
+
+    @Override
+    public View getShow() {
+        return show;
+    }
+
+    @Override
+    public final void showType(Type type) {
+        reset();
+        Logger.e(TAG, "showType: type = " + type);
+        (Type.show == type ? show : none).setVisibility(View.VISIBLE);
+    }
+
     @Deprecated
     public RHolder(View show, View none, IRefresh refresh) {
         if (null == none || null == refresh) {
@@ -53,28 +75,6 @@ public class RHolder implements IRHolder {
         this.refresh = refresh;
         this.show = (View) refresh;
         initializeNone((ViewGroup) show.getParent());
-    }
-
-    @Override
-    public IRefresh getRefresh() {
-        return refresh;
-    }
-
-    @Override
-    public View getNone() {
-        return none;
-    }
-
-    @Override
-    public View getShow() {
-        return show;
-    }
-
-    @Override
-    public final void showType(Type type) {
-        reset();
-        Logger.e(TAG, "showType: type = " + type);
-        (Type.show == type ? show : none).setVisibility(View.VISIBLE);
     }
 
     /**

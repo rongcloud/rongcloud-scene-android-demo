@@ -17,6 +17,41 @@ public class SharedPreferUtil {
     public static final String SP_FILE_NAME = "common_sp_file_name";
 
     /**
+     * SharedPreferences兼容类
+     */
+    private static class SharedPreferencesCompat {
+        private static final Method sApplyMethod = findApplyMethod();
+
+        private static Method findApplyMethod() {
+            try {
+                Class clz = SharedPreferences.Editor.class;
+                return clz.getMethod("apply");
+            } catch (NoSuchMethodException e) {
+            }
+            return null;
+        }
+
+        /**
+         * @param editor
+         */
+        public static void apply(SharedPreferences.Editor editor) {
+            try {
+                if (sApplyMethod != null) {
+                    sApplyMethod.invoke(editor);
+                    return;
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            editor.commit();
+        }
+    }
+
+    /**
      * 保存键值对
      *
      * @param key   key
@@ -49,6 +84,7 @@ public class SharedPreferUtil {
         editor.putString(key, value);
         SharedPreferencesCompat.apply(editor);
     }
+
 
     /**
      * 获取键对应的值
@@ -189,41 +225,6 @@ public class SharedPreferUtil {
      */
     public static Map<String, ?> getAll(String fileName) {
         return UIKit.getContext().getSharedPreferences(fileName, Context.MODE_MULTI_PROCESS).getAll();
-    }
-
-    /**
-     * SharedPreferences兼容类
-     */
-    private static class SharedPreferencesCompat {
-        private static final Method sApplyMethod = findApplyMethod();
-
-        private static Method findApplyMethod() {
-            try {
-                Class clz = SharedPreferences.Editor.class;
-                return clz.getMethod("apply");
-            } catch (NoSuchMethodException e) {
-            }
-            return null;
-        }
-
-        /**
-         * @param editor
-         */
-        public static void apply(SharedPreferences.Editor editor) {
-            try {
-                if (sApplyMethod != null) {
-                    sApplyMethod.invoke(editor);
-                    return;
-                }
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            editor.commit();
-        }
     }
 
 }

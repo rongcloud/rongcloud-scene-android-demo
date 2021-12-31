@@ -24,6 +24,7 @@ import cn.rong.combusis.common.base.BaseBottomSheetDialogFragment;
 import cn.rong.combusis.message.RCFollowMsg;
 import cn.rong.combusis.provider.user.User;
 import cn.rong.combusis.provider.voiceroom.RoomOwnerType;
+import cn.rong.combusis.sdk.StateUtil;
 import cn.rong.combusis.sdk.event.wrapper.EToast;
 import cn.rong.combusis.ui.room.model.Member;
 import cn.rong.combusis.ui.room.model.MemberCache;
@@ -38,12 +39,6 @@ import io.rong.imlib.model.Conversation;
  */
 public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
 
-    //麦位的状态
-    boolean isMute = true;
-    // 操作的用户是否在麦位上 TODO：@lihao 需要知道当前用户是否在麦位上
-    boolean memberIsOnSeat = false;
-    //麦位的位置
-    int seatPosition = 1;
     private Guideline mGlBg;
     private CircleImageView mIvMemberPortrait;
     private AppCompatTextView mTvMemberName;
@@ -62,16 +57,18 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
     private RelativeLayout mRlSettingAdmin;
     private AppCompatTextView mTvSettingAdmin;
     private AppCompatButton mBtnFollow;
+
     private RoomOwnerType mRoomOwnerType;
+    //麦位的状态
+    boolean isMute = true;
     private String roomUserId;
     private OnMemberSettingClickListener mOnMemberSettingClickListener;
-    private Member member;
 
-    public MemberSettingFragment(RoomOwnerType roomOwnerType, OnMemberSettingClickListener onMemberSettingClickListener) {
-        super(R.layout.fragment_member_setting);
-        this.mRoomOwnerType = roomOwnerType;
-        this.mOnMemberSettingClickListener = onMemberSettingClickListener;
-    }
+    // 操作的用户是否在麦位上 TODO：@lihao 需要知道当前用户是否在麦位上
+    boolean memberIsOnSeat = false;
+    //麦位的位置
+    int seatPosition = 1;
+    private Member member;
 
     public void setMute(boolean mute) {
         isMute = mute;
@@ -81,8 +78,15 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
         this.seatPosition = seatPosition;
     }
 
+
     public void setMemberIsOnSeat(boolean memberIsOnSeat) {
         this.memberIsOnSeat = memberIsOnSeat;
+    }
+
+    public MemberSettingFragment(RoomOwnerType roomOwnerType, OnMemberSettingClickListener onMemberSettingClickListener) {
+        super(R.layout.fragment_member_setting);
+        this.mRoomOwnerType = roomOwnerType;
+        this.mOnMemberSettingClickListener = onMemberSettingClickListener;
     }
 
     @Override
@@ -125,16 +129,14 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
             });
         });
         mLlInvitedSeat.setOnClickListener(v -> {
-//            if (StateUtil.isPking()) {
-//                EToast.showToast("当前PK中,无法进行该操作");
-//                return;
-//            }
-            mOnMemberSettingClickListener.clickInviteSeat(member.toUser(), (result, msg) -> {
+            if (StateUtil.isPking()) {
+                EToast.showToast("当前PK中,无法进行该操作");
+                return;
+            }
+            mOnMemberSettingClickListener.clickInviteSeat(-1, member.toUser(), (result, msg) -> {
+                EToast.showToast(msg);
                 if (result) {
                     dismiss();
-                    EToast.showToast("发送上麦通知成功");
-                } else {
-                    EToast.showToast(msg);
                 }
             });
         });
@@ -158,7 +160,7 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
             });
         });
         mLlMuteSeat.setOnClickListener(v -> {
-            mOnMemberSettingClickListener.clickMuteSeat(member.toUser(), (result, msg) -> {
+            mOnMemberSettingClickListener.clickMuteSeat(seatPosition, !isMute, (result, msg) -> {
                 if (result) {
                     dismiss();
                 } else {
@@ -167,13 +169,11 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
             });
         });
         mLlCloseSeat.setOnClickListener(v -> {
-            mOnMemberSettingClickListener.clickCloseSeat(member.toUser(), (result, msg) -> {
+            mOnMemberSettingClickListener.clickCloseSeat(seatPosition, true, (result, msg) -> {
                 if (result) {
                     dismiss();
-                    EToast.showToast("座位已关闭");
-                } else {
-                    EToast.showToast(msg);
                 }
+                EToast.showToast(msg);
             });
         });
         mBtnSendGift.setOnClickListener(v -> {
@@ -230,6 +230,14 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
     private void refreshBottomView(boolean selfIsAdmin, boolean memberIsAdmin, boolean memberIsOnSeat, boolean memberIsOwner) {
         switch (mRoomOwnerType) {
             case VOICE_OWNER:
+            case LIVE_OWNER:
+                if (memberIsOwner) {
+                    mClButtons.setVisibility(View.INVISIBLE);
+                    mClMemberSetting.setVisibility(View.GONE);
+                    mTvSeatPosition.setVisibility(View.INVISIBLE);
+                    mRlSettingAdmin.setVisibility(View.GONE);
+                    break;
+                }
                 mClMemberSetting.setVisibility(View.VISIBLE);
                 // 上下麦
                 if (memberIsOnSeat) {
@@ -254,6 +262,7 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
                 // 可以踢人
                 mLlKickRoom.setVisibility(View.VISIBLE);
                 break;
+            case LIVE_VIEWER:
             case VOICE_VIEWER:
                 // 自己和对方都是管理,或对方是房主,不显示底部操作
                 if (selfIsAdmin && memberIsAdmin || memberIsOwner) {
@@ -322,6 +331,7 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
         switch (mRoomOwnerType) {
             case VOICE_OWNER:
             case RADIO_OWNER:
+            case LIVE_OWNER:
                 mRlSettingAdmin.setVisibility(View.VISIBLE);
                 if (memberIsAdmin) {
                     mTvSettingAdmin.setText("撤回管理");
@@ -405,7 +415,7 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
         });
     }
 
-    public interface OnMemberSettingClickListener {
+    public interface OnMemberSettingClickListener extends SeatActionClickListener {
         /**
          * 设置管理员
          *
@@ -415,14 +425,6 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
         void clickSettingAdmin(User user, ClickCallback<Boolean> callback);
 
         /**
-         * 邀请上麦
-         *
-         * @param user
-         * @param callback
-         */
-        void clickInviteSeat(User user, ClickCallback<Boolean> callback);
-
-        /**
          * 踢出房间
          *
          * @param user
@@ -430,29 +432,6 @@ public class MemberSettingFragment extends BaseBottomSheetDialogFragment {
          */
         void clickKickRoom(User user, ClickCallback<Boolean> callback);
 
-        /**
-         * 下麦
-         *
-         * @param user
-         * @param callback
-         */
-        void clickKickSeat(User user, ClickCallback<Boolean> callback);
-
-        /**
-         * 静麦
-         *
-         * @param user
-         * @param callback
-         */
-        void clickMuteSeat(User user, ClickCallback<Boolean> callback);
-
-        /**
-         * 关闭座位
-         *
-         * @param user
-         * @param callback
-         */
-        void clickCloseSeat(User user, ClickCallback<Boolean> callback);
 
         /**
          * 发送礼物

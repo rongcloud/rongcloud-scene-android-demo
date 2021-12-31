@@ -107,15 +107,6 @@ public class MultiVideoCallActivity extends BaseCallActivity {
     LinearLayout infoLayout;
     ImageView signalView;
     TextView userNameView;
-    boolean isFullScreen = false;
-    boolean isMuteMIC = false;
-    boolean isMuteCamera = false;
-    boolean startForCheckPermissions = false;
-    String localViewUserId;
-    ImageView muteButtion;
-    ImageView disableCameraButtion;
-    CallPromptDialog dialog = null;
-    RelativeLayout observerLayout;
     private WebView whiteboardView;
     private RelativeLayout mRelativeWebView;
     private int remoteUserViewWidth;
@@ -123,10 +114,20 @@ public class MultiVideoCallActivity extends BaseCallActivity {
     // 主叫、通话中 远端View
     private float remoteUserViewMarginsRight = 10;
     private float remoteUserViewMarginsLeft = 20;
+
+    boolean isFullScreen = false;
+    boolean isMuteMIC = false;
+    boolean isMuteCamera = false;
+    boolean startForCheckPermissions = false;
+
+    String localViewUserId;
     private CallOptionMenu optionMenu;
+    ImageView muteButtion;
+    ImageView disableCameraButtion;
+    CallPromptDialog dialog = null;
+    RelativeLayout observerLayout;
     private ImageView iv_large_preview_mutilvideo, iv_large_preview_Mask;
     private String topUserName = "", topUserNameTag = "";
-    private ProgressDialog progressDialog;
 
     @Override
     @TargetApi(23)
@@ -1659,6 +1660,8 @@ public class MultiVideoCallActivity extends BaseCallActivity {
                 nameView.setText(userInfo.getName());
         }
     }
+
+    private ProgressDialog progressDialog;
 
     private void loadWhiteBoard(String url, boolean isReload) {
         if (isReload) {

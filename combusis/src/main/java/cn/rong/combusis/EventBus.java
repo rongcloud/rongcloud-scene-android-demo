@@ -10,16 +10,6 @@ import cn.rong.combusis.common.utils.UIKit;
 
 public class EventBus {
 
-    private final static EventBus _bus = new EventBus();
-    private final LinkedHashMap<String, List<EventCallback>> events = new LinkedHashMap<>(16);
-
-    private EventBus() {
-    }
-
-    public static EventBus get() {
-        return _bus;
-    }
-
     /**
      * 触发事件
      *
@@ -37,6 +27,16 @@ public class EventBus {
                 }
             }
         });
+    }
+
+    private final static EventBus _bus = new EventBus();
+    private final LinkedHashMap<String, List<EventCallback>> events = new LinkedHashMap<>(16);
+
+    private EventBus() {
+    }
+
+    public static EventBus get() {
+        return _bus;
     }
 
     /**

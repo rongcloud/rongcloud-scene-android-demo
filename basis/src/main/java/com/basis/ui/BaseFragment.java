@@ -25,10 +25,10 @@ import com.kit.utils.Logger;
  */
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IBasis, IBaseView {
     protected final String TAG = this.getClass().getSimpleName();
-    public P present;
     protected BaseActivity activity;
     private View layout;
     private boolean init = false;//init 和 onRefresh()的执行的先后问题
+    public P present;
     private LoadTag mLoadTag;
 
     @Override

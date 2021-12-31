@@ -27,9 +27,9 @@
             <TextView
                 android:id="@+id/user_status"
                 style="@style/rc_voip_text_style_style"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/rc_voip_call_connecting" />
 

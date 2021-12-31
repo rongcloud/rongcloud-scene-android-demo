@@ -46,70 +46,9 @@ public class PermissionUtil {
             Manifest.permission.READ_SMS,//短信
             Manifest.permission.SEND_SMS,
     };
+
     public static final int STATE_RECORDING = -1;
     public static final int STATE_NO_PERMISSION = -2;
-    public static final int STATE_SUCCESS = 1;
-
-    /**
-     * 检查权限
-     *
-     * @param context
-     * @param var1    检查权限集
-     * @return 是否需要申请权限 true：需要，权限未全部授予，false：不需要，已授予全部权限
-     */
-    @NonNull
-    public static boolean hasPermissions(Context context, @Size(min = 1L) @NonNull String[] var1) {
-        if (Build.VERSION.SDK_INT < 23) {
-            Log.w("EasyPermissions", "hasPermissions: API version < M, returning true by default");
-            return true;
-        } else if (context == null) {
-            throw new IllegalArgumentException("Can't check permissions for null context");
-        } else {
-            String[] var2 = var1;
-            int var3 = var1.length;
-
-            for (int var4 = 0; var4 < var3; ++var4) {
-                String var5 = var2[var4];
-                if (ContextCompat.checkSelfPermission(context, var5) != 0) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    }
-
-    /**
-     * 检查并申请权限
-     *
-     * @param activity
-     * @param permissions 检查权限集
-     * @return 是否需要申请权限 true：需要，权限未全部授予，false：不需要，已授予全部权限
-     */
-    @NonNull
-    public static boolean checkPermissions(Activity activity, String[] permissions) {
-        try {
-            if (Build.VERSION.SDK_INT >= 23) {
-                ArrayList<String> requestPerssions = new ArrayList<>();
-                if (null == permissions) return true;
-                for (String permission : permissions) {
-                    if (PackageManager.PERMISSION_GRANTED != activity.checkSelfPermission(permission)) {
-                        requestPerssions.add(permission);
-                    }
-                }
-                int size = requestPerssions.size();
-                if (size > 0) {
-                    activity.requestPermissions(requestPerssions.toArray(new String[size]), REQUEST_CODE);
-                    return false;
-                }
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
 
     public static void checkPermission(Activity activity, String permission, int requestCode) {
         try {
@@ -145,6 +84,68 @@ public class PermissionUtil {
             }
         }
         return new String[0];
+    }
+
+    public static final int STATE_SUCCESS = 1;
+
+    /**
+     * 检查权限
+     *
+     * @param context
+     * @param var1    检查权限集
+     * @return 是否需要申请权限 true：需要，权限未全部授予，false：不需要，已授予全部权限
+     */
+    @NonNull
+    public static boolean hasPermissions(Context context, @Size(min = 1L) @NonNull String[] var1) {
+        if (Build.VERSION.SDK_INT < 23) {
+            Log.w("EasyPermissions", "hasPermissions: API version < M, returning true by default");
+            return true;
+        } else if (context == null) {
+            throw new IllegalArgumentException("Can't check permissions for null context");
+        } else {
+            String[] var2 = var1;
+            int var3 = var1.length;
+
+            for (int var4 = 0; var4 < var3; ++var4) {
+                String var5 = var2[var4];
+                if (ContextCompat.checkSelfPermission(context, var5) != 0) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    /**
+     * 检查并申请权限
+     * @param activity
+     * @param permissions 检查权限集
+     * @return 是否需要申请权限 true：需要，权限未全部授予，false：不需要，已授予全部权限
+     */
+    @NonNull
+    public static boolean checkPermissions(Activity activity, String[] permissions) {
+        try {
+            if (Build.VERSION.SDK_INT >= 23) {
+                ArrayList<String> requestPerssions = new ArrayList<>();
+                if (null == permissions) return true;
+                for (String permission : permissions) {
+                    if (PackageManager.PERMISSION_GRANTED != activity.checkSelfPermission(permission)) {
+                        requestPerssions.add(permission);
+                    }
+                }
+                int size = requestPerssions.size();
+                if (size > 0) {
+                    activity.requestPermissions(requestPerssions.toArray(new String[size]), REQUEST_CODE);
+                    return false;
+                }
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**

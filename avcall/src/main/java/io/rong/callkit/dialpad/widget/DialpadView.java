@@ -42,17 +42,20 @@ import io.rong.callkit.R;
 
 public class DialpadView extends LinearLayout {
     private static final String TAG = DialpadView.class.getSimpleName();
-    private final int[] mButtonIds = new int[]{R.id.zero, R.id.one, R.id.two, R.id.three,
-            R.id.four, R.id.five, R.id.six, R.id.seven, R.id.eight, R.id.nine, R.id.star,
-            R.id.pound};
     private EditText mDigits;
     private ImageButton mDelete;
     private View mOverflowMenuButton;
     private ColorStateList mRippleColor;
+
     private ViewGroup mRateContainer;
     private TextView mIldCountry;
     private TextView mIldRate;
+
     private boolean mCanDigitsBeEdited;
+
+    private final int[] mButtonIds = new int[]{R.id.zero, R.id.one, R.id.two, R.id.three,
+            R.id.four, R.id.five, R.id.six, R.id.seven, R.id.eight, R.id.nine, R.id.star,
+            R.id.pound};
 
 
     public DialpadView(Context context) {

@@ -40,7 +40,17 @@ class ConfirmDialog(
     override fun initView() {
         tv_message.text = message
         btn_cancel.text = cancel
-        if (TextUtils.isEmpty(cancel)) btn_cancel.visibility = View.GONE
+        if (TextUtils.isEmpty(cancel)) {
+            b_divider.visibility = View.GONE
+            btn_cancel.visibility = View.GONE
+        }
         btn_confirm.text = confirm
+    }
+
+    /**
+     * 更新UI
+     */
+    fun updateMessage(message: String) {
+        tv_message.text = message
     }
 }

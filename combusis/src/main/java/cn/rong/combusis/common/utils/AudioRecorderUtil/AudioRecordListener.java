@@ -7,7 +7,6 @@ public interface AudioRecordListener {
      * 开始
      */
     void startAudioRecord();
-
     /**
      * 结束
      */

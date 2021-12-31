@@ -43,6 +43,5 @@
         <item name="android:textColor">@color/basis_bar_text_color</item>
         <item name="android:textSize">@dimen/basis_bar_text_size</item>
     </style>
-
     <style name="BasisMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar"></style>
 </resources>

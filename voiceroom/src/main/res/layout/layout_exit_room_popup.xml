@@ -29,8 +29,8 @@
             android:id="@+id/ll_pack_up_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -53,8 +53,8 @@
             android:id="@+id/ll_leave_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -77,9 +77,9 @@
             android:id="@+id/ll_close_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="50dp"

@@ -9,7 +9,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import cn.rong.combusis.api.VRApi
 import cn.rong.combusis.common.utils.RealPathFromUriUtils
-import cn.rongcloud.voiceroom.model.FileModel
+import cn.rongcloud.voice.model.FileModel
 import cn.rongcloud.voiceroomdemo.mvp.activity.iview.ISettingView
 import cn.rongcloud.voiceroomdemo.net.CommonNetManager
 import cn.rongcloud.voiceroomdemo.net.api.bean.request.UpdateUserInfoRequestBean

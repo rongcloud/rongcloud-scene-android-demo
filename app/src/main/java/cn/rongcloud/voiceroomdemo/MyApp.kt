@@ -12,6 +12,7 @@ import cn.rongcloud.voiceroomdemo.mvp.activity.LauncherActivity
 import cn.rongcloud.voiceroomdemo.mvp.activity.LoginActivity
 import com.basis.BasisHelper
 import com.basis.net.oklib.net.Page
+import com.meihu.beautylibrary.MHSDK
 import com.rongcloud.common.ActivityManager
 import com.rongcloud.common.AppConfig
 import com.rongcloud.common.ModuleManager
@@ -47,7 +48,8 @@ class MyApp : ComApplication() {
             BuildConfig.UM_APP_KEY,
             "rcrtc",
             BuildConfig.BASE_SERVER_ADDRES,
-            BuildConfig.BUSINESS_TOKEN
+            BuildConfig.BUSINESS_TOKEN,
+            BuildConfig.INTERIAL
         )
         var process = UIKit.getCurrentProcessName()
         Log.d(TAG, "process : $process")
@@ -63,6 +65,9 @@ class MyApp : ComApplication() {
         })
         //初始化 bugly
         CrashReport.initCrashReport(this, BuildConfig.BUGLY_ID, BuildConfig.DEBUG)
+
+        //初始化美狐
+        MHSDK.init(this, BuildConfig.MH_APP_KEY)
         // 退出或者账号被挤下线的流程
         AccountStore.obLogoutSubject().subscribe {
             try {

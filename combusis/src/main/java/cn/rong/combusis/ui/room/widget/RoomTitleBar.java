@@ -18,6 +18,7 @@ import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.rongcloud.common.utils.AccountStore;
+import com.rongcloud.common.utils.ImageLoaderUtil;
 import com.rongcloud.common.utils.UiUtils;
 
 import java.util.List;
@@ -26,7 +27,9 @@ import java.util.concurrent.TimeUnit;
 import cn.rong.combusis.R;
 import cn.rong.combusis.api.VRApi;
 import cn.rong.combusis.message.RCFollowMsg;
+import cn.rong.combusis.provider.voiceroom.RoomOwnerType;
 import cn.rong.combusis.ui.room.model.Member;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.core.Observable;
 import io.rong.imkit.picture.tools.ToastUtils;
 
@@ -47,6 +50,9 @@ public class RoomTitleBar extends ConstraintLayout {
     private OnFollowClickListener onFollowClickListener;
     private boolean isShowFollow = false;
     private int mDelay = 0;
+    private CircleImageView mCreaterImageview;
+    private RoomOwnerType roomOwnerType;
+    private TextView tvRoomOnlineCount;
 
     public RoomTitleBar(@NonNull Context context) {
         this(context, null);
@@ -66,9 +72,16 @@ public class RoomTitleBar extends ConstraintLayout {
         mDelayTextView = mRootView.findViewById(R.id.tv_room_delay);
         mMenuButton = mRootView.findViewById(R.id.btn_menu);
         mFollowTextView = mRootView.findViewById(R.id.tv_follow);
+        mCreaterImageview = mRootView.findViewById(R.id.iv_creater_id);
+        tvRoomOnlineCount = mRootView.findViewById(R.id.tv_room_online_count);
         mFollowTextView.setOnClickListener(v -> {
             follow();
         });
+
+    }
+
+    public Observable setOnLineMemberClickListener() {
+        return RxView.clicks(tvRoomOnlineCount).throttleFirst(1, TimeUnit.SECONDS);
     }
 
     public Observable setOnMemberClickListener() {
@@ -79,11 +92,26 @@ public class RoomTitleBar extends ConstraintLayout {
         return RxView.clicks(mMenuButton).throttleFirst(1, TimeUnit.SECONDS);
     }
 
-    public void setData(String name, int id, String roomUserId, OnFollowClickListener onFollowClickListener) {
+    public void setData(RoomOwnerType roomOwnerType, String name, int id, String roomUserId, OnFollowClickListener onFollowClickListener) {
         this.onFollowClickListener = onFollowClickListener;
-        setRoomName(name);
+        this.roomOwnerType = roomOwnerType;
+        setViewState();
+        if (roomOwnerType == RoomOwnerType.LIVE_OWNER || roomOwnerType == RoomOwnerType.LIVE_VIEWER) {
+            //如果是直播房，那么房间名直接显示创建者的ID
+            setCreatorName(name);
+        } else {
+            setRoomName(name);
+        }
         setRoomId(id);
         getFollowStatus(roomUserId);
+    }
+
+    public void setCreatorName(String creatorName) {
+        mNameTextView.setText(creatorName);
+    }
+
+    public void setCreatorPortrait(String portrait) {
+        ImageLoaderUtil.INSTANCE.loadPortraitDef(getContext(), mCreaterImageview, portrait);
     }
 
     public void setRoomId(int id) {
@@ -96,7 +124,21 @@ public class RoomTitleBar extends ConstraintLayout {
 
     public void setOnlineNum(int num) {
         mOnlineTextView.setText(String.format("在线 %s", num));
+        tvRoomOnlineCount.setText(num + "");
     }
+
+//    /**
+//     * 是否在麦位上
+//     */
+//    public void setIsLinkSeat(boolean isLinkSeat){
+//        if (roomOwnerType!=null&&roomOwnerType.equals(RoomOwnerType.LIVE_VIEWER)) {
+//            if (isLinkSeat){
+//                mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_close_live_room));
+//            }else {
+//                mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
+//            }
+//        }
+//    }
 
     public void setDelay(int delay) {
         setDelay(delay, true);
@@ -148,7 +190,7 @@ public class RoomTitleBar extends ConstraintLayout {
     public void setFollow(boolean isFollow) {
         if (isShowFollow) {
             mFollowTextView.setVisibility(VISIBLE);
-            mLeftView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dimen_room_padding), 0, UiUtils.INSTANCE.dp2Px(getContext(), 6), 0);
+            mLeftView.setPadding(0, 0, UiUtils.INSTANCE.dp2Px(getContext(), 6), 0);
             if (isFollow) {
                 mFollowTextView.setText("已关注");
                 mFollowTextView.setBackgroundResource(R.drawable.btn_titlebar_followed);
@@ -158,7 +200,7 @@ public class RoomTitleBar extends ConstraintLayout {
             }
         } else {
             mFollowTextView.setVisibility(GONE);
-            mLeftView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dimen_room_padding), 0, UiUtils.INSTANCE.dp2Px(getContext(), 20), 0);
+            mLeftView.setPadding(0, 0, UiUtils.INSTANCE.dp2Px(getContext(), 20), 0);
         }
     }
 
@@ -208,6 +250,60 @@ public class RoomTitleBar extends ConstraintLayout {
                 }
             }
         });
+    }
+
+    /**
+     * 设置不同房间的状态
+     */
+    public void setViewState() {
+        ConstraintLayout.LayoutParams layoutParams = (LayoutParams) mNameTextView.getLayoutParams();
+        switch (roomOwnerType) {
+            case LIVE_OWNER:
+                layoutParams.bottomToTop = mDelayTextView.getId();
+                mNameTextView.setLayoutParams(layoutParams);
+                mDelayTextView.setVisibility(VISIBLE);
+                mCreaterImageview.setVisibility(VISIBLE);
+                mLeftView.setBackgroundResource(R.drawable.bg_live_room_title_left);
+                mOnlineTextView.setVisibility(GONE);
+                tvRoomOnlineCount.setVisibility(VISIBLE);
+                mIDTextView.setVisibility(GONE);
+                mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_close_live_room));
+                setmLeftViewMarginStart(getResources().getDimensionPixelOffset(R.dimen.dimen_room_padding));
+                break;
+            case LIVE_VIEWER:
+                mDelayTextView.setVisibility(GONE);
+                mCreaterImageview.setVisibility(VISIBLE);
+                mLeftView.setBackgroundResource(R.drawable.bg_live_room_title_left);
+                mOnlineTextView.setVisibility(GONE);
+                mIDTextView.setVisibility(GONE);
+                tvRoomOnlineCount.setVisibility(VISIBLE);
+                setmLeftViewMarginStart(getResources().getDimensionPixelOffset(R.dimen.dimen_room_padding));
+                mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
+                break;
+            default:
+                //非直播房
+                layoutParams.bottomToTop = mIDTextView.getId();
+                mNameTextView.setLayoutParams(layoutParams);
+                mCreaterImageview.setVisibility(GONE);
+                mLeftView.setBackgroundResource(R.drawable.bg_room_title_left);
+                mOnlineTextView.setVisibility(VISIBLE);
+                mIDTextView.setVisibility(VISIBLE);
+                tvRoomOnlineCount.setVisibility(GONE);
+                mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
+                setmLeftViewMarginStart(0);
+                break;
+        }
+    }
+
+    /**
+     * 设置距离右边的边距
+     *
+     * @param marginStart
+     */
+    private void setmLeftViewMarginStart(int marginStart) {
+        LayoutParams layoutParams = (LayoutParams) mLeftView.getLayoutParams();
+        layoutParams.setMarginStart(marginStart);
+        mLeftView.setLayoutParams(layoutParams);
     }
 
     public interface OnFollowClickListener {

@@ -22,17 +22,6 @@ import io.rong.imlib.model.MessageContent;
  */
 @MessageTag(value = "RC:Chatroom:User:Ban")
 public class RCChatroomUserBan extends MessageContent {
-    public static final Creator<RCChatroomUserBan> CREATOR = new Creator<RCChatroomUserBan>() {
-        @Override
-        public RCChatroomUserBan createFromParcel(Parcel source) {
-            return new RCChatroomUserBan(source);
-        }
-
-        @Override
-        public RCChatroomUserBan[] newArray(int size) {
-            return new RCChatroomUserBan[size];
-        }
-    };
     private static final String TAG = "RCChatroomUserBan";
     private String id;
     private long duration;
@@ -57,15 +46,6 @@ public class RCChatroomUserBan extends MessageContent {
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getMessage());
         }
-    }
-
-    public RCChatroomUserBan() {
-    }
-
-    protected RCChatroomUserBan(Parcel in) {
-        this.id = in.readString();
-        this.duration = in.readInt();
-        this.extra = in.readString();
     }
 
     @Override
@@ -127,5 +107,27 @@ public class RCChatroomUserBan extends MessageContent {
         this.id = source.readString();
         this.duration = source.readInt();
         this.extra = source.readString();
+    }
+
+    public static final Creator<RCChatroomUserBan> CREATOR = new Creator<RCChatroomUserBan>() {
+        @Override
+        public RCChatroomUserBan createFromParcel(Parcel source) {
+            return new RCChatroomUserBan(source);
+        }
+
+        @Override
+        public RCChatroomUserBan[] newArray(int size) {
+            return new RCChatroomUserBan[size];
+        }
+    };
+
+
+    public RCChatroomUserBan() {
+    }
+
+    protected RCChatroomUserBan(Parcel in) {
+        this.id = in.readString();
+        this.duration = in.readInt();
+        this.extra = in.readString();
     }
 }

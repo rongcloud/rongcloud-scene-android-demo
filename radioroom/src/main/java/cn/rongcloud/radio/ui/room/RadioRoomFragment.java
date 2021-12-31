@@ -36,6 +36,7 @@ import cn.rong.combusis.music.MusicDialog;
 import cn.rong.combusis.provider.user.User;
 import cn.rong.combusis.provider.user.UserProvider;
 import cn.rong.combusis.provider.voiceroom.RoomOwnerType;
+import cn.rong.combusis.provider.voiceroom.RoomType;
 import cn.rong.combusis.provider.voiceroom.VoiceRoomBean;
 import cn.rong.combusis.ui.room.AbsRoomActivity;
 import cn.rong.combusis.ui.room.AbsRoomFragment;
@@ -151,15 +152,10 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
         mMessageView = getView(R.id.rv_message);
         mMessageView.setLayoutManager(new LinearLayoutManager(getContext()));
         mMessageView.addItemDecoration(new DefaultItemDecoration(Color.TRANSPARENT, 0, UiUtils.INSTANCE.dp2Px(getContext(), 5)));
-        mRoomMessageAdapter = new RoomMessageAdapter(getContext(), this);
+        mRoomMessageAdapter = new RoomMessageAdapter(getContext(), this, RoomType.RADIO_ROOM);
         mMessageView.setAdapter(mRoomMessageAdapter);
 
         mCoverView = getView(R.id.view_cover);
-    }
-
-    @Override
-    public void onSoftKeyboardChange(int height) {
-        mRoomBottomView.setPadding(0, 0, 0, height);
     }
 
     @Override
@@ -170,11 +166,6 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
             @Override
             public void onSendLikeMessage(RCChatroomLike rcChatroomLike) {
                 present.sendMessage(rcChatroomLike);
-            }
-
-            @Override
-            public void onSingleTap() {
-                mRoomBottomView.hideSoftKeyboardAndInput();
             }
         });
         mRoomTitleBar.setOnMenuClickListener().subscribe(new Consumer() {
@@ -220,7 +211,7 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
         // 加载背景
         setRoomBackground(voiceRoomBean.getBackgroundUrl());
         // 设置title数据
-        mRoomTitleBar.setData(voiceRoomBean.getRoomName(), voiceRoomBean.getId(), voiceRoomBean.getUserId(), present);
+        mRoomTitleBar.setData(roomOwnerType, voiceRoomBean.getRoomName(), voiceRoomBean.getId(), voiceRoomBean.getUserId(), present);
         mRoomTitleBar.setDelay(0, false);
         // 设置房主麦位信息
         mRoomSeatView.setData(voiceRoomBean.getCreateUserName(), voiceRoomBean.getCreateUserPortrait());
@@ -265,11 +256,6 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
         if (count > 0) {
             mMessageView.smoothScrollToPosition(count - 1);
         }
-    }
-
-    @Override
-    public void clearInput() {
-        mRoomBottomView.clearInput();
     }
 
     @Override

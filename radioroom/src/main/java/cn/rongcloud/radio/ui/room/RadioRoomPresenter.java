@@ -501,7 +501,6 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
                             }
                             if (isContains) {
                                 mView.addToMessageList(barrage, false);
-                                mView.clearInput();
                             } else {
                                 sendMessage(barrage);
                             }
@@ -820,8 +819,6 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
             return;
         } else if (content instanceof RCChatroomBarrage
                 && isSelf(((RCChatroomBarrage) content).getUserId())) {
-            // 自己发消息成功后清除输入框内容
-            mView.clearInput();
         } else if (content instanceof RCRRCloseMessage) {
             mView.showRoomCloseDialog();
             return;

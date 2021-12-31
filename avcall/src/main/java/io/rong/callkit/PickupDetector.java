@@ -17,6 +17,7 @@ public class PickupDetector {
 
     private boolean isPickUp;
     private PickupDetectListener listener;
+
     SensorEventListener sensorEventListener =
             new SensorEventListener() {
                 @Override

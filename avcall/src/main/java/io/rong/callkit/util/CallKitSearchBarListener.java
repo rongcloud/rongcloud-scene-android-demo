@@ -17,8 +17,6 @@ public interface CallKitSearchBarListener {
      */
     void onSoftSearchKeyClick();
 
-    /**
-     * 搜索控件中，点击"清除"后，触发此回调
-     */
+    /** 搜索控件中，点击"清除"后，触发此回调 */
     void onClearButtonClick();
 }

@@ -18,8 +18,8 @@ import java.util.Map;
 public abstract class AbsProvider<T extends Provide> implements IProvider<T> {
     private final static int MAX_MEMORY = 2 * 1024 * 1024;
     protected final String TAG = getClass().getSimpleName();
-    private final LruCache<String, T> lruCache;
     Map<String, IResultBack> singleObservers = new HashMap(4);
+    private final LruCache<String, T> lruCache;
 
     public AbsProvider(int max) {
         lruCache = new LruCache<>(Math.max(max, MAX_MEMORY));

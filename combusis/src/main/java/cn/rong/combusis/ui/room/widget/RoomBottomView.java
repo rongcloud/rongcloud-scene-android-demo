@@ -3,16 +3,11 @@ package cn.rong.combusis.ui.room.widget;
 import android.Manifest;
 import android.content.Context;
 import android.graphics.Point;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,18 +17,18 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 
+import com.kit.utils.Logger;
 import com.rongcloud.common.utils.AccountStore;
 import com.rongcloud.common.utils.UiUtils;
-import com.vanniktech.emoji.EmojiPopup;
 
 import cn.rong.combusis.R;
-import cn.rong.combusis.common.utils.SoftKeyboardUtils;
 import cn.rong.combusis.manager.AudioPlayManager;
 import cn.rong.combusis.manager.AudioRecordManager;
 import cn.rong.combusis.message.RCChatroomVoice;
 import cn.rong.combusis.provider.voiceroom.RoomOwnerType;
 import cn.rong.combusis.sdk.event.EventHelper;
 import cn.rong.combusis.sdk.event.wrapper.EToast;
+import cn.rong.combusis.sdk.event.wrapper.IEventHelp;
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo;
 import io.rong.imkit.manager.UnReadMessageManager;
 import io.rong.imkit.utils.PermissionCheckUtil;
@@ -88,32 +83,25 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
      * 申请上麦
      */
     private ImageView mRequestSeatView;
-    /**
-     * 底部输入框整体
-     */
-    private ConstraintLayout mInputBar;
-    /**
-     * 输入框
-     */
-    private EditText mInputView;
-    /**
-     * emoji
-     */
-    private ImageView mEmojiView;
-    /**
-     * 发送按钮
-     */
-    private Button mSendButton;
-    /**
-     * emoji选择框
-     */
-    private EmojiPopup mEmojiPopup;
+
+    private InputBarDialog inputBarDialog;
 
     private OnBottomOptionClickListener mOnBottomOptionClickListener;
     private AudioRecordManager audioRecordManager;
 
     private long showSoftKeyboardTime = 0L;
     private String roomId;
+
+    public RoomBottomView(@NonNull Context context) {
+        this(context, null);
+    }
+
+    public RoomBottomView(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        mRootView = LayoutInflater.from(context).inflate(R.layout.view_room_bottom, this);
+        initView();
+    }
+
     private OnTouchListener onTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -169,101 +157,6 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         }
     };
 
-    public RoomBottomView(@NonNull Context context) {
-        this(context, null);
-    }
-
-    public RoomBottomView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        mRootView = LayoutInflater.from(context).inflate(R.layout.view_room_bottom, this);
-        initView();
-    }
-
-    private void initView() {
-        mSendMessageView = mRootView.findViewById(R.id.rl_send_message_id);
-        mSendVoiceMassageView = mRootView.findViewById(R.id.iv_send_voice_message_id);
-        mSeatOrder = mRootView.findViewById(R.id.btn_seat_order);
-        mSeatOrderNumber = mRootView.findViewById(R.id.tv_seat_order_operation_number);
-        mSettingView = mRootView.findViewById(R.id.iv_room_setting);
-        mPrivateMessageView = mRootView.findViewById(R.id.iv_send_message);
-        mPrivateMessageCountView = mRootView.findViewById(R.id.tv_unread_message_number);
-        mSendGiftView = mRootView.findViewById(R.id.iv_send_gift);
-        mPkView = mRootView.findViewById(R.id.iv_request_pk);
-        mPkView.setSelected(false);
-        mRequestSeatView = mRootView.findViewById(R.id.iv_request_enter_seat);
-        mInputBar = mRootView.findViewById(R.id.cl_input_bar);
-        mInputView = mRootView.findViewById(R.id.et_message);
-        mEmojiView = mRootView.findViewById(R.id.btn_emoji_keyboard);
-        mSendButton = mRootView.findViewById(R.id.btn_send_message);
-        mEmojiPopup = EmojiPopup
-                .Builder
-                .fromRootView(mRootView)
-                .setOnEmojiPopupShownListener(() -> {
-                    mEmojiView.setImageResource(R.drawable.ic_voice_room_keybroad);
-                })
-                .setOnEmojiPopupDismissListener(() -> {
-                    mEmojiView.setImageResource(R.drawable.ic_voice_room_emoji);
-                }).build(mInputView);
-        // 点击消息区域
-        mInputView.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (mInputBar.getVisibility() != VISIBLE) {
-                    return;
-                }
-                if (hasFocus) {
-                    showSoftKeyboardTime = System.currentTimeMillis();
-                    SoftKeyboardUtils.showSoftKeyboard(mInputView);
-                } else {
-                    // 解决魅蓝Note5,获取焦点后系统立马又自动取消焦点，导致键盘不能弹出
-                    // 这里看获取焦点又取消焦点的间隔小于500ms就再打开键盘
-                    long diff = System.currentTimeMillis() - showSoftKeyboardTime;
-                    if (diff < 500) {
-                        showSoftKeyboardTime = 0;
-                        SoftKeyboardUtils.showSoftKeyboard(mInputView);
-                    }
-                }
-            }
-        });
-        mInputView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    //发送消息
-                    Editable msg = mInputView.getText();
-                    if (TextUtils.isEmpty(msg) || TextUtils.isEmpty(msg.toString().trim())) {
-                        EToast.showToast("消息不能为空");
-                        return false;
-                    }
-                    mOnBottomOptionClickListener.clickSendMessage(msg.toString().trim());
-                    return true;
-                }
-                return false;
-            }
-        });
-        mSendMessageView.setOnClickListener(v -> {
-            mInputBar.setVisibility(VISIBLE);
-            mInputView.requestFocus();
-        });
-
-        // 点击emoji
-        mEmojiView.setOnClickListener(v -> {
-            mEmojiPopup.toggle();
-        });
-
-        audioRecordManager = new AudioRecordManager();
-        audioRecordManager.setOnSendVoiceMessageClickListener(new AudioRecordManager.OnSendVoiceMessageClickListener() {
-            @Override
-            public void onSendVoiceMessage(RCChatroomVoice rcChatroomVoice) {
-                mOnBottomOptionClickListener.onSendVoiceMessage(rcChatroomVoice);
-            }
-        });
-        // 语音
-        mSendVoiceMassageView.setOnTouchListener(onTouchListener);
-        // 私密消息数量监听
-        UnReadMessageManager.getInstance().addObserver(new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE}, this);
-    }
-
     /**
      * 设置麦位申请人数
      *
@@ -278,15 +171,49 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         }
     }
 
-    /**
-     * 隐藏输入框
-     */
-    public void hideSoftKeyboardAndInput() {
-        if (mInputBar.getVisibility() == VISIBLE) {
-            mInputBar.setVisibility(View.GONE);
-            mInputView.clearFocus();
-            SoftKeyboardUtils.hideSoftKeyboard(mInputView);
-        }
+    private void initView() {
+        mSendMessageView = mRootView.findViewById(R.id.rl_send_message_id);
+        mSendVoiceMassageView = mRootView.findViewById(R.id.iv_send_voice_message_id);
+        mSeatOrder = mRootView.findViewById(R.id.btn_seat_order);
+        mSeatOrderNumber = mRootView.findViewById(R.id.tv_seat_order_operation_number);
+        mSettingView = mRootView.findViewById(R.id.iv_room_setting);
+        mPrivateMessageView = mRootView.findViewById(R.id.iv_send_message);
+        mPrivateMessageCountView = mRootView.findViewById(R.id.tv_unread_message_number);
+        mSendGiftView = mRootView.findViewById(R.id.iv_send_gift);
+        mPkView = mRootView.findViewById(R.id.iv_request_pk);
+        mPkView.setSelected(false);
+        mRequestSeatView = mRootView.findViewById(R.id.iv_request_enter_seat);
+        mSendMessageView.setOnClickListener(v -> {
+            inputBarDialog = new InputBarDialog(getContext(), new InputBar.InputBarListener() {
+                @Override
+                public void onClickSend(String message) {
+                    if (TextUtils.isEmpty(message)) {
+                        EToast.showToast("消息不能为空");
+                        return;
+                    }
+                    if (mOnBottomOptionClickListener != null) {
+                        mOnBottomOptionClickListener.clickSendMessage(message);
+                    }
+                }
+
+                @Override
+                public boolean onClickEmoji() {
+                    return false;
+                }
+            });
+            inputBarDialog.show();
+        });
+        audioRecordManager = new AudioRecordManager();
+        audioRecordManager.setOnSendVoiceMessageClickListener(new AudioRecordManager.OnSendVoiceMessageClickListener() {
+            @Override
+            public void onSendVoiceMessage(RCChatroomVoice rcChatroomVoice) {
+                mOnBottomOptionClickListener.onSendVoiceMessage(rcChatroomVoice);
+            }
+        });
+        // 语音
+        mSendVoiceMassageView.setOnTouchListener(onTouchListener);
+        // 私密消息数量监听
+        UnReadMessageManager.getInstance().addObserver(new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE}, this);
     }
 
     /**
@@ -296,8 +223,22 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         mRequestSeatView.setImageResource(drawable);
     }
 
-    public void clearInput() {
-        mInputView.setText("");
+    /**
+     * 隐藏输入框
+     */
+    public void hideSoftKeyboardAndInput() {
+//        if (mInputBar.getVisibility() == VISIBLE) {
+//            mInputBar.setVisibility(View.GONE);
+//            mInputView.clearFocus();
+//            SoftKeyboardUtils.hideSoftKeyboard(mInputView);
+//        }
+    }
+
+    /**
+     * 设置邀请连麦的按钮
+     */
+    public void setSeatOrderImage(int drawable) {
+        mSeatOrder.setImageResource(drawable);
     }
 
     public void setData(RoomOwnerType roomOwnerType, OnBottomOptionClickListener onBottomOptionClickListener, String roomId) {
@@ -318,14 +259,14 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
             mSeatOrder.setOnClickListener(v -> {
                 onBottomOptionClickListener.clickSeatOrder();
             });
-            mSendButton.setOnClickListener(v -> {
-                Editable msg = mInputView.getText();
-                if (TextUtils.isEmpty(msg) || TextUtils.isEmpty(msg.toString().trim())) {
-                    EToast.showToast("消息不能为空");
-                    return;
-                }
-                onBottomOptionClickListener.clickSendMessage(msg.toString().trim());
-            });
+//            mSendButton.setOnClickListener(v -> {
+//                Editable msg = mInputView.getText();
+//                if (TextUtils.isEmpty(msg) || TextUtils.isEmpty(msg.toString().trim())) {
+//                    EToast.showToast("消息不能为空");
+//                    return;
+//                }
+//                onBottomOptionClickListener.clickSendMessage(msg.toString().trim());
+//            });
             mPkView.setOnClickListener(v -> {
                 onBottomOptionClickListener.clickPk();
             });
@@ -335,24 +276,24 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         }
     }
 
-//    public void refreshPkState() {
-//        if (null != mPkView) {
-//            IEventHelp.Type type = EventHelper.helper().getPKState();
-//            Logger.e("refreshPkState", "state = " + type);
-//            if (IEventHelp.Type.PK_NONE == type
-//                    || IEventHelp.Type.PK_FINISH == type
-//                    || IEventHelp.Type.PK_STOP == type) {// 可以发起邀请
-//                mPkView.setImageResource(R.drawable.ic_request_pk);
-//            } else if (IEventHelp.Type.PK_INVITE == type) {//邀请等 ->待
-//                mPkView.setImageResource(R.drawable.ic_wait_enter_seat);
-//            } else if (IEventHelp.Type.PK_GOING == type
-//                    || IEventHelp.Type.PK_PUNISH == type
-//                    || IEventHelp.Type.PK_START == type
-//            ) {// pk中
-//                mPkView.setImageResource(R.drawable.ic_pk_close);
-//            }
-//        }
-//    }
+    public void refreshPkState() {
+        if (null != mPkView) {
+            IEventHelp.Type type = EventHelper.helper().getPKState();
+            Logger.e("refreshPkState", "state = " + type);
+            if (IEventHelp.Type.PK_NONE == type
+                    || IEventHelp.Type.PK_FINISH == type
+                    || IEventHelp.Type.PK_STOP == type) {// 可以发起邀请
+                mPkView.setImageResource(R.drawable.ic_request_pk);
+            } else if (IEventHelp.Type.PK_INVITE == type) {//邀请等 ->待
+                mPkView.setImageResource(R.drawable.ic_wait_enter_seat);
+            } else if (IEventHelp.Type.PK_GOING == type
+                    || IEventHelp.Type.PK_PUNISH == type
+                    || IEventHelp.Type.PK_START == type
+            ) {// pk中
+                mPkView.setImageResource(R.drawable.ic_pk_close);
+            }
+        }
+    }
 
     /**
      * 控制各种房间状态下按钮的显示
@@ -363,8 +304,7 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         switch (roomOwnerType) {
             case VOICE_OWNER:
                 mSeatOrder.setVisibility(VISIBLE);
-//                mPkView.setVisibility(VISIBLE);
-                mPkView.setVisibility(GONE);
+                mPkView.setVisibility(VISIBLE);
                 mSendGiftView.setVisibility(VISIBLE);
                 mPrivateMessageView.setVisibility(VISIBLE);
                 mRequestSeatView.setVisibility(GONE);
@@ -379,6 +319,26 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
                 mRequestSeatView.setVisibility(VISIBLE);
                 mSettingView.setVisibility(GONE);
                 mSendVoiceMassageView.setVisibility(VISIBLE);
+                break;
+            case LIVE_OWNER:
+                mSeatOrder.setVisibility(VISIBLE);
+                mPkView.setVisibility(VISIBLE);
+                mSendGiftView.setVisibility(VISIBLE);
+                mPrivateMessageView.setVisibility(VISIBLE);
+                mRequestSeatView.setVisibility(GONE);
+                mSettingView.setVisibility(VISIBLE);
+                mSendVoiceMassageView.setVisibility(GONE);
+                mPkView.setVisibility(GONE);
+                break;
+            case LIVE_VIEWER:
+                mSeatOrder.setVisibility(GONE);
+                mPkView.setVisibility(GONE);
+                mSendGiftView.setVisibility(VISIBLE);
+                mPrivateMessageView.setVisibility(VISIBLE);
+                mRequestSeatView.setVisibility(VISIBLE);
+                mSettingView.setVisibility(GONE);
+                mSendVoiceMassageView.setVisibility(VISIBLE);
+                mPkView.setVisibility(GONE);
                 break;
             case RADIO_OWNER:
                 mSeatOrder.setVisibility(GONE);

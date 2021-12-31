@@ -159,7 +159,29 @@ public class UserProvider implements IProvider<UserInfo> {
                     }
                 }
                 if (null != resultBack) resultBack.onResult(userInfos);
+            }
+        });
+    }
 
+    public void getFromService(List<String> ids, @Nullable IResultBack<List<User>> resultBack) {
+        if (null == ids || ids.isEmpty()) {
+            if (null != resultBack) resultBack.onResult(null);
+            return;
+        }
+        Map<String, Object> params = new HashMap<>(2);
+        params.put("userIds", ids);
+        OkApi.post(API_BATCH, params, new WrapperCallBack() {
+            @Override
+            public void onError(int code, String msg) {
+                Log.e(TAG, "provideFromService#onError code  = " + code + " message = " + msg);
+                if (null != resultBack) resultBack.onResult(null);
+            }
+
+            @Override
+            public void onResult(Wrapper result) {
+                List<User> users = result.getList(User.class);
+                Log.e(TAG, "provideFromService: size = " + (null == users ? 0 : users.size()));
+                if (null != resultBack) resultBack.onResult(users);
             }
         });
     }

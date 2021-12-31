@@ -22,3 +22,9 @@ include ':annotation'
 
 //电台模块
 include ':radioroom'
+
+//美颜模块
+include ':mhui'
+
+//直播房模块
+include ':liveroom'

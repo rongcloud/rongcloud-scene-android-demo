@@ -23,8 +23,9 @@ import java.io.Serializable;
 public class UIKit {
     public final static String KEY_BASE = "key_basis";
     public final static String KEY_OBJ = "key_obj";
-    private final static Handler mainHand = new Handler(Looper.getMainLooper());
+
     private static Application mBaseContext;
+    private final static Handler mainHand = new Handler(Looper.getMainLooper());
 
     public static Context getContext() {
         if (null == mBaseContext) {

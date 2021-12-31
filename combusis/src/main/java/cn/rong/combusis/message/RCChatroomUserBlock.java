@@ -22,18 +22,8 @@ import io.rong.imlib.model.MessageContent;
  */
 @MessageTag(value = "RC:Chatroom:User:Block")
 public class RCChatroomUserBlock extends MessageContent {
-    public static final Creator<RCChatroomUserBlock> CREATOR = new Creator<RCChatroomUserBlock>() {
-        @Override
-        public RCChatroomUserBlock createFromParcel(Parcel source) {
-            return new RCChatroomUserBlock(source);
-        }
-
-        @Override
-        public RCChatroomUserBlock[] newArray(int size) {
-            return new RCChatroomUserBlock[size];
-        }
-    };
     private static final String TAG = "RCChatroomUserBlock";
+
     private String id;
     private long duration;
     private String extra;
@@ -59,15 +49,6 @@ public class RCChatroomUserBlock extends MessageContent {
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getMessage());
         }
-    }
-
-    public RCChatroomUserBlock() {
-    }
-
-    protected RCChatroomUserBlock(Parcel in) {
-        this.id = in.readString();
-        this.duration = in.readLong();
-        this.extra = in.readString();
     }
 
     @Override
@@ -112,6 +93,7 @@ public class RCChatroomUserBlock extends MessageContent {
         this.extra = extra;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -128,5 +110,27 @@ public class RCChatroomUserBlock extends MessageContent {
         this.id = source.readString();
         this.duration = source.readLong();
         this.extra = source.readString();
+    }
+
+    public static final Creator<RCChatroomUserBlock> CREATOR = new Creator<RCChatroomUserBlock>() {
+        @Override
+        public RCChatroomUserBlock createFromParcel(Parcel source) {
+            return new RCChatroomUserBlock(source);
+        }
+
+        @Override
+        public RCChatroomUserBlock[] newArray(int size) {
+            return new RCChatroomUserBlock[size];
+        }
+    };
+
+
+    public RCChatroomUserBlock() {
+    }
+
+    protected RCChatroomUserBlock(Parcel in) {
+        this.id = in.readString();
+        this.duration = in.readLong();
+        this.extra = in.readString();
     }
 }

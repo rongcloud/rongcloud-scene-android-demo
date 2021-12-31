@@ -8,9 +8,9 @@
         <aapt:attr name="android:fillColor">
             <gradient
                 android:endX="42.5"
-                android:endY="45.5"
                 android:startX="7"
                 android:startY="5.5"
+                android:endY="45.5"
                 android:type="linear">
                 <item
                     android:color="#E92B99"

@@ -40,45 +40,12 @@ import io.rong.push.notification.RongNotificationInterface;
  */
 public class VoIPBroadcastReceiver extends BroadcastReceiver {
 
-    public static final String ACTION_CALLINVITEMESSAGE = "action.push.CallInviteMessage";
-    public final static String ACTION_CALLINVITEMESSAGE_CLICKED = "action.push.CallInviteMessage.CLICKED";//通知pantent发送的广播
     private static final String HANGUP = "RC:VCHangup";
     private static final String INVITE = "RC:VCInvite";
+    public static final String ACTION_CALLINVITEMESSAGE = "action.push.CallInviteMessage";
+    public final static String ACTION_CALLINVITEMESSAGE_CLICKED = "action.push.CallInviteMessage.CLICKED";//通知pantent发送的广播
     private static final String TAG = "VoIPBroadcastReceiver";
     private static Map<String, Integer> notificationCache = new HashMap<>();
-
-    private static PendingIntent createPendingIntent(Context context, PushNotificationMessage message, RongCallSession callSession, boolean checkPermissions, int requestCode, boolean isMulti) {
-        Intent intent = new Intent();
-        intent.setAction(ACTION_CALLINVITEMESSAGE_CLICKED);
-        intent.putExtra(PushConst.MESSAGE, message);
-        intent.putExtra("callsession", callSession);
-        intent.putExtra("checkPermissions", checkPermissions);
-        intent.putExtra(PushConst.IS_MULTI, isMulti);
-        intent.setPackage(context.getPackageName());
-        return PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
-    private static Intent createConversationListIntent(Context context) {
-        Intent intent = new Intent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.parse("rong://" + context.getPackageName()).buildUpon()
-                .appendPath("conversationlist").build();
-        intent.setData(uri);
-        intent.setPackage(context.getPackageName());
-        return intent;
-    }
-
-    private static Intent createDialIntent(Context context, boolean video) {
-        RLog.i(TAG, "createDialIntent:video = " + video);
-        Intent intent = new Intent("io.rong.intent.action.voip.DIAL");
-        intent.putExtra("is_video", video);
-        intent.setPackage(context.getPackageName());
-        return intent;
-    }
-
-    public static void clearNotificationCache() {
-        notificationCache.clear();
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -230,5 +197,38 @@ public class VoIPBroadcastReceiver extends BroadcastReceiver {
                 nm.notify(notificationId, notification);
             }
         }
+    }
+
+    private static PendingIntent createPendingIntent(Context context, PushNotificationMessage message, RongCallSession callSession, boolean checkPermissions, int requestCode, boolean isMulti) {
+        Intent intent = new Intent();
+        intent.setAction(ACTION_CALLINVITEMESSAGE_CLICKED);
+        intent.putExtra(PushConst.MESSAGE, message);
+        intent.putExtra("callsession", callSession);
+        intent.putExtra("checkPermissions", checkPermissions);
+        intent.putExtra(PushConst.IS_MULTI, isMulti);
+        intent.setPackage(context.getPackageName());
+        return PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private static Intent createConversationListIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uri = Uri.parse("rong://" + context.getPackageName()).buildUpon()
+                .appendPath("conversationlist").build();
+        intent.setData(uri);
+        intent.setPackage(context.getPackageName());
+        return intent;
+    }
+
+    private static Intent createDialIntent(Context context, boolean video) {
+        RLog.i(TAG, "createDialIntent:video = " + video);
+        Intent intent = new Intent("io.rong.intent.action.voip.DIAL");
+        intent.putExtra("is_video", video);
+        intent.setPackage(context.getPackageName());
+        return intent;
+    }
+
+    public static void clearNotificationCache() {
+        notificationCache.clear();
     }
 }

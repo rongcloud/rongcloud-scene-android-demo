@@ -45,14 +45,14 @@ public class Member implements Serializable {
         return portrait;
     }
 
-    public void setPortrait(String portrait) {
-        this.portrait = portrait;
-    }
-
     public String getPortraitUrl() {
         return TextUtils.isEmpty(portrait) ?
                 ApiConstant.INSTANCE.getDEFAULT_PORTRAIT_ULR()
                 : ApiConstant.INSTANCE.getFILE_URL() + portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
     }
 
     public boolean isAdmin() {

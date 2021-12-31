@@ -16,25 +16,7 @@ import io.rong.imlib.model.MessageContent;
 @MessageTag(value = "RC:LocationMessage")
 public class RCChatroomLocationMessage extends MessageContent {
 
-    public static final Creator<RCChatroomLocationMessage> CREATOR = new Creator<RCChatroomLocationMessage>() {
-        @Override
-        public RCChatroomLocationMessage createFromParcel(Parcel source) {
-            return new RCChatroomLocationMessage(source);
-        }
-
-        @Override
-        public RCChatroomLocationMessage[] newArray(int size) {
-            return new RCChatroomLocationMessage[size];
-        }
-    };
     private String content;
-
-    public RCChatroomLocationMessage() {
-    }
-
-    protected RCChatroomLocationMessage(Parcel in) {
-        this.content = in.readString();
-    }
 
     public String getContent() {
         return content;
@@ -49,6 +31,7 @@ public class RCChatroomLocationMessage extends MessageContent {
         return new byte[0];
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -61,5 +44,24 @@ public class RCChatroomLocationMessage extends MessageContent {
 
     public void readFromParcel(Parcel source) {
         this.content = source.readString();
+    }
+
+    public static final Creator<RCChatroomLocationMessage> CREATOR = new Creator<RCChatroomLocationMessage>() {
+        @Override
+        public RCChatroomLocationMessage createFromParcel(Parcel source) {
+            return new RCChatroomLocationMessage(source);
+        }
+
+        @Override
+        public RCChatroomLocationMessage[] newArray(int size) {
+            return new RCChatroomLocationMessage[size];
+        }
+    };
+
+    public RCChatroomLocationMessage() {
+    }
+
+    protected RCChatroomLocationMessage(Parcel in) {
+        this.content = in.readString();
     }
 }

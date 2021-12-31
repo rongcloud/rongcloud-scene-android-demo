@@ -18,7 +18,6 @@ import javax.inject.Inject
 abstract class BaseLifeCycleModel(val lifecycleOwner: LifecycleOwner) : BaseModel,
     BaseLifeCycleObserver, LifecycleObserver {
     val TAG: String = javaClass.simpleName
-
     @Inject
     public fun initLifecycle() {
         lifecycleOwner.lifecycle.addObserver(this)

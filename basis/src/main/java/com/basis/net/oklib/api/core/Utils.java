@@ -9,11 +9,8 @@ import android.net.NetworkInfo;
 import android.os.Build;
 
 public class Utils {
-    private static Application mBaseContext;
-
     /**
      * 检测网络连接
-     *
      * @return
      */
     protected static boolean isNetworkAvailable() {
@@ -36,6 +33,9 @@ public class Utils {
         }
         return false;
     }
+
+    private static Application mBaseContext;
+
 
     private static Application getBaseContext() {
         if (null != mBaseContext) {

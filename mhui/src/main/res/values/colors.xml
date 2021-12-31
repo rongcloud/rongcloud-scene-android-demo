@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/global</color>
+    <color name="colorPrimaryDark">@color/global</color>
+    <color name="colorAccent">@color/global</color>
+
+    <color name="global">#ff6131</color>
+    <color name="background">@color/gray2</color>
+    <color name="transparent">#00000000</color>
+    <color name="textColor">#323232</color>
+    <color name="white">#fff</color>
+    <color name="gray1">#969696</color>
+    <!--    <color name="gray2">#f5f5f5</color>-->
+    <color name="gray3">#c8c8c8</color>
+
+
+    <color name="gray4">#B4B4B4</color>
+    <color name="gray5">#dcdcdc</color>
+    <color name="yellow">#fffa37</color>
+    <color name="yellow2">#f0cd08</color>
+    <color name="yellow3">#FFF34D</color>
+    <color name="yellow4">#ffdd00</color>
+    <!--    <color name="textColor2">#646464</color>-->
+    <color name="red">#ff0000</color>
+    <color name="pk_red">#f03a40</color>
+    <color name="pk_blue">#2a92f7</color>
+    <color name="black1">#e6323232</color>
+    <color name="blue1">#1FC8F8</color>
+    <color name="blue2">#4998F7</color>
+
+    <color name="bg_white">#e6ffffff</color>
+
+    <color name="bg_black">#80000000</color>
+
+    <color name="gray2">#1affffff</color>
+    <color name="textColor2">#DCDCDC</color>
+    <color name="textColor3">#C8C8C8</color>
+
+</resources>

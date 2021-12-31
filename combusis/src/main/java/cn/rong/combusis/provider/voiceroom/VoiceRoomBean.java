@@ -70,12 +70,12 @@ public class VoiceRoomBean implements Provide {
         return isPrivate;
     }
 
-    public void setIsPrivate(int isPrivate) {
-        this.isPrivate = isPrivate;
-    }
-
     public boolean isPrivate() {
         return isPrivate == 1;
+    }
+
+    public void setIsPrivate(int isPrivate) {
+        this.isPrivate = isPrivate;
     }
 
     public String getPassword() {
@@ -106,10 +106,6 @@ public class VoiceRoomBean implements Provide {
         return createUser;
     }
 
-    public void setCreateUser(User createUser) {
-        this.createUser = createUser;
-    }
-
     public String getCreateUserName() {
         if (createUser != null) {
             return createUser.getUserName();
@@ -132,6 +128,10 @@ public class VoiceRoomBean implements Provide {
         } else {
             return "";
         }
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
     }
 
     public int getRoomType() {

@@ -22,7 +22,24 @@ import io.rong.imlib.model.Conversation;
 
 public class RongCallKit {
 
+    /**
+     * 获取群组成员提供者。
+     *
+     * @return 群组成员提供者。
+     */
+    public static GroupMembersProvider getGroupMemberProvider() {
+        return mGroupMembersProvider;
+    }
+
+    /**
+     * 通话过程中用户自定义操作。
+     */
+    public static RongCallCustomerHandlerListener getCustomerHandlerListener() {
+        return customerHandlerListener;
+    }
+
     private static GroupMembersProvider mGroupMembersProvider;
+
     private static RongCallCustomerHandlerListener customerHandlerListener;
 
     /**
@@ -244,12 +261,16 @@ public class RongCallKit {
     }
 
     /**
-     * 获取群组成员提供者。
+     * 忽略 voip 来电，不弹出来电界面，直接挂断。
      *
-     * @return 群组成员提供者。
+     * @param ignore true 时忽略来电，false 恢复默认值接收来电，弹出来电界面。 此接口针对音视频会议过程中不能被 voip 打断等的细分场景
      */
-    public static GroupMembersProvider getGroupMemberProvider() {
-        return mGroupMembersProvider;
+    public static void ignoreIncomingCall(boolean ignore) {
+        RongCallModule.ignoreIncomingCall(ignore);
+    }
+
+    public static void setMainPageActivityClass(String[] className) {
+        RongCallModule.setMainPageActivity(className);
     }
 
     /**
@@ -266,11 +287,9 @@ public class RongCallKit {
         mGroupMembersProvider = groupMembersProvider;
     }
 
-    /**
-     * 通话过程中用户自定义操作。
-     */
-    public static RongCallCustomerHandlerListener getCustomerHandlerListener() {
-        return customerHandlerListener;
+    public enum CallMediaType {
+        CALL_MEDIA_TYPE_AUDIO,
+        CALL_MEDIA_TYPE_VIDEO
     }
 
     /**
@@ -286,31 +305,13 @@ public class RongCallKit {
         customerHandlerListener = callCustomerHandlerListener;
     }
 
+    public interface ICallUsersProvider {
+        void onGotUserList(ArrayList<String> userIds);
+    }
+
     public static void setRongCallMissedListener(
             final RongCallMissedListener rongCallMissedListener) {
         RongCallModule.setMissedCallListener(rongCallMissedListener);
-    }
-
-    /**
-     * 忽略 voip 来电，不弹出来电界面，直接挂断。
-     *
-     * @param ignore true 时忽略来电，false 恢复默认值接收来电，弹出来电界面。 此接口针对音视频会议过程中不能被 voip 打断等的细分场景
-     */
-    public static void ignoreIncomingCall(boolean ignore) {
-        RongCallModule.ignoreIncomingCall(ignore);
-    }
-
-    public static void setMainPageActivityClass(String[] className) {
-        RongCallModule.setMainPageActivity(className);
-    }
-
-    public enum CallMediaType {
-        CALL_MEDIA_TYPE_AUDIO,
-        CALL_MEDIA_TYPE_VIDEO
-    }
-
-    public interface ICallUsersProvider {
-        void onGotUserList(ArrayList<String> userIds);
     }
 
     //TODO 由于最新CallKit中已经将 RongCallModule#mViewLoaded 默认值改为true，所以不在需要此方法
