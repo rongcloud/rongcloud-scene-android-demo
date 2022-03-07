@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_info"
+    android:layout_width="match_parent"
+    android:layout_height="26dp"
+    android:layout_gravity="center_horizontal|bottom"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/selector_pop_num_item_bg"
+    android:gravity="center"
+    android:lines="1"
+    android:text=""
+    android:textColor="@color/basis_gray"
+    android:textSize="12sp" />

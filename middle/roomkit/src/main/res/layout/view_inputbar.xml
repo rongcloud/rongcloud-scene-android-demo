@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_input_bar"
+    android:paddingStart="12dp"
+    android:paddingTop="7dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="7dp"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <com.vanniktech.emoji.EmojiEditText
+        android:id="@+id/et_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_voice_room_message_edit"
+        android:gravity="center_vertical"
+        android:hint="@string/text_have_chat"
+        android:imeOptions="actionSend"
+        android:maxHeight="108dp"
+        android:maxLines="3"
+        android:minHeight="36dp"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+
+    <Space
+        android:id="@+id/space1"
+        android:layout_width="12dp"
+        android:layout_height="0dp" />
+
+    <ImageView
+        android:id="@+id/iv_emoji"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_voice_room_emoji" />
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="12dp"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:id="@+id/tv_send"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_voice_room_send_button"
+        android:gravity="center"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:text="发送"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+</merge>

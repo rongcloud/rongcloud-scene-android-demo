@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="online_owner">在线房主</string>
+    <string name="invitate" tools:ignore="ExtraTranslation">邀请</string>
+    <string name="invitate_pk">邀请pk</string>
+    <string name="alterlay_invitate_pk">已邀请</string>
+    <string name="cancel_invitate_pk">撤销PK邀请</string>
+
+    <string name="already_invitate_pk" translatable="false">已经邀请</string>
+    <string name="quit_pk_dialog_tip">挂断并结束本轮PK吗？</string>
+    <string name="dialog_tip">提示</string>
+    <string name="dialog_cancle">取消</string>
+    <string name="dialog_agree">同意</string>
+</resources>

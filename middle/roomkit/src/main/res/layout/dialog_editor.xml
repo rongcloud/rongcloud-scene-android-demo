@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F3F3F3"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/basis_25px"
+    android:paddingTop="@dimen/basis_15px"
+    android:paddingRight="@dimen/basis_25px"
+    android:paddingBottom="@dimen/basis_15px">
+
+    <EditText
+        android:id="@+id/et_editor"
+        style="@style/main_primary_16"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_editor_bg"
+        android:gravity="center_vertical|left"
+        android:hint="请输入内容"
+        android:imeOptions="actionDone"
+        android:maxLength="10"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="@dimen/basis_10px"
+        android:paddingRight="@dimen/basis_10px"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/complete"
+        style="@style/main_white_14"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="@dimen/basis_20px"
+        android:background="@drawable/selector_editor_complete"
+        android:gravity="center"
+        android:paddingLeft="@dimen/basis_15px"
+        android:paddingRight="@dimen/basis_15px"
+        android:text="完成" />
+
+</LinearLayout>
+

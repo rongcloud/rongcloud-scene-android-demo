@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_music_icon"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_music_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_music_author"
+        app:layout_constraintStart_toEndOf="@+id/iv_music_icon"
+        app:layout_constraintTop_toTopOf="@+id/iv_music_icon"
+        tools:text="11111111111111111111" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_music_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="#B3FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_music_size"
+        app:layout_constraintStart_toStartOf="@+id/tv_music_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_music_name"
+        tools:text="2222222222222"
+        tools:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_music_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="#B3FFFFFF"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_music_icon"
+        app:layout_constraintStart_toStartOf="@id/tv_music_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_music_author"
+        tools:text="33333333333333"
+        tools:visibility="gone" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_music_status"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="23dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#1AFFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_music_icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

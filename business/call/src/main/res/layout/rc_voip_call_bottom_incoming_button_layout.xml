@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rc_voip_two_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:paddingBottom="30dp">
+    <!--接听和挂断-->
+
+    <RelativeLayout
+        android:id="@+id/callkit_callhang_up_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="72.5dp">
+
+        <ImageView
+            android:id="@+id/rc_voip_call_hang_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_huang_up_bg"
+            android:onClick="onHangupBtnClick"
+            android:padding="10dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_call_only" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rc_voip_call_hang_up"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/rc_voip_hangup"
+            android:textColor="@color/color_text_main"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="72.5dp">
+
+        <ImageView
+            android:id="@+id/rc_voip_call_answer_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_answer_bg"
+            android:padding="10dp"
+            android:onClick="onReceiveBtnClick"
+            android:scaleType="center"
+            android:src="@drawable/ic_call_video_answer" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rc_voip_call_answer_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/rc_voip_answer"
+            android:textColor="@color/color_text_main"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

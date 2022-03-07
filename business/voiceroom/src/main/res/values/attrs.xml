@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PKProcessbar">
+        <attr name="progress_unreached_color" format="color" />
+        <attr name="progress_unreached_height" format="dimension" />
+        <attr name="progress_reached_color" format="color" />
+        <attr name="progress_reached_height" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_padding" format="dimension" />
+        <attr name="progress_text_visibility" format="dimension" />
+    </declare-styleable>
+</resources>

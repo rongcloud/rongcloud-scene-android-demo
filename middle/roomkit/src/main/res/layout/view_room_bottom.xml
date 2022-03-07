@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_option"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:background="#000"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_send_message_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dimen_room_padding"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:background="@drawable/icon_edit_message_bg"
+            android:paddingStart="13dp"
+            android:paddingEnd="13dp"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_open_send_message"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/iv_send_voice_message_id"
+                android:gravity="center"
+                android:text="@string/text_have_chat"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/iv_send_voice_message_id"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_voice"
+                android:visibility="visible">
+
+            </ImageView>
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_seat_order"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dimen_room_padding"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintStart_toEndOf="@id/rl_send_message_id"
+            app:srcCompat="@drawable/ic_seat_order" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_seat_order_operation_number"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:background="@drawable/bg_seat_order_subscript"
+            android:gravity="center"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/btn_seat_order"
+            app:layout_constraintTop_toTopOf="@+id/btn_seat_order"
+            tools:text="11" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_room_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="@dimen/dimen_room_padding"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_room_setting" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_send_message"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="@dimen/dimen_room_padding"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/iv_room_setting"
+            app:srcCompat="@drawable/ic_send_message" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_unread_message_number"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:background="@drawable/bg_seat_order_subscript"
+            android:gravity="center"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/iv_send_message"
+            app:layout_constraintTop_toTopOf="@+id/iv_send_message"
+            tools:text="11"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_send_gift"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="@dimen/dimen_room_padding"
+            android:layout_marginBottom="7dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/iv_send_message"
+            app:srcCompat="@drawable/ic_send_gift" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_request_enter_seat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="@dimen/dimen_room_padding"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/iv_send_gift"
+            app:srcCompat="@drawable/ic_request_enter_seat" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_request_pk"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="@dimen/dimen_room_padding"
+            android:layout_marginBottom="7dp"
+            android:visibility="invisible"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/iv_send_gift"
+            app:srcCompat="@drawable/selector_pk" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

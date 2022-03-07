@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+}
+
+dependencies {
+    implementation android_ui.appcompat
+    implementation android_ui.material
+
+    api project(':middle:config')
+    api project(':common')
+    // https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$baseAdapter"
+
+    // https://github.com/vanniktech/Emoji
+    api "com.vanniktech:emoji-ios:$emojiIos"
+    // https://github.com/vdurmont/emoji-java
+    api "com.vdurmont:emoji-java:$emojiJava"
+
+    // SmartRefreshLayout
+    // https://github.com/scwang90/SmartRefreshLayout
+    api "com.scwang.smart:refresh-layout-kernel:$smartRefresh"
+    api "com.scwang.smart:refresh-header-classics:$smartRefresh"
+    api "com.scwang.smart:refresh-footer-classics:$smartRefresh"
+
+    // https://github.com/yhaolpz/FloatWindow
+    api "com.github.yhaolpz:FloatWindow:$floatWindow"
+
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter"
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/friend_item_height"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/friend_item_left_padding"
+        android:paddingEnd="@dimen/friend_item_right_padding">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_avatar"
+            android:layout_width="@dimen/friend_avatar_size"
+            android:layout_height="@dimen/friend_avatar_size" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#03003A"
+            android:textSize="@dimen/basis_17sp"
+            tools:text="用户名" />
+
+        <CheckBox
+            android:id="@+id/btn_follow"
+            android:layout_width="84dp"
+            android:layout_height="32dp"
+            android:background="@drawable/selector_follow_button"
+            android:gravity="center"
+            android:button="@null"
+            android:text="关注"
+            android:textColor="@color/selector_follow_button"
+            android:textSize="@dimen/basis_14sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_2px"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="77dp"
+        android:background="#E3E5E6" />
+</FrameLayout>
