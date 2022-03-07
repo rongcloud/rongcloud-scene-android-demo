@@ -20,88 +20,93 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# 表示不要提示警告
--dontwarn
--dontoptimize
-# 代码循环优化次数，0-7，默认为5
+#指定代码的压缩级别
 -optimizationpasses 5
-# 包名不使用大小写混合 aA Aa
+
+#包明不混合大小写
 -dontusemixedcaseclassnames
-# 不混淆第三方引用的库
+
+#不去忽略非公共的库类
 -dontskipnonpubliclibraryclasses
-# 不做预校验
+
+ #优化  不优化输入的类文件
+-dontoptimize
+
+ #预校验
 -dontpreverify
-#忽略警告
--ignorewarnings
-#混淆时所采用的优化规则
-#-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*,!class/unboxing/enum
 
-# 混淆后生产映射文件 map 类名->转化后类名的映射
-# 存放在app\build\outputs\mapping\release中
+ #混淆时是否记录日志
 -verbose
-# 混淆前后的映射
--printmapping mapping.txt
-# apk 包内所有 class 的内部结构
--dump class_files.txt
-# 未混淆的类和成员
--printseeds seeds.txt
-# 列出从 apk 中删除的代码
--printusage unused.txt
 
-# 抛出异常时保留代码行号
-# 这个最后release的时候关闭掉
--keepattributes SourceFile,LineNumberTable
+ # 混淆时所采用的算法
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 
-# 保护注解
+#保护注解
 -keepattributes *Annotation*
--keep class * extends java.lang.annotation.Annotation {*;}
 
-# 泛型与反射
--keepattributes Signature
--keepattributes EnclosingMethod
+# 保持哪些类不被混淆
+-keep public class * extends android.app.Fragment
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
 
-# 不混淆内部类
--keepattributes InnerClasses
 
-# 不混淆异常类
--keepattributes Exceptions
+#忽略警告
+#-ignorewarning
 
--keepclassmembers class * {
-   public <init> (org.json.JSONObject);
+##记录生成的日志数据,gradle build时在本项目根目录输出##
+#apk 包内所有 class 的内部结构
+-dump proguard/class_files.txt
+#未混淆的类和成员
+-printseeds proguard/seeds.txt
+#列出从 apk 中删除的代码
+-printusage proguard/unused.txt
+#混淆前后的映射
+-printmapping proguard/mapping.txt
+########记录生成的日志数据，gradle build时 在本项目根目录输出-end######
+
+#如果引用了v4或者v7包
+-dontwarn android.support.**
+
+####混淆保护自己项目的部分代码以及引用的第三方jar包library-end####
+
+
+
+#保持 native 方法不被混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
 }
 
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
+#保持自定义控件类不被混淆
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
 }
 
--keep class * extends android.os.IInterface{*;}
--keep class * extends android.os.Binder{*;}
-
-# 所有View的子类及其子类的get、set方法都不进行混淆
--keepclassmembers public class * extends android.view.View {
-   void set*(***);
-   *** get*();
-}
-
-#不混淆Activity中参数类型为View的所有方法
+#保持自定义控件类不被混淆
 -keepclassmembers class * extends android.app.Activity {
    public void *(android.view.View);
 }
 
-#不混淆Parcelable和它的子类，还有Creator成员变量
+-keep public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(...);
+}
+
+#保持 Parcelable 不被混淆
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
 
--keep class * implements android.os.Parcelable {
-  public static final android.os.Parcelable$Creator *;
-}
-# Serializable
+#保持 Serializable 不被混淆
 -keepnames class * implements java.io.Serializable
--keep public class * implements java.io.Serializable {
-   public *;
-}
+
+#保持 Serializable 不被混淆并且enum 类也不被混淆
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
@@ -114,45 +119,21 @@
     java.lang.Object readResolve();
 }
 
-#不混淆R类里及其所有内部static类中的所有static变量字段
+#保持枚举 enum 类不被混淆
+-keepclassmembers enum * {
+  public static **[] values();
+  public static ** valueOf(java.lang.String);
+}
+
+-keepclassmembers class * {
+    public void *ButtonClicked(android.view.View);
+}
+
+#不混淆资源类
 -keepclassmembers class **.R$* {
     public static <fields>;
 }
 
-# 添加白名单 ------------------------
+-keep class com.logger.** {*;}
 
-# 友盟
--keep class com.umeng.** {*;}
--keep class com.uc.** {*;}
--keep class com.efs.** {*;}
-
--keep class com.zui.**{*;}
--keep class com.miui.**{*;}
--keep class com.heytap.**{*;}
--keep class a.**{*;}
--keep class com.vivo.**{*;}
-
--keep class android.support.** {*;}
--keep class cn.rongcloud.rtc.core.** {*;}
--keep class cn.rongcloud.rtc.api.** {*;}
--keep class cn.rongcloud.rtc.base.** {*;}
--keep class cn.rongcloud.rtc.utils.** {*;}
--keep class cn.rongcloud.rtc.media.http.** {*;}
--keep class cn.rongcloud.rtc.engine.view** {*;}
--keep class cn.rongcloud.rtc.proxy.message.** {*;}
--keep class cn.rongcloud.rtc.RongRTCExtensionModule {*;}
--keep class cn.rongcloud.rtc.RongRTCMessageRouter {*;}
-# voiceroom 保留api相关保
--keep class cn.rongcloud.voice.api.** {*;}
--keep class cn.rongcloud.voice.model.** {*;}
--keep class cn.rongcloud.voice.utils.** {*;}
--keep class cn.rongcloud.messager.** {*;}
-
-# test
-#-keep class com.** {*;}
-#modle
--keep class cn.rongcloud.voiceroomdemo.net.api.bean.** {*;}
-# bugly start
--dontwarn com.tencent.bugly.**
--keep public class com.tencent.bugly.**{*;}
-# bugly end
+-ignorewarnings

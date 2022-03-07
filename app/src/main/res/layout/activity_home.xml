@@ -2,242 +2,30 @@
   ~ Copyright © 2021 RongCloud. All rights reserved.
   -->
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".mvp.activity.HomeActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/contain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/basis_white" />
 
-        <LinearLayout
-            android:id="@id/iv_voice_room"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/ic_voice_room"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingBottom="10dp"
-            app:layout_constraintDimensionRatio="w,173:335"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <View
+        style="@style/basis_main_divider"
+        android:layout_width="match_parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/voice_room"
-                android:textColor="@color/app_color_white"
-                android:textSize="18sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/basis_white"
+        android:overScrollMode="never" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="@string/voice_room_des"
-                android:textColor="@color/app_color_white"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/fl_radio"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintDimensionRatio="w,225:160"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/iv_video_live"
-            app:layout_constraintTop_toBottomOf="@+id/iv_voice_room"
-            app:layout_constraintWidth_percent="0.475">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_radio_room"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/radio_room"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/radio_room_des"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/iv_video_call"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintDimensionRatio="w,225:160"
-            app:layout_constraintBottom_toBottomOf="@+id/fl_radio"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/iv_audio_call"
-            app:layout_constraintLeft_toRightOf="@+id/fl_radio"
-            app:layout_constraintTop_toBottomOf="@+id/iv_audio_call"
-            app:layout_constraintWidth_percent="0.475"
-
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_video_call"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/video_call"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/video_call_des"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="12sp" />
-            </LinearLayout>
-            <!-- 设置蒙层 通过filtercolor置灰 -->
-            <ImageView
-                android:id="@+id/bg2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                android:src="@drawable/ic_video_call" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="COMING\nSOON"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/iv_audio_call"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintDimensionRatio="w,225:160"
-            app:layout_constraintLeft_toLeftOf="@+id/iv_video_live"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fl_radio"
-            app:layout_constraintWidth_percent="0.475">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_audio_call"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/voice_call"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/voice_call_des"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/bg3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                android:src="@drawable/ic_audio_call" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="COMING\nSOON"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/iv_video_live"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintDimensionRatio="w,225:160"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_voice_room"
-            app:layout_constraintWidth_percent="0.475">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_live_video"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/live_video_call"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/live_video_des"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/bg4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_live_video"
-                android:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="COMING\nSOON"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:visibility="gone" />
-        </FrameLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</LinearLayout>

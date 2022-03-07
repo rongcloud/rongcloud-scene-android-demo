@@ -1,30 +1,10 @@
-/*
- * Copyright © 2021 RongCloud. All rights reserved.
- */
-rootProject.name = "RongRTCDemo"
+rootProject.name = "RC RTC"
 include ':app'
+// 业务
+include ':business:voiceroom', ':business:radio', ':business:live', ':business:call', ':business:profile'
 
-//语聊房SDK
-include ':voiceroom'
+// middle 中间层
+include ':middle:music', ':middle:pk', ':middle:gift', ':middle:roomkit', ':middle:config', ':middle:mhui'
 
-//音视频呼叫
-include ':avcall'
-
-//公共业务模块:评价反馈
-include ':combusis'
-
-//公共模块 依赖
-include ':basis'
-
-//编译插件
-include ':processor'
-include ':annotation'
-
-//电台模块
-include ':radioroom'
-
-//美颜模块
-include ':mhui'
-
-//直播房模块
-include ':liveroom'
+// common
+include ':common'

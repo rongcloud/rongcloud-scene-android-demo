@@ -1,88 +1,40 @@
-/*
- * Copyright © 2021 RongCloud. All rights reserved.
- */
-
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
-    id("dagger.hilt.android.plugin")
 }
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
-    compileOptions {
-        sourceCompatibility rootProject.ext.sourceCompatibility
-        targetCompatibility rootProject.ext.targetCompatibility
-    }
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "4.0.0"
-
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        ndk {
-//            abiFilters "armeabi-v7a", "x86"
-            abiFilters "armeabi-v7a"
-        }
+        // 写modes到BuildConfig
+        buildConfigField("String[]", "RC_BUSI", "${modes()}")
 
-        renderscriptTargetApi 14
-        renderscriptSupportModeEnabled true
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
 
         javaCompileOptions {
             annotationProcessorOptions {
-                includeCompileClasspath = true
-                // 此参数用于编译期生成相关代码的标识，请勿删除
-                arguments += [isAppModule: 'true']
+                arguments += [AROUTER_MODULE_NAME: project.getName()]
             }
-        }
-        renderscriptSupportModeEnabled true
-        multiDexEnabled true
-    }
-
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
-
-    signingConfigs {
-        debug {
-            keyAlias "debugkey"
-            keyPassword "123456"
-            storeFile file("./debugkey.key")
-            storePassword '123456'
         }
     }
 
     buildTypes {
         debug {
             minifyEnabled false
-            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    androidExtensions {
-        experimental = true
-    }
-
-    applicationVariants.all {
-        variant ->
-            variant.outputs.all {
-                output -> outputFileName = new File(variant.name, "RTC_RC_" + releaseTime() + ".apk")
-            }
     }
 
     lintOptions {
@@ -95,74 +47,68 @@ android {
             dimension 'environment'
             applicationId "cn.rongcloud.voiceroomdemo.dev" // 配置不同的包名，确保切换环境时不会因为缓存导致出现问题
             buildConfigField("String", "APP_KEY", "\"pvxdm17jpw7ar\"")
+            buildConfigField("String", "UM_APP_KEY", "\"60c062bf8d6cd512500c78ed\"")
             buildConfigField("String", "BASE_SERVER_ADDRES", "\"https://rcrtc-api.rongcloud.net/\"")
-            buildConfigField("String", "INTERIAL", "\"false\"")// 区分国内/国际 国内环境不显示UI 选择地区
-
-            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请https://rcrtc-api.rongcloud.net/code\"")
-            buildConfigField("String", "MH_APP_KEY", "\"这里是美狐美颜SDK的appkey，要想体验美颜功能需要去美狐官网申请http://www.facegl.com/\"")
-            buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
-            buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
-
-            manifestPlaceholders = [APP_NAME: "@string/app_name_test"]
-        }
-        releaseEnvironment {
-            dimension 'environment'
-            applicationId "cn.rongcloud.voiceroomdemo"
-            buildConfigField("String", "APP_KEY", "\"这里填写AppKey\"")
-            buildConfigField("String", "BASE_SERVER_ADDRES", "\"这里是服务器地址\"")
-            buildConfigField("String", "INTERIAL", "\"false\"")
-
-            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请https://rcrtc-api.rongcloud.net/code\"")
-            buildConfigField("String", "MH_APP_KEY", "\"这里是美狐美颜SDK的appkey，要想体验美颜功能需要去美狐官网申请http://www.facegl.com/\"")
-            buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
-            buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
-            manifestPlaceholders = [APP_NAME: "@string/app_name"]
-        }
-        // 国际环境
-        interialEnvironment {
-            dimension 'environment'
-            applicationId "cn.rongcloud.voiceroomdemo.interial"
-            buildConfigField("String", "APP_KEY", "\"这里填写AppKey\"")
-            buildConfigField("String", "BASE_SERVER_ADDRES", "\"这里是服务器地址\"")
-            buildConfigField("String", "INTERIAL", "\"true\"")
-
-            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请https://rcrtc-api.rongcloud.net/code\"")
-            buildConfigField("String", "MH_APP_KEY", "\"这里是美狐美颜SDK的appkey，要想体验美颜功能需要去美狐官网申请http://www.facegl.com/\"")
-            buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
-            buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
-            manifestPlaceholders = [APP_NAME: "@string/app_name_interial"]
+            buildConfigField("String", "BUGLY_ID", "\"f3c227951e\"")
+            buildConfigField("String", "MH_APP_KEY", "\"替换您的美颜appkey\"")// 可选
+            buildConfigField("String", "BUSINESS_TOKEN", "\"替换您的BussinessToken\"")// 必须
+            buildConfigField("Boolean", "INTERIAL", "false")// 区分国内/国际 国内环境不显示UI 选择地区
+            manifestPlaceholders = [
+                    APP_NAME         : "@string/app_name_test",
+                    // hifive音乐服务的 appid和servercode
+                    HIFIVE_APPID     : "替换您hifive音乐服务的appid",//可选替换
+                    HIFIVE_SERVERCODE: "替换您hifive音乐服务的servercode"//可选替换
+            ]
         }
     }
 }
 
-static def releaseTime() {
-    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+dependencies {
+    implementation fileTree(includes: ['*.aar'], dir: 'libs')
+    implementation android_ui.appcompat
+    implementation android_ui.material
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter"
+    // config
+    implementation project(path: ':middle:config')
+    // 登录设置模块
+    implementation project(path: ':business:profile')
+    // 模块条件编译
+    if (!containMode(rootProject.ext.mode_live)
+            && !containMode(rootProject.ext.mode_voice)
+            && !containMode(rootProject.ext.mode_radio)) {
+        // 只有call 兼容编译
+        implementation project(path: ':middle:roomkit')
+        implementation project(path: ':middle:music')
+    } else {
+        if (containMode(rootProject.ext.mode_voice)) {
+            api project(path: ':business:voiceroom')
+        }
+        if (containMode(rootProject.ext.mode_radio)) {
+            api project(path: ':business:radio')
+        }
+        if (containMode(rootProject.ext.mode_call)) {
+            api project(path: ':business:call')
+        }
+        if (containMode(rootProject.ext.mode_live)) {
+            api project(path: ':business:live')
+        }
+    }
 }
 
-dependencies {
+def containMode(mode) {
+    for (String temp in rootProject.ext.rc_busi) {
+        if (mode.equals(temp)) {
+            return true
+        }
+    }
+    return false
+}
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    implementation project(path: ':annotation')
-    implementation project(path: ':processor')
-    implementation project(path: ':avcall')
-    implementation project(path: ':combusis')
-    implementation project(path: ':voiceroom')
-    implementation project(path: ':radioroom')
-    implementation project(path: ':liveroom')
-
-    api "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.belerweb:pinyin4j:2.5.1'
+def modes() {
+    String busi = ""
+    for (String temp in rootProject.ext.rc_busi) {
+        busi += "\"${temp}\","
+    }
+    return "new String[]{" + busi.substring(0, busi.length() - 1) + "}"
 }
