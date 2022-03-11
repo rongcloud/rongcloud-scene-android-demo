@@ -2,7 +2,6 @@
   ~ Copyright © 2021 RongCloud. All rights reserved.
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <string name="online_owner">在线房主</string>
     <string name="invitate" tools:ignore="ExtraTranslation">邀请</string>
     <string name="invitate_pk">邀请pk</string>

@@ -15,14 +15,14 @@
         android:layout_marginBottom="@dimen/basis_20px"
         android:gravity="center"
         android:text="@string/online_owner"
-        android:textColor="@color/white"
+        android:textColor="@color/basis_white"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/rcy_owner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.bcq.refresh.XRecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcy_owner"
         android:layout_width="match_parent"
         android:layout_height="0dp"

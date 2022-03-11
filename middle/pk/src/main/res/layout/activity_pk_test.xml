@@ -4,15 +4,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:keepScreenOn="true"
     android:background="#5E3E7E"
+    android:keepScreenOn="true"
     android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="250dp">
+        android:layout_height="250dp"
+        android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/voice_room"

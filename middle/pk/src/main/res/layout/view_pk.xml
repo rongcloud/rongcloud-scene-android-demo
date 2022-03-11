@@ -150,7 +150,7 @@
         app:progress_corner_radius="10dp"
         app:progress_reached_color="#EF499A"
         app:progress_reached_height="20dp"
-        app:progress_text_color="@color/white"
+        app:progress_text_color="@color/basis_white"
         app:progress_unreached_color="@color/basis_blue"
         app:progress_unreached_height="20dp" />
 

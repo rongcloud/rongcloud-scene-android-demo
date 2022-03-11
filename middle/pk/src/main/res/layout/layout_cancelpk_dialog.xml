@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/basis_35px"
         android:layout_marginBottom="@dimen/basis_30px"
         android:text="@string/already_invitate_pk"
-        android:textColor="@color/white"
+        android:textColor="@color/basis_white"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/cancele_pk"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:paddingTop="@dimen/basis_15px"
         android:paddingBottom="@dimen/basis_15px"
         android:text="@string/cancel_invitate_pk"
-        android:textColor="@color/white"
+        android:textColor="@color/basis_white"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/cancel_dialog"
         app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -54,7 +54,7 @@
         android:gravity="center"
         android:paddingTop="@dimen/basis_15px"
         android:paddingBottom="@dimen/basis_15px"
-        android:text="@string/cancel"
+        android:text="@string/basis_cancle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cancele_pk" />
 </androidx.constraintlayout.widget.ConstraintLayout>
