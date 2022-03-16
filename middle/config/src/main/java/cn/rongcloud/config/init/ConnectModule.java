@@ -3,13 +3,18 @@ package cn.rongcloud.config.init;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.basis.net.oklib.OkApi;
+import com.basis.net.oklib.WrapperCallBack;
+import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.GsonUtil;
 import com.basis.utils.KToast;
 import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
+import com.basis.wapper.IResultBack;
 
 import java.util.Arrays;
 
+import cn.rongcloud.config.ApiConfig;
 import cn.rongcloud.config.AppConfig;
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.init.shumei.RCDeviceMessage;
@@ -30,6 +35,7 @@ import io.rong.imlib.model.ReceivedProfile;
 public class ConnectModule implements IModule {
     private final static String TAG = "ConnectModule";
     private OnRegisterMessageTypeListener listener;
+    private final static String DEVICE = ApiConfig.HOST + "/user/login/device/mobile";
 
     protected ConnectModule(OnRegisterMessageTypeListener listener) {
         this.listener = listener;
@@ -94,23 +100,36 @@ public class ConnectModule implements IModule {
         if (TextUtils.isEmpty(imToken)) {
             return;
         }
-        // 用户已登录则连接im
-        RongIM.connect(imToken, new RongIMClient.ConnectCallback() {
+        //兼容踢web端，需要先上报状态，才能连接 否则web端无法接收到服务分发的设备消息
+        reportDevice(new IResultBack<Boolean>() {
             @Override
-            public void onSuccess(String t) {
-                Logger.e(TAG, "connect#onSuccess:" + t);
-            }
+            public void onResult(Boolean aBoolean) {
+                if (!aBoolean) return;
+                UIKit.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 用户已登录则连接im
+                        RongIM.connect(imToken, new RongIMClient.ConnectCallback() {
+                            @Override
+                            public void onSuccess(String t) {
+                                Logger.e(TAG, "connect#onSuccess:" + t);
+                            }
 
-            @Override
-            public void onError(RongIMClient.ConnectionErrorCode e) {
-                Logger.e(TAG, "connect#onError:" + GsonUtil.obj2Json(e));
-            }
+                            @Override
+                            public void onError(RongIMClient.ConnectionErrorCode e) {
+                                Logger.e(TAG, "connect#onError:" + GsonUtil.obj2Json(e));
+                            }
 
-            @Override
-            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
-                Logger.e(TAG, "connect#onDatabaseOpened:code = " + code);
+                            @Override
+                            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
+                                Logger.e(TAG, "connect#onDatabaseOpened:code = " + code);
+                            }
+                        });
+                    }
+                }, 200);
             }
         });
+
     }
 
     @Override
@@ -120,5 +139,24 @@ public class ConnectModule implements IModule {
     @Override
     public void onRegisterMessageType() {
         RongIMClient.registerMessageType(Arrays.asList(RCDeviceMessage.class, RCSMMessage.class));
+    }
+
+    /**
+     * 上报设备状态，处理自定登录踢除web端
+     */
+    private static void reportDevice(IResultBack<Boolean> resultBack) {
+        OkApi.post(DEVICE, null, new WrapperCallBack() {
+            @Override
+            public void onError(int code, String msg) {
+                Logger.e(TAG, "reportDevice#onError code  = " + code + " message = " + msg);
+                if (null != resultBack) resultBack.onResult(false);
+            }
+
+            @Override
+            public void onResult(Wrapper result) {
+                Logger.e(TAG, "reportDevice#onResult code  = " + result.getCode() + " message = " + result.getMessage());
+                if (null != resultBack) resultBack.onResult(null != result && result.ok());
+            }
+        });
     }
 }
