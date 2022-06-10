@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--    自定义action bar 属性-->
-    <color name="basis_color_bar_bg">#008000</color>
+    <color name="basis_color_bar_bg">#FFFFFF</color>
     <color name="basis_color_status_bg">#FFFFFF</color>
     <!--    标题栏高度，默认 56dp-->
     <dimen name="basis_bar_size">@dimen/abc_action_bar_default_height_material</dimen>
     <!--    标题 text size 默认：17sp-->
     <dimen name="basis_bar_text_size">17sp</dimen>
     <!--    标题栏文字包括menu颜色 默认：白色-->
-    <color name="basis_bar_text_color">@android:color/white</color>
+    <color name="basis_bar_text_color">@color/basis_blue</color>
     <!--    action text size 默认：14sp-->
     <dimen name="basis_menu_text_size">14sp</dimen>
 
@@ -15,10 +15,11 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <!--        <item name="android:windowTranslucentNavigation">true</item>-->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+        <!--        <item name="android:windowFullscreen">true</item>-->
     </style>
     <!--    自定义Action Bar的主体-->
     <style name="BasisTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -35,7 +36,8 @@
         <!--        menu text size-->
         <item name="android:textSize">@dimen/basis_menu_text_size</item>
         <!--        自定义返回监听-->
-        <item name="android:homeAsUpIndicator">@drawable/svg_back</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_black</item>
+
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 

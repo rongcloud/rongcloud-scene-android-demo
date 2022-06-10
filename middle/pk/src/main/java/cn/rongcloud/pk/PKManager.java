@@ -1,5 +1,6 @@
 package cn.rongcloud.pk;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.text.TextUtils;
@@ -13,8 +14,8 @@ import com.basis.utils.KToast;
 import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
-import com.basis.widget.BottomDialog;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.BottomDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,7 @@ import io.rong.imlib.model.UserInfo;
 public class PKManager implements IPKManager, DialogInterface.OnDismissListener {
     private static final String TAG = PKManager.class.getSimpleName();
     private String roomId, pkRoomId;
+    private int roomType;
     private IPK pkView;
     private PKState pkState = PKState.PK_NONE;
     private PKListener pkListener;
@@ -101,8 +103,9 @@ public class PKManager implements IPKManager, DialogInterface.OnDismissListener 
     }
 
     @Override
-    public void init(String roomId, IPK pkView, PKListener listener) {
+    public void init(String roomId, int roomType, IPK pkView, PKListener listener) {
         this.roomId = roomId;
+        this.roomType = roomType;
         this.pkView = pkView;
         this.pkListener = listener;
         pkView.setPKListener(listener);
@@ -268,7 +271,7 @@ public class PKManager implements IPKManager, DialogInterface.OnDismissListener 
     public void showPkInvitation(Activity activity) {
         if (pkState.enableInvite()) {
             if (dialog != null) dialog.dismiss();
-            dialog = new OnlineCreatorDialog(activity, new OnlineCreatorDialog.OnSendPkCallback() {
+            dialog = new OnlineCreatorDialog(activity, roomType, new OnlineCreatorDialog.OnSendPkCallback() {
                 @Override
                 public void sendPkInvitation(String inviteeRoomId, String inviteeUserId) {
                     pkInvitee = new PKInvitee();
@@ -505,10 +508,15 @@ public class PKManager implements IPKManager, DialogInterface.OnDismissListener 
         this.pkInviteInfo = pkInviteInfo;
         onPkStateChanged(PKState.PK_GOING);
         if (pkInviteInfo != null) {
-            pkRoomId = TextUtils.equals(pkInviteInfo.getInviteeRoomId(), roomId) ? pkInviteInfo.getInviterRoomId() : pkInviteInfo.getInviteeRoomId();
+//            pkRoomId = TextUtils.equals(pkInviteInfo.getInviteeRoomId(), roomId) ? pkInviteInfo.getInviterRoomId() : pkInviteInfo.getInviteeRoomId();
+            pkRoomId = TextUtils.equals(pkInviteInfo.getInviteeUserId(), UserManager.get().getUserId()) ? pkInviteInfo.getInviterRoomId() : pkInviteInfo.getInviteeRoomId();
+            //  pk信息中的自己房间
+            String plcRoomId = TextUtils.equals(pkInviteInfo.getInviteeUserId(), UserManager.get().getUserId()) ? pkInviteInfo.getInviteeRoomId() : pkInviteInfo.getInviterRoomId();
             // 1、约定 邀请者开启pk 上报pk开始状态
             // 2、被邀请者 暂不处理，等待服务端pk开启消息
-            if (isInviter()) {
+            Logger.e(TAG,"plcRoomId = "+plcRoomId);
+            Logger.e(TAG,"roomId = "+roomId);
+            if (isInviter() && TextUtils.equals(plcRoomId,roomId)) {
                 PKApi.reportPKStart(roomId, pkRoomId, new IResultBack<Boolean>() {
                     @Override
                     public void onResult(Boolean success) {

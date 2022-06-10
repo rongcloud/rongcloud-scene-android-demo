@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.basis.ui.UIStack;
 import com.basis.utils.ImageLoader;
 import com.basis.utils.UiUtils;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,7 +153,7 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
         mMessageView = getView(R.id.rv_message);
         mMessageView.setLayoutManager(new LinearLayoutManager(getContext()));
         mMessageView.addItemDecoration(new DefaultItemDecoration(Color.TRANSPARENT, 0, UiUtils.dp2px(5)));
-        mRoomMessageAdapter = new RoomMessageAdapter(getContext(), this, RoomType.RADIO_ROOM);
+        mRoomMessageAdapter = new RoomMessageAdapter(getContext(), mMessageView, this, RoomType.RADIO_ROOM);
         mMessageView.setAdapter(mRoomMessageAdapter);
 
         // 音乐小窗口
@@ -248,21 +248,30 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
     @Override
     public void addToMessageList(MessageContent messageContent, boolean isRefresh) {
         List<MessageContent> list = new ArrayList<>(1);
-        if (messageContent != null) {
-            list.add(messageContent);
+//        if (messageContent != null) {
+//            list.add(messageContent);
+//        }
+//        mRoomMessageAdapter.setMessages(list, isRefresh);
+        if (isRefresh) {
+            if (messageContent != null) {
+                list.add(messageContent);
+            }
+            mRoomMessageAdapter.setMessages(list, true);
+        } else {
+            mRoomMessageAdapter.interMessage(messageContent);
         }
-        mRoomMessageAdapter.setData(list, isRefresh, mMessageView);
     }
 
     @Override
     public void addAllToMessageList(List<MessageContent> messageContents, boolean isRefresh) {
-        mRoomMessageAdapter.setData(messageContents, isRefresh, mMessageView);
+        mRoomMessageAdapter.setMessages(messageContents, isRefresh);
     }
 
     @Override
     public void finish() {
         //在销毁之前提前出栈顶
         try {
+            if (null != mRoomMessageAdapter)mRoomMessageAdapter.release();
             UIStack.getInstance().remove(((RadioRoomActivity) requireActivity()));
             requireActivity().finish();
         } catch (Exception e) {
@@ -376,11 +385,11 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
     public void showShieldDialog(String roomId) {
         mShieldDialog = new ShieldDialog(requireActivity(), roomId, 10, new ShieldDialog.OnShieldDialogListener() {
             @Override
-            public void onAddShield(String s,List<Shield> shields) {
+            public void onAddShield(String s, List<Shield> shields) {
             }
 
             @Override
-            public void onDeleteShield(Shield shield,List<Shield> shields) {
+            public void onDeleteShield(Shield shield, List<Shield> shields) {
 
             }
         });
@@ -523,6 +532,7 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
         clVoiceRoomView.setVisibility(View.INVISIBLE);
         rlRoomFinishedId.setVisibility(View.GONE);
         present.switchRoom();
+        mRoomMessageAdapter.release();
     }
 
     @Override

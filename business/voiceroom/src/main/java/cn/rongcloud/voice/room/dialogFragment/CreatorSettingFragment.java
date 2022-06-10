@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.Guideline;
 import com.basis.ui.BaseBottomSheetDialog;
 import com.basis.utils.ImageLoader;
 import com.basis.utils.KToast;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 import com.rc.voice.R;
 
 import cn.rongcloud.config.provider.user.User;
@@ -106,7 +106,7 @@ public class CreatorSettingFragment extends BaseBottomSheetDialog implements Vie
                     }
                 }, new Consumer<Throwable>() {
                     @Override
-                    public void accept(Throwable throwable) throws Throwable {
+                    public void accept(Throwable throwable) {
                         KToast.show(throwable.getMessage());
                     }
                 });

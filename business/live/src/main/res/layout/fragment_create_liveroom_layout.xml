@@ -17,7 +17,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/svg_back" />
+            android:src="@drawable/svg_back_white" />
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_room_cover"

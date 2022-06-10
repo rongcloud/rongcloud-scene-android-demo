@@ -49,6 +49,22 @@ public interface IAdapte<T, VH extends IHolder> {
     boolean removeItem(T item);
 
     /**
+     * 刷新
+     */
+    void updateItem(T item);
+
+    /**
+     * 添加
+     */
+    void insertItem(T item, boolean isLast);
+
+    /**
+     * 清除所有
+     */
+    void clear();
+
+
+    /**
      * 根据position 和 数据 获取itemView的布局id
      *
      * @param item

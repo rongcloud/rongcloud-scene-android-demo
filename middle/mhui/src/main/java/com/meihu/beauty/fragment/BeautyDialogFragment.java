@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.basis.utils.Logger;
-import com.basis.widget.BottomDialog;
+import com.basis.widget.dialog.BottomDialog;
 import com.meihu.beauty.R;
 import com.meihu.beauty.interfaces.IBeautyHideTipCallBack;
 import com.meihu.beauty.interfaces.OnTieZhiActionClickListener;

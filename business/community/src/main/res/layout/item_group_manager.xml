@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/basis_selector_main_item_click"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    tools:ignore="ResourceName">
+
+    <ImageView
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:padding="12dp"
+        android:src="@drawable/svg_channel_sort" />
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:padding="12dp"
+        android:src="@drawable/svg_delete_channel" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/main_primary_15"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/iv_editor"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:padding="12dp"
+        android:src="@drawable/svg_channel_editor" />
+</LinearLayout>

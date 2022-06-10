@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ResourceName">
+
+    <cn.rc.community.channel.InputPanelView
+        android:id="@+id/input_pannel_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_mark_id"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:background="@color/basis_white"
+        android:orientation="horizontal"
+        android:elevation="4dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_mark_id"
+            android:layout_width="0dp"
+            android:layout_height="41dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/svg_mark_icon_mini_blue"
+            android:drawablePadding="10dp"
+            android:ellipsize="end"
+            android:paddingStart="30dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp" />
+
+        <ImageView
+            android:id="@+id/iv_close_mark_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@drawable/svg_delete" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_editingStatus_id"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_below="@+id/ll_mark_id"
+        android:background="#E5E8EF"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:text="燕小七 等18个人  正在输入..." />
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/layout_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/input_pannel_id"
+        android:layout_below="@+id/tv_editingStatus_id">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_message_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/picture_color_transparent"
+        android:drawableTop="@drawable/svg_empty_message"
+        android:gravity="center"
+        android:text="来都来了，聊几句再走"
+        android:textColor="#7303003A"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_unread"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/shape_sold_bg_blue_left"
+        android:drawableStart="@drawable/svg_unread_icon"
+        android:drawablePadding="3dp"
+        android:gravity="center_vertical"
+        android:paddingStart="11dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/basis_white"
+        android:textSize="@dimen/basis_13sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        tools:text="128条新消息" />
+
+    <ImageView
+        android:id="@+id/iv_go_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/input_pannel_id"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/rc_image_download"
+        android:visibility="gone" />
+</RelativeLayout>

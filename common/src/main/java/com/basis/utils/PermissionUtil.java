@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Size;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -57,6 +58,10 @@ public class PermissionUtil {
     }
 
     public static boolean checkPermissions(Activity activity, String[] permissions) {
+        return checkPermissions(activity, permissions, REQUEST_CODE);
+    }
+
+    public static boolean checkPermissions(Activity activity, String[] permissions, int requestCode) {
         try {
             if (Build.VERSION.SDK_INT >= 23) {
                 ArrayList<String> requestPerssions = new ArrayList<>();
@@ -68,7 +73,35 @@ public class PermissionUtil {
                 }
                 int size = requestPerssions.size();
                 if (size > 0) {
-                    activity.requestPermissions(requestPerssions.toArray(new String[size]), REQUEST_CODE);
+                    activity.requestPermissions(requestPerssions.toArray(new String[size]), requestCode);
+                    return false;
+                }
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean checkPermissions(Fragment fragment, String[] permissions) {
+        return checkPermissions(fragment, permissions, REQUEST_CODE);
+    }
+
+    public static boolean checkPermissions(Fragment fragment, String[] permissions, int requestCode) {
+        try {
+            if (Build.VERSION.SDK_INT >= 23) {
+                ArrayList<String> requestPerssions = new ArrayList<>();
+                int len = permissions.length;
+                for (String permission : permissions) {
+                    if (PackageManager.PERMISSION_GRANTED != fragment.getActivity().checkSelfPermission(permission)) {
+                        requestPerssions.add(permission);
+                    }
+                }
+                int size = requestPerssions.size();
+                if (size > 0) {
+                    fragment.requestPermissions(requestPerssions.toArray(new String[size]), requestCode);
                     return false;
                 }
                 return true;

@@ -89,7 +89,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     void initBottom() {
         // 国际环境才选择显示地区
-        UIKit.setVisiable(vRegion, AppConfig.get().isInternational());
+        UIKit.setVisible(vRegion, AppConfig.get().isInternational());
         SpannableStringBuilder style = new SpannableStringBuilder();
         style.append("同意《注册条款》和《隐私政策》并新登录即注册开通融云开发者账号");
         style.setSpan(new ClickableSpan() {
@@ -233,6 +233,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             public void onResult(User user) {
                 if (null != user) {
                     initRongIM(tag, user);
+                } else {
+                    if (null != tag) tag.dismiss();
                 }
             }
         });

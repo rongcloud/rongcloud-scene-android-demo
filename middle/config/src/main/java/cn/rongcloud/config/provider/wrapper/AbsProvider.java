@@ -38,8 +38,8 @@ public abstract class AbsProvider<T extends Provide> implements IProvider<T> {
     }
 
     @Override
-    public void getAsyn(@NonNull String id, IResultBack<T> resultBack) {
-        getAsynWithNeed(id, resultBack, true);
+    public void getAsyn(@NonNull String key, IResultBack<T> resultBack) {
+        getAsynWithNeed(key, resultBack, true);
     }
 
     public T getSync(String key) {
@@ -47,17 +47,17 @@ public abstract class AbsProvider<T extends Provide> implements IProvider<T> {
     }
 
     /**
-     * @param id
+     * @param key
      * @param resultBack
      * @param needServiceBack 来着observice 需处理两次回调的问题
      */
-    private void getAsynWithNeed(@NonNull String id, IResultBack<T> resultBack, boolean needServiceBack) {
-        T t = lruCache.get(id);
+    private void getAsynWithNeed(@NonNull String key, IResultBack<T> resultBack, boolean needServiceBack) {
+        T t = lruCache.get(key);
         if (null != t && null != resultBack) {
             resultBack.onResult(t);
             return;
         }
-        provideFromService(Collections.singletonList(id), new IResultBack<List<T>>() {
+        provideFromService(Collections.singletonList(key), new IResultBack<List<T>>() {
             @Override
             public void onResult(List<T> ts) {
                 if (null != ts && 1 == ts.size()) {

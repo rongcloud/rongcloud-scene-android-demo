@@ -113,8 +113,8 @@ public class DialActivity extends BaseActionBarActivity implements View.OnClickL
 
     private void refreshViewByRecord(boolean hasRecord) {
         Logger.e(TAG, "refreshViewByRecord:hasRecord = " + hasRecord);
-        UIKit.setVisiable(recyclerView, hasRecord);
-        UIKit.setVisiable(emptyTip, !hasRecord);
+        UIKit.setVisible(recyclerView, hasRecord);
+        UIKit.setVisible(emptyTip, !hasRecord);
         if (null != tvTip)
             tvTip.setText(isVideo ? R.string.video_no_record_tip : R.string.audio_no_record_tip);
     }

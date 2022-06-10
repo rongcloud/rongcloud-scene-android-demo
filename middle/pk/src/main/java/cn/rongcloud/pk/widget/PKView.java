@@ -153,7 +153,7 @@ public class PKView extends LinearLayout implements IPK {
     @Override
     public void reset(boolean isRoomOwner) {
         ivMute.setSelected(false);
-        UIKit.setVisiable(ivMute, isRoomOwner);
+        UIKit.setVisible(ivMute, isRoomOwner);
     }
 
     @Override

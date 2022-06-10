@@ -54,14 +54,15 @@ public class RcyHolder extends RecyclerView.ViewHolder implements IHolder<RcyHol
     @SuppressLint("NewApi")
     @Override
     public RcyHolder setAlpha(int viewId, float value) {
+        View view = getView(viewId);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            getView(viewId).setAlpha(value);
+            if (null != view) view.setAlpha(value);
         } else {
             // Pre-honeycomb hack to set Alpha value
             AlphaAnimation alpha = new AlphaAnimation(value, value);
             alpha.setDuration(0);
             alpha.setFillAfter(true);
-            getView(viewId).startAnimation(alpha);
+            if (null != view) view.startAnimation(alpha);
         }
         return this;
     }
@@ -69,84 +70,92 @@ public class RcyHolder extends RecyclerView.ViewHolder implements IHolder<RcyHol
     @Override
     public RcyHolder setVisible(int viewId, boolean visible) {
         View view = getView(viewId);
-        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        if (null != view) view.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 
     @Override
     public RcyHolder setTag(int viewId, Object tag) {
         View view = getView(viewId);
-        view.setTag(tag);
+        if (null != view) view.setTag(tag);
         return this;
     }
 
     @Override
     public RcyHolder setChecked(int viewId, boolean checked) {
-        Checkable view = (Checkable) getView(viewId);
-        view.setChecked(checked);
+        Checkable view = getView(viewId);
+        if (null != view) view.setChecked(checked);
         return this;
     }
 
     @Override
     public RcyHolder setSelected(int viewId, boolean selected) {
         View view = getView(viewId);
-        view.setSelected(selected);
+        if (null != view) view.setSelected(selected);
         return this;
     }
 
     @Override
     public RcyHolder setText(int viewId, CharSequence text) {
         TextView tv = getView(viewId);
-        tv.setText(text);
+        if (text == null) text = "";
+        if (null != tv) tv.setText(text);
         return this;
     }
 
     @Override
     public RcyHolder setTextColor(int viewId, int color) {
         TextView view = getView(viewId);
-        view.setTextColor(color);
+        if (null != view) view.setTextColor(color);
         return this;
     }
 
     @Override
     public RcyHolder setImageBitmap(int viewId, Bitmap bitmap) {
         ImageView view = getView(viewId);
-        view.setImageBitmap(bitmap);
+        if (null != view) view.setImageBitmap(bitmap);
         return this;
     }
 
     @Override
     public RcyHolder setImageDrawable(int viewId, Drawable drawable) {
         ImageView view = getView(viewId);
-        view.setImageDrawable(drawable);
+        if (null != view) view.setImageDrawable(drawable);
         return this;
     }
 
     @Override
     public RcyHolder setImageResource(int viewId, @DrawableRes int resource) {
         ImageView view = getView(viewId);
-        view.setImageResource(resource);
+        if (null != view) view.setImageResource(resource);
         return this;
     }
 
     @Override
     public RcyHolder setBackgroundColor(int viewId, int color) {
         View view = getView(viewId);
-        view.setBackgroundColor(color);
+        if (null != view) view.setBackgroundColor(color);
         return this;
     }
 
     @Override
     public RcyHolder setBackgroundResource(int viewId, int resource) {
         View view = getView(viewId);
-        view.setBackgroundResource(resource);
+        if (null != view) view.setBackgroundResource(resource);
         return this;
     }
 
     @Override
     public RcyHolder setOnClickListener(int viewId, View.OnClickListener ol) {
         View view = getView(viewId);
-        view.setOnClickListener(ol);
+        if (null != view) view.setOnClickListener(ol);
         return this;
+    }
+
+    @Override
+    public RcyHolder setOnLongClickListener(int viewId, View.OnLongClickListener longClickListener) {
+        View view = getView(viewId);
+        if (null != view) view.setOnLongClickListener(longClickListener);
+        return null;
     }
 }

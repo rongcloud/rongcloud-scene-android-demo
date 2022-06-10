@@ -1,5 +1,6 @@
 package cn.rongcloud.roomkit.ui.room.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -7,6 +8,10 @@ import android.view.MotionEvent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.basis.ui.UIStack;
+
+import cn.rongcloud.roomkit.ui.room.AbsRoomActivity;
 
 public class RecyclerViewAtVP2 extends RecyclerView {
     final static String TAG = "RecyclerViewAtVP2";
@@ -32,6 +37,7 @@ public class RecyclerViewAtVP2 extends RecyclerView {
                 startX = (int) ev.getX();
                 startY = (int) ev.getY();
                 getParent().requestDisallowInterceptTouchEvent(true);
+                resetEnable(false);
                 break;
             case MotionEvent.ACTION_MOVE:
                 int endX = (int) ev.getX();
@@ -43,12 +49,22 @@ public class RecyclerViewAtVP2 extends RecyclerView {
                     getParent().requestDisallowInterceptTouchEvent(canScrollHorizontally(startX - endX));
                 } else {
                     getParent().requestDisallowInterceptTouchEvent(canScrollVertically(startY - endY));
+//                    getParent().requestDisallowInterceptTouchEvent(true);
                 }
                 break;
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
                 getParent().requestDisallowInterceptTouchEvent(false);
+                resetEnable(true);
                 break;
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    void resetEnable(boolean enable){
+        Activity top = UIStack.getInstance().getTopActivity();
+        if (null != top && top instanceof AbsRoomActivity){
+            ((AbsRoomActivity)top).setCanSwitch(enable);
+        }
     }
 }

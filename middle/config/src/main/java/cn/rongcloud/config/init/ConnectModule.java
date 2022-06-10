@@ -43,6 +43,13 @@ public class ConnectModule implements IModule {
 
     @Override
     public void onInit() {
+        String appkey = AppConfig.get().getAppKey();
+        if (TextUtils.isEmpty(appkey)) {
+            return;
+        }
+        // 初始化im
+        RongIM.init((Application) UIKit.getContext(), appkey);
+
         // 连接监听
         IMCenter.getInstance().addConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
             @Override
@@ -63,35 +70,36 @@ public class ConnectModule implements IModule {
             @Override
             public void onReceivedMessage(Message message, ReceivedProfile profile) {
                 if (null != message) {
-                    MessageContent content = message.getContent();
-                    Logger.e(TAG, "message objectName = " + message.getObjectName() + "content = " + GsonUtil.obj2Json(content));
-                    //如果status级别：1: 弹窗提示  2: 则为用户跳到登录页面
-                    if (content instanceof RCSMMessage) {
-                        RCSMMessage rcs = (RCSMMessage) content;
-                        if (2 == rcs.getStatus()) {
-                            UserManager.logout();
+                    try {
+                        MessageContent content = message.getContent();
+                        Logger.e(TAG, "objectName:" + message.getObjectName()
+                                + "  messageId:" + message.getMessageId()
+                                + "  uid:" + message.getUId()
+                                + "  content:" + GsonUtil.obj2Json(content));
+                        //如果status级别：1: 弹窗提示  2: 则为用户跳到登录页面
+                        if (content instanceof RCSMMessage) {
+                            RCSMMessage rcs = (RCSMMessage) content;
+                            if (2 == rcs.getStatus()) {
+                                UserManager.logout();
+                            }
+                            KToast.show(rcs.getMessage());
+                        } else if (content instanceof RCDeviceMessage) {
+                            RCDeviceMessage rds = (RCDeviceMessage) content;
+                            // mobile web 和 desktop
+                            // 注意 android 和 ios 可以通过连接状态监听实现互踢，此处主要针对和web互踢功能
+                            String platform = rds.getPlatform();
+                            if (!TextUtils.equals(platform, "mobile")) {
+                                UserManager.logout();
+                                KToast.show(platform + " 端已登录");
+                            }
                         }
-                        KToast.show(rcs.getMessage());
-                    } else if (content instanceof RCDeviceMessage) {
-                        RCDeviceMessage rds = (RCDeviceMessage) content;
-                        // mobile web 和 desktop
-                        // 注意 android 和 ios 可以通过连接状态监听实现互踢，此处主要针对和web互踢功能
-                        String platform = rds.getPlatform();
-                        if (!TextUtils.equals(platform, "mobile")) {
-                            UserManager.logout();
-                            KToast.show(platform + " 端已登录");
-                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
         });
 
-        String appkey = AppConfig.get().getAppKey();
-        if (TextUtils.isEmpty(appkey)) {
-            return;
-        }
-        // 初始化im
-        RongIM.init((Application) UIKit.getContext(), appkey);
         // 添加自定义消息
         if (null != listener) listener.onRegisterMessageType();
 

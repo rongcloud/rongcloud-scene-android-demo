@@ -14,6 +14,9 @@ public class RouterPath {
     // 登录页
     public static final String ROUTER_LOGIN = "/profile/login";
 
+    // h5 页面
+    public static final String ROUTER_H5 = "/profile/h5";
+
 
     // 语聊房相关页面
     /**
@@ -52,8 +55,12 @@ public class RouterPath {
     public static final String ROUTER_CALL = "/call/callpage";
 
     // 主页fragment
+    public static final String FRAGMENT_COMMUNITY = "/community/fragment_community";
+    public static final String FRAGMENT_FIND = "/community/fragment_find";
+    public static final String FRAGMENT_MESSAGE = "/community/fragment_message";
     public static final String FRAGMENT_HOME = "/app/fragment_home";
-    public static final String FRAGMENT_FIND = "/app/fragment_find";
     public static final String FRAGMENT_ME = "/profile/fragment_me";
+    public static final String FRAGMENT_ME_COMMUNITY = "/profile/fragment_me_community";
+
 
 }

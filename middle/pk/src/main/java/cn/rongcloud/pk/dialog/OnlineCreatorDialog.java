@@ -15,7 +15,7 @@ import com.basis.utils.KToast;
 import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
-import com.basis.widget.BottomDialog;
+import com.basis.widget.dialog.BottomDialog;
 
 import java.util.List;
 
@@ -33,10 +33,12 @@ public class OnlineCreatorDialog extends BottomDialog {
     private RecyclerView rcyOwner;
     private FrameLayout emptyLayout;
     private IAdapte adapter;
+    private int roomType;
 
-    public OnlineCreatorDialog(Activity activity, OnSendPkCallback onSendPkCallback) {
+    public OnlineCreatorDialog(Activity activity, int roomType, OnSendPkCallback onSendPkCallback) {
         super(activity);
         this.onSendPkCallback = onSendPkCallback;
+        this.roomType = roomType;
         setContentView(R.layout.layout_owner_dialog, 60);
         initView();
         requestOwners();
@@ -100,7 +102,7 @@ public class OnlineCreatorDialog extends BottomDialog {
     }
 
     private void requestOwners() {
-        PKApi.getOnlineCreator(new IResultBack<List<VoiceRoomBean>>() {
+        PKApi.getOnlineCreator(roomType, new IResultBack<List<VoiceRoomBean>>() {
             @Override
             public void onResult(List<VoiceRoomBean> voiceRoomBeans) {
                 adapter.setData(voiceRoomBeans, true);

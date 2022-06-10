@@ -13,7 +13,7 @@ import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.KToast;
 import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
-import com.basis.widget.BottomDialog;
+import com.basis.widget.dialog.BottomDialog;
 import com.basis.widget.flowlayout.FlowLayout;
 
 import java.util.ArrayList;

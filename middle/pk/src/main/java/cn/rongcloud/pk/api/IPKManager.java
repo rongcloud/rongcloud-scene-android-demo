@@ -17,12 +17,12 @@ public interface IPKManager {
 
     /**
      * 初始化
-     *
-     * @param roomId   房间id
+     *  @param roomId   房间id
+     * @param roomType
      * @param pkView   PK 视图
      * @param listener pk监听
      */
-    void init(String roomId, IPK pkView, PKListener listener);
+    void init(String roomId,int roomType, IPK pkView, PKListener listener);
 
     /**
      * 获取pk状态

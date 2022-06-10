@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F4F6FA"
+    android:orientation="vertical"
+    tools:ignore="ResourceName">
+
+
+    <View
+        style="@style/basis_main_divider"
+        android:layout_marginTop="37dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            style="@style/main_secondary_16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/profile_me_head" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_portrait"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="@dimen/basis_20px"
+            android:layout_marginRight="@dimen/basis_20px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/default_portrait" />
+
+        <TextView
+            android:id="@+id/btn_portrait"
+            style="@style/main_secondary_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/svg_right_gray"
+            android:drawablePadding="@dimen/basis_15px"
+            android:text="@string/profile_update"
+            android:textColor="#949494" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <View
+        style="@style/basis_main_divider"
+        android:layout_marginTop="21dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            style="@style/main_secondary_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/basis_15px"
+            android:text="@string/profile_nickname" />
+
+
+        <EditText
+            android:id="@+id/et_name"
+            style="@style/main_secondary_16"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/basis_5px"
+            android:layout_marginBottom="@dimen/basis_5px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical|end"
+            android:text="@string/app_name" />
+
+        <ImageView
+            android:id="@+id/iv_editor"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="@dimen/basis_10px"
+            android:src="@drawable/svg_editor" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+
+    <View
+        style="@style/basis_main_divider"
+        android:layout_marginTop="21dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            style="@style/main_secondary_16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/basis_15px"
+            android:layout_weight="1"
+            android:text="@string/profile_sex" />
+
+        <LinearLayout
+            android:id="@+id/cb_man"
+            style="@style/main_white_15"
+            android:layout_width="80dp"
+            android:layout_height="32dp"
+            android:background="@drawable/profile_selector_sex_bg"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/selector_sex_man" />
+
+            <TextView
+                style="@style/main_white_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/profile_man"
+                android:textColor="@color/profile_color_select_sex"
+                android:textSize="@dimen/basis_15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cb_woman"
+            android:layout_width="80dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="@dimen/basis_20px"
+            android:background="@drawable/profile_selector_sex_woman_bg"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/selector_sex_woman" />
+
+            <TextView
+                style="@style/main_white_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/profile_woman"
+                android:textColor="@color/profile_color_select_sex"
+                android:textSize="@dimen/basis_15sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/basis_bg" />
+</LinearLayout>
+

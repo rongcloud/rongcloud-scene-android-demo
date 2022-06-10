@@ -15,10 +15,10 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
+        android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:riv_corner_radius="8dp"
-        android:scaleType="centerCrop" />
+        app:riv_corner_radius="8dp" />
 
     <com.vanniktech.emoji.EmojiTextView
         android:id="@+id/tv_room_name"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="@+id/tv_room_name"
         tools:src="@drawable/default_portrait" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.vanniktech.emoji.EmojiTextView
         android:id="@+id/tv_room_creator_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

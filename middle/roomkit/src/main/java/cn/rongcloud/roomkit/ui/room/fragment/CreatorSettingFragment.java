@@ -6,7 +6,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.basis.ui.BaseBottomSheetDialog;
 import com.basis.utils.ImageLoader;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.roomkit.R;

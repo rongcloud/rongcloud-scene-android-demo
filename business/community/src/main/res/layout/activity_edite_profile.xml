@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource,ResourceName">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View style="@style/basis_main_divider" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basis_60px"
+            android:background="@color/basis_bg" />
+
+        <View style="@style/basis_main_divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basis_main_item"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/basis_30px"
+            android:paddingRight="@dimen/basis_30px">
+
+            <TextView
+                style="@style/main_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cmu_profile_community_name" />
+
+            <TextView
+                android:id="@+id/tv_community_name"
+                style="@style/main_secondary_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/basis_30px"
+                android:layout_marginEnd="@dimen/basis_15px"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="@string/app_name" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:src="@drawable/svg_right_gray" />
+        </LinearLayout>
+
+        <View style="@style/basis_main_divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_portrait"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basis_main_item"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/basis_30px"
+            android:paddingRight="@dimen/basis_30px">
+
+            <TextView
+                style="@style/main_primary_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cmu_profile_community_portrait" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_portrait"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/basis_30px"
+                android:layout_marginEnd="@dimen/basis_10px"
+                android:src="@drawable/cmu_default_portrait" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:src="@drawable/svg_right_gray" />
+        </LinearLayout>
+
+        <View style="@style/basis_main_divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_them"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basis_main_item"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/basis_30px"
+            android:paddingRight="@dimen/basis_30px">
+
+            <TextView
+                style="@style/main_primary_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cmu_profile_community_them" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_them"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/basis_30px"
+                android:layout_marginEnd="@dimen/basis_10px"
+                android:src="@drawable/cmu_default_portrait" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:src="@drawable/svg_right_gray" />
+        </LinearLayout>
+
+        <View style="@style/basis_main_divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_des"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basis_main_item"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/basis_30px"
+            android:paddingRight="@dimen/basis_30px">
+
+            <TextView
+                style="@style/main_primary_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cmu_profile_community_des" />
+
+            <TextView
+                android:id="@+id/tv_community_des"
+                style="@style/main_secondary_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/basis_10px"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:maxLines="1"
+                android:text="@string/app_name" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:src="@drawable/svg_right_gray" />
+        </LinearLayout>
+
+        <View style="@style/basis_main_divider" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basis_60px"
+            android:background="@color/basis_bg" />
+
+        <View style="@style/basis_main_divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_default_channel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/basis_30px"
+            android:paddingTop="@dimen/basis_10px"
+            android:paddingRight="@dimen/basis_30px"
+            android:paddingBottom="@dimen/basis_10px">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/main_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cmu_profile_default_channel" />
+
+                <TextView
+                    android:id="@+id/tv_default_channel"
+                    style="@style/main_secondary_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/basis_30px"
+                    android:layout_marginEnd="@dimen/basis_10px"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    tools:text="@string/app_name" />
+
+                <ImageView
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:src="@drawable/svg_right_gray" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/main_secondary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:text="@string/cmu_profile_default_channel_des" />
+
+        </LinearLayout>
+
+        <View style="@style/basis_main_divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_notify_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/basis_30px"
+            android:paddingTop="@dimen/basis_10px"
+            android:paddingRight="@dimen/basis_30px"
+            android:paddingBottom="@dimen/basis_10px">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/main_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cmu_profile_default_notify" />
+
+                <TextView
+                    android:id="@+id/tv_notify_setting"
+                    style="@style/main_secondary_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/basis_30px"
+                    android:layout_marginEnd="@dimen/basis_10px"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    tools:text="@string/app_name" />
+
+                <ImageView
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:src="@drawable/svg_right_gray" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/main_secondary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:text="@string/cmu_profile_default_notify_des" />
+
+        </LinearLayout>
+
+        <View style="@style/basis_main_divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_sys_channel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/basis_30px"
+            android:paddingTop="@dimen/basis_10px"
+            android:paddingRight="@dimen/basis_30px"
+            android:paddingBottom="@dimen/basis_10px">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/main_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cmu_profile_sys_channel" />
+
+                <TextView
+                    android:id="@+id/tv_sys_channel"
+                    style="@style/main_secondary_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/basis_30px"
+                    android:layout_marginEnd="@dimen/basis_10px"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    tools:text="@string/app_name" />
+
+                <ImageView
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:src="@drawable/svg_right_gray" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/main_secondary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:text="@string/cmu_profile_sys_channel_des" />
+
+        </LinearLayout>
+
+        <View style="@style/basis_main_divider" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/basis_bg" />
+    </LinearLayout>
+</ScrollView>

@@ -23,7 +23,7 @@ import com.basis.utils.KToast;
 import com.basis.utils.Logger;
 import com.basis.wapper.IResultBack;
 import com.basis.wapper.IRoomCallBack;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 import com.meihu.beauty.utils.MhDataManager;
 import com.rc.live.constant.CurrentStatusType;
 import com.rc.live.constant.InviteStatusType;
@@ -75,6 +75,9 @@ import cn.rongcloud.roomkit.ui.miniroom.OnCloseMiniRoomListener;
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback;
 import cn.rongcloud.roomkit.ui.room.model.MemberCache;
 import cn.rongcloud.rtc.api.RCRTCConfig;
+import cn.rongcloud.rtc.api.RCRTCMixConfig;
+import cn.rongcloud.rtc.api.stream.RCRTCInputStream;
+import cn.rongcloud.rtc.base.RCRTCMediaType;
 import cn.rongcloud.rtc.base.RCRTCVideoFrame;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -1008,7 +1011,7 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
         }, "同意", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//同意邀请
+                //同意邀请
                 RCLiveEngine.getInstance().getLinkManager().acceptInvitation(userId, index, new RCLiveCallback() {
                     @Override
                     public void onSuccess() {
@@ -1190,7 +1193,34 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
     }
 
     @Override
+    public void onFirstRemoteVideoFrame(String userId, String tag) {
+
+    }
+
+    @Override
+    public void onReportFirstFrame(RCRTCInputStream stream, RCRTCMediaType mediaType) {
+
+    }
+
+    /**
+     * RTC 初始化参数，用户可自定义
+     *
+     * @param builder
+     * @return 返回null，那么用默认的
+     */
+    @Override
     public RCRTCConfig.Builder onInitRCRTCConfig(RCRTCConfig.Builder builder) {
+        return null;
+    }
+
+    /**
+     * RTC 合流参数，用户可自定义
+     *
+     * @param rcrtcMixConfig 合流参数
+     * @return 如果返回null，那么用默认的
+     */
+    @Override
+    public RCRTCMixConfig onInitMixConfig(RCRTCMixConfig rcrtcMixConfig) {
         return null;
     }
 
@@ -1207,6 +1237,7 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
     public void onRoomDestroy() {
         //如果是房主的话，那么直接退出就可以了
         MiniRoomManager.getInstance().close();
+        unRegister();
         if (TextUtils.equals(createUserId, RongCoreClient.getInstance().getCurrentUserId())) {
             onLiveRoomFinish();
             return;
@@ -1226,7 +1257,6 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
      * 当界面被销毁的时候
      */
     private void onLiveRoomFinish() {
-        unRegister();
         for (LiveRoomListener liveRoomListener : liveRoomListeners) {
             liveRoomListener.onRoomDestroy();
         }

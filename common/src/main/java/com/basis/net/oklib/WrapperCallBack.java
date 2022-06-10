@@ -4,6 +4,8 @@ package com.basis.net.oklib;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.basis.net.oklib.wrapper.Page;
+import com.basis.net.oklib.wrapper.interfaces.IPage;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -54,6 +56,15 @@ public abstract class WrapperCallBack extends OCallBack<Wrapper> {//IOCallBack
                     if (result.has("data")) {
                         wrapper.setBody(result.get("data"));
                     }
+                    int total = 0;
+                    int pages = 0;
+                    if (result.has("total")){
+                        pages = result.get("total").getAsInt();
+                    }
+                    if (result.has("pages")){
+                        pages = result.get("pages").getAsInt();
+                    }
+                    wrapper.setPage(pages,total);
                 }
             }
         } catch (IOException e) {

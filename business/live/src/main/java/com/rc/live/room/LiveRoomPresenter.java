@@ -120,7 +120,10 @@ import cn.rongcloud.roomkit.ui.room.widget.WaveView;
 import cn.rongcloud.roomkit.widget.InputPasswordDialog;
 import cn.rongcloud.rtc.api.RCRTCConfig;
 import cn.rongcloud.rtc.api.RCRTCEngine;
+import cn.rongcloud.rtc.api.RCRTCMixConfig;
 import cn.rongcloud.rtc.api.stream.RCRTCCameraOutputStream;
+import cn.rongcloud.rtc.api.stream.RCRTCInputStream;
+import cn.rongcloud.rtc.base.RCRTCMediaType;
 import cn.rongcloud.rtc.base.RCRTCParamsType;
 import cn.rongcloud.rtc.base.RCRTCVideoFrame;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -681,6 +684,7 @@ public class LiveRoomPresenter extends BasePresenter<LiveRoomView> implements
             @Override
             public void onResult(Wrapper result) {
                 mView.dismissLoading();
+                mView.finish();
             }
 
             @Override
@@ -1259,7 +1263,22 @@ public class LiveRoomPresenter extends BasePresenter<LiveRoomView> implements
     }
 
     @Override
+    public void onFirstRemoteVideoFrame(String userId, String tag) {
+
+    }
+
+    @Override
+    public void onReportFirstFrame(RCRTCInputStream stream, RCRTCMediaType mediaType) {
+
+    }
+
+    @Override
     public RCRTCConfig.Builder onInitRCRTCConfig(RCRTCConfig.Builder builder) {
+        return null;
+    }
+
+    @Override
+    public RCRTCMixConfig onInitMixConfig(RCRTCMixConfig rcrtcMixConfig) {
         return null;
     }
 

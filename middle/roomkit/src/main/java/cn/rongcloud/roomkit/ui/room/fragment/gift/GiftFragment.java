@@ -16,6 +16,7 @@ import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.ui.BaseBottomSheetDialog;
 import com.basis.utils.ImageLoader;
+import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
 import com.basis.utils.UiUtils;
 
@@ -136,6 +137,7 @@ public class GiftFragment extends BaseBottomSheetDialog {
             public void convert(RcyHolder holder, Member member, int position) {
                 ImageView imageView = holder.getView(R.id.iv_member_head);
                 ImageLoader.loadUrl(imageView, member.getPortraitUrl(), R.drawable.default_portrait);
+                Logger.e("Gift","memberIndex = "+member.getSeatIndex());
                 String name = "观众";
                 if (TextUtils.equals(mVoiceRoomBean.getCreateUserId(), member.getUserId())) {
                     name = "房主";
@@ -195,8 +197,8 @@ public class GiftFragment extends BaseBottomSheetDialog {
             }
         });
         mVpPresent.setLayoutManager(layoutManager);
-        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
-        pagerSnapHelper.attachToRecyclerView(mVpPresent);
+//        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+//        pagerSnapHelper.attachToRecyclerView(mVpPresent);
         mVpPresent.setAdapter(mGiftAdapter);
         mGiftAdapter.setData(giftList, true);
 

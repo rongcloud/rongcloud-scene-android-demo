@@ -11,6 +11,7 @@ import androidx.annotation.StringRes;
  * ActionBar 包装类
  */
 public interface IWrapBar<T extends IWrapBar> {
+    int DEFAULT_ELEVATION = 12;
 
     T setHide(boolean hide);
 
@@ -18,7 +19,11 @@ public interface IWrapBar<T extends IWrapBar> {
 
     T setTitle(@StringRes int title);
 
+    T setElevation(float elevation);
+
     T setTitle(String title);
+
+    T setTitleAndGravity(String title, int gravity);
 
     T setOnMenuSelectedListener(OnMenuSelectedListener listener);
 

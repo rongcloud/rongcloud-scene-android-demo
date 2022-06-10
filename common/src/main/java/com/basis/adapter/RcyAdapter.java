@@ -1,7 +1,6 @@
 package com.basis.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,12 +76,42 @@ public abstract class RcyAdapter<T, VH extends IHolder> extends RecyclerView.Ada
     @Override
     public synchronized boolean removeItem(T item) {
         if (null == data) return false;
+        int i = data.indexOf(item);
         boolean flag = data.remove(item);
         notifyDataSetChanged();
+        if (flag) notifyItemRemoved(i);
         if (null != observer) {
             observer.onObserve(data.size());
         }
         return flag;
+    }
+
+    @Override
+    public void updateItem(T item) {
+        if (null == data) return;
+        int i = data.indexOf(item);
+        if (i > -1) {
+            notifyItemChanged(i);
+        }
+    }
+
+    @Override
+    public void insertItem(T item, boolean isLast) {
+        if (null == data) return;
+        if (isLast) {
+            data.add(item);
+            notifyItemInserted(data.size() - 1);
+        } else {
+            data.add(0, item);
+            notifyItemInserted(0);
+        }
+    }
+
+    @Override
+    public void clear() {
+        if (null == data) return;
+        data.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -102,6 +131,7 @@ public abstract class RcyAdapter<T, VH extends IHolder> extends RecyclerView.Ada
     @Override
     public int getItemViewType(int position) {
         int layoutId = getItemLayoutId(getItem(position), position);
+        if (layoutId == -1) return -1;
         Integer type = itemTypes.get(layoutId);
         if (null == type) {
             throw new IllegalArgumentException("No ViewType Setted for position =" + position);

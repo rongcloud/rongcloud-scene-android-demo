@@ -40,7 +40,7 @@ public abstract class PermissionFragment extends BaseFragment {
     };
 
     @Override
-    public final void init() {
+    public void init() {
         // chen permeissions
         String[] permissions = onCheckPermission();
         checkAndRequestPermissions(permissions, null);
@@ -57,7 +57,7 @@ public abstract class PermissionFragment extends BaseFragment {
      */
     protected void checkAndRequestPermissions(String[] permissions, IResultBack<Boolean> resultBack) {
         this.resultBack = resultBack;
-        if (null == permissions || PermissionUtil.checkPermissions(activity, permissions)) {
+        if (null == permissions || PermissionUtil.checkPermissions(this, permissions)) {
             handlePermissionResult(true);
         }
     }

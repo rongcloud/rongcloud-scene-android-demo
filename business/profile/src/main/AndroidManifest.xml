@@ -5,8 +5,8 @@
     <application>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/BasisTheme_No"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
         <activity
             android:name=".region.RegionActivity"
             android:screenOrientation="portrait"
@@ -29,6 +29,10 @@
 
         <activity
             android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".SettingCommunityActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BasisTheme" />
     </application>

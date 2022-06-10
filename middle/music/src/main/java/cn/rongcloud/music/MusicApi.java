@@ -49,7 +49,7 @@ public class MusicApi {
             @Override
             public void onResult(Wrapper result) {
                 List<MusicBean> temp = result.getList(MusicBean.class);
-                Logger.e("MusicApi", "result count = " + temp.size() + " type = " + type);
+                Logger.e("MusicApi", "result count = " + (null == temp ? 0 : temp.size()) + " type = " + type);
                 if (null != resultBack) resultBack.onResult(temp);
             }
 

@@ -213,6 +213,9 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     public void onSeatInfoUpdate(List<RCVoiceSeatInfo> list) {
         synchronized (this) {
             int size = null == list ? 0 : list.size();
+            List<UiSeatModel> olds = new ArrayList<>();
+            olds.addAll(uiSeatModels);
+            int oldCount = olds.size();
             uiSeatModels.clear();
             for (int i = 0; i < size; i++) {
                 //构建一个集合返回去
@@ -222,10 +225,15 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
                     rcVoiceSeatInfo.setStatus(RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusUsing);
                 }
                 UiSeatModel uiSeatModel = new UiSeatModel(i, rcVoiceSeatInfo, seatInfoChangeSubject);
+                //缓存giftcount
+                if (i < oldCount) {
+                    uiSeatModel.setGiftCount(olds.get(i).getGiftCount());
+                }
                 uiSeatModels.add(uiSeatModel);
             }
             seatListChangeSubject.onNext(uiSeatModels);
         }
+        present.refreshRoomMember();
     }
 
 
@@ -238,7 +246,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     @Override
     public void onUserEnterSeat(int i, String s) {
         Log.e(TAG, "onUserEnterSeat: ");
-        present.refreshRoomMember();
+//        present.refreshRoomMember();
     }
 
     /**
@@ -251,7 +259,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     public void onUserLeaveSeat(int i, String s) {
         Log.e(TAG, "onUserLeaveSeat: ");
         //如果是房主的话，那么去更新房主的信息
-        present.refreshRoomMember();
+//        present.refreshRoomMember();
     }
 
     /**
@@ -264,7 +272,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     public void onSeatMute(int i, boolean b) {
         UiSeatModel uiSeatModel = uiSeatModels.get(i);
         uiSeatModel.setMute(b);
-        Log.e(TAG, "onSeatMute: ");
+//        Log.e(TAG, "onSeatMute: ");
     }
 
     /**
@@ -276,7 +284,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     @Override
     public void onSeatLock(int i, boolean b) {
         //锁住的位置，和状态
-        present.refreshRoomMember();
+//        present.refreshRoomMember();
         Log.e(TAG, "onSeatLock: ");
     }
 
@@ -303,7 +311,9 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
         UIKit.postDelayed(new Runnable() {
             @Override
             public void run() {
-                present.refreshRoomMember();
+                if (present != null) {
+                    present.refreshRoomMember();
+                }
             }
         }, 2000);
         //缓存立即刷新
@@ -413,6 +423,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
      */
     @Override
     public void onRequestSeatListChanged() {
+        Logger.d(TAG, "onRequestSeatListChanged");
         getRequestSeatUserIds();
     }
 
@@ -606,6 +617,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
      * @param users
      */
     public void onMemberListener(List<User> users) {
+        Logger.d(TAG, "onMemberListener");
         //房间观众发生变化
         getRequestSeatUserIds();
 
@@ -680,10 +692,12 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
 
     /**
      * 上麦
+     *
+     * @param userId 邀请人id
      */
-    public void enterSeatIfAvailable() {
+    public void enterSeatIfAvailable(String userId) {
         RCVoiceRoomEngine.getInstance()
-                .notifyVoiceRoom(EVENT_AGREE_MANAGE_PICK, UserManager.get().getUserId(), null);
+                .notifyVoiceRoom(EVENT_AGREE_MANAGE_PICK, userId, null);
         int availableIndex = getAvailableIndex();
         if (availableIndex > 0) {
             RCVoiceRoomEngine
@@ -775,4 +789,39 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public void creatorMuteSelf(boolean disable) {
+        Logger.e(TAG, "creatorMuteSelf disable = " + disable);
+        RCVoiceRoomEngine.getInstance().disableAudioRecording(disable);
+        UiSeatModel.UiSeatModelExtra extra = new UiSeatModel.UiSeatModelExtra();
+        extra.setDisableRecording(disable);
+        RCVoiceRoomEngine.getInstance().updateSeatInfo(0, GsonUtil.obj2Json(extra), new RCVoiceRoomCallback() {
+            @Override
+            public void onSuccess() {
+                Logger.e(TAG, "creatorMuteSelf:updateSeatInfo success");
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                Logger.e(TAG, "creatorMuteSelf:updateSeatInfo code =" + code + ": " + message);
+            }
+        });
+    }
+
+    public void muteSelf(int index, boolean disable) {
+        Logger.e(TAG, "muteSelf disable = " + disable + " index = " + index);
+        RCVoiceRoomEngine.getInstance().disableAudioRecording(disable);
+        UiSeatModel.UiSeatModelExtra extra = new UiSeatModel.UiSeatModelExtra();
+        extra.setDisableRecording(disable);
+        RCVoiceRoomEngine.getInstance().updateSeatInfo(index, GsonUtil.obj2Json(extra), new RCVoiceRoomCallback() {
+            @Override
+            public void onSuccess() {
+                Logger.e(TAG, "creatorMuteSelf:updateSeatInfo success");
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                Logger.e(TAG, "creatorMuteSelf:updateSeatInfo code =" + code + ": " + message);
+            }
+        });
+    }
 }

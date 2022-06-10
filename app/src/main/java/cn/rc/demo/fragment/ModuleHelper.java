@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.basis.utils.GsonUtil;
 import com.basis.utils.KToast;
 import com.basis.utils.Logger;
@@ -29,18 +30,24 @@ public class ModuleHelper {
     public final static Map<String, Module> modules = new HashMap();
 
     static {
-        modules.put(AppConfig.MODE_VOICE,
-                new Module(RcUmEvent.VoiceRoom, R.drawable.ic_voice, R.drawable.ic_pro, new Frame(0, 0, width, height + height + divider), RouterPath.ROUTER_VOICE_LIST));
-        modules.put(AppConfig.MODE_CALL + "audio",
-                new Module(RcUmEvent.AudioCall, R.drawable.ic_audio_call, new Frame(width + divider, 0, width, height), RouterPath.ROUTER_CALL));
-        modules.put(AppConfig.MODE_CALL + "video",
-                new Module(RcUmEvent.VideoCall, R.drawable.ic_video_call, new Frame(width + divider, height + divider, width, height), RouterPath.ROUTER_CALL));
+        //视频直播
         modules.put(AppConfig.MODE_LIVE,
-                new Module(RcUmEvent.LiveRoom, R.drawable.ic_live, R.drawable.ic_new, new Frame(0, height * 2 + divider * 2, total, height * 2), RouterPath.ROUTER_LIVE_LIST));
+                new Module(RcUmEvent.LiveRoom, R.drawable.ic_live, "audio.json", R.drawable.ic_new, new Frame(0, 0, total, height * 2), RouterPath.ROUTER_LIVE_LIST));
+        //语聊房
+        modules.put(AppConfig.MODE_VOICE,
+                new Module(RcUmEvent.VoiceRoom, R.drawable.ic_voice, "audio.json", R.drawable.ic_pro, new Frame(0, height * 2 + divider, width, height * 2 + divider), RouterPath.ROUTER_VOICE_LIST));
+        //语音通话
+        modules.put(AppConfig.MODE_CALL + "audio",
+                new Module(RcUmEvent.AudioCall, R.drawable.ic_audio_call, "audio.json", new Frame(width + divider, height * 2 + divider, width, height), RouterPath.ROUTER_CALL));
+        //视频通话
+        modules.put(AppConfig.MODE_CALL + "video",
+                new Module(RcUmEvent.VideoCall, R.drawable.ic_video_call, "audio.json", new Frame(width + divider, height * 3 + divider * 2, width, height), RouterPath.ROUTER_CALL));
+        //语音电台
         modules.put(AppConfig.MODE_RADIO,
-                new Module(RcUmEvent.RadioRoom, R.drawable.ic_radio, new Frame(0, height * 4 + divider * 3, width, height), RouterPath.ROUTER_RADIO_LIST));
+                new Module(RcUmEvent.RadioRoom, R.drawable.ic_radio, "audio.json", new Frame(0, height * 4 + divider * 3, width, height), RouterPath.ROUTER_RADIO_LIST));
+        //未开发功能
         modules.put("SOON",
-                new Module(null, R.drawable.ic_comming_soon, new Frame(width + divider, height * 4 + divider * 3, width, height), RouterPath.ROUTER_RADIO_LIST));
+                new Module(null, R.drawable.ic_comming_soon, "audio.json", new Frame(0, height * 5 + divider * 4, width, height), RouterPath.ROUTER_RADIO_LIST));
     }
 
     static class Frame {
@@ -63,17 +70,19 @@ public class ModuleHelper {
         public String router;
         public RcUmEvent event;
         public Frame frame;
+        public String fileName;
 
-        public Module(RcUmEvent event, int icon, int tip, Frame frame, String router) {
+        public Module(RcUmEvent event, int icon, String fileName, int tip, Frame frame, String router) {
             this.event = event;
             this.icon = icon;
             this.tip = tip;
             this.frame = frame;
             this.router = router;
+            this.fileName = fileName;
         }
 
-        public Module(RcUmEvent event, int icon, Frame frame, String router) {
-            this(event, icon, -1, frame, router);
+        public Module(RcUmEvent event, int icon, String fileName, Frame frame, String router) {
+            this(event, icon, fileName, -1, frame, router);
         }
     }
 
@@ -105,13 +114,15 @@ public class ModuleHelper {
                 int count = modes.size();
                 for (int i = 0; i < count; i++) {
                     Module m = modes.get(i);
-                    ImageView image = new ImageView(containt.getContext());
+                    LottieAnimationView lottieAnimationView = new LottieAnimationView(containt.getContext());
+//                    ImageView image = new ImageView(containt.getContext());
                     FrameLayout.LayoutParams lp = layoutParams(m, w);
                     if (m.tip != -1) {
                         FrameLayout view = new FrameLayout(containt.getContext());
-                        view.addView(image, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                        view.addView(lottieAnimationView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
                         containt.addView(view, lp);
 
+                        //pro标签
                         ImageView news = new ImageView(containt.getContext());
                         FrameLayout.LayoutParams nl = new FrameLayout.LayoutParams(w * tip / total, w * tip / total);
                         nl.gravity = Gravity.TOP | Gravity.RIGHT;
@@ -119,10 +130,16 @@ public class ModuleHelper {
                         news.setImageResource(m.tip);
                         view.addView(news, nl);
                     } else {
-                        containt.addView(image, lp);
+                        containt.addView(lottieAnimationView, lp);
                     }
-                    image.setBackgroundResource(m.icon);
-                    image.setOnClickListener(new View.OnClickListener() {
+                    lottieAnimationView.setBackgroundResource(m.icon);
+                    //将动画覆盖在指定位置
+//                    lottieAnimationView.setImageAssetsFolder("images/");
+//                    lottieAnimationView.setAnimation("2333.json");
+                    lottieAnimationView.loop(true);
+                    lottieAnimationView.playAnimation();
+//                    image.setBackgroundResource(m.icon);
+                    lottieAnimationView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             if (null == m.event) {
@@ -134,28 +151,6 @@ public class ModuleHelper {
                     });
 
                 }
-//                for (Module m : modes) {
-//                    ImageView v = new ImageView(containt.getContext());
-//                    int w = width * m.frame.width / total;
-//                    int h = width * m.frame.height / total;
-//                    int l = width * m.frame.left / total;
-//                    int t = width * m.frame.top / total;
-//                    FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(w, h);
-//                    lp.setMargins(l, t, 0, 0);
-//                    containt.addView(v, lp);
-//                    v.setBackgroundResource(m.icon);
-//                    v.setImageResource(R.drawable.ic_new);
-//                    v.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (null == m.event) {
-//                                KToast.show("新功能正在打磨中...");
-//                                return;
-//                            }
-//                            listener.onModuleClick(m);
-//                        }
-//                    });
-//                }
             }
         });
     }

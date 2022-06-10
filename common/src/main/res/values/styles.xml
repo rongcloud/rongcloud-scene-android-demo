@@ -1,5 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--  ****************  ILoad style **************** -->
+    <style name="Basis_Dialog_Style" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+
     <style name="Basis_Style_WX_Dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -70,6 +80,17 @@
     </style>
 
     <!--secondary次级文字样式-->
+
+    <style name="main_secondary_17" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_secondary</item>
+        <item name="android:textSize">@dimen/basis_17sp</item>
+    </style>
+
+    <style name="main_secondary_16" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_secondary</item>
+        <item name="android:textSize">@dimen/basis_16sp</item>
+    </style>
+
 
     <style name="main_secondary_15" tools:ignore="ResourceName">
         <item name="android:textColor">@color/basis_color_secondary</item>

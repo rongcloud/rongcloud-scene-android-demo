@@ -9,7 +9,7 @@ import com.basis.utils.DateFt;
 import com.basis.utils.DateUtil;
 import com.basis.utils.ResUtil;
 import com.basis.utils.SharedPreferUtil;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.Date;

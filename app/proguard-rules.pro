@@ -134,6 +134,35 @@
     public static <fields>;
 }
 
--keep class com.logger.** {*;}
+-keep class io.rong.** {*;}
+# im的这个混淆配置，已经涵盖了语聊房的SDK的混淆配置，
+# 这里 voiceroom的混淆配置其实可以省略
+-keep class cn.rongcloud.** {*;}
+-keep class * implements io.rong.imlib.model.MessageContent {*;}
+-dontwarn io.rong.push.**
+-dontnote com.xiaomi.**
+-dontnote com.google.android.gms.gcm.**
+-dontnote io.rong.**
 
+# 下方混淆使用了Location包时才需要配置, 可参考高德官网的混淆方式:https://lbs.amap.com/api/android-sdk/guide/create-project/dev-attention
+-keep class com.amap.api.**{*;}
+-keep class com.amap.api.services.**{*;}
+-keep class com.autonavi.**{*;}
+
+# voiceroom sdk 的混淆配置
+-keep class cn.rongcloud.voiceroom.api.** {*;}
+-keep class cn.rongcloud.voiceroom.model.** {*;}
+-keep class cn.rongcloud.voiceroom.utils.** {*;}
+-keep class cn.rongcloud.messager.** {*;}
+-keep public class com.logger.**{*;}
 -ignorewarnings
+
+-keep public class com.alibaba.android.arouter.routes.**{*;}
+-keep public class com.alibaba.android.arouter.facade.**{*;}
+-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
+
+# 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口
+-keep interface * implements com.alibaba.android.arouter.facade.template.IProvider
+
+# 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现
+# -keep class * implements com.alibaba.android.arouter.facade.template.IProvider

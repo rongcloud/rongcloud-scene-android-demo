@@ -26,6 +26,7 @@ import cn.rongcloud.config.ApiConfig;
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.feedback.RcUmEvent;
 import cn.rongcloud.config.feedback.UmengHelper;
+import cn.rongcloud.config.provider.user.Sex;
 import cn.rongcloud.profile.dialog.UserInfoDialog;
 import cn.rongcloud.profile.webview.ActCommentWeb;
 
@@ -160,7 +161,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
 
     void modifyUserInfo(String userName, String portraitUrl) {
-        ProfileApi.updateUserInfo(userName, portraitUrl, new IResultBack<Boolean>() {
+        ProfileApi.updateUserInfo(userName, portraitUrl, Sex.unknown, new IResultBack<Boolean>() {
             @Override
             public void onResult(Boolean aBoolean) {
                 if (aBoolean) {

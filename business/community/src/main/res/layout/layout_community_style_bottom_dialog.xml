@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/basis_shape_bottom_bg"
+    android:minHeight="120dp"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/basis_10px"
+    android:paddingBottom="@dimen/basis_25px"
+    tools:ignore="ResourceName">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:layout_marginLeft="@dimen/basis_25px"
+        android:layout_marginRight="@dimen/basis_25px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="ResourceName">
+
+        <TextView
+            android:id="@+id/csbd_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:textColor="@color/basis_color_primary"
+            android:textSize="@dimen/basis_18sp" />
+
+        <TextView
+            android:id="@+id/csbd_cancel"
+            style="@style/main_secondary_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/basis_cancle" />
+
+        <TextView
+            android:id="@+id/csbd_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/cmu_sure"
+            android:textColor="@color/basis_blue"
+            android:textSize="@dimen/basis_14sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/custom_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/basis_25px"
+        android:layout_marginRight="@dimen/basis_25px" />
+
+</LinearLayout>

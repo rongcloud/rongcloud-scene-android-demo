@@ -9,13 +9,11 @@ import android.widget.TextView;
 import com.basis.net.oklib.OkApi;
 import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
-import com.basis.utils.GsonUtil;
 import com.basis.utils.KToast;
-import com.basis.utils.Logger;
 import com.basis.utils.ResUtil;
 import com.basis.utils.SystemUtil;
 import com.basis.utils.UIKit;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

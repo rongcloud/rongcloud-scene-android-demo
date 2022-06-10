@@ -1,6 +1,7 @@
 package cn.rongcloud.pk.api;
 
 import com.basis.net.oklib.OkApi;
+import com.basis.net.oklib.OkParams;
 import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.GsonUtil;
@@ -152,8 +153,10 @@ public class PKApi {
         });
     }
 
-    public static void getOnlineCreator(IResultBack<List<VoiceRoomBean>> resultBack) {
-        OkApi.get(PKApi.ONLINE_CREATER, null, new WrapperCallBack() {
+    public static void getOnlineCreator(int roomType, IResultBack<List<VoiceRoomBean>> resultBack) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("roomType", roomType);
+        OkApi.get(PKApi.ONLINE_CREATER, params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 Logger.d(TAG, "requestOwners#onResult");

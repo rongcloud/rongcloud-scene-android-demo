@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.basis.net.oklib.OkApi;
 import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
+import com.basis.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class MemberCache {
      * @param roomId
      */
     public void refreshMemberData(String roomId, ClickCallback<Boolean> callback) {
+        Logger.e("refreshMemberData");
         OkApi.get(VRApi.getMembers(roomId), null, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
@@ -115,6 +117,7 @@ public class MemberCache {
      * @param user
      */
     public void removeMember(User user) {
+        Logger.e("removeMember");
         List<User> list = getMembers();
         if (list.contains(user)) {
             list.remove(user);
@@ -141,6 +144,7 @@ public class MemberCache {
      * @param user
      */
     public void addMember(User user) {
+        Logger.e("addMember");
         List<User> list = getMembers();
         if (!list.contains(user)) {
             list.add(user);

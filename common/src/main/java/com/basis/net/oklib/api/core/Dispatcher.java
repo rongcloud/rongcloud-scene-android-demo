@@ -21,4 +21,8 @@ public class Dispatcher {
     public void dispatch(Runnable runnable) {
         handler.post(runnable);
     }
+
+    public void dispatch(Runnable runnable, int delayMillis) {
+        handler.postDelayed(runnable, delayMillis);
+    }
 }

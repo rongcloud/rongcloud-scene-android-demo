@@ -1,14 +1,19 @@
 package com.basis.utils;
 
+import static com.basis.utils.Logger.e;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -32,7 +37,7 @@ public class GsonUtil {
      */
     public static <T> T json2Obj(String json, TypeToken<T> typeToken) {
         if (null == typeToken) {
-            Logger.e(TAG, "typeToken can not null!");
+            e(TAG, "typeToken can not null!");
             return null;
         }
         return gson.fromJson(json, typeToken.getType());
@@ -48,7 +53,7 @@ public class GsonUtil {
      */
     public static <T> T json2Obj(String json, Class<T> clazz) {
         if (null == clazz) {
-            Logger.e(TAG, "the clazz can not null!");
+            e(TAG, "the clazz can not null!");
             return null;
         }
         return gson.fromJson(json, clazz);
@@ -67,7 +72,7 @@ public class GsonUtil {
      */
     public static <T> List<T> json2List(String json, Class<T> clazz) {
         if (null == clazz) {
-            Logger.e(TAG, "the clazz can not null!");
+            e(TAG, "the clazz can not null!");
             return null;
         }
         List<T> lst = new ArrayList<T>();
@@ -92,5 +97,19 @@ public class GsonUtil {
             return "";
         }
         return gson.toJson(object);
+    }
+
+    public static <T> HashMap<String, T> json2Map(String json, Type type) {
+        if (null == type) {
+            e(TAG, "the typeToken can not null!");
+            return null;
+        }
+        try {
+            return gson.fromJson(json, type);
+        } catch (JsonSyntaxException e) {
+            return null;
+        } catch (ClassCastException e) {
+            return null;
+        }
     }
 }

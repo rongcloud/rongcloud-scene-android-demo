@@ -32,7 +32,7 @@ import com.basis.utils.KToast;
 import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
 import com.basis.utils.UiUtils;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 import com.meihu.beauty.fragment.BeautyDialogFragment;
 import com.meihu.beautylibrary.bean.MHConfigConstants;
 import com.rc.live.R;
@@ -256,6 +256,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
     public void destroyRoom() {
         super.destroyRoom();
         present.unInitLiveRoomListener();
+        mRoomMessageAdapter.release();
         PKManager.get().unInit();
     }
 
@@ -303,7 +304,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
         rvMessage = (RecyclerViewAtVP2) getView().findViewById(R.id.rv_message);
         rvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMessage.addItemDecoration(new DefaultItemDecoration(Color.TRANSPARENT, 0, UiUtils.dp2px(5)));
-        mRoomMessageAdapter = new RoomMessageAdapter(getContext(), this, RoomType.LIVE_ROOM);
+        mRoomMessageAdapter = new RoomMessageAdapter(getContext(), rvMessage, this, RoomType.LIVE_ROOM);
         rvMessage.setAdapter(mRoomMessageAdapter);
 
         roomTitleBar.setOnMenuClickListener().subscribe(new Consumer() {
@@ -557,6 +558,9 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
 
     @Override
     public void showCreatorSettingFragment(RCLiveSeatInfo rcLiveSeatInfo) {
+        if (PKManager.get().getPkState().isInPk()) {
+            return;
+        }
         boolean isOwner = false;
         if (present.getCreateUserId().equals(rcLiveSeatInfo.getUserId())) {
             //创建者
@@ -715,6 +719,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
                 @Override
                 public void clickCancel() {
                     mInputPasswordDialog.dismiss();
+                    mInputPasswordDialog = null;
                 }
 
                 @Override
@@ -727,6 +732,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
                         return;
                     }
                     mInputPasswordDialog.dismiss();
+                    mInputPasswordDialog = null;
                     present.setRoomPassword(true, password, item, mRoomId);
                 }
             });
@@ -833,7 +839,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
         roomBottomView.setData(present.getRoomOwnerType(), present, voiceRoomBean.getRoomId());
         // 设置消息列表数据
         mRoomMessageAdapter.setRoomCreateId(voiceRoomBean.getCreateUserId());
-        PKManager.get().init(mRoomId, pkView, new SimpleLivePkListener() {
+        PKManager.get().init(mRoomId, RoomType.LIVE_ROOM.getType(), pkView, new SimpleLivePkListener() {
             @Override
             public void onPkStart() {
                 pkView.setVisibility(View.VISIBLE);
@@ -885,15 +891,23 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
     @Override
     public void addMessageContent(MessageContent messageContent, boolean isReset) {
         List<MessageContent> list = new ArrayList<>(1);
-        if (messageContent != null) {
-            list.add(messageContent);
+//        if (messageContent != null) {
+//            list.add(messageContent);
+//        }
+//        mRoomMessageAdapter.setMessages(list, isReset);
+        if (isReset) {
+            if (messageContent != null) {
+                list.add(messageContent);
+            }
+            mRoomMessageAdapter.setMessages(list, isReset);
+        } else {
+            mRoomMessageAdapter.interMessage(messageContent);
         }
-        mRoomMessageAdapter.setData(list, isReset, rvMessage);
     }
 
     @Override
     public void addMessageList(List<MessageContent> messageContentList, boolean isReset) {
-        mRoomMessageAdapter.setData(messageContentList, isReset, rvMessage);
+        mRoomMessageAdapter.setMessages(messageContentList, isReset);
     }
 
     @Override
@@ -949,6 +963,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
     @Override
     public void finish() {
         present.unInitLiveRoomListener();
+        if (null != mRoomMessageAdapter)mRoomMessageAdapter.release();
         requireActivity().finish();
     }
 

@@ -52,6 +52,7 @@ public class ImageLoader {
      * @param size size
      */
     public static void loadUri(final ImageView to, Uri uri, @DrawableRes int def, Size size) {
+        if (null == to) return;
         int[] sizes = size.size();
         if (null == uri) {
             Glide.with(to.getContext())

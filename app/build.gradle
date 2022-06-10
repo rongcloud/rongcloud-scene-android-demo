@@ -2,9 +2,13 @@ plugins {
     id 'com.android.application'
 }
 
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -37,6 +41,13 @@ android {
         }
     }
 
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "融云 RTC-${versionName}-${releaseTime()}.apk"
+        }
+    }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -47,17 +58,35 @@ android {
             dimension 'environment'
             applicationId "cn.rongcloud.voiceroomdemo.dev" // 配置不同的包名，确保切换环境时不会因为缓存导致出现问题
             buildConfigField("String", "APP_KEY", "\"pvxdm17jpw7ar\"")
-            buildConfigField("String", "UM_APP_KEY", "\"友盟的appkey\"")
             buildConfigField("String", "BASE_SERVER_ADDRES", "\"https://rcrtc-api.rongcloud.net/\"")
-            buildConfigField("String", "BUGLY_ID", "\"Bugly的id\"")
-            buildConfigField("String", "MH_APP_KEY", "\"替换您的美颜appkey\"")// 可选
-            buildConfigField("String", "BUSINESS_TOKEN", "\"替换您的BussinessToken\"")// 必须
             buildConfigField("Boolean", "INTERIAL", "false")// 区分国内/国际 国内环境不显示UI 选择地区
+
+            buildConfigField("String", "BUSINESS_TOKEN", "\"这里是测试服务器token，需要申请 https://rcrtc-api.rongcloud.net/code\"")
+            buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
+            buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
+            buildConfigField("String", "MH_APP_KEY", "\"这里是美狐美颜SDK的appkey，要想体验美颜功能需要去美狐官网申请http://www.facegl.com/\"")
             manifestPlaceholders = [
                     APP_NAME         : "@string/app_name_test",
                     // hifive音乐服务的 appid和servercode
                     HIFIVE_APPID     : "替换您hifive音乐服务的appid",//可选替换
                     HIFIVE_SERVERCODE: "替换您hifive音乐服务的servercode"//可选替换
+            ]
+        }
+        releaseEnvironment {
+            dimension 'environment'
+            applicationId "cn.rongcloud.voiceroomdemo"
+            buildConfigField("String", "APP_KEY", "\"xxxx\"")
+            buildConfigField("String", "UM_APP_KEY", "\"xxxx\"")
+            buildConfigField("String", "BASE_SERVER_ADDRES", "\"xxxx\"")
+            buildConfigField("String", "BUGLY_ID", "\"xxxxx\"")
+            buildConfigField("String", "MH_APP_KEY", "\"xxxxx\"")
+            buildConfigField("String", "BUSINESS_TOKEN", "\"xxxxx\"")
+            buildConfigField("Boolean", "INTERIAL", "false")
+            manifestPlaceholders = [
+                    APP_NAME         : "@string/app_name",
+                    // hifive音乐服务的 appid和servercode
+                    HIFIVE_APPID     : "xxx",
+                    HIFIVE_SERVERCODE: "xxx"
             ]
         }
     }
@@ -68,10 +97,16 @@ dependencies {
     implementation android_ui.appcompat
     implementation android_ui.material
     annotationProcessor "com.alibaba:arouter-compiler:$arouter"
+    api 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    api 'com.tencent.bugly:nativecrashreport:latest.release'
+
     // config
     implementation project(path: ':middle:config')
     // 登录设置模块
     implementation project(path: ':business:profile')
+    // 实时社区
+    implementation project(path: ':business:community')
     // 模块条件编译
     if (!containMode(rootProject.ext.mode_live)
             && !containMode(rootProject.ext.mode_voice)

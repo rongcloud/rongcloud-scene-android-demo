@@ -20,6 +20,7 @@ android {
         }
     }
 
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,7 +39,15 @@ dependencies {
     api project(path: ':middle:pk')
     api project(path: ':middle:mhui')
 
-    api "cn.rongcloud.sdk:liveroom_lib:$liveroomLib"
+    Properties properties = new Properties()
+    File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
+    properties.load(propertyFile.newDataInputStream())
+    if (properties.get("LIVE_ROOM_REMOTE_DEPENDENCE") != null && !properties.get("LIVE_ROOM_REMOTE_DEPENDENCE").toBoolean()) {
+        println("------------------------>>>>use local module")
+        api project(path: ':RCliveroom')
+    } else {
+        api "cn.rongcloud.sdk:liveroom_lib:$liveroomLib"
+    }
 
     implementation "cn.rongcloud.sdk:im_lib:$imLib"
     implementation "cn.rongcloud.sdk:im_kit:$imLib"

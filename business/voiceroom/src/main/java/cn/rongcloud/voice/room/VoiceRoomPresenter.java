@@ -37,7 +37,7 @@ import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
 import com.basis.wapper.IRoomCallBack;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 import com.rc.voice.R;
 
 import java.util.ArrayList;
@@ -109,6 +109,7 @@ import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine;
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback;
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo;
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo;
+import cn.rongcloud.voiceroom.utils.VMLog;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Consumer;
@@ -239,7 +240,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                         public void run() {
                             joinRoom(roomId, isCreate);
                         }
-                    }, 1000);
+                    }, 0);
                 }
             }
 
@@ -366,10 +367,20 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
      */
     @Override
     public void setCurrentRoom(VoiceRoomBean mVoiceRoomBean) {
+        Logger.e(TAG,"setCurrentRoom");
         roomOwnerType = VoiceRoomProvider.provider().getRoomOwnerType(mVoiceRoomBean);
         // 房主进入房间，如果不在麦位上那么自动上麦
         if (roomOwnerType == RoomOwnerType.VOICE_OWNER && !voiceRoomModel.userInSeat() && !isInRoom) {
-            roomOwnerEnterSeat();
+            roomOwnerEnterSeat(true);
+        } else if (voiceRoomModel.userInSeat()) {
+            // 第一次进房间 房主的disableRecord状态置为false
+            if (null == voiceRoomModel) return;
+            RCVoiceRoomEngine.getInstance().disableAudioRecording(!voiceRoomModel.isRecordingStatus());
+//            UiSeatModel seatModel = voiceRoomModel.getUiSeatModels().get(0);
+//            if (null != seatModel && null != seatModel.getExtra()) {
+//                boolean disable = seatModel.getExtra().isDisableRecording();
+//                voiceRoomModel.creatorMuteSelf(disable);
+//            }
         }
         if (isInRoom) {
             //恢复一下当前信息就可以了
@@ -744,7 +755,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                     //请求麦位被允许
                     currentStatus = STATUS_ON_SEAT;
                     //加入麦位
-                    voiceRoomModel.enterSeatIfAvailable();
+                    voiceRoomModel.enterSeatIfAvailable("");
                     //去更改底部的状态显示按钮
                     mView.changeStatus(currentStatus);
                 } else if (TextUtils.equals(first, EVENT_REQUEST_SEAT_REFUSE)) {
@@ -785,7 +796,9 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                 } else if (TextUtils.equals(first, EVENT_BACKGROUND_CHANGE)) {
                     mView.setRoomBackground(stringArrayListPair.second.get(0));
                 } else if (TextUtils.equals(first, EVENT_AGREE_MANAGE_PICK)) {
-                    KToast.show("用户连线成功");
+                    if (stringArrayListPair.second.get(0).equals(UserManager.get().getUserId())) {
+                        KToast.show("用户连线成功");
+                    }
                 } else if (TextUtils.equals(first, EVENT_REJECT_MANAGE_PICK)) {
                     if (stringArrayListPair.second.get(0).equals(UserManager.get().getUserId())) {
                         KToast.show("用户拒绝邀请");
@@ -832,7 +845,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                     creatorSettingFragment.show(fragmentManager);
                 } else {
                     //如果不在麦位上，直接上麦
-                    roomOwnerEnterSeat();
+                    roomOwnerEnterSeat(false);
                 }
             }
         }
@@ -1033,7 +1046,20 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
      */
     @Override
     public void clickSendGift(User user) {
-        mView.showSendGiftDialog(mVoiceRoomBean, user.getUserId(), Arrays.asList(Member.fromUser(user)));
+        String userId = user.getUserId();
+        Member member = Member.fromUser(user);
+        if (!TextUtils.isEmpty(userId)) {
+            Logger.e(TAG, "clickSendGift: userId = " + userId);
+            ArrayList<UiSeatModel> uiSeatModels = voiceRoomModel.getUiSeatModels();
+            int count = uiSeatModels.size();
+            for (int i = 0; i < count; i++) {
+                UiSeatModel m = uiSeatModels.get(i);
+                if (userId.equals(m.getUserId())) {
+                    member.setSeatIndex(i);
+                }
+            }
+        }
+        mView.showSendGiftDialog(mVoiceRoomBean, user.getUserId(), Arrays.asList(member));
     }
 
     /**
@@ -1097,7 +1123,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                     @Override
                     public void onClick(View v) {
                         //同意
-                        voiceRoomModel.enterSeatIfAvailable();
+                        voiceRoomModel.enterSeatIfAvailable(userId);
                         confirmDialog.dismiss();
                         if (currentStatus == STATUS_WAIT_FOR_SEAT) {
                             //被邀请上麦了，并且同意了，如果该用户已经申请了上麦，那么主动撤销掉申请
@@ -1184,11 +1210,28 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
     /**
      * 房主上麦
      */
-    public void roomOwnerEnterSeat() {
+    public void roomOwnerEnterSeat(boolean fromJoinRoom) {
         RCVoiceRoomEngine.getInstance().enterSeat(0, new RCVoiceRoomCallback() {
             @Override
             public void onSuccess() {
                 mView.enterSeatSuccess();
+//                if (!fromJoinRoom) {
+                if (null == voiceRoomModel) return;
+                UiSeatModel seatModel = voiceRoomModel.getUiSeatModels().get(0);
+                if (null != seatModel && null != seatModel.getExtra()) {
+                    boolean disable = seatModel.getExtra().isDisableRecording();
+                    voiceRoomModel.creatorMuteSelf(disable);
+                }
+//                } else {
+//                    if (null == voiceRoomModel) return;
+//                    // 第一次进房间 房主的disableRecord状态置为false
+//                    boolean disable = RCVoiceRoomEngine.getInstance().isDisableAudioRecording();
+//                    UiSeatModel seatModel = voiceRoomModel.getUiSeatModels().get(0);
+//                    UiSeatModel.UiSeatModelExtra extra = new UiSeatModel.UiSeatModelExtra();
+//                    extra.setDisableRecording(disable);
+//                    seatModel.setExtra(extra);
+//                    voiceRoomModel.creatorMuteSelf(disable);
+//                }
             }
 
             @Override

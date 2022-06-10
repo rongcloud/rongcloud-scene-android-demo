@@ -61,20 +61,22 @@ ext {
     baseAdapter = "3.0.7"
     emojiIos = "0.8.0"
     emojiJava = "5.1.1"
-    smartRefresh = "2.0.3"
+    smartRefresh = "2.0.5"
     floatWindow = "1.0.9"
+    pictureselector = "v3.0.9"
+    lottieVersion = "5.2.0"
 
     // 融云相关库
-    imLib = "5.1.8.2"
-    rtcLib = "5.1.17.2"
-    musicLib = "0.0.3"
-    corekitLib = "0.0.2"
+    imLib = "5.2.2"
+    rtcLib = "5.2.2"
+    musicLib = "1.0.0"
+    corekitLib = "1.0.0"
     voiceroomLib = "2.0.8"
-    liveroomLib = "2.1.0.2"
+    liveroomLib = "2.1.0.7"
 
     //动态配置
-    versionCode = 14
-    versionName = "4.1.0"
+    versionCode = 18
+    versionName = "4.2.2"
     mode = 0
     appcompat_version = '1.3.1'
     material_version = '1.4.0'

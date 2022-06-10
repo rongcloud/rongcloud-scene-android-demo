@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="205dp"
+    app:cardCornerRadius="8dp"
+    tools:ignore="ResourceName">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:scaleType="centerCrop" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_portrait_id"
+            android:layout_width="51dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/cmu_default_portrait" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/iv_background"
+            android:layout_alignBottom="@+id/iv_background"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="#FFFFFF"
+            android:textSize="10dp"
+            tools:text="2918人" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_community_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_portrait_id"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="6dp"
+            android:textColor="#333333"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            tools:text="奈飞影视分享" />
+
+        <TextView
+            android:id="@+id/tv_intro_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_community_name"
+            android:layout_alignStart="@+id/tv_community_name"
+            android:layout_marginTop="6dp"
+            android:text="简介:"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_intro_title"
+            android:layout_alignStart="@+id/tv_community_name"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="6.5dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textSize="10dp"
+            tools:text="Nulla Lorem mollit cupidatat irure. Laborum magna nulla " />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

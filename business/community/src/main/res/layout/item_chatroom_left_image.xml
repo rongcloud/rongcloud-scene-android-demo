@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="20dp"
+    android:paddingTop="18.5dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="18.5dp"
+    tools:ignore="ResourceName">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cv_id"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/cmu_default_portrait" />
+
+    <TextView
+        android:id="@+id/tv_name_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/cv_id"
+        android:textSize="14sp"
+        android:textColor="#80282828"
+        android:textStyle="bold"
+        tools:text="涵涵" />
+
+    <TextView
+        android:id="@+id/tv_time_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_alignTop="@id/tv_name_id"
+        android:layout_alignBottom="@id/tv_name_id"
+        android:gravity="center"
+        android:textColor="#33282828"
+        android:layout_toEndOf="@id/tv_name_id"
+        android:textSize="12sp"
+        tools:text="02:30 pm" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shape_iv_content_id"
+        android:layout_width="138dp"
+        android:layout_height="106dp"
+        android:layout_below="@+id/tv_name_id"
+        android:layout_alignStart="@+id/tv_name_id"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/shape_editor_bg_gray_corner_8px"
+        android:scaleType="center"
+        android:src="@drawable/svg_send_image_message_fail"
+        app:shapeAppearance="@style/RoundedStyle_10dp" />
+
+    <ProgressBar
+        android:id="@+id/progress_id"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="138dp"
+        android:layout_height="4dp"
+        android:layout_below="@id/shape_iv_content_id"
+        android:layout_alignStart="@+id/shape_iv_content_id"
+        android:layout_marginTop="7dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/progressbar_bg"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rl_sendMessage_fail_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shape_iv_content_id"
+        android:layout_alignStart="@+id/tv_name_id"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_editor_bg_gray_corner_12px"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="4dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:drawableStart="@drawable/svg_ic_send_fail"
+            android:drawablePadding="4dp"
+            android:text="@string/cmu_send_message_fail"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tv_resend_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="16dp"
+            android:layout_toRightOf="@+id/tv_1"
+            android:text="@string/cmu_resend_message"
+            android:textColor="#0099FF"
+            android:textSize="@dimen/sp_14" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="20dp"
+    android:paddingTop="18.5dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="18.5dp"
+    tools:ignore="ResourceName">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cv_id"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/bg_system_message" />
+
+    <TextView
+        android:id="@+id/tv_name_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/cv_id"
+        android:textSize="14sp"
+        android:textColor="#80282828"
+        android:textStyle="bold"
+        android:text="系统消息"/>
+
+    <TextView
+        android:id="@+id/tv_time_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_alignTop="@id/tv_name_id"
+        android:layout_alignBottom="@id/tv_name_id"
+        android:gravity="center"
+        android:textColor="#33282828"
+        android:layout_toEndOf="@id/tv_name_id"
+        android:textSize="12sp"
+        tools:text="02:30 pm" />
+
+    <TextView
+        android:id="@+id/tv_content_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name_id"
+        android:layout_alignStart="@+id/tv_name_id"
+        android:layout_marginTop="8dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        tools:text="MC Chen 标注了一条消息" />
+
+    <TextView
+        android:id="@+id/tv_jump_to_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_content_id"
+        android:layout_alignStart="@+id/tv_name_id"
+        android:layout_marginTop="8dp"
+        android:text="点击查看"
+        android:textColor="#0099FF"
+        android:textSize="14sp" />
+
+</RelativeLayout>

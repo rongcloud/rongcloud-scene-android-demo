@@ -5,13 +5,14 @@ import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.basis.net.oklib.OkApi;
 import com.basis.net.oklib.OkParams;
 import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.ui.mvp.BaseMvpFragment;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ import cn.rongcloud.roomkit.provider.VoiceRoomProvider;
 import cn.rongcloud.roomkit.ui.OnItemClickRoomListListener;
 import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
-import cn.rongcloud.roomkit.ui.room.widget.RecyclerViewAtVP2;
 import cn.rongcloud.roomkit.widget.InputPasswordDialog;
 import io.rong.imkit.picture.tools.ToastUtils;
 
@@ -41,7 +41,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
         implements OnItemClickRoomListListener<VoiceRoomBean>, CreateRoomDialog.CreateRoomCallBack {
 
     private RoomListAdapter mAdapter;
-    private RecyclerViewAtVP2 mRoomList;
+    private RecyclerView mRoomList;
     private CreateRoomDialog mCreateRoomDialog;
     private VRCenterDialog confirmDialog;
     private SmartRefreshLayout refreshLayout;
@@ -62,9 +62,9 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
 
     @Override
     public void init() {
-        mRoomList = (RecyclerViewAtVP2) getView(R.id.xrv_room);
-        refreshLayout = (SmartRefreshLayout) getView(R.id.layout_refresh);
-        emptyView = (View) getView(R.id.layout_empty);
+        mRoomList = getView(R.id.xrv_room);
+        refreshLayout = getView(R.id.layout_refresh);
+        emptyView = getView(R.id.layout_empty);
         getView(R.id.iv_create_room).setOnClickListener(v -> {
             createRoom();
         });
@@ -154,7 +154,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
         // 创建之前检查是否已有创建的房间
         OkApi.put(
                 VRApi.ROOM_CREATE_CHECK,
-                null,
+                new OkParams().add("roomType", getRoomType().getType()).build(),
                 new WrapperCallBack() {
                     @Override
                     public void onResult(Wrapper result) {

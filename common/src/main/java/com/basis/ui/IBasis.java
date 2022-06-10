@@ -20,9 +20,9 @@ public interface IBasis {
     /**
      * 刷新UI回调接口 供fragment刷数据使用
      *
-     * @param obj
+     * @param cmd
      */
-    default void onRefresh(Object obj) {
+    default void onRefresh(ICmd cmd) {
     }
 
     /**
@@ -32,5 +32,32 @@ public interface IBasis {
     }
 
     default void onLogout() {
+    }
+
+    interface ICmd{
+        String getKey();
+        <T>T getObject();
+    }
+    /**
+     * 刷新cmd 接口
+     */
+    class RefreshCmd implements ICmd{
+        private String key;
+        private Object obj;
+
+        public RefreshCmd(String key, Object obj) {
+            this.key = key;
+            this.obj = obj;
+        }
+
+        @Override
+        public String getKey() {
+            return key;
+        }
+
+        @Override
+        public <T> T getObject() {
+            return (T) obj;
+        }
     }
 }

@@ -6,26 +6,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/contain"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/basis_white" />
+        android:visibility="visible"
+        android:layout_weight="1" />
 
     <View
         style="@style/basis_main_divider"
         android:layout_width="match_parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bottom_bar"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_home"
+        android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar.Bridge"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/basis_white"
-        android:overScrollMode="never" />
+        app:tabIndicatorHeight="0dp"
+        android:visibility="visible"
+        app:tabIconTint="@null"
+        app:tabRippleColor="@color/transparent"
+        app:tabTextAppearance="@style/HomeTab" />
 
 </LinearLayout>

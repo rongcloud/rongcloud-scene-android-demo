@@ -44,7 +44,7 @@ public class RoomTitleBar extends ConstraintLayout {
     private TextView mOnlineTextView;
     private TextView mDelayTextView;
     private ImageButton mMenuButton;
-    private ConstraintLayout mLeftView;
+    private View mLeftView;
     private TextView mFollowTextView;
     private Member member;
     private OnFollowClickListener onFollowClickListener;

@@ -78,7 +78,7 @@ public class RegionActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void afterTextChanged(Editable s) {
                 String text = s.toString();
-                UIKit.setVisiable(ivDelete, !TextUtils.isEmpty(text));
+                UIKit.setVisible(ivDelete, !TextUtils.isEmpty(text));
                 search(text);
 
             }

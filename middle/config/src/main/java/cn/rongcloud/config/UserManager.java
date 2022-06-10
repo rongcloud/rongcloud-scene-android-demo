@@ -11,8 +11,10 @@ import com.basis.utils.ObjToSP;
 import java.util.List;
 
 import cn.rongcloud.config.provider.user.User;
+import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.config.router.RouterPath;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * @author: BaiCQ
@@ -35,6 +37,7 @@ public class UserManager extends ObjToSP<User> {
 
     public static void save(@NonNull User user) {
         _manager.saveUser(user);
+        UserProvider.provider().update(user.toUserInfo());
     }
 
     public static void logout() {

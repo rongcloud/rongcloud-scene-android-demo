@@ -47,12 +47,6 @@ dependencies {
     // https://github.com/vdurmont/emoji-java
     api "com.vdurmont:emoji-java:$emojiJava"
 
-    // SmartRefreshLayout
-    // https://github.com/scwang90/SmartRefreshLayout
-    api "com.scwang.smart:refresh-layout-kernel:$smartRefresh"
-    api "com.scwang.smart:refresh-header-classics:$smartRefresh"
-    api "com.scwang.smart:refresh-footer-classics:$smartRefresh"
-
     // https://github.com/yhaolpz/FloatWindow
     api "com.github.yhaolpz:FloatWindow:$floatWindow"
 

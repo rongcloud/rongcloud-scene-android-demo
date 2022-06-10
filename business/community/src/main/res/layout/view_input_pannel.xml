@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    tools:ignore="ResourceName">
+
+    <View
+        android:id="@+id/v_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="#E5E8EF" />
+
+    <LinearLayout
+        android:id="@+id/ll_text_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/v_divider"
+        android:layout_marginStart="15.7dp"
+        android:layout_marginEnd="15.7dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/shape_chat_about_what"
+        android:minHeight="28dp"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_text_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/svg_mini_quote" />
+
+        <TextView
+            android:id="@+id/tv_message_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9.5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textSize="14sp"
+            tools:text="还好多人点赞，还有人说为啥买那么贵的房子,还好多人点赞，还有人说为啥买那么贵的房子,还好多人点赞，还有人说为啥买那么贵的房子" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/svg_delete" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/input_panel_add_or_send"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@id/ll_text_id"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="14dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_extended_fun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/svg_text_channel_extended"
+            android:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/input_panel_send_btn"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/rc_send_background"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/rc_send"
+            android:textColor="@color/rc_white_color"
+            android:textSize="@dimen/rc_font_text_third_size"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_meme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_text_id"
+        android:layout_marginStart="11dp"
+        android:layout_toLeftOf="@+id/input_panel_add_or_send"
+        android:src="@drawable/svg_text_channel_meme" />
+
+    <EditText
+        android:id="@+id/et_id"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/ll_text_id"
+        android:layout_marginStart="17.5dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_toLeftOf="@+id/iv_meme"
+        android:background="@drawable/shape_chat_about_what"
+        android:gravity="center_vertical"
+        android:hint="@string/cmu_str_chat_about_what"
+        android:paddingStart="18dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_shut_up"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/basis_white"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/cmu_you_have_been_shutup"
+        android:textSize="17sp"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_plugin_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_id"
+        android:layout_alignStart="@+id/et_id"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="14dp"
+        android:visibility="gone" />
+</RelativeLayout>

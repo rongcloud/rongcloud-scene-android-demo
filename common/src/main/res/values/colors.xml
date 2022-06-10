@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <color name="basis_white">#FFFFFF</color>
-    <color name="basis_bg">#EFEFF4</color>
+    <color name="basis_bg">#F4F4Fa</color>
 
     <!-- material 文字分割线色-->
     <color name="basis_color_primary">#212121</color>
@@ -44,6 +44,7 @@
     <color name="basis_brown">#795548</color>
     <color name="basis_brown_dark">#5D4037</color>
     <color name="basis_gray">#9E9E9E</color>
+    <color name="basis_grayish">#D5D2D2</color>
     <color name="basis_gray_dark">#616161</color>
     <color name="basis_blue_gray">#607D8B</color>
     <color name="basis_blue_gray_dark">#455A64</color>
@@ -52,4 +53,5 @@
     <color name="basis_color_svg">#8A96A3</color>
     <color name="re_color_default">@color/basis_blue_dark</color>
     <color name="kit_color_default">#BB4A4F64</color>
+
 </resources>

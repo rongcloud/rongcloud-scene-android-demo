@@ -1,5 +1,8 @@
 package com.basis.net.oklib.api.core;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -43,7 +46,7 @@ public class Core {
 
     private void addHttpLoggingInterceptor() {
         if (mBuilder != null) {
-            mBuilder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+            mBuilder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS));
         }
     }
 
@@ -79,7 +82,7 @@ public class Core {
      *                 key：String value：object（Ibody）
      * @param callBack 回调
      */
-    public <T> void post(Object tag, String url, Map<String, Object> params, IOBack<T> callBack) {
+    public <T> void post(Object tag, String url, Map<String, Object> params, @Nullable IOBack<T> callBack) {
         post(tag, url, Transform.param2Body(params), callBack);
     }
 
@@ -89,7 +92,7 @@ public class Core {
      *                 key：String value：object（Ibody）
      * @param callBack 回调
      */
-    public <T> void delete(Object tag, String url, Map<String, Object> params, IOBack<T> callBack) {
+    public <T> void delete(Object tag, String url, Map<String, Object> params, @Nullable IOBack<T> callBack) {
         delete(tag, url, Transform.param2Body(params), callBack);
     }
 
@@ -98,24 +101,24 @@ public class Core {
      * @param params   参数
      * @param callBack 回调
      */
-    public <T> void get(Object tag, String url, Map<String, Object> params, IOBack<T> callBack) {
+    public <T> void get(Object tag, String url, Map<String, Object> params, @Nullable IOBack<T> callBack) {
         Request.Builder builder = new Request.Builder()
                 .url(Transform.urlAppendParam(url, params))
                 .tag(tag);
-        callBack.onBefore(builder);
+        if (null != callBack) callBack.onBefore(builder);
         request(builder.build(), callBack);
     }
 
-    public <T> void put(Object tag, String url, Object params, IOBack<T> callBack) {
+    public <T> void put(Object tag, String url, Object params, @Nullable IOBack<T> callBack) {
         put(tag, url, Transform.param2Body(params), callBack);
     }
 
-    protected <T> void put(Object tag, String url, RequestBody body, IOBack<T> callBack) {
+    protected <T> void put(Object tag, String url, RequestBody body, @Nullable IOBack<T> callBack) {
         Request.Builder builder = new Request.Builder()
                 .url(url)
                 .tag(tag)
                 .put(body);
-        callBack.onBefore(builder);
+        if (null != callBack) callBack.onBefore(builder);
         request(builder.build(), callBack);
     }
 
@@ -124,12 +127,12 @@ public class Core {
      * @param body     body
      * @param callBack 回调
      */
-    protected <T> void post(Object tag, String url, RequestBody body, IOBack<T> callBack) {
+    protected <T> void post(Object tag, String url, RequestBody body, @Nullable IOBack<T> callBack) {
         Request.Builder builder = new Request.Builder()
                 .url(url)
                 .tag(tag)
                 .post(body);
-        callBack.onBefore(builder);
+        if (null != callBack) callBack.onBefore(builder);
         request(builder.build(), callBack);
     }
 
@@ -138,12 +141,12 @@ public class Core {
      * @param body     body
      * @param callBack 回调
      */
-    protected <T> void delete(Object tag, String url, RequestBody body, IOBack<T> callBack) {
+    protected <T> void delete(Object tag, String url, RequestBody body, @Nullable IOBack<T> callBack) {
         Request.Builder builder = new Request.Builder()
                 .url(url)
                 .tag(tag)
                 .delete(body);
-        callBack.onBefore(builder);
+        if (null != callBack) callBack.onBefore(builder);
         request(builder.build(), callBack);
     }
 
@@ -153,7 +156,7 @@ public class Core {
      * @param request  请求封装体
      * @param callback 回调
      */
-    private final <T> void request(Request request, final IOBack<T> callback) {
+    private <T> void request(Request request, @Nullable final IOBack<T> callback) {
         if (!Utils.isNetworkAvailable()) {
             dispatchFail(Error.NO_CONNECTED, "No Connected !", callback);
             return;
@@ -161,12 +164,12 @@ public class Core {
         client().newCall(request)
                 .enqueue(new okhttp3.Callback() {
                     @Override
-                    public void onFailure(Call call, final IOException e) {
+                    public void onFailure(@NonNull Call call, @NonNull final IOException e) {
                         dispatchFail(Error.REQUEST_IO, e.getLocalizedMessage(), callback);
                     }
 
                     @Override
-                    public void onResponse(final Call call, final Response response) {
+                    public void onResponse(@NonNull final Call call, @NonNull final Response response) {
                         try {
                             if (call.isCanceled()) {
                                 dispatchFail(Error.REQUEST_CANCEL, "Request Cancel ！", callback);
@@ -190,27 +193,29 @@ public class Core {
                 });
     }
 
-    private void dispatchFail(final int code, final String msg, final IOBack callback) {
-        Dispatcher.get().dispatch(new Runnable() {
-            @Override
-            public void run() {
-                if (null != callback) {
-                    callback.onError(code, msg);
-                    callback.onAfter();
+    private void dispatchFail(final int code, final String msg, @Nullable final IOBack<?> callback) {
+        if (null != callback)
+            Dispatcher.get().dispatch(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != callback) {
+                        callback.onError(code, msg);
+                        callback.onAfter();
+                    }
                 }
-            }
-        });
+            });
     }
 
-    private <T> void dispatchSuccess(final T obj, final IOBack callback) {
-        Dispatcher.get().dispatch(new Runnable() {
-            @Override
-            public void run() {
-                if (null != callback) {
-                    callback.onResult(obj);
-                    callback.onAfter();
+    private <T> void dispatchSuccess(final T obj, final IOBack<T> callback) {
+        if (null != callback)
+            Dispatcher.get().dispatch(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != callback) {
+                        callback.onResult(obj);
+                        callback.onAfter();
+                    }
                 }
-            }
-        });
+            });
     }
 }

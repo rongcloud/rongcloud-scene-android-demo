@@ -3,9 +3,12 @@ package cn.rc.demo;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.basis.utils.Logger;
 import com.basis.utils.SystemUtil;
 import com.meihu.beautylibrary.MHSDK;
+import com.tencent.bugly.crashreport.CrashReport;
 
+import cn.rc.community.CommunityModule;
 import cn.rongcloud.config.AppConfig;
 import cn.rongcloud.config.init.ModuleManager;
 import cn.rongcloud.config.router.ARouterWrapper;
@@ -23,6 +26,7 @@ public class RCApplication extends Application {
             return;
         }
         initConfig();
+        Logger.startLoop();
     }
 
     void initConfig() {
@@ -39,12 +43,15 @@ public class RCApplication extends Application {
 
         MHSDK.init(this, BuildConfig.MH_APP_KEY);
         // init rong
-        ModuleManager.manager().register(new RoomKitInit(), new MusicInit(), new PKInit());
+        ModuleManager.manager().register(new RoomKitInit(), new MusicInit(), new PKInit(), new CommunityModule());
+        //初始化 bugly
+        CrashReport.initCrashReport(this, BuildConfig.BUGLY_ID, BuildConfig.DEBUG);
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
+        Logger.stopLoop();
         ARouterWrapper.destory();
         ModuleManager.manager().unregister();
     }

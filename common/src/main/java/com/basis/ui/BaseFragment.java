@@ -1,16 +1,20 @@
 package com.basis.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.basis.utils.Logger;
+
+import java.util.List;
 
 /**
  * @author: BaiCQ
@@ -81,7 +85,7 @@ public abstract class BaseFragment extends Fragment implements IBasis {
      * 首次刷新尽量先于init执行
      */
     @Override
-    public void onRefresh(Object obj) {
+    public void onRefresh(ICmd obj) {
         Logger.e(TAG, "onRefresh");
     }
 
@@ -92,5 +96,21 @@ public abstract class BaseFragment extends Fragment implements IBasis {
 
     public boolean isInit() {
         return init;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        List<Fragment> fs = getChildFragmentManager().getFragments();
+        for (Fragment f : fs) {
+            f.onActivityResult(resultCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        List<Fragment> fs = getChildFragmentManager().getFragments();
+        for (Fragment f : fs) {
+            f.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

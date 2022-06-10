@@ -24,7 +24,7 @@ import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.ImageLoader;
 import com.basis.utils.RealPathFromUriUtils;
 import com.basis.utils.UiUtils;
-import com.basis.widget.BottomDialog;
+import com.basis.widget.dialog.BottomDialog;
 import com.basis.widget.ChineseLengthFilter;
 import com.basis.widget.loading.LoadTag;
 

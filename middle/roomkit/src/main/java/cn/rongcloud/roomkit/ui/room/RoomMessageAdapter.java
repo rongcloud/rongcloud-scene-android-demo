@@ -24,6 +24,8 @@ import com.basis.adapter.RcyAdapter;
 import com.basis.adapter.RcyHolder;
 import com.basis.utils.Logger;
 import com.basis.utils.UiUtils;
+import com.basis.wapper.IBuffer;
+import com.basis.wapper.RCRefreshBuffer;
 import com.vanniktech.emoji.EmojiTextView;
 
 import java.util.ArrayList;
@@ -60,20 +62,61 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
     private String mRoomCreateId = "";
     private int iconSize = 0;
     private RoomType roomType;
+    public RCRefreshBuffer<MessageContent> refreshBuffer;
+    RecyclerView recyclerView;
 
-    public RoomMessageAdapter(Context context, OnClickMessageUserListener onClickMessageUserListener, RoomType roomType) {
+    public void release() {
+        if (null != refreshBuffer) {
+            refreshBuffer.release();
+            refreshBuffer = null;
+        }
+        recyclerView = null;
+    }
+
+    public RoomMessageAdapter(Context context, RecyclerView recyclerView, OnClickMessageUserListener onClickMessageUserListener, RoomType roomType) {
         this(context, R.layout.item_message_system, R.layout.item_message_normal, R.layout.item_message_voice);
         this.mOnClickMessageUserListener = onClickMessageUserListener;
         iconSize = UiUtils.dp2px(11);
         this.roomType = roomType;
+        this.recyclerView = recyclerView;
     }
 
     public RoomMessageAdapter(Context context, int... itemLayoutId) {
         super(context, itemLayoutId);
+        refreshBuffer = new RCRefreshBuffer<>(-1);
+        refreshBuffer.setOnOutflowListener(new IBuffer.OnOutflowListener<MessageContent>() {
+            @Override
+            public void onOutflow(List<MessageContent> data) {
+                setData(data, false);
+                // 当前是否在列表最下面
+                boolean inBottom = !recyclerView.canScrollVertically(1);
+                // 是否是自己主动发的消息
+                boolean isMyselfMessage = false;
+                if (data != null && data.size() > 0) {
+                    MessageContent messageContent = data.get(data.size() - 1);
+                    if (messageContent instanceof RCChatroomVoice) {
+                        isMyselfMessage = TextUtils.equals(((RCChatroomVoice) messageContent).getUserId(), UserManager.get().getUserId());
+                    }
+                    if (messageContent instanceof RCChatroomBarrage) {
+                        isMyselfMessage = TextUtils.equals(((RCChatroomBarrage) messageContent).getUserId(), UserManager.get().getUserId());
+                    }
+                }
+                if (inBottom || isMyselfMessage) {
+                    int count = getItemCount();
+                    if (count > 0) {
+                        recyclerView.smoothScrollToPosition(count - 1);
+                    }
+                }
+            }
+        });
     }
 
     public void setRoomCreateId(String roomCreateId) {
         this.mRoomCreateId = roomCreateId;
+    }
+
+    public synchronized void interMessage(MessageContent content) {
+        if (null != refreshBuffer) refreshBuffer.apply(content);
     }
 
     /**
@@ -81,9 +124,8 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
      *
      * @param list
      * @param refresh
-     * @param recyclerView
      */
-    public synchronized void setData(List<MessageContent> list, boolean refresh, RecyclerView recyclerView) {
+    public synchronized void setMessages(List<MessageContent> list, boolean refresh) {
         // 当前是否在列表最下面
         boolean inBottom = !recyclerView.canScrollVertically(1);
         // 设置数据

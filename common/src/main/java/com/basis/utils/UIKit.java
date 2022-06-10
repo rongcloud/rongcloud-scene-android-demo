@@ -9,6 +9,8 @@ import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.io.Serializable;
 
@@ -65,14 +67,25 @@ public class UIKit {
         return (T) parent.findViewById(viewId);
     }
 
-    public static <T extends View> void setVisiable(T t, boolean visiable) {
+    public static <T extends View> void setVisible(T t, boolean visible) {
         if (null == t) return;
-        t.setVisibility(visiable ? View.VISIBLE : View.GONE);
+        t.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    public static <T extends TextView> void setBoldText(T t, boolean bold) {
+        if (null == t) return;
+        t.getPaint().setFakeBoldText(bold);
     }
 
     public static <T extends Activity> void startActivity(Activity actx, Class<T> activityClass) {
         actx.startActivity(new Intent(actx, activityClass));
     }
+
+    public static <T extends Activity> void startActivityForResult(Activity actx, Class<T> activityClass, int requestCode) {
+        Intent intent = new Intent(actx, activityClass);
+        actx.startActivityForResult(intent, requestCode);
+    }
+
 
     public static <T extends Activity> void startActivityByObj(Activity actx, Class<T> activityClass, Serializable serializable) {
         actx.startActivity(new Intent(actx, activityClass).putExtra(KEY_OBJ, serializable));
@@ -97,5 +110,39 @@ public class UIKit {
             }
         }
         return application;
+    }
+
+    /**
+     * 递归查找指定类型的视图组件 注意只能获取第一个
+     *
+     * @param layout   视图树的根节点
+     * @param clazz    查询字节码
+     * @param level    起始层级
+     * @param maxLevel 最大层级 小于0 则不现在层级
+     * @param <T>      类型
+     * @return view
+     */
+    public static <T extends View> T findChildFromTreeByTypeClass(ViewGroup layout, Class clazz, int level, int maxLevel) {
+        if (level < 1) {
+            level = 1;
+        }
+        if (maxLevel > 0 && level > maxLevel) {
+            return null;
+        }
+        int count = layout.getChildCount();
+        for (int i = 0; i < count; i++) {//遍历第一层视图树
+            View ch1 = layout.getChildAt(i);
+            if (clazz.isInstance(ch1)) {
+                Logger.e(clazz.getSimpleName() + " 在" + level + "级视图查到");
+                return (T) ch1;
+            } else if (ch1 instanceof ViewGroup) {
+                ViewGroup chg = (ViewGroup) ch1;
+                T t = findChildFromTreeByTypeClass(chg, clazz, level + 1, maxLevel);
+                if (null != t) {
+                    return t;
+                }
+            }
+        }
+        return null;
     }
 }

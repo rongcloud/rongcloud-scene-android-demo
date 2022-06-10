@@ -35,4 +35,5 @@
     <!--分割线的高/宽-->
     <dimen name="basis_main_divide">0.3dp</dimen>
     <dimen name="kit_corner">4dp</dimen>
+    <dimen name="basis_main_item">48dp</dimen>
 </resources>

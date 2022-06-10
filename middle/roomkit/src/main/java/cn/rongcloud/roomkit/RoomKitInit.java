@@ -47,7 +47,7 @@ public class RoomKitInit implements IModule {
 
     @Override
     public void onInit() {
-        EmojiManager.install(new MyEmojiProvider());
+        EmojiManager.install(MyEmojiProvider.getEmojiProviderInstance());
         // // 初始化kit
         // RCSceneKitEngine.getInstance().initWithAppKey(UIKit.getContext(), "");
         // // 初始化HiFive
@@ -88,7 +88,13 @@ public class RoomKitInit implements IModule {
         });
     }
 
-    public class MyEmojiProvider implements EmojiProvider {
+    public static class MyEmojiProvider implements EmojiProvider {
+
+        private static MyEmojiProvider myEmojiProvider = new MyEmojiProvider();
+
+        public static MyEmojiProvider getEmojiProviderInstance() {
+            return myEmojiProvider;
+        }
 
         @NonNull
         @Override

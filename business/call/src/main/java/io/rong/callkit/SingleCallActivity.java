@@ -38,6 +38,9 @@ import java.util.Locale;
 
 import cn.rongcloud.config.feedback.FeedbackHelper;
 import cn.rongcloud.config.provider.user.UserProvider;
+import cn.rongcloud.rtc.api.RCRTCConfig;
+import cn.rongcloud.rtc.api.stream.RCRTCAudioStreamConfig;
+import cn.rongcloud.rtc.base.RCRTCParamsType;
 import io.rong.callkit.util.BluetoothUtil;
 import io.rong.callkit.util.CallKitUtils;
 import io.rong.callkit.util.DefaultPushConfig;
@@ -326,8 +329,16 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         List<String> userIds = new ArrayList<>();
         userIds.add(targetId);
         RongCallClient.setPushConfig(DefaultPushConfig.getInviteConfig(this, mediaType == RongCallCommon.CallMediaType.AUDIO, true, ""), DefaultPushConfig.getHangupConfig(this, true, ""));
-        if (needCall)
+        if (needCall) {
+            // 3a
+//            RCRTCAudioStreamConfig.Builder builder = RCRTCAudioStreamConfig.Builder
+//                    .create()
+//                    .setEchoCancel(RCRTCParamsType.AECMode.AEC_MODE0)
+//                    .setNoiseSuppression(RCRTCParamsType.NSMode.NS_MODE0)
+//                    .enableAGCControl(false);
+//            RongCallClient.getInstance().setAudioConfig(builder);
             RongCallClient.getInstance().startCall(conversationType, targetId, userIds, null, mediaType, null);
+        }
     }
 
     @Override

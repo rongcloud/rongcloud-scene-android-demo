@@ -85,4 +85,6 @@ public interface IHolder<T extends IHolder> {
     T setBackgroundResource(int viewId, int resource);
 
     T setOnClickListener(int viewId, View.OnClickListener ol);
+
+    T setOnLongClickListener(int viewId, View.OnLongClickListener longClickListener);
 }

@@ -72,7 +72,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_save_user_info"
         android:gravity="center"
-        android:text="@string/save"
+        android:text="@string/profile_save"
         android:textColor="@color/basis_white"
         android:textSize="17sp"
         app:layout_constraintCircleRadius="4dp"

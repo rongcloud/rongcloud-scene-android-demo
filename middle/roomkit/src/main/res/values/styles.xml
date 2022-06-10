@@ -159,6 +159,10 @@
         <item name="android:textSize">17sp</item>
     </style>
 
+    <style name="MessageTabTheme" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <declare-styleable name="KsgLikeView">
         <!-- 进入动画 时长-->
         <attr name="ksg_enter_duration" format="integer" />

@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
-import com.basis.widget.BottomDialog;
+import com.basis.widget.dialog.BottomDialog;
 
 import cn.rongcloud.pk.R;
 

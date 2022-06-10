@@ -35,7 +35,9 @@ dependencies {
     implementation android_ui.material
 
     implementation "cn.rongcloud.sdk:rccorekit_lib:$corekitLib"
-    api "cn.rongcloud.sdk:rcmusiccontrolkit_lib:$musicLib"
+    api("cn.rongcloud.sdk:rcmusiccontrolkit_lib:$musicLib") {
+        exclude group: 'com.scwang.smart'
+    }
 
     compileOnly "cn.rongcloud.sdk:im_lib:$imLib"
     compileOnly "cn.rongcloud.sdk:im_kit:$imLib"

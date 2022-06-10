@@ -29,7 +29,7 @@ public class UiSeatModel {
     public void setMember(UiMemberModel member) {
         // giftCount处理被重置
         int temp = getGiftCount();
-        if (temp < 1) {
+        if (member.getGiftCount() < 1) {
             member.setGiftCount(temp);
         }
         this.member = member;
@@ -70,6 +70,7 @@ public class UiSeatModel {
     }
 
     public void setExtra(UiSeatModelExtra extra) {
+//        Logger.e("seatModel：setExtra extra= "+GsonUtil.obj2Json(extra));
         if (null != seatModel) {
             seatModel.setExtra(GsonUtil.obj2Json(extra));
         }
@@ -82,11 +83,17 @@ public class UiSeatModel {
 
 
     public int getGiftCount() {
+        if (null != member && member.getGiftCount() > 0) {
+            giftCount = member.getGiftCount();
+        }
+//        Logger.e("UiSeatModel#getGiftCount: = " + giftCount + " index = " + index);
         return giftCount;
     }
 
     public void setGiftCount(int giftCount) {
+//        Logger.e("UiSeatModel#setGiftCount: = " + giftCount + " index = " + index);
         this.giftCount = giftCount;
+        if (null != member) member.setGiftCount(giftCount);
         if (null != subject) subject.onNext(this);
     }
 

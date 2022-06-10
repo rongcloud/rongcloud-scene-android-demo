@@ -3,12 +3,14 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingTop="20dp"
-    android:paddingRight="20dp">
+    android:paddingRight="20dp"
+    tools:ignore="ResourceName">
 
     <LinearLayout
         android:id="@+id/ll_item_first"
@@ -26,7 +28,7 @@
             android:drawableLeft="@drawable/ic_registered"
             android:gravity="center_vertical"
             android:drawablePadding="@dimen/basis_20px"
-            android:text="@string/str_rejster_coms" />
+            android:text="@string/profile_register_coms" />
 
         <ImageView
             android:layout_width="30dp"
@@ -54,7 +56,7 @@
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/ic_private"
             android:drawablePadding="@dimen/basis_20px"
-            android:text="@string/str_privite_coms" />
+            android:text="@string/profile_privite_coms" />
 
         <ImageView
             android:layout_width="30dp"
@@ -82,7 +84,7 @@
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/ic_uninit"
             android:drawablePadding="@dimen/basis_20px"
-            android:text="@string/str_uninit_coms" />
+            android:text="@string/profile_uninit_coms" />
 
         <ImageView
             android:layout_width="30dp"
@@ -110,7 +112,7 @@
             android:drawableLeft="@drawable/ic_update"
             android:drawablePadding="@dimen/basis_20px"
             android:gravity="center_vertical"
-            android:text="@string/str_check_version" />
+            android:text="@string/profile_check_version" />
 
         <ImageView
             android:layout_width="30dp"
@@ -138,7 +140,7 @@
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/ic_logout"
             android:drawablePadding="@dimen/basis_20px"
-            android:text="@string/str_logout" />
+            android:text="@string/profile_logout" />
     </LinearLayout>
 
     <View style="@style/basis_main_divider" />

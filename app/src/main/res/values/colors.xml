@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="colorAccent" tools:ignore="MissingDefaultResource">#0099FF</color>
+
+    <color name="color_main_bottom_selected">#0099FF</color>
+    <color name="color_main_bottom">#B3C2DF</color>
+    <color name="color_main_unread_point">#F31D8A</color>
 </resources>

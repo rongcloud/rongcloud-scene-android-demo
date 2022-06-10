@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import com.basis.net.oklib.OkApi;
 import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
+import com.basis.utils.GsonUtil;
+import com.basis.utils.Logger;
 import com.basis.wapper.IResultBack;
 
 import java.util.ArrayList;

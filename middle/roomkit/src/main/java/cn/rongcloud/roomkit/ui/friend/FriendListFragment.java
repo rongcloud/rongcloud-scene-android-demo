@@ -6,6 +6,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.basis.net.oklib.OkApi;
 import com.basis.net.oklib.WrapperCallBack;
@@ -22,13 +23,12 @@ import java.util.Map;
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.ui.friend.model.Friend;
-import cn.rongcloud.roomkit.ui.room.widget.RecyclerViewAtVP2;
 
 public class FriendListFragment extends BaseFragment implements FriendAdapter.OnFollowClickListener {
     private FriendAdapter mAdapter;
     private int mType = 2;// 1 我关注的 2 我的粉丝
     private SendPrivateMessageFragment sendPrivateMessageFragment;
-    private RecyclerViewAtVP2 mFriendRecyclerView;
+    private RecyclerView mFriendRecyclerView;
     private SmartRefreshLayout refreshLayout;
     private TextView emptyView;
     private int page = 1;
@@ -51,7 +51,7 @@ public class FriendListFragment extends BaseFragment implements FriendAdapter.On
                 loadData(true);
             }
         });
-        mFriendRecyclerView = (RecyclerViewAtVP2) getView(R.id.rv_friend);
+        mFriendRecyclerView =  getView(R.id.rv_friend);
         refreshLayout = (SmartRefreshLayout) getView(R.id.layout_refresh);
         emptyView = (TextView) getView(R.id.tv_empty);
         mAdapter = new FriendAdapter(getContext(), R.layout.item_friend);

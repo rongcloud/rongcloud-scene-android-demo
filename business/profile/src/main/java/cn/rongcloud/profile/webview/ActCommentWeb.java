@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.basis.ui.BaseActivity;
+import com.basis.utils.UIKit;
+import com.basis.widget.interfaces.IWrapBar;
 
+import cn.rongcloud.config.router.RouterPath;
 import cn.rongcloud.profile.R;
 
 
@@ -15,11 +19,10 @@ import cn.rongcloud.profile.R;
  * @ClassName: ActCommentWeb
  * @Description: 只加载https
  */
+@Route(path = RouterPath.ROUTER_H5)
 public class ActCommentWeb extends BaseActivity {
     public final static String tag = "ActCommentWeb";
     public final static String _https = "https";
-    public final static String KEY_BASIC = "key_basic";
-    public final static String KEY_URL = "key_url";
     //拦截url
     private final static int _codeLogin = 10003;
     private RCWebView webview;
@@ -38,8 +41,8 @@ public class ActCommentWeb extends BaseActivity {
      */
     public static void openCommentWeb(Activity mActivity, String loadUrl, String title) {
         Intent intent = new Intent(mActivity, ActCommentWeb.class);
-        intent.putExtra(KEY_URL, loadUrl);
-        intent.putExtra(KEY_BASIC, title);
+        intent.putExtra(UIKit.KEY_BASE, loadUrl);
+        intent.putExtra(UIKit.KEY_BASE1, title);
         mActivity.startActivity(intent);
     }
 
@@ -50,10 +53,10 @@ public class ActCommentWeb extends BaseActivity {
 
 
     public void init() {
-        loadUrl = getIntent().getStringExtra(KEY_URL);
-        title = getIntent().getStringExtra(KEY_BASIC);
+        loadUrl = getIntent().getStringExtra(UIKit.KEY_BASE);
+        title = getIntent().getStringExtra(UIKit.KEY_BASE1);
         Log.e(tag, "loadUrl = " + loadUrl + " title = " + title);
-        getWrapBar().setTitle(title).work();
+        getWrapBar().setTitle(title).setElevation(IWrapBar.DEFAULT_ELEVATION).work();
         webview = findViewById(R.id.webview);
         isHttps = TextUtils.isEmpty(loadUrl) ? false : loadUrl.contains(_https);
         WebViewUtil.openWebViewCache(this, webview, isHttps);

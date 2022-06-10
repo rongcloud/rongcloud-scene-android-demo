@@ -2,6 +2,7 @@ package cn.rongcloud.voice.room.dialogFragment;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -81,7 +82,7 @@ public class SelfSettingFragment extends BaseBottomSheetDialog {
                 .subscribe(new Consumer<UiSeatModel>() {
                     @Override
                     public void accept(UiSeatModel uiSeatModel) throws Throwable {
-                        if (!seatInfo.getUserId().equals(UserManager.get().getUserId())) {
+                        if (null != seatInfo && !TextUtils.isEmpty(seatInfo.getUserId()) && !seatInfo.getUserId().equals(UserManager.get().getUserId())) {
                             if (isLeaveSeating) {
                                 ToastUtils.s(getContext(), "正在断开链接中");
                             }

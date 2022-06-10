@@ -47,4 +47,8 @@
         <item name="editTextStyle">@style/LoginEditTextStyle</item>
     </style>
 
+    <style name="HomeTab">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/color_home_bar</item>
+    </style>
 </resources>

@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import cn.rongcloud.config.ApiConfig;
 import cn.rongcloud.config.UserManager;
+import cn.rongcloud.config.provider.user.Sex;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 
@@ -78,23 +79,28 @@ public class ProfileApi {
         });
     }
 
-    public static void updateUserInfo(String userName, String portraitUrl, IResultBack<Boolean> back) {
+    public static void updateUserInfo(String userName, String portraitUrl, Sex sex, IResultBack<Boolean> back) {
         Logger.e(TAG, "userName = " + userName);
         Logger.e(TAG, "portraitUrl = " + portraitUrl);
+        Logger.e(TAG, "sex = " + sex);
         Map<String, Object> params = new HashMap<>();
+        User user = UserManager.get();
         params.put("userName", userName);
         params.put("portrait", portraitUrl);
+        params.put("sex", sex.getSex());
         OkApi.post(UPDATE_INFO, params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 if (result.ok()) {
-//                    User temp = result.get(User.class);
                     User user = UserManager.get();
-                    user.setUserName(userName);
-                    if (!TextUtils.isEmpty(portraitUrl)) {
-                        user.setPortrait(portraitUrl);
+                    if (null != user) {
+                        user.setUserName(userName);
+                        user.setSex(sex);
+                        if (!TextUtils.isEmpty(portraitUrl)) {
+                            user.setPortrait(portraitUrl);
+                        }
+                        UserManager.save(user);
                     }
-                    UserManager.save(user);
                     if (null != back) back.onResult(true);
                 } else {
                     KToast.show(result.getMessage());

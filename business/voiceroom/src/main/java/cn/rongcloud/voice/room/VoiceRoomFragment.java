@@ -228,7 +228,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mMessageView.setLayoutManager(linearLayoutManager);
         mMessageView.addItemDecoration(new DefaultItemDecoration(Color.TRANSPARENT, 0, UiUtils.dp2px(5)));
-        mRoomMessageAdapter = new RoomMessageAdapter(getContext(), this, RoomType.VOICE_ROOM);
+        mRoomMessageAdapter = new RoomMessageAdapter(getContext(), mMessageView, this, RoomType.VOICE_ROOM);
         mMessageView.setAdapter(mRoomMessageAdapter);
 
         pkView = getView(R.id.pk_view);
@@ -386,7 +386,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
     }
 
     private void initPk() {
-        PKManager.get().init(mRoomId, pkView, new SimpleVoicePkListener() {
+        PKManager.get().init(mRoomId, RoomType.VOICE_ROOM.getType(), pkView, new SimpleVoicePkListener() {
             @Override
             public void onPkStart() {
                 PKManager.get().enterPkWithAnimation(voiceRoom, pkView, 200);
@@ -455,10 +455,18 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
     @Override
     public void showMessage(MessageContent messageContent, boolean isRefresh) {
         List<MessageContent> list = new ArrayList<>(1);
-        if (messageContent != null) {
-            list.add(messageContent);
+//        if (messageContent != null) {
+//            list.add(messageContent);
+//        }
+//        mRoomMessageAdapter.setMessages(list, isRefresh);
+        if (isRefresh) {
+            if (messageContent != null) {
+                list.add(messageContent);
+            }
+            mRoomMessageAdapter.setMessages(list, true);
+        } else {
+            mRoomMessageAdapter.interMessage(messageContent);
         }
-        mRoomMessageAdapter.setData(list, isRefresh, mMessageView);
     }
 
     @Override
@@ -483,7 +491,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
      */
     @Override
     public void showMessageList(List<MessageContent> messageContentList, boolean isRefresh) {
-        mRoomMessageAdapter.setData(messageContentList, isRefresh, mMessageView);
+        mRoomMessageAdapter.setMessages(messageContentList, isRefresh);
     }
 
     @Override
@@ -526,6 +534,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         VoiceEventHelper.helper().unregeister();
         //取消当前对于各种消息的回调监听
         present.unInitListener();
+        mRoomMessageAdapter.release();
     }
 
     @Override
@@ -547,7 +556,8 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         if (TextUtils.isEmpty(uiSeatModel.getUserId())) {
             mRoomSeatView.setData("", null);
             mRoomSeatView.setSpeaking(false);
-            mRoomSeatView.setRoomOwnerMute(false);
+            // mute 状态不变
+//            mRoomSeatView.setRoomOwnerMute(false);
             mRoomSeatView.setGiftCount(0L);
         } else {
 //            Log.e(TAG, "refreshRoomOwner: " + uiSeatModel.toString());
@@ -690,6 +700,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         try {
             UIStack.getInstance().remove(((VoiceRoomActivity) requireActivity()));
             requireActivity().finish();
+            if (null != mRoomMessageAdapter)mRoomMessageAdapter.release();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -869,13 +880,13 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
     public void showShieldDialog(String roomId) {
         mShieldDialog = new ShieldDialog(requireActivity(), roomId, 10, new ShieldDialog.OnShieldDialogListener() {
             @Override
-            public void onAddShield(String shield,List<Shield> shields) {
+            public void onAddShield(String shield, List<Shield> shields) {
                 present.getShield();
                 RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Constant.EVENT_ADD_SHIELD, shield, null);
             }
 
             @Override
-            public void onDeleteShield(Shield shield,List<Shield> shields) {
+            public void onDeleteShield(Shield shield, List<Shield> shields) {
                 present.getShield();
                 RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Constant.EVENT_DELETE_SHIELD, shield.getName(), null);
             }

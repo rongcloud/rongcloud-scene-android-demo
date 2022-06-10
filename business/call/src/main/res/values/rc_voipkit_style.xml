@@ -138,43 +138,43 @@
         <item name="background">@color/colorPrimary</item>
     </style>
 
-    <color name="basis_color_bar_bg">#ffffff</color>
-    <color name="basis_color_status_bg">#ffffff</color>
-    <!--    标题栏高度，默认 56dp-->
-    <dimen name="basis_bar_size">@dimen/abc_action_bar_default_height_material</dimen>
-    <!--    标题 text size 默认：17sp-->
-    <dimen name="basis_bar_text_size">17sp</dimen>
-    <!--    标题栏文字包括menu颜色 默认：白色-->
-    <color name="basis_bar_text_color">@android:color/widget_edittext_dark</color>
-    <!--    action text size 默认：14sp-->
-    <dimen name="basis_menu_text_size">14sp</dimen>
+<!--    <color name="basis_color_bar_bg">#ffffff</color>-->
+<!--    <color name="basis_color_status_bg">#ffffff</color>-->
+<!--    &lt;!&ndash;    标题栏高度，默认 56dp&ndash;&gt;-->
+<!--    <dimen name="basis_bar_size">@dimen/abc_action_bar_default_height_material</dimen>-->
+<!--    &lt;!&ndash;    标题 text size 默认：17sp&ndash;&gt;-->
+<!--    <dimen name="basis_bar_text_size">17sp</dimen>-->
+<!--    &lt;!&ndash;    标题栏文字包括menu颜色 默认：白色&ndash;&gt;-->
+<!--    <color name="basis_bar_text_color">@android:color/widget_edittext_dark</color>-->
+<!--    &lt;!&ndash;    action text size 默认：14sp&ndash;&gt;-->
+<!--    <dimen name="basis_menu_text_size">14sp</dimen>-->
 
-    <style name="BasisTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--        status bar color-->
-        <item name="android:statusBarColor" tools:targetApi="o">@color/basis_color_status_bg</item>
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>c
-        <!--        action bar hight-->
-        <item name="actionBarSize">@dimen/basis_bar_size</item>
-        <!--        action bar style-->
-        <item name="actionBarStyle">@style/Basis_ActionBar_Style</item>
-        <!--        menu text size-->
-        <item name="android:actionMenuTextColor">@color/basis_bar_text_color</item>
-        <!--        menu text size-->
-        <item name="android:textSize">@dimen/basis_menu_text_size</item>
-        <!--        自定义返回监听-->
-        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-    </style>
+<!--    <style name="BasisTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--        &lt;!&ndash;        status bar color&ndash;&gt;-->
+<!--        <item name="android:statusBarColor" tools:targetApi="o">@color/basis_color_status_bg</item>-->
+<!--        <item name="windowActionBar">true</item>-->
+<!--        <item name="windowNoTitle">false</item>-->
+<!--        &lt;!&ndash;        action bar hight&ndash;&gt;-->
+<!--        <item name="actionBarSize">@dimen/basis_bar_size</item>-->
+<!--        &lt;!&ndash;        action bar style&ndash;&gt;-->
+<!--        <item name="actionBarStyle">@style/Basis_ActionBar_Style</item>-->
+<!--        &lt;!&ndash;        menu text size&ndash;&gt;-->
+<!--        <item name="android:actionMenuTextColor">@color/basis_bar_text_color</item>-->
+<!--        &lt;!&ndash;        menu text size&ndash;&gt;-->
+<!--        <item name="android:textSize">@dimen/basis_menu_text_size</item>-->
+<!--        &lt;!&ndash;        自定义返回监听&ndash;&gt;-->
+<!--        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>-->
+<!--        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
+<!--    </style>-->
 
-    <style name="Basis_ActionBar_Style" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="background">@color/basis_color_bar_bg</item>
-        <item name="titleTextStyle">@style/Basis_Title_Style</item>
-    </style>
+<!--    <style name="Basis_ActionBar_Style" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">-->
+<!--        <item name="background">@color/basis_color_bar_bg</item>-->
+<!--        <item name="titleTextStyle">@style/Basis_Title_Style</item>-->
+<!--    </style>-->
 
-    <!--    action bar title style-->
-    <style name="Basis_Title_Style" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/basis_bar_text_color</item>
-        <item name="android:textSize">@dimen/basis_bar_text_size</item>
-    </style>
+<!--    &lt;!&ndash;    action bar title style&ndash;&gt;-->
+<!--    <style name="Basis_Title_Style" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">-->
+<!--        <item name="android:textColor">@color/basis_bar_text_color</item>-->
+<!--        <item name="android:textSize">@dimen/basis_bar_text_size</item>-->
+<!--    </style>-->
 </resources>

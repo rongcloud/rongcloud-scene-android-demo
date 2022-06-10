@@ -12,7 +12,7 @@ public class Constant {
      */
     public static String EVENT_ROOM_CLOSE = "VoiceRoomClosed";
     public static String EVENT_BACKGROUND_CHANGE = "VoiceRoomBackgroundChanged";
-    public static String EVENT_MANAGER_LIST_CHANGE = "VoiceRoomNeedRefreshManagerList";
+    public static String EVENT_MANAGER_LIST_CHANGE = "VoiceRoomNeedRefreshmanagers";
     public static String EVENT_REJECT_MANAGE_PICK = "VoiceRoomRejectManagePick"; // 拒绝上麦
     public static String EVENT_AGREE_MANAGE_PICK = "VoiceRoomAgreeManagePick"; // 同意上麦
     public static String EVENT_KICK_OUT_OF_SEAT = "EVENT_KICK_OUT_OF_SEAT";

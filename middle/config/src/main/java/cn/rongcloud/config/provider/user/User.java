@@ -3,6 +3,8 @@ package cn.rongcloud.config.provider.user;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.basis.utils.Logger;
+
 import java.io.Serializable;
 
 import cn.rongcloud.config.ApiConfig;
@@ -20,6 +22,15 @@ public class User implements Serializable, Provide {
     private String authorization;
     private String imToken;
     private String phone;
+    private String sex;// 兼容 sex：1 和sex："男"
+
+    public void setSex(Sex sex) {
+        this.sex = sex.getSex() + "";
+    }
+
+    public Sex getSex() {
+        return Sex.sexOf(this.sex);
+    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -69,8 +80,10 @@ public class User implements Serializable, Provide {
 
     public String getPortraitUrl() {
         return TextUtils.isEmpty(portrait) ?
-                ApiConfig.DEFAULT_PORTRAIT_ULR
-                : ApiConfig.FILE_URL + portrait;
+                ApiConfig.DEFAULT_PORTRAIT_ULR :
+                portrait.startsWith("http")
+                        ? portrait
+                        : ApiConfig.FILE_URL + portrait;
     }
 
     public Uri getPortraitUri() {
@@ -102,4 +115,6 @@ public class User implements Serializable, Provide {
         }
         return user;
     }
+
+
 }

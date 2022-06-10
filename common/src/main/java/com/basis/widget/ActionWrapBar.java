@@ -2,12 +2,15 @@ package com.basis.widget;
 
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -17,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.basis.R;
 import com.basis.ui.BaseActivity;
+import com.basis.utils.ResUtil;
 import com.basis.widget.interfaces.IWrapBar;
 import com.basis.utils.UIKit;
 import com.basis.utils.Logger;
@@ -31,6 +35,8 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
     private boolean noneBar = false;//action bar 是否隐藏
     private List<OpMenu> options;
     private OnMenuSelectedListener onMenuSelectedListener;
+    private TextView tvTitle;
+    private float elevation = 0f;
 
     public ActionWrapBar(AppCompatActivity activity) {
         actionBar = activity.getSupportActionBar();
@@ -40,25 +46,36 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
         if (null == actionBar) {
             throw new IllegalArgumentException("No Support ActionBarWrapper For ActionBar is null ! ");
         }
+        //自定义title
+        LinearLayout customerView = new LinearLayout(activity);
+        tvTitle = new TextView(activity);
+        customerView.addView(tvTitle);
+        tvTitle.setTextColor(ResUtil.getColor(R.color.basis_color_primary));
+        tvTitle.setTextSize(20);
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+        actionBar.setCustomView(customerView, lp);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setElevation(0);
     }
 
     private ActionBar inflateDefaultActionBar(BaseActivity activity) {
         ActionBar result = null;
         View defaultBarView = LayoutInflater.from(activity).inflate(R.layout.basis_action_bar_default, null, false);
         View content = (ViewGroup) activity.getLayout();
-        View view = activity.getWindow().getDecorView();
         if (content != null) {
-            if (content instanceof ScrollView){
+            if (content instanceof ScrollView) {
                 content = ((ScrollView) content).getChildAt(0);
             }
             ((ViewGroup) content).addView(defaultBarView, 0);
             Toolbar toolbar = defaultBarView.findViewById(R.id.basis_toolbar);
-            toolbar.setNavigationIcon(R.drawable.svg_back);
+            toolbar.setNavigationIcon(R.drawable.svg_back_black);
             activity.setSupportActionBar(toolbar);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (null != activity) activity.onBackCode();
+                    activity.onBackCode();
                 }
             });
             result = activity.getSupportActionBar();
@@ -91,6 +108,28 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
         return this;
     }
 
+
+    @Override
+    public ActionWrapBar setTitleAndGravity(String title, int gravity) {
+        this.title = title;
+        if (null != actionBar) {
+            View customer = actionBar.getCustomView();
+            if (null != customer) {
+                ViewGroup.LayoutParams lp = customer.getLayoutParams();
+                if (lp instanceof ActionBar.LayoutParams) {
+                    ((ActionBar.LayoutParams) lp).gravity = gravity;
+                }
+            }
+        }
+        return this;
+    }
+
+    @Override
+    public ActionWrapBar setElevation(float elevation) {
+        this.elevation = elevation;
+        return this;
+    }
+
     @Override
     public ActionWrapBar setOnMenuSelectedListener(OnMenuSelectedListener onMenuSelectedListener) {
         this.onMenuSelectedListener = onMenuSelectedListener;
@@ -117,7 +156,8 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
     @Override
     public ActionWrapBar work() {
         if (null != actionBar) {
-            if (null != title) actionBar.setTitle(title);
+            if (null != title) tvTitle.setText(title);
+            if (elevation > -1) actionBar.setElevation(elevation);
             actionBar.setDisplayHomeAsUpEnabled(!backHide);
             if (noneBar) {
                 actionBar.hide();

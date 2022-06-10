@@ -1,7 +1,11 @@
 package cn.rongcloud.config.init;
 
+import com.basis.utils.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imlib.model.Message;
 
 /**
  * 模块初始化
@@ -14,8 +18,8 @@ public class ModuleManager implements OnRegisterMessageTypeListener {
     private boolean registerMessageType = false;
 
     private ModuleManager() {
-        modules.add(new BaseModule(new ConnectModule(this)));
         modules.add(new BaseModule(new OKModule()));
+        modules.add(new BaseModule(new ConnectModule(this)));
     }
 
     public static ModuleManager manager() {
@@ -43,8 +47,8 @@ public class ModuleManager implements OnRegisterMessageTypeListener {
         if (initialize) {
             handleInit();
         }
-        if (registerMessageType){
-            for (IModule m:modules) {
+        if (registerMessageType) {
+            for (IModule m : modules) {
                 m.onRegisterMessageType();
             }
         }
@@ -66,6 +70,13 @@ public class ModuleManager implements OnRegisterMessageTypeListener {
         registerMessageType = true;
     }
 
+    @Override
+    public void onReceivedMessage(Message message) {
+        for (IModule m : modules) {
+            m.onReceivedMessage(message);
+        }
+    }
+
     public static class BaseModule implements IModule {
         private IModule module;
         private boolean initialize = false;
@@ -76,11 +87,14 @@ public class ModuleManager implements OnRegisterMessageTypeListener {
 
         @Override
         public void onInit() {
+            initialize = true;
+            Logger.e("ModuleManager","onInit: "+module.getClass().getSimpleName());
             if (null != module) module.onInit();
         }
 
         @Override
         public void onUnInit() {
+            initialize = false;
             if (null != module) module.onUnInit();
         }
 

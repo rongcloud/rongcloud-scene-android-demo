@@ -20,7 +20,7 @@ import com.basis.utils.KToast;
 import com.basis.utils.Logger;
 import com.basis.wapper.IResultBack;
 import com.basis.wapper.IRoomCallBack;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.VRCenterDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,9 +119,10 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     }
 
     protected void unInit() {
+        Logger.e(TAG,"unInit");
+        RCVoiceRoomEngine.getInstance().setVoiceRoomEventListener(null);
         MusicControlManager.getInstance().release();
         PKManager.get().unInit();
-        RCVoiceRoomEngine.getInstance().setVoiceRoomEventListener(null);
         if (null != mSeatInfos) mSeatInfos.clear();
         if (null != listeners) listeners.clear();
         if (null != statusListeners) statusListeners.clear();
@@ -381,7 +382,8 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
                 confirmDialog.setCancelable(false);
                 confirmDialog.show();
             } else if (TextUtils.equals(name, EVENT_AGREE_MANAGE_PICK)) {
-                KToast.show("用户连线成功");
+                if (TextUtils.equals(content, UserManager.get().getUserId()))
+                    KToast.show("用户连线成功");
             } else if (TextUtils.equals(name, EVENT_REJECT_MANAGE_PICK)) {
                 if (TextUtils.equals(content, UserManager.get().getUserId()))
                     KToast.show("用户拒绝邀请");

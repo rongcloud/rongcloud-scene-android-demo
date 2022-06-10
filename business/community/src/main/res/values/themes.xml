@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--ShapeableImageView 圆角-->
+    <style name="RoundedStyle" tools:ignore="ResourceName">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeTopRight">10dp</item>
+    </style>
+
+    <style name="RoundedStyle_10dp" tools:ignore="ResourceName">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="Dialog_Adjust_Nothing" parent="@style/Basis_Dialog_Style" tools:ignore="ResourceName">
+        <item name="android:windowSoftInputMode">adjustNothing</item>
+    </style>
+    <style name="cmu_TabTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textSize">17sp</item>
+    </style>
+</resources>

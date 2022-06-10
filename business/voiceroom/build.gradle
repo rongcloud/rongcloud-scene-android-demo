@@ -4,7 +4,6 @@ plugins {
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -39,7 +38,15 @@ dependencies {
     api project(path: ':middle:roomkit')
     api project(path: ':middle:pk')
 
-    api "cn.rongcloud.sdk:voiceroom_lib:$voiceroomLib"
+    Properties properties = new Properties()
+    File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
+    properties.load(propertyFile.newDataInputStream())
+    if (properties.get("VOICE_ROOM_REMOTE_DEPENDENCE") != null && !properties.get("VOICE_ROOM_REMOTE_DEPENDENCE").toBoolean()) {
+        println("------------------------>>>>use local module")
+        api project(path: ':RCVoiceRoom')
+    } else {
+        api "cn.rongcloud.sdk:voiceroom_lib:$voiceroomLib"
+    }
 
     implementation "cn.rongcloud.sdk:im_lib:$imLib"
     implementation "cn.rongcloud.sdk:im_kit:$imLib"

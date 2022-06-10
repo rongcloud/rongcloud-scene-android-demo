@@ -5,7 +5,6 @@
 package cn.rongcloud.config.feedback;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,7 +19,9 @@ import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.SharedPreferUtil;
 import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
-import com.basis.widget.VRCenterDialog;
+import com.basis.widget.dialog.DialogBuilder;
+import com.basis.widget.dialog.IBuilder;
+import com.basis.widget.dialog.IDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -92,7 +93,9 @@ public class FeedbackHelper implements IFeedback {
      */
     private boolean enableScore() {
         //未打分 且次数大于limt
-        return !SharedPreferUtil.getBoolean(KEY_SCORE_FLAG) &&
+//        return !SharedPreferUtil.getBoolean(KEY_SCORE_FLAG) &&
+//                SharedPreferUtil.get(KEY_TIME, 0) >= LIMT;
+        return
                 SharedPreferUtil.get(KEY_TIME, 0) >= LIMT;
     }
 
@@ -118,30 +121,44 @@ public class FeedbackHelper implements IFeedback {
         centerDialog = null;
     }
 
-    private VRCenterDialog centerDialog;
+    private IDialog centerDialog;
 
     private void showFeedbackDialog(Activity activity) {
-        if (null == centerDialog || !centerDialog.enable()) {
-            centerDialog = new VRCenterDialog(activity, new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    centerDialog = null;
-                }
-            });
+//        if (null == centerDialog || !centerDialog.enable()) {
+//            centerDialog = new VRCenterDialog(activity, new DialogInterface.OnDismissListener() {
+//                @Override
+//                public void onDismiss(DialogInterface dialog) {
+//                    centerDialog = null;
+//                }
+//            });
+//        }
+//        centerDialog.replaceContent("请留下您的使用感受吧", R.color.basis_color_primary,
+//                "稍后再说", R.color.basis_color_secondary, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dismissDialog();
+//                        clearStatistics();
+//                    }
+//                }, "", -1, null, initScoreView());
+//        centerDialog.show();
+        if (null == centerDialog) {
+            centerDialog = new DialogBuilder(activity)
+                    .setTitle("请留下您的使用感受吧")
+                    .setEnableSure(false)
+                    .setCustomerView(initScoreView())
+                    .setCancelBtnStyle("稍后再说", R.color.basis_color_secondary, -1, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dismissDialog();
+                            clearStatistics();
+                        }
+                    }).build();
         }
-        centerDialog.replaceContent("请留下您的使用感受吧", R.color.basis_color_primary,
-                "稍后再说", R.color.basis_color_secondary, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dismissDialog();
-                        clearStatistics();
-                    }
-                }, "", -1, null, initScoreView());
         centerDialog.show();
     }
 
     private View initScoreView() {
-        View view = centerDialog.getLayoutInflater().inflate(R.layout.layout_score_tip, null);
+        View view = UIKit.inflate(R.layout.layout_score_tip);
         View up_selected = view.findViewById(R.id.iv_up_selected);
         View down_selected = view.findViewById(R.id.iv_down_selected);
         view.findViewById(R.id.cl_up).setOnTouchListener(new View.OnTouchListener() {
@@ -229,27 +246,45 @@ public class FeedbackHelper implements IFeedback {
      */
     private void shwoDownDialog() {
         if (null == centerDialog) return;
-        centerDialog.replaceContent("请问哪个方面需要改进呢？",
-                R.color.basis_color_primary,
-                "提交反馈", R.color.basis_color_secondary, new View.OnClickListener() {
+        IBuilder builder = centerDialog.getBuilder();
+        builder.setTitle("请问哪个方面需要改进呢")
+                .setEnableTitle(true)
+                .setCustomerView(initDownView())
+                .setCancelBtnStyle("提交反馈", R.color.basis_color_secondary, -1, new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
                         if (null != selectedDowns && !selectedDowns.isEmpty()) {
                             sendReport();
                         }
                     }
-                }, "我再想想", R.color.basis_color_secondary, new View.OnClickListener() {
+                })
+                .setSureBtnStyle("我再想想", R.color.basis_color_secondary, -1, new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
                         dismissDialog();
                     }
-                }, initDownView());
+                }).refresh();
+//        centerDialog.replaceContent("请问哪个方面需要改进呢？",
+//                R.color.basis_color_primary,
+//                "提交反馈", R.color.basis_color_secondary, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (null != selectedDowns && !selectedDowns.isEmpty()) {
+//                            sendReport();
+//                        }
+//                    }
+//                }, "我再想想", R.color.basis_color_secondary, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dismissDialog();
+//                    }
+//                }, initDownView());
     }
 
     private final List<Integer> selectedDowns = new ArrayList();
 
     private View initDownView() {
-        View view = centerDialog.getLayoutInflater().inflate(R.layout.layout_score_down, null);
+        View view = UIKit.inflate(R.layout.layout_score_down);
         View[] views = new View[4];
         View[] selectVs = new View[4];
         views[0] = view.findViewById(R.id.cl_first);
@@ -286,27 +321,43 @@ public class FeedbackHelper implements IFeedback {
      */
     private void showLastPromotion() {
         if (null == centerDialog) return;
-        centerDialog.replaceContent("融云最近活动，了解一下？",
-                R.color.basis_color_primary,
-                "我想了解", R.color.basis_color_secondary, new View.OnClickListener() {
+//        centerDialog.replaceContent("融云最近活动，了解一下？",
+//                R.color.basis_color_primary,
+//                "我想了解", R.color.basis_color_secondary, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        jumpPromotionPage();
+//                    }
+//                }, "我再想想", R.color.basis_color_primary, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dismissDialog();
+//                    }
+//                }, centerDialog.getLayoutInflater().inflate(R.layout.layout_promotion, null));
+        IBuilder builder = centerDialog.getBuilder();
+        builder.setTitle("融云最近活动，了解一下？")
+                .setEnableTitle(true)
+                .setCustomerView(initDownView())
+                .setCancelBtnStyle("我想了解", R.color.basis_color_secondary, -1, new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
                         jumpPromotionPage();
                     }
-                }, "我再想想", R.color.basis_color_primary, new View.OnClickListener() {
+                })
+                .setSureBtnStyle("我再想想", R.color.basis_color_primary, -1, new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
                         dismissDialog();
                     }
-                }, centerDialog.getLayoutInflater().inflate(R.layout.layout_promotion, null));
+                }).refresh();
     }
 
     private void jumpPromotionPage() {
-        if (null != centerDialog && centerDialog.enable()) {
+        if (null != centerDialog) {
             Intent intent = new Intent("io.rong.intent.action.commonwebpage");
             intent.putExtra("key_url", "https://m.rongcloud.cn/activity/rtc20");
             intent.putExtra("key_basic", "最近活动");
-            centerDialog.startActivity(intent);
+            UIKit.getContext().startActivity(intent);
         }
         dismissDialog();
     }

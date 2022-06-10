@@ -14,9 +14,7 @@
         style="@style/main_primary_17"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_margin="20dp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +24,9 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/v_divider"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -48,7 +48,7 @@
         <!--        style="@style/main_secondary_15"-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_cancel"
-
+            style="@style/main_secondary_15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="ResourceName">
+
+    <EditText
+        android:id="@+id/editor"
+        style="@style/main_primary_16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/shape_editor_bg_gray_corner_12px"
+        android:gravity="center_vertical|start"
+        android:maxLength="16"
+        android:paddingStart="@dimen/basis_10px" />
+</FrameLayout>

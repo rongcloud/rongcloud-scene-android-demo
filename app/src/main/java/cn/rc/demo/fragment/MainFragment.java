@@ -9,14 +9,12 @@ import com.basis.ui.PermissionFragment;
 import com.basis.utils.KToast;
 import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
-import com.rc.live.helper.LiveEventHelper;
 
 import cn.rc.demo.R;
 import cn.rongcloud.config.feedback.RcUmEvent;
 import cn.rongcloud.config.feedback.UmengHelper;
 import cn.rongcloud.config.router.RouterPath;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
-import cn.rongcloud.roomkit.ui.miniroom.OnCloseMiniRoomListener;
 import io.rong.imkit.manager.UnReadMessageManager;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.model.Conversation;
@@ -121,6 +119,6 @@ public class MainFragment extends PermissionFragment implements View.OnClickList
 
     @Override
     public void onCountChanged(int count) {
-        UIKit.setVisiable(unread, count > 0);
+        UIKit.setVisible(unread, count > 0);
     }
 }

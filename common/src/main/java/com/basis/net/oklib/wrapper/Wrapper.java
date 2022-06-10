@@ -2,6 +2,9 @@ package com.basis.net.oklib.wrapper;
 
 import androidx.annotation.Nullable;
 
+import com.basis.net.oklib.wrapper.interfaces.IPage;
+import com.basis.net.oklib.wrapper.interfaces.IWrap;
+import com.basis.utils.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
@@ -9,9 +12,6 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.basis.net.oklib.wrapper.interfaces.IPage;
-import com.basis.net.oklib.wrapper.interfaces.IWrap;
 
 public class Wrapper implements IWrap {
     private int code;
@@ -25,6 +25,7 @@ public class Wrapper implements IWrap {
     private int total = 0;
 
     public void setPage(int page, int total) {
+        Logger.e("page = " + page + " total = " + total);
         this.page = page;
         this.total = total;
     }
@@ -59,8 +60,13 @@ public class Wrapper implements IWrap {
 
     @Override
     public IPage getPage() {
+        if (body == null) return null;
+        JsonElement pages = body.getAsJsonObject().get("pages");
+        JsonElement total = body.getAsJsonObject().get("total");
+        page = pages == null ? 0 : pages.getAsInt();
+        this.total = total == null ? 0 : total.getAsInt();
         if (page < 0) return null;
-        return new Page(page, total);
+        return new Page(page, this.total);
     }
 
     public boolean ok() {
