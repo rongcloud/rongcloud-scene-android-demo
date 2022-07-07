@@ -2,7 +2,7 @@
   ~ Copyright © 2021 RongCloud. All rights reserved.
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="please_input_phone_number">请输入手机号</string>
     <string name="please_input_verification_code">请输入验证码</string>
     <string name="get_verification_code">获取验证码</string>
@@ -18,13 +18,13 @@
     <string name="profile_version_alterly_lastest">当前已是最新版本</string>
     <string name="profile_version_tip">发现新的版本</string>
     <string name="profile_version_update">更新</string>
-    
+
     <string name="profile_me_setting">个人信息</string>
-    <string name="profile_register_coms" >注册条款</string>
-    <string name="profile_privite_coms" >隐身政策</string>
-    <string name="profile_uninit_coms" >账号注销</string>
-    <string name="profile_check_version" >检查版本</string>
-    <string name="profile_logout" >退出登录</string>
+    <string name="profile_register_coms">注册条款</string>
+    <string name="profile_privite_coms">隐私政策</string>
+    <string name="profile_uninit_coms">账号注销</string>
+    <string name="profile_check_version">检查版本</string>
+    <string name="profile_logout">退出登录</string>
     <string name="profile_profile_update_success">保存成功</string>
     <string name="profile_me_head">头像</string>
     <string name="profile_update">更换</string>

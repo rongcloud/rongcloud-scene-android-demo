@@ -186,7 +186,7 @@ public class FeedbackHelper implements IFeedback {
         view.findViewById(R.id.cl_up).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengHelper.get().event(RcUmEvent.AppraisalBanner);
+                UmengHelper.get().event(RcEvent.AppraisalBanner);
                 sendFovLikes();
             }
         });

@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.rongcloud.config.UserManager;
+import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.RcEvent;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.music.MusicControlManager;
 import cn.rongcloud.radioroom.IRCRadioRoomEngine;
 import cn.rongcloud.radioroom.RCRadioRoomEngine;
@@ -36,9 +39,12 @@ import cn.rongcloud.roomkit.message.RCChatroomLocationMessage;
 import cn.rongcloud.roomkit.message.RCChatroomVoice;
 import cn.rongcloud.roomkit.message.RCFollowMsg;
 import cn.rongcloud.roomkit.message.RCRRCloseMessage;
+import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
 import cn.rongcloud.roomkit.ui.miniroom.OnCloseMiniRoomListener;
 import cn.rongcloud.roomkit.ui.miniroom.OnMiniRoomListener;
+import cn.rongcloud.rtc.api.RCRTCEngine;
+import cn.rongcloud.rtc.api.stream.RCRTCMicOutputStream;
 import io.rong.imkit.picture.tools.ToastUtils;
 import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
@@ -67,6 +73,7 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
     private List<Message> messages = new ArrayList<>();
     private OnMiniRoomListener onMiniRoomListener;
     private String roomId;
+    private VoiceRoomBean voiceRoomBean;
     // 是否在麦位上
     private boolean isInSeat = false;
     // 是否暂停
@@ -113,6 +120,7 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
         messages.clear();
         isInSeat = false;
         isSuspend = false;
+        voiceRoomBean = null;
         isMute = false;
         isSendDefaultMessage = false;
         onMiniRoomListener = null;
@@ -125,6 +133,10 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
             this.roomId = roomId;
             RCRadioRoomEngine.getInstance().setRadioEventListener(this);
         }
+    }
+
+    public void setRoomBean(VoiceRoomBean voiceRoomBean) {
+        this.voiceRoomBean = voiceRoomBean;
     }
 
     @Override
@@ -333,6 +345,12 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
      * @param leaveRoomCallback
      */
     public void leaveRoom(LeaveRoomCallback leaveRoomCallback) {
+        if (voiceRoomBean != null) {
+            RCRTCMicOutputStream defaultAudioStream = RCRTCEngine.getInstance().getDefaultAudioStream();
+            SensorsUtil.instance().leaveRoom(roomId, voiceRoomBean.getRoomName(), voiceRoomBean.isPrivate(),
+                    defaultAudioStream == null ? false : defaultAudioStream.isMicrophoneDisable(),
+                    false, RoomType.RADIO_ROOM.convertToRcEvent(), "");
+        }
         // 调用切换房间以发送消息和移除监听
         switchRoom();
         // 离开房间的操作
@@ -364,19 +382,21 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
      */
     public void closeRoom(String roomId, CloseRoomCallback closeRoomCallback) {
         MusicControlManager.getInstance().release();
+        String roomName = voiceRoomBean.getRoomName();
         // 发送关闭房间的消息
         sendMessage(new RCRRCloseMessage());
         // 离开房间
         leaveRoom(() -> {
             // 删除房间
-            deleteRoom(roomId, closeRoomCallback);
+            deleteRoom(roomId, roomName, closeRoomCallback);
         });
     }
 
     /**
      * 房主关闭房间
      */
-    private void deleteRoom(String roomId, CloseRoomCallback closeRoomCallback) {
+    private void deleteRoom(String roomId, String roomName, CloseRoomCallback closeRoomCallback) {
+        SensorsUtil.instance().closeRoom(roomId, roomName, "", RcEvent.RadioRoom);
         // 房主关闭房间，调用删除房间接口
         OkApi.get(VRApi.deleteRoom(roomId), null, new WrapperCallBack() {
             @Override

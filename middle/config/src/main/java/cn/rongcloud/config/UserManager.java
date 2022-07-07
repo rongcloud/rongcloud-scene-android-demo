@@ -10,11 +10,11 @@ import com.basis.utils.ObjToSP;
 
 import java.util.List;
 
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.config.router.RouterPath;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * @author: BaiCQ
@@ -49,6 +49,8 @@ public class UserManager extends ObjToSP<User> {
         }
         RongIM.getInstance().disconnect();
         RongIM.getInstance().logout();
+        SensorsUtil.instance().registerSuperProperties(false);
+        SensorsUtil.instance().removeUserProperties();
         ARouter.getInstance().build(RouterPath.ROUTER_LOGIN).navigation();
     }
 

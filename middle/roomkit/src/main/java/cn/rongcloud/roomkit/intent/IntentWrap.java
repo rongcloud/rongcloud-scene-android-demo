@@ -19,10 +19,13 @@ public class IntentWrap {
     public static final String KEY_ROOM_IDS = "KEY_ROOM_IDS";
     public static final String KEY_IS_CREATE = "KEY_IS_CREATE";
     public static final String KEY_ROOM_POSITION = "KEY_ROOM_POSITION";
+    public static final String KEY_IS_FAST_IN = "KEY_IS_FAST_IN";
+    public static final String KEY_GAME_ID = "KEY_GAME_ID";
     // actions
     private static final String ACTION_RADIO_ROOM = ".RadioRoomActivity";
     private static final String ACTION_VOICE_ROOM = ".VoiceRoomActivity";
     private static final String ACTION_LIVE_ROOM = ".LiveRoomActivity";
+    private static final String ACTION_GAME_ROOM = ".GameRoomActivity";
 
     public static String getRadioRoomAction(Context context) {
         return context.getPackageName() + ACTION_RADIO_ROOM;
@@ -34,6 +37,10 @@ public class IntentWrap {
 
     public static String getLiveRoomAction(Context context) {
         return context.getPackageName() + ACTION_LIVE_ROOM;
+    }
+
+    public static String getGameRoomAction(Context context) {
+        return context.getPackageName() + ACTION_GAME_ROOM;
     }
 
     /**
@@ -77,6 +84,18 @@ public class IntentWrap {
                 .navigation();
     }
 
+    /**
+     * 打开直播房
+     */
+    public static void launchGameRoom(Context context, String roomId, boolean isCreate, boolean isFastIn, String gameId) {
+        ARouter.getInstance().build(RouterPath.ROUTER_GAME_ROOM)
+                .withString(KEY_ROOM_IDS, roomId)
+                .withBoolean(KEY_IS_CREATE, isCreate)
+                .withBoolean(KEY_IS_FAST_IN, isFastIn)
+                .withString(KEY_GAME_ID, gameId)
+                .navigation();
+    }
+
 
     /**
      * 根据房间类型，id，跳转到相应的房间
@@ -98,6 +117,8 @@ public class IntentWrap {
             ArrayList<String> ids = new ArrayList<>();
             ids.add(roomId);
             launchLiveRoom(context, ids, 0, false);
+        } else if (roomType == RoomType.GAME_ROOM.getType()) {
+            launchGameRoom(context, roomId, false, false, "");
         }
     }
 
@@ -117,6 +138,8 @@ public class IntentWrap {
             launchVoiceRoom(context, roomIds, position, isCreate);
         } else if (roomType == RoomType.LIVE_ROOM) {
             launchLiveRoom(context, roomIds, position, isCreate);
+        } else if (roomType == RoomType.GAME_ROOM) {
+            launchGameRoom(context, roomIds.get(0), isCreate, false, "");
         }
     }
 }

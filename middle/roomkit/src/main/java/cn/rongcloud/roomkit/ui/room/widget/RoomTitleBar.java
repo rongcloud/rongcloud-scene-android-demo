@@ -53,6 +53,8 @@ public class RoomTitleBar extends ConstraintLayout {
     private CircleImageView mCreaterImageview;
     private RoomOwnerType roomOwnerType;
     private TextView tvRoomOnlineCount;
+    private TextView mTvSwitchGame;
+    private ImageButton mBtnNotice;
 
     public RoomTitleBar(@NonNull Context context) {
         this(context, null);
@@ -78,6 +80,8 @@ public class RoomTitleBar extends ConstraintLayout {
             follow();
         });
 
+        mTvSwitchGame = mRootView.findViewById(R.id.tv_switch_game);
+        mBtnNotice = mRootView.findViewById(R.id.btn_notice);
     }
 
     public Observable setOnLineMemberClickListener() {
@@ -90,6 +94,14 @@ public class RoomTitleBar extends ConstraintLayout {
 
     public Observable setOnMenuClickListener() {
         return RxView.clicks(mMenuButton).throttleFirst(1, TimeUnit.SECONDS);
+    }
+
+    public Observable setOnNoticeClickListener() {
+        return RxView.clicks(mBtnNotice).throttleFirst(1, TimeUnit.SECONDS);
+    }
+
+    public Observable setOnSwitchClickListener() {
+        return RxView.clicks(mTvSwitchGame).throttleFirst(1, TimeUnit.SECONDS);
     }
 
     public void setData(RoomOwnerType roomOwnerType, String name, int id, String roomUserId, OnFollowClickListener onFollowClickListener) {
@@ -280,6 +292,17 @@ public class RoomTitleBar extends ConstraintLayout {
                 setmLeftViewMarginStart(getResources().getDimensionPixelOffset(R.dimen.dimen_room_padding));
                 mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
                 break;
+
+            case GAME_OWNER:
+                mTvSwitchGame.setVisibility(VISIBLE);
+                mBtnNotice.setVisibility(VISIBLE);
+                tvRoomOnlineCount.setVisibility(GONE);
+                break;
+            case GAME_VIEWER:
+                mTvSwitchGame.setVisibility(GONE);
+                mBtnNotice.setVisibility(VISIBLE);
+                tvRoomOnlineCount.setVisibility(GONE);
+                break;
             default:
                 //非直播房
                 layoutParams.bottomToTop = mIDTextView.getId();
@@ -293,6 +316,14 @@ public class RoomTitleBar extends ConstraintLayout {
                 setmLeftViewMarginStart(0);
                 break;
         }
+    }
+
+    public void setSwitchGameVisible(boolean visible) {
+        mTvSwitchGame.setVisibility(visible ? VISIBLE : GONE);
+    }
+
+    public void setSwitchGameName(String name) {
+        mTvSwitchGame.setText(name);
     }
 
     /**

@@ -36,6 +36,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import cn.rongcloud.config.UserManager;
+import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.RcEvent;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.liveroom.api.RCHolder;
@@ -70,13 +73,17 @@ import cn.rongcloud.roomkit.message.RCChatroomLocationMessage;
 import cn.rongcloud.roomkit.message.RCChatroomSeats;
 import cn.rongcloud.roomkit.message.RCChatroomVoice;
 import cn.rongcloud.roomkit.message.RCFollowMsg;
+import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
 import cn.rongcloud.roomkit.ui.miniroom.OnCloseMiniRoomListener;
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback;
 import cn.rongcloud.roomkit.ui.room.model.MemberCache;
 import cn.rongcloud.rtc.api.RCRTCConfig;
+import cn.rongcloud.rtc.api.RCRTCEngine;
 import cn.rongcloud.rtc.api.RCRTCMixConfig;
+import cn.rongcloud.rtc.api.stream.RCRTCCameraOutputStream;
 import cn.rongcloud.rtc.api.stream.RCRTCInputStream;
+import cn.rongcloud.rtc.api.stream.RCRTCMicOutputStream;
 import cn.rongcloud.rtc.base.RCRTCMediaType;
 import cn.rongcloud.rtc.base.RCRTCVideoFrame;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -113,6 +120,7 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
     private List<MessageContent> messageList = new ArrayList<>();
     private String roomId;//直播房的房间ID
     private String createUserId;//房间创建人ID
+    private VoiceRoomBean voiceRoomBean;//当前房间信息
     private CurrentStatusType currentStatus = STATUS_NOT_ON_SEAT;
     private CurrentStatusType lastStatus = STATUS_NOT_ON_SEAT;
     private InviteStatusType inviteStatusType = STATUS_NOT_INVITRED;
@@ -179,6 +187,7 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
     public void unRegister() {
         this.roomId = null;
         this.createUserId = null;
+        voiceRoomBean = null;
         setCurrentStatus(STATUS_NOT_ON_SEAT);
         setInviteStatusType(STATUS_NOT_INVITRED);
         messageList.clear();
@@ -226,12 +235,26 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
     }
 
 
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
+    public void setRoomBean(VoiceRoomBean voiceRoomBean) {
+        this.voiceRoomBean = voiceRoomBean;
+        this.createUserId = voiceRoomBean.getCreateUserId();
+    }
+
+    private String getRoomName() {
+        if (voiceRoomBean != null) return voiceRoomBean.getRoomName();
+        else return "";
     }
 
     @Override
     public void leaveRoom(IRoomCallBack callback) {
+        if (voiceRoomBean != null) {
+            RCRTCMicOutputStream defaultAudioStream = RCRTCEngine.getInstance().getDefaultAudioStream();
+            RCRTCCameraOutputStream defaultVideoStream = RCRTCEngine.getInstance().getDefaultVideoStream();
+            SensorsUtil.instance().leaveRoom(roomId, getRoomName(), voiceRoomBean.isPrivate(),
+                    defaultAudioStream == null ? false : defaultAudioStream.isMicrophoneDisable(),
+                    defaultVideoStream == null ? false : true, RoomType.LIVE_ROOM.convertToRcEvent(), "");
+
+        }
         RCLiveEngine.getInstance().leaveRoom(new RCLiveCallback() {
             @Override
             public void onSuccess() {
@@ -366,6 +389,7 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
 
     @Override
     public void cancelRequestSeat(ClickCallback<Boolean> callback) {
+        SensorsUtil.instance().recallConnect(roomId, getRoomName(), RcEvent.LiveRoom);
         RCLiveEngine.getInstance().getLinkManager().cancelRequest(new RCLiveCallback() {
             @Override
             public void onSuccess() {
@@ -592,6 +616,7 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
 
     @Override
     public void requestLiveVideo(int index, ClickCallback<Boolean> callback) {
+        SensorsUtil.instance().connectRequest(roomId, getRoomName(), RcEvent.LiveRoom);
         RCLiveEngine.getInstance().getLinkManager().requestLiveVideo(index, new RCLiveCallback() {
             @Override
             public void onSuccess() {
@@ -1292,7 +1317,7 @@ public class LiveEventHelper implements ILiveEventHelper, RCLiveEventListener, R
     }
 
     @Override
-    public void onCloseMiniRoom(OnCloseMiniRoomListener.CloseResult closeResult) {
+    public void onCloseMiniRoom(CloseResult closeResult) {
         leaveRoom(new IRoomCallBack() {
             @Override
             public void onSuccess() {

@@ -7,7 +7,6 @@ import static cn.rongcloud.voice.room.VoiceRoomPresenter.STATUS_WAIT_FOR_SEAT;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +32,8 @@ import java.util.List;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.RcEvent;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.music.MusicControlManager;
@@ -305,8 +306,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
                 present.closeRoom();
             }
         });
-        mExitRoomPopupWindow.setAnimationStyle(R.style.popup_window_anim_style);
-        mExitRoomPopupWindow.showAtLocation(mBackgroundImageView, Gravity.TOP, 0, 0);
+        mExitRoomPopupWindow.show(mBackgroundImageView);
     }
 
     /**
@@ -385,7 +385,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         mAllBroadcastView.setBroadcastListener();
     }
 
-    private void initPk() {
+    private void initPk(VoiceRoomBean voiceRoomBean) {
         PKManager.get().init(mRoomId, RoomType.VOICE_ROOM.getType(), pkView, new SimpleVoicePkListener() {
             @Override
             public void onPkStart() {
@@ -518,7 +518,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         // 设置消息列表数据
         mRoomMessageAdapter.setRoomCreateId(voiceRoomBean.getCreateUserId());
         // init
-        initPk();
+        initPk(voiceRoomBean);
     }
 
 
@@ -700,7 +700,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         try {
             UIStack.getInstance().remove(((VoiceRoomActivity) requireActivity()));
             requireActivity().finish();
-            if (null != mRoomMessageAdapter)mRoomMessageAdapter.release();
+            if (null != mRoomMessageAdapter) mRoomMessageAdapter.release();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -721,6 +721,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
      */
     @Override
     public void clickPrivateMessage() {
+        SensorsUtil.instance().textClick(mRoomId, present.getmVoiceRoomBean().getRoomName(), RcEvent.RadioRoom);
         RouteUtils.routeToSubConversationListActivity(
                 requireActivity(),
                 Conversation.ConversationType.PRIVATE,
@@ -749,6 +750,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
      */
     @Override
     public void clickPk() {
+        SensorsUtil.instance().pkClick(present.getRoomId(), present.getmVoiceRoomBean().getRoomName(), RcEvent.VoiceRoom);
         PKState pkState = PKManager.get().getPkState();
         if (pkState.isNotInPk()) {
             PKManager.get().showPkInvitation(activity);

@@ -90,8 +90,8 @@ public class Member implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return TextUtils.isEmpty(userId) && userId.equals(user.getUserId());
+        Member member = (Member) o;
+        return !TextUtils.isEmpty(userId) && userId.equals(member.getUserId());
     }
 
     public UserInfo toUserInfo() {

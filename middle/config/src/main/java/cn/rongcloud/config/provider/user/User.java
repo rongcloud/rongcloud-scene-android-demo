@@ -3,8 +3,6 @@ package cn.rongcloud.config.provider.user;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.basis.utils.Logger;
-
 import java.io.Serializable;
 
 import cn.rongcloud.config.ApiConfig;
@@ -73,6 +71,10 @@ public class User implements Serializable, Provide {
         this.userName = userName;
     }
 
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
     @Deprecated
     public String getPortrait() {
         return portrait;
@@ -99,7 +101,7 @@ public class User implements Serializable, Provide {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return TextUtils.isEmpty(userId) && userId.equals(user.userId);
+        return !TextUtils.isEmpty(userId) && userId.equals(user.userId);
     }
 
     public UserInfo toUserInfo() {

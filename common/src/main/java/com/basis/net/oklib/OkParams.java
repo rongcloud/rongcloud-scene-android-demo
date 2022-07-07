@@ -18,4 +18,8 @@ public class OkParams {
     public HashMap<String, Object> build() {
         return mParams;
     }
+
+    public static OkParams Builder() {
+        return new OkParams();
+    }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.rongcloud.gameroom">
+
+    <application>
+        <activity
+            android:name="cn.rongcloud.gameroom.ui.gamelist.GameListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+
+        <activity
+            android:name=".ui.gameroom.GameRoomActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme">
+            <intent-filter>
+                <action android:name="${applicationId}.GameRoomActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

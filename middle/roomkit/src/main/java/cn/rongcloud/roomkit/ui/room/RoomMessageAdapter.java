@@ -15,6 +15,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -22,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.basis.adapter.RcyAdapter;
 import com.basis.adapter.RcyHolder;
-import com.basis.utils.Logger;
 import com.basis.utils.UiUtils;
 import com.basis.wapper.IBuffer;
 import com.basis.wapper.RCRefreshBuffer;
@@ -169,6 +169,32 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
         } else {
             setNormalMessage(holder, messageContent);
         }
+    }
+
+    RcyHolder lastHolder;
+
+    public View getLastMessageView() {
+        if (getData() == null || getData().size() < 1) {
+            return null;
+        }
+        MessageContent messageContent = getData().get(getData().size() - 1);
+        int id = getItemLayoutId(messageContent, 0);
+        lastHolder = new RcyHolder(View.inflate(context, id, null));
+        convert(lastHolder, messageContent, 0, id);
+        TextView textView;
+        if (messageContent instanceof RCChatroomLocationMessage || messageContent instanceof TextMessage) {
+            textView = lastHolder.getView(R.id.tv_message_system);
+        } else if (messageContent instanceof RCChatroomVoice) {
+            textView = lastHolder.getView(R.id.tv_message_content);
+        } else {
+            textView = lastHolder.getView(R.id.tv_message_normal);
+        }
+        textView.setMaxLines(1);
+        textView.setEllipsize(TextUtils.TruncateAt.END);
+        textView.setSingleLine();
+        textView.setTextSize(12);
+        textView.setPadding(UiUtils.dp2px(10), UiUtils.dp2px(8), UiUtils.dp2px(10), UiUtils.dp2px(8));
+        return lastHolder.itemView;
     }
 
     /**

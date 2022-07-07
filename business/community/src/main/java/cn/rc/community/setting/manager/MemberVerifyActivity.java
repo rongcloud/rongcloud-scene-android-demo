@@ -10,6 +10,7 @@ import com.basis.adapter.RcySAdapter;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.ui.BaseActivity;
 import com.basis.utils.KToast;
+import com.basis.utils.Logger;
 import com.basis.utils.ResUtil;
 import com.basis.wapper.IResultBack;
 
@@ -68,6 +69,7 @@ public class MemberVerifyActivity extends BaseActivity {
                     temp.setUpdateType(Constants.UpdateType.UPDATE_TYPE_ALL.getUpdateTypeCode());
                     temp.setNeedAudit(s.verify ? Constants.NeedAuditType.NEED_AUDIT_TYPE.getNeedAuditCode()
                             : Constants.NeedAuditType.NOT_NEED_AUDIT_TYPE.getNeedAuditCode());
+                    Logger.e("NeedAudit 设置", temp.getUid()+":"+temp.getNeedAudit());
                     CommunityHelper.getInstance().saveCommunityAll(temp, new IResultBack<Wrapper>() {
                         @Override
                         public void onResult(Wrapper wrapper) {

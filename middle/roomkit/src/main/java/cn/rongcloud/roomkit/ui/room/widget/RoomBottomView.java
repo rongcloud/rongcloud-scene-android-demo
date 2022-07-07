@@ -78,6 +78,10 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
      * 申请上麦
      */
     private ImageView mRequestSeatView;
+    /**
+     * 麦克风开关
+     */
+    private ImageView mMicSwitch;
 
     private InputBarDialog inputBarDialog;
 
@@ -104,6 +108,7 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         mPrivateMessageCountView = mRootView.findViewById(R.id.tv_unread_message_number);
         mSendGiftView = mRootView.findViewById(R.id.iv_send_gift);
         mPkView = mRootView.findViewById(R.id.iv_request_pk);
+        mMicSwitch = mRootView.findViewById(R.id.iv_mic_switch);
         mPkView.setSelected(false);
         mRequestSeatView = mRootView.findViewById(R.id.iv_request_enter_seat);
         mSendMessageView.setOnClickListener(v -> {
@@ -125,6 +130,8 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
                 }
             });
             inputBarDialog.show();
+            if (mOnBottomOptionClickListener != null)
+                mOnBottomOptionClickListener.clickMessageView();
         });
         audioRecordManager = new AudioRecordManager();
         audioRecordManager.setOnSendVoiceMessageClickListener(new AudioRecordManager.OnSendVoiceMessageClickListener() {
@@ -137,6 +144,12 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         mSendVoiceMassageView.setOnTouchListener(onTouchListener);
         // 私密消息数量监听
         UnReadMessageManager.getInstance().addObserver(new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE}, this);
+    }
+
+    public void closeInput() {
+        if (inputBarDialog != null && inputBarDialog.isShowing()) {
+            inputBarDialog.dismiss();
+        }
     }
 
     private OnTouchListener onTouchListener = new OnTouchListener() {
@@ -212,6 +225,9 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         }
     }
 
+    public void setInviteVisible(boolean visible) {
+        mSeatOrder.setVisibility(visible ? VISIBLE : GONE);
+    }
 
     /**
      * 设置申请上面的按钮的图
@@ -259,7 +275,18 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
             mSendGiftView.setOnClickListener(v -> {
                 onBottomOptionClickListener.onSendGift();
             });
+            mMicSwitch.setOnClickListener(v -> {
+                onBottomOptionClickListener.clickSwitchMic();
+            });
         }
+    }
+
+    public void setMicSwitchVisible(boolean visible) {
+        mMicSwitch.setVisibility(visible ? VISIBLE : GONE);
+    }
+
+    public void setMicSwitch(boolean isOn) {
+        mMicSwitch.setSelected(!isOn);
     }
 
     public void refreshPkState(PKViewState pkViewState) {
@@ -323,6 +350,26 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
                 mRequestSeatView.setVisibility(GONE);
                 mSendVoiceMassageView.setVisibility(VISIBLE);
                 break;
+            case GAME_OWNER:
+                mSeatOrder.setVisibility(VISIBLE);
+                mPkView.setVisibility(GONE);
+                mSendGiftView.setVisibility(VISIBLE);
+                mPrivateMessageView.setVisibility(VISIBLE);
+                mRequestSeatView.setVisibility(GONE);
+                mSettingView.setVisibility(VISIBLE);
+                mSendVoiceMassageView.setVisibility(GONE);
+                mMicSwitch.setVisibility(GONE);
+                break;
+            case GAME_VIEWER:
+                mSeatOrder.setVisibility(GONE);
+                mPkView.setVisibility(GONE);
+                mSendGiftView.setVisibility(VISIBLE);
+                mPrivateMessageView.setVisibility(VISIBLE);
+                mRequestSeatView.setVisibility(GONE);
+                mSettingView.setVisibility(GONE);
+                mSendVoiceMassageView.setVisibility(VISIBLE);
+                mMicSwitch.setVisibility(GONE);
+                break;
         }
     }
 
@@ -360,5 +407,11 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         void onSendVoiceMessage(RCChatroomVoice rcChatroomVoice);
 
         boolean canSend();
+
+        default void clickMessageView() {
+        }
+
+        default void clickSwitchMic() {
+        }
     }
 }

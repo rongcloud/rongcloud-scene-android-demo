@@ -56,6 +56,8 @@ import java.util.concurrent.TimeUnit;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.RcEvent;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.liveroom.api.RCHolder;
@@ -91,6 +93,7 @@ import cn.rongcloud.roomkit.message.RCFollowMsg;
 import cn.rongcloud.roomkit.provider.VoiceRoomProvider;
 import cn.rongcloud.roomkit.ui.RoomListIdsCache;
 import cn.rongcloud.roomkit.ui.RoomOwnerType;
+import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.room.dialog.shield.Shield;
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback;
 import cn.rongcloud.roomkit.ui.room.fragment.MemberSettingFragment;
@@ -266,6 +269,8 @@ public class LiveRoomPresenter extends BasePresenter<LiveRoomView> implements
      * @param isCreate
      */
     private void joinRoom(String roomId, boolean isCreate) {
+        SensorsUtil.instance().joinRoom(roomId, mVoiceRoomBean.getRoomName(), mVoiceRoomBean.getIsPrivate() == 1,
+                false, false, RoomType.LIVE_ROOM.convertToRcEvent());
         if (mVoiceRoomBean.getCreateUserId().equals(UserManager.get().getUserId())) {
             prepare(roomId, isCreate);
         } else {
@@ -477,7 +482,7 @@ public class LiveRoomPresenter extends BasePresenter<LiveRoomView> implements
         //初次进入的时候，获取房间内的人数信息
         MemberCache.getInstance().fetchData(mVoiceRoomBean.getRoomId());
         //设置创建者id
-        LiveEventHelper.getInstance().setCreateUserId(mVoiceRoomBean.getCreateUserId());
+        LiveEventHelper.getInstance().setRoomBean(mVoiceRoomBean);
         //显示直播布局
         mView.showRCLiveVideoView(RCLiveEngine.getInstance().preview());
         getShield();
@@ -587,6 +592,7 @@ public class LiveRoomPresenter extends BasePresenter<LiveRoomView> implements
      */
     @Override
     public void sendGift() {
+        SensorsUtil.instance().giftClick(getRoomId(), getRoomName(), RcEvent.LiveRoom);
         ArrayList<Member> memberArrayList = new ArrayList<>();
 
         if (PKManager.get().getPkState().isInPk()) {
@@ -679,12 +685,13 @@ public class LiveRoomPresenter extends BasePresenter<LiveRoomView> implements
     public void finishLiveRoom() {
         mView.showLoading("正在关闭房间");
         MusicControlManager.getInstance().release();
+        if (mVoiceRoomBean != null)
+            SensorsUtil.instance().closeRoom(getRoomId(), mVoiceRoomBean.getRoomName(), "", RcEvent.LiveRoom);
         //房主关闭房间，调用删除房间接口
         OkApi.get(VRApi.deleteRoom(mVoiceRoomBean.getRoomId()), null, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 mView.dismissLoading();
-                mView.finish();
             }
 
             @Override
@@ -1361,6 +1368,7 @@ public class LiveRoomPresenter extends BasePresenter<LiveRoomView> implements
 
     @Override
     public void clickPrivateMessage() {
+        SensorsUtil.instance().textClick(getRoomId(), getRoomName(), RcEvent.LiveRoom);
         RouteUtils.routeToSubConversationListActivity(
                 mView.getLiveActivity(),
                 Conversation.ConversationType.PRIVATE,
@@ -1421,6 +1429,7 @@ public class LiveRoomPresenter extends BasePresenter<LiveRoomView> implements
 
     @Override
     public void clickPk() {
+        SensorsUtil.instance().pkClick(getRoomId(), getRoomName(), RcEvent.LiveRoom);
         PKState pkState = PKManager.get().getPkState();
         int mixType = RCDataManager.get().getMixType();
         // 非默认或2分屏 且 不是邀请状态 ，可点击

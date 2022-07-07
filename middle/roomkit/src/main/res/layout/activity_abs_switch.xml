@@ -34,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight="1.8"
+            android:background="@color/transparent"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
             app:tabIndicatorColor="#03003A"
             app:tabIndicatorFullWidth="false"

@@ -2,6 +2,7 @@ package cn.rongcloud.roomkit.ui.room.fragment;
 
 
 import cn.rongcloud.config.provider.user.User;
+import cn.rongcloud.roomkit.ui.room.model.Member;
 
 /**
  * @author lihao
@@ -80,4 +81,35 @@ public interface SeatActionClickListener {
      * 切换麦位
      */
     void switchToSeat(int seatIndex, ClickCallback<Boolean> callback);
+
+    /**
+     * 换我上麦
+     *
+     * @param member
+     * @param seatIndex
+     * @param callback
+     */
+    default void switchSelfEnterSeat(Member member, int seatIndex, ClickCallback<Boolean> callback) {
+
+    }
+
+    /**
+     * 邀请游戏
+     *
+     * @param user
+     * @param callback
+     */
+    default void clickInvitedGame(User user, ClickCallback<Boolean> callback) {
+
+    }
+
+    /**
+     * 踢出游戏
+     *
+     * @param user
+     * @param callback
+     */
+    default void clickKickGame(User user, ClickCallback<Boolean> callback) {
+
+    }
 }

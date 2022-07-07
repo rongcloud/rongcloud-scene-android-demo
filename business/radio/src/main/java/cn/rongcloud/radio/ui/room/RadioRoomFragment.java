@@ -3,7 +3,6 @@ package cn.rongcloud.radio.ui.room;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +24,8 @@ import java.util.List;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.RcEvent;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.music.MusicControlManager;
@@ -271,7 +272,7 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
     public void finish() {
         //在销毁之前提前出栈顶
         try {
-            if (null != mRoomMessageAdapter)mRoomMessageAdapter.release();
+            if (null != mRoomMessageAdapter) mRoomMessageAdapter.release();
             UIStack.getInstance().remove(((RadioRoomActivity) requireActivity()));
             requireActivity().finish();
         } catch (Exception e) {
@@ -515,8 +516,7 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
                 dialog.show();
             }
         });
-        mExitRoomPopupWindow.setAnimationStyle(R.style.popup_window_anim_style);
-        mExitRoomPopupWindow.showAtLocation(mBackgroundImageView, Gravity.TOP, 0, 0);
+        mExitRoomPopupWindow.show(mBackgroundImageView);
     }
 
     @Override
@@ -553,6 +553,7 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
 
     @Override
     public void clickPrivateMessage() {
+        SensorsUtil.instance().textClick(mRoomId, present.getRoomName(), RcEvent.RadioRoom);
         RouteUtils.routeToSubConversationListActivity(
                 requireActivity(),
                 Conversation.ConversationType.PRIVATE,

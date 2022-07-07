@@ -21,6 +21,7 @@ import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.ui.UIStack;
 import com.basis.utils.GsonUtil;
 import com.basis.utils.KToast;
+import com.basis.utils.Logger;
 import com.basis.utils.ResUtil;
 import com.basis.wapper.IResultBack;
 import com.basis.widget.dialog.VRCenterDialog;
@@ -92,6 +93,7 @@ public class CommunityHelper implements ICommunityHelper, IUltraGroupUserEventLi
 
     /**
      * 当前所在频道的实体类监听
+     * communityDetailsLiveData
      *
      * @return
      */
@@ -416,6 +418,7 @@ public class CommunityHelper implements ICommunityHelper, IUltraGroupUserEventLi
                 CommunityDetailsBean detailsBean = null;
                 if (result.ok()) {
                     detailsBean = result.get(CommunityDetailsBean.class);
+                    Logger.e("NeedAudit 获取", targetId+":"+detailsBean.getNeedAudit());
                     communityDetailsLiveData.setValue(detailsBean);
                 } else {
                     //当前社区已解散
@@ -528,7 +531,7 @@ public class CommunityHelper implements ICommunityHelper, IUltraGroupUserEventLi
             public void onResult(Wrapper result) {
                 if (result.ok()) {
                     KToast.show(ResUtil.getString(R.string.cmu_save_success));
-                    communityDetailsLiveData.postValue(communityDetailsBean);
+//                    communityDetailsLiveData.setValue(communityDetailsBean);
                 } else {
                     KToast.show(result.getMessage());
                 }

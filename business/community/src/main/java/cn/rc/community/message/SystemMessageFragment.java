@@ -9,6 +9,7 @@ import static cn.rc.community.message.sysmsg.CommunityType.disabled;
 import static cn.rc.community.message.sysmsg.CommunityType.enabled;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.basis.adapter.RcyHolder;
@@ -31,10 +32,12 @@ import java.util.Map;
 import cn.rc.community.CommunityAPI;
 import cn.rc.community.OnConvertListener;
 import cn.rc.community.R;
+import cn.rc.community.bean.CommunityDetailsBean;
 import cn.rc.community.bean.UltraGroupUserBean;
 import cn.rc.community.conversion.ObjectName;
 import cn.rc.community.conversion.controller.MessageManager;
 import cn.rc.community.conversion.controller.interfaces.IManager;
+import cn.rc.community.helper.CommunityHelper;
 import cn.rc.community.message.sysmsg.CommunityDeleteMsg;
 import cn.rc.community.message.sysmsg.CommunitySysNoticeMsg;
 import cn.rc.community.message.sysmsg.CommunityType;
@@ -199,43 +202,55 @@ public class SystemMessageFragment extends AbsMessageFragment<Message> implement
             holder.setVisible(R.id.ok, false);
             holder.setVisible(R.id.info, false);
             if (TextUtils.isEmpty(extra) || TextUtils.equals("0", extra)) {// 未处理
-                Map<String, Object> params = new HashMap<>(4);
-                params.put("userUid", msg.getFromUserId());
-                params.put("communityUid", msg.getCommunityUid());
-                OkApi.post(CommunityAPI.Community_User_info, params, new WrapperCallBack() {
+                CommunityHelper.getInstance().getCommunityDetails(msg.getCommunityUid(), new IResultBack<CommunityDetailsBean>() {
                     @Override
-                    public void onResult(Wrapper result) {
-                        UltraGroupUserBean ultraGroupUserBean = result.get(UltraGroupUserBean.class);
-                        if (ultraGroupUserBean != null) {
-                            if ((ultraGroupUserBean.getStatus() == NOT_PASS_AUDIT.getCode() ||
-                                    ultraGroupUserBean.getStatus() == KNOCKOUT.getCode() ||
-                                    ultraGroupUserBean.getStatus() == QUIT.getCode()) ||
-                                    ultraGroupUserBean.getStatus() == AUDITING.getCode()) {
-                                holder.setVisible(R.id.reject, true);
-                                holder.setVisible(R.id.ok, true);
-                            } else if (ultraGroupUserBean.getStatus() == PASS_AUDIT.getCode()) {
-                                //已经在当前社区里面了
-                                holder.setVisible(R.id.info, true);
-                                holder.setText(R.id.info, "已同意");
-                                saveMessage(message, 1);
-                            }
+                    public void onResult(CommunityDetailsBean communityDetailsBean) {
+                        if (communityDetailsBean == null) {
+                            //社区已经解散了，该消息不做处理
+                            holder.setVisible(R.id.info, true);
+                            holder.setText(R.id.info, "已拒绝");
+                            saveMessage(message, 2);
                         } else {
-                            //如果没有拿到信息，
-                            holder.setVisible(R.id.reject, true);
-                            holder.setVisible(R.id.ok, true);
+                            Map<String, Object> params = new HashMap<>(4);
+                            params.put("userUid", msg.getFromUserId());
+                            params.put("communityUid", msg.getCommunityUid());
+                            OkApi.post(CommunityAPI.Community_User_info, params, new WrapperCallBack() {
+                                @Override
+                                public void onResult(Wrapper result) {
+                                    UltraGroupUserBean ultraGroupUserBean = result.get(UltraGroupUserBean.class);
+                                    if (ultraGroupUserBean != null) {
+                                        if ((ultraGroupUserBean.getStatus() == NOT_PASS_AUDIT.getCode() ||
+                                                ultraGroupUserBean.getStatus() == KNOCKOUT.getCode() ||
+                                                ultraGroupUserBean.getStatus() == QUIT.getCode()) ||
+                                                ultraGroupUserBean.getStatus() == AUDITING.getCode()) {
+                                            holder.setVisible(R.id.reject, true);
+                                            holder.setVisible(R.id.ok, true);
+                                        } else if (ultraGroupUserBean.getStatus() == PASS_AUDIT.getCode()) {
+                                            //已经在当前社区里面了
+                                            holder.setVisible(R.id.info, true);
+                                            holder.setText(R.id.info, "已同意");
+                                            saveMessage(message, 1);
+                                        }
+                                    } else {
+                                        //如果没有拿到信息，
+                                        holder.setVisible(R.id.reject, true);
+                                        holder.setVisible(R.id.ok, true);
+                                    }
+                                }
+                            });
+                            holder.setOnClickListener(R.id.reject, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    responseRequest(true, message);
+                                }
+                            });
+                            holder.setOnClickListener(R.id.ok, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    responseRequest(false, message);
+                                }
+                            });
                         }
-                    }
-                });
-                holder.setOnClickListener(R.id.reject, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        responseRequest(true, message);
-                    }
-                });
-                holder.setOnClickListener(R.id.ok, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        responseRequest(false, message);
                     }
                 });
             } else {// 已处理

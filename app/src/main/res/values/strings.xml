@@ -4,16 +4,20 @@
     <string name="app_name_test">融云 RTC-Test</string>
 
     <string name="voice_room">语聊房</string>
-    <string name="voice_room_des">超大聊天室，支持麦位、麦序 \n管理，涵盖 KTV 等多种玩法</string>
+    <string name="voice_room_des">支持连麦位、PK</string>
     <string name="video_call">视频通话</string>
-    <string name="video_call_des">低延迟、高清晰度 视频通话</string>
+    <string name="video_call_des">低延迟、高清晰</string>
     <string name="audio_call">语音通话</string>
-    <string name="audio_call_des">拥有智能降噪的无差别电话体验</string>
+    <string name="audio_call_des">低延迟、智能降噪</string>
     <string name="radio_room">语音电台</string>
-    <string name="radio_room_des">听众端采用CDN链路 支持人数无上限</string>
+    <string name="radio_room_des">单主播语音推流</string>
+    <string name="game_room">游戏房</string>
+    <string name="game_room_des">多种游戏 | 快速匹配</string>
+    <string name="coming_soon_room">Coming Soon</string>
+    <string name="coming_soon_room_des">新功能正在打磨中...</string>
 
     <string name="live_video_call">视频直播</string>
-    <string name="live_video_des">视频直播间，支持高级美颜、观众连麦互动</string>
+    <string name="live_video_des">多种布局，支持美颜、PK</string>
     <string name="text_please_exit_room">请先退出房间，再进行通话!</string>
     <string name="text_please_allow_permission">请赋予必要权限</string>
 </resources>

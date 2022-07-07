@@ -8,7 +8,6 @@ import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.api.body.FileBody;
 import com.basis.net.oklib.api.callback.FileIOCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
-import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
 
@@ -49,7 +48,6 @@ public class MusicApi {
             @Override
             public void onResult(Wrapper result) {
                 List<MusicBean> temp = result.getList(MusicBean.class);
-                Logger.e("MusicApi", "result count = " + (null == temp ? 0 : temp.size()) + " type = " + type);
                 if (null != resultBack) resultBack.onResult(temp);
             }
 

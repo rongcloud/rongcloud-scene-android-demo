@@ -154,7 +154,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
         // 创建之前检查是否已有创建的房间
         OkApi.put(
                 VRApi.ROOM_CREATE_CHECK,
-                new OkParams().add("roomType", getRoomType().getType()).build(),
+                null,
                 new WrapperCallBack() {
                     @Override
                     public void onResult(Wrapper result) {

@@ -29,4 +29,5 @@
     <color name="bg_broadcast">#493C98</color>
 
     <color name="bg_room_dialog">#5C5095</color>
+    <color name="bg_exit_pop">#8003062F</color>
 </resources>

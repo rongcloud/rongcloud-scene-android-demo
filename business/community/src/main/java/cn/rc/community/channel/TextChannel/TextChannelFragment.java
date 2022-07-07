@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.basis.ui.mvp.BaseMvpFragment;
 import com.basis.utils.KToast;
 import com.basis.utils.Logger;
 import com.basis.utils.ResUtil;
+import com.basis.utils.UiUtils;
 import com.basis.wapper.IResultBack;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -121,7 +123,10 @@ public class TextChannelFragment extends BaseMvpFragment<TextChannelPresent> imp
                 if (communityDetailsBean == null) return;
                 CommunityDetailsBean.CommunityUserBean u = communityDetailsBean.getCommunityUser();
                 int auditStatus = null != u ? u.getAuditStatus() : Constants.AuditStatus.NOT_JOIN.getCode();
-                inputPanelId.setVisibility(auditStatus == Constants.AuditStatus.JOINED.getCode() ? View.VISIBLE : View.GONE);
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) inputPanelId.getLayoutParams();
+                layoutParams.bottomMargin = auditStatus == Constants.AuditStatus.JOINED.getCode() ? UiUtils.dp2px(10) : UiUtils.dp2px(30);
+                inputPanelId.setLayoutParams(layoutParams);
+                inputPanelId.setVisibility(auditStatus == Constants.AuditStatus.JOINED.getCode() ? View.VISIBLE : View.INVISIBLE);
                 refreshShutUpView();
             }
         });

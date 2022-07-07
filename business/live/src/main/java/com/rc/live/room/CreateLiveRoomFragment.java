@@ -47,6 +47,7 @@ import java.util.Map;
 import java.util.Random;
 
 import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.liveroom.api.RCLiveEngine;
 import cn.rongcloud.liveroom.weight.RCLiveView;
 import cn.rongcloud.roomkit.api.VRApi;
@@ -351,6 +352,8 @@ public class CreateLiveRoomFragment extends BaseFragment implements View.OnClick
                 if (mCreateRoomCallBack != null) {
                     VoiceRoomBean voiceRoomBean = result.get(VoiceRoomBean.class);
                     if (result.ok() && voiceRoomBean != null) {
+                        SensorsUtil.instance().createRoom(voiceRoomBean.getRoomId(), voiceRoomBean.getRoomName(), rbPrivate.isChecked(),
+                                true, true, mRoomType.convertToRcEvent());
                         mCreateRoomCallBack.onCreateSuccess(voiceRoomBean);
                     } else if (30016 == result.getCode() && voiceRoomBean != null) {
                         mCreateRoomCallBack.onCreateExist(voiceRoomBean);

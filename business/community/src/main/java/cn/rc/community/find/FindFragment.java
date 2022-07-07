@@ -125,7 +125,7 @@ public class FindFragment extends BaseFragment {
             ImageView portrait = holder.getView(R.id.iv_portrait_id);
             ImageView ivBackGroup = holder.getView(R.id.iv_background);
             ImageLoader.loadUrl(portrait, item.getPortrait(), R.color.app_color_white);
-            ImageLoader.loadUrl(ivBackGroup, item.getCoverUrl(), R.color.basis_green);
+            ImageLoader.loadUrl(ivBackGroup, item.getCoverUrl(), R.color.app_color_white);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +50,8 @@ import java.util.Map;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.RcEvent;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.liveroom.api.RCLiveEngine;
@@ -85,6 +86,7 @@ import cn.rongcloud.roomkit.ui.room.fragment.gift.GiftFragment;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.IFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomBeautyFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomBeautyMakeUpFun;
+import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomFunIdUitls;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomLockFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomMusicFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomNameFun;
@@ -441,8 +443,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
 
             }
         });
-        mExitRoomPopupWindow.setAnimationStyle(R.style.popup_window_anim_style);
-        mExitRoomPopupWindow.showAtLocation(clLiveRoomView, Gravity.TOP, 0, 0);
+        mExitRoomPopupWindow.show(clLiveRoomView);
     }
 
     private View createMiniWindow() {
@@ -667,6 +668,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
                 }
             });
         }
+        SensorsUtil.instance().settingClick(mRoomId, present.getRoomName(), fun.getText(), RoomFunIdUitls.convert(fun), RcEvent.LiveRoom);
     }
 
     /**
@@ -963,7 +965,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
     @Override
     public void finish() {
         present.unInitLiveRoomListener();
-        if (null != mRoomMessageAdapter)mRoomMessageAdapter.release();
+        if (null != mRoomMessageAdapter) mRoomMessageAdapter.release();
         requireActivity().finish();
     }
 

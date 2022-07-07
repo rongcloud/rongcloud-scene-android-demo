@@ -25,4 +25,12 @@ public enum RoomOwnerType {
      * 直播房观众
      */
     LIVE_VIEWER,
+    /**
+     * 游戏房主
+     */
+    GAME_OWNER,
+    /**
+     * 游戏观众
+     */
+    GAME_VIEWER
 }

@@ -14,6 +14,7 @@ public class AppConfig {
     public final static String MODE_RADIO = "radio";
     public final static String MODE_CALL = "call";
     public final static String MODE_LIVE = "live";
+    public final static String MODE_GAME = "game";
 
     public static AppConfig get() {
         return Holder.INSTANCE;
@@ -21,17 +22,17 @@ public class AppConfig {
 
     public void init(String appKey,
                      String umengAppKey,
-                     String channelName,
                      String baseServerAddress,//host
                      String businessToken, // businesstoken
+                     String dispatchChannel,// 分发渠道
                      boolean international,// 国际化标识
                      String[] busiModes//配置业务模块数组
     ) {
         this.appKey = appKey;
         this.umengAppKey = umengAppKey;
-        this.channelName = channelName;
         this.baseServerAddress = baseServerAddress;
         this.businessToken = businessToken;
+        this.dispatchChannel = dispatchChannel;
         this.international = international;
         if (null == modes) modes = new ArrayList();
         modes.clear();
@@ -45,10 +46,10 @@ public class AppConfig {
 
     private String appKey = "";
     private String umengAppKey = "";
-    private String channelName = "";
     private String baseServerAddress = "";
     private String businessToken = "";
     private boolean international = false;
+    private String dispatchChannel;
     private List<String> modes;
 
     public String getAppKey() {
@@ -57,10 +58,6 @@ public class AppConfig {
 
     public String getUmengAppKey() {
         return umengAppKey;
-    }
-
-    public String getChannelName() {
-        return channelName;
     }
 
     public String getBaseServerAddress() {
@@ -73,6 +70,10 @@ public class AppConfig {
 
     public boolean isInternational() {
         return international;
+    }
+
+    public String getDispatchChannel() {
+        return null == dispatchChannel ? "" : dispatchChannel;
     }
 
     /**

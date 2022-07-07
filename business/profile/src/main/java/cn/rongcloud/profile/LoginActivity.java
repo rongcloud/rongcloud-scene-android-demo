@@ -6,7 +6,9 @@ package cn.rongcloud.profile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.Spannable;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -38,6 +41,8 @@ import com.basis.widget.loading.LoadTag;
 
 import cn.rongcloud.config.ApiConfig;
 import cn.rongcloud.config.AppConfig;
+import cn.rongcloud.config.UserManager;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.router.RouterPath;
 import cn.rongcloud.profile.region.Region;
@@ -85,6 +90,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         btnCode.setOnClickListener(this);
         login.setOnClickListener(this);
         vRegion.setOnClickListener(this);
+
+        //神策埋点记录激活时间
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(this, "android.permission.READ_PHONE_STATE") != PackageManager.PERMISSION_GRANTED) {
+                // 6.0 以上，无权限时，先申请 READ_PHONE_STATE 权限。
+                ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_PHONE_STATE"}, 100);
+            } else {
+                // 6.0 以上，有权限时，直接触发激活事件。
+                SensorsUtil.instance().trackAppInstall();
+            }
+        } else {
+            // 6.0 以下，无须申请权限，直接触发激活事件。
+            SensorsUtil.instance().trackAppInstall();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            // 申请权限结果回调时（无论申请权限成功失败），都需要触发激活事件。
+            SensorsUtil.instance().trackAppInstall();
+        }
     }
 
     void initBottom() {
@@ -179,6 +207,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     void sendCode(String reg, String phone) {
+        SensorsUtil.instance().getCode("登陆");
         ProfileApi.sendVerificationCode(reg, phone, new IResultBack<Boolean>() {
             @Override
             public void onResult(Boolean aBoolean) {
@@ -228,6 +257,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     void login(String reg, String phone, String code) {
         LoadTag tag = new LoadTag(activity, "登录中...");
         tag.show();
+        SensorsUtil.instance().login("demo注册页", "验证码登录");
         ProfileApi.login(reg, phone, code, new IResultBack<User>() {
             @Override
             public void onResult(User user) {
@@ -247,6 +277,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 public void onSuccess(String t) {
                     Logger.e(TAG, "connect#onSuccess:" + t);
                     if (null != tag) tag.dismiss();
+                    SensorsUtil.instance().setUserProperties(UserManager.get().getPhone());
+                    SensorsUtil.instance().registerSuperProperties(true);
                     ARouter.getInstance().build(RouterPath.ROUTER_MAIN).navigation();
                     finish();
                 }

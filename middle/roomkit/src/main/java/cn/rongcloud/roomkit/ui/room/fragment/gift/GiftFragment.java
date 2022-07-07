@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.basis.adapter.RcyHolder;
@@ -16,7 +15,6 @@ import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.ui.BaseBottomSheetDialog;
 import com.basis.utils.ImageLoader;
-import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
 import com.basis.utils.UiUtils;
 
@@ -77,6 +75,8 @@ public class GiftFragment extends BaseBottomSheetDialog {
     private OnSendGiftListener mOnSendGiftListener;
     private CountDownLatch latch;
     private List<Member> successMembers = new ArrayList<>();
+    // 显示的麦位号，true 从1开始，false 从0开始
+    private boolean isNormalSeatIndex = false;
 
     public GiftFragment(VoiceRoomBean voiceRoomBean, String selectUserId, OnSendGiftListener onSendGiftListener) {
         super(R.layout.fragment_gift);
@@ -87,6 +87,10 @@ public class GiftFragment extends BaseBottomSheetDialog {
             mSelectUserIds.add(selectUserId);
         }
         mCurrentGift = giftList.get(0);
+    }
+
+    public void setNormalSeatIndex(boolean normalSeatIndex) {
+        isNormalSeatIndex = normalSeatIndex;
     }
 
     public void refreshMember(List<Member> members) {
@@ -137,12 +141,11 @@ public class GiftFragment extends BaseBottomSheetDialog {
             public void convert(RcyHolder holder, Member member, int position) {
                 ImageView imageView = holder.getView(R.id.iv_member_head);
                 ImageLoader.loadUrl(imageView, member.getPortraitUrl(), R.drawable.default_portrait);
-                Logger.e("Gift","memberIndex = "+member.getSeatIndex());
                 String name = "观众";
                 if (TextUtils.equals(mVoiceRoomBean.getCreateUserId(), member.getUserId())) {
                     name = "房主";
                 } else if (member.getSeatIndex() >= 0 && member.getSeatIndex() < Integer.MAX_VALUE) {
-                    name = member.getSeatIndex() + "";
+                    name = (isNormalSeatIndex ? (member.getSeatIndex() + 1) : member.getSeatIndex()) + "";
                 }
                 holder.setText(R.id.tv_member_name, name);
                 holder.itemView.setSelected(mSelectUserIds.contains(member.getUserId()));

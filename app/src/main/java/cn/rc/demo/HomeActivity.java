@@ -29,14 +29,14 @@ import io.rong.imlib.model.Conversation;
 public class HomeActivity extends PermissionActivity implements UnReadMessageManager.IUnReadMessageObserver {
     private final static String TAG = "HomeActivity";
     private final static HomeBottomBar[] barTitles = new HomeBottomBar[]{
-            new HomeBottomBar("社区", R.drawable.selector_bar_community, RouterPath.FRAGMENT_COMMUNITY, false, true),
+            // new HomeBottomBar("社区", R.drawable.selector_bar_community, RouterPath.FRAGMENT_COMMUNITY, false, true),
             new HomeBottomBar("娱乐", R.drawable.selector_bar_home, RouterPath.FRAGMENT_HOME, false, false),
-            new HomeBottomBar("发现", R.drawable.selector_bar_find, RouterPath.FRAGMENT_FIND),
+            // new HomeBottomBar("发现", R.drawable.selector_bar_find, RouterPath.FRAGMENT_FIND),
             new HomeBottomBar("消息", R.drawable.selector_bar_message, RouterPath.FRAGMENT_MESSAGE),
             new HomeBottomBar("我的", R.drawable.selector_bar_me, RouterPath.FRAGMENT_ME_COMMUNITY)
     };
 
-    private final static int MSG_INDEX = 3;
+    private static int MSG_INDEX = 0;
 
     private TabLayout tabLayout;
     private ViewPager2 container;
@@ -92,6 +92,13 @@ public class HomeActivity extends PermissionActivity implements UnReadMessageMan
                 tab.setIcon(barTitles[position].icon);
             }
         }).attach();
+
+        for (int i = 0; i < barTitles.length; i++) {
+            if (TextUtils.equals(barTitles[i].router, RouterPath.FRAGMENT_MESSAGE)) {
+                MSG_INDEX = i;
+                break;
+            }
+        }
 
         // 未读消息
         Conversation.ConversationType[] cs = new Conversation.ConversationType[]{

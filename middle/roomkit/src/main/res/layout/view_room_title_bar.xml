@@ -37,8 +37,8 @@
             android:ellipsize="end"
             android:maxWidth="120dp"
             android:maxLines="1"
-            android:textColor="@color/white"
             android:paddingStart="@dimen/dimen_room_padding"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tv_room_id"
@@ -50,28 +50,28 @@
             android:id="@+id/tv_room_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_room_padding"
             android:textColor="@color/white"
             android:textSize="9sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_room_name"
             app:layout_constraintTop_toBottomOf="@id/tv_room_name"
-            android:paddingStart="@dimen/dimen_room_padding"
-            android:visibility="visible"
             tools:text="ID 1234567" />
 
         <TextView
             android:id="@+id/tv_room_online"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_room_padding"
             android:drawableLeft="@drawable/shape_online_icon"
             android:drawablePadding="3dp"
             android:text="在线 1"
             android:textColor="@color/white"
             android:textSize="9sp"
-            android:layout_marginStart="@dimen/dimen_room_padding"
-            app:layout_constraintStart_toEndOf="@id/tv_room_id"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_room_id"
             app:layout_constraintTop_toBottomOf="@id/tv_room_name"
             tools:text="在线 648" />
 
@@ -79,15 +79,15 @@
             android:id="@+id/tv_room_delay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_room_padding"
             android:drawableStart="@drawable/ic_room_delay_1"
             android:drawablePadding="3dp"
             android:text="0"
             android:textColor="@color/white"
             android:textSize="9sp"
             android:visibility="visible"
-            app:layout_constraintStart_toEndOf="@id/tv_room_online"
-            android:layout_marginStart="@dimen/dimen_room_padding"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_room_online"
             app:layout_constraintTop_toBottomOf="@id/tv_room_name"
             tools:text="100" />
 
@@ -146,4 +146,35 @@
         app:layout_constraintEnd_toStartOf="@id/btn_menu"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_switch_game"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/game_bg_switch_game"
+        android:drawableEnd="@drawable/game_ic_switch_game_arrow"
+        android:drawablePadding="2dp"
+        android:gravity="center"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:text="切换游戏"
+        android:textColor="@color/white"
+        android:textSize="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cl_left"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_notice"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        android:src="@drawable/game_ic_room_notice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2:3"
+        app:layout_constraintEnd_toStartOf="@id/btn_menu"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,8 @@ public interface IWrapBar<T extends IWrapBar> {
 
     T setTitleAndGravity(String title, int gravity);
 
+    T setBackIcon(@DrawableRes int res);
+
     T setOnMenuSelectedListener(OnMenuSelectedListener listener);
 
     T addOptionMenu(String title);

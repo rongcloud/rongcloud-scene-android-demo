@@ -72,6 +72,7 @@ public class MusicControlManager extends RCRTCAudioMixingStateChangeListener imp
     private String mRoomId;
     private LoadTag loadTag = null;
     private RCAudioRouteType routeType;
+    private boolean hasSetAudioRouteListener = false;
 
     public MusicControlManager() {
         // 这里存到了cache缓存目录下，可根据自己需求存到其他地方
@@ -98,8 +99,11 @@ public class MusicControlManager extends RCRTCAudioMixingStateChangeListener imp
         musicControl.setRemoteVolume(RCRTCAudioMixer.getInstance().getMixingVolume());
         musicControl.setLocalVolume(RCRTCAudioMixer.getInstance().getPlaybackVolume());
         RCRTCAudioMixer.getInstance().setAudioMixingStateChangeListener(this);
+        if (!hasSetAudioRouteListener) {
+            hasSetAudioRouteListener = true;
+            RCRTCAudioRouteManager.getInstance().setOnAudioRouteChangedListener(this);
+        }
         initRouteType();
-        RCRTCAudioRouteManager.getInstance().setOnAudioRouteChangedListener(this);
     }
 
     private void initRouteType() {
@@ -817,6 +821,7 @@ public class MusicControlManager extends RCRTCAudioMixingStateChangeListener imp
             RCRTCEngine.getInstance().getAudioEffectManager().unloadAllEffects();
         }
         RCRTCAudioRouteManager.getInstance().setOnAudioRouteChangedListener(null);
+        hasSetAudioRouteListener = false;
     }
 
     /**

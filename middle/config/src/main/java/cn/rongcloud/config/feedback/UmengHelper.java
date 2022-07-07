@@ -19,7 +19,7 @@ public class UmengHelper {
     }
 
 
-    public void event(RcUmEvent event) {
+    public void event(RcEvent event) {
         Map<String, Object> params = new HashMap<>(4);
         params.put("userid", UserManager.get().getUserId());
         MobclickAgent.onEventObject(UIKit.getContext(), event.name(), params);

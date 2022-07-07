@@ -73,8 +73,11 @@ public class CommunityDetailsBean implements Cloneable {
     }
 
     public String getCoverUrl() {
-        return TextUtils.isEmpty(coverUrl) ? ApiConfig.DEFAULT_PORTRAIT_ULR
-                : ApiConfig.FILE_URL + coverUrl;//拼接前缀
+        return TextUtils.isEmpty(coverUrl) ?
+                ApiConfig.DEFAULT_PORTRAIT_ULR :
+                coverUrl.startsWith("http")
+                        ? coverUrl
+                        : ApiConfig.FILE_URL + coverUrl;
     }
 
     public void setCoverUrl(String coverUrl) {
@@ -139,8 +142,11 @@ public class CommunityDetailsBean implements Cloneable {
     }
 
     public String getPortrait() {
-        return TextUtils.isEmpty(portrait) ? ApiConfig.DEFAULT_PORTRAIT_ULR
-                : ApiConfig.FILE_URL + portrait;//拼接前缀
+        return TextUtils.isEmpty(portrait) ?
+                ApiConfig.DEFAULT_PORTRAIT_ULR :
+                portrait.startsWith("http")
+                        ? portrait
+                        : ApiConfig.FILE_URL + portrait;
     }
 
     public void setPortrait(String portrait) {

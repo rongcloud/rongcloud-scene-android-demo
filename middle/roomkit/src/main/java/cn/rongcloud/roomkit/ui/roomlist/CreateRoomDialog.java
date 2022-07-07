@@ -24,8 +24,8 @@ import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.ImageLoader;
 import com.basis.utils.RealPathFromUriUtils;
 import com.basis.utils.UiUtils;
-import com.basis.widget.dialog.BottomDialog;
 import com.basis.widget.ChineseLengthFilter;
+import com.basis.widget.dialog.BottomDialog;
 import com.basis.widget.loading.LoadTag;
 
 import java.io.File;
@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Random;
 
 import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.manager.LocalDataManager;
@@ -260,6 +261,8 @@ public class CreateRoomDialog extends BottomDialog {
                     VoiceRoomBean voiceRoomBean = result.get(VoiceRoomBean.class);
                     if (result.ok() && voiceRoomBean != null) {
                         dismiss();
+                        SensorsUtil.instance().createRoom(voiceRoomBean.getRoomId(), voiceRoomBean.getRoomName(), mPrivateButton.isChecked(),
+                                true, false, mRoomType.convertToRcEvent());
                         mCreateRoomCallBack.onCreateSuccess(voiceRoomBean);
                     } else if (30016 == result.getCode() && voiceRoomBean != null) {
                         dismiss();

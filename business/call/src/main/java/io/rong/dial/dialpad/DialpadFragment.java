@@ -32,8 +32,10 @@ import java.util.HashSet;
 import java.util.regex.Pattern;
 
 import cn.rongcloud.config.AppConfig;
-import io.rong.dial.DialActivity;
+import cn.rongcloud.config.feedback.RcEvent;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import io.rong.callkit.R;
+import io.rong.dial.DialActivity;
 import io.rong.dial.dialpad.widget.DialpadKeyButton;
 import io.rong.dial.dialpad.widget.DialpadView;
 import io.rong.dial.dialpad.widget.FloatingActionButtonController;
@@ -416,6 +418,8 @@ public class DialpadFragment extends Fragment
     public void onClick(View view) {
         int resId = view.getId();
         if (resId == R.id.dialpad_floating_action_button) {
+            boolean is_video = getActivity().getIntent().getBooleanExtra("is_video", false);
+            SensorsUtil.instance().callClick(is_video ? RcEvent.VideoCall : RcEvent.AudioCall);
             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             String num = mDigits.getText().toString().trim();
             if (TextUtils.isEmpty(num)) {

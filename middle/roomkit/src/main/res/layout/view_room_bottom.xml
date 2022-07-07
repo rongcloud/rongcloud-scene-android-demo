@@ -9,8 +9,8 @@
         android:id="@+id/cl_option"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        tools:background="#000"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:background="#000">
 
         <RelativeLayout
             android:id="@+id/rl_send_message_id"
@@ -128,6 +128,18 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/iv_send_gift"
             app:srcCompat="@drawable/ic_request_enter_seat" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_mic_switch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="@dimen/dimen_room_padding"
+            android:layout_marginBottom="7dp"
+            android:visibility="gone"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/iv_request_enter_seat"
+            app:srcCompat="@drawable/ic_mic_switch" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_request_pk"

@@ -56,7 +56,6 @@ public class MemberCache {
      * @param roomId
      */
     public void refreshMemberData(String roomId, ClickCallback<Boolean> callback) {
-        Logger.e("refreshMemberData");
         OkApi.get(VRApi.getMembers(roomId), null, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {

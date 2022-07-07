@@ -20,10 +20,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.basis.R;
 import com.basis.ui.BaseActivity;
-import com.basis.utils.ResUtil;
-import com.basis.widget.interfaces.IWrapBar;
-import com.basis.utils.UIKit;
 import com.basis.utils.Logger;
+import com.basis.utils.ResUtil;
+import com.basis.utils.UIKit;
+import com.basis.widget.interfaces.IWrapBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,7 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
     private String title;
     private boolean backHide = false;//back 是否隐藏
     private boolean noneBar = false;//action bar 是否隐藏
+    private int backRes = -1;
     private List<OpMenu> options;
     private OnMenuSelectedListener onMenuSelectedListener;
     private TextView tvTitle;
@@ -70,7 +71,7 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
             }
             ((ViewGroup) content).addView(defaultBarView, 0);
             Toolbar toolbar = defaultBarView.findViewById(R.id.basis_toolbar);
-            toolbar.setNavigationIcon(R.drawable.svg_back_black);
+            toolbar.setNavigationIcon(backRes == -1 ? R.drawable.svg_back_black : backRes);
             activity.setSupportActionBar(toolbar);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,6 +132,12 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
     }
 
     @Override
+    public ActionWrapBar setBackIcon(@DrawableRes int res) {
+        this.backRes = res;
+        return this;
+    }
+
+    @Override
     public ActionWrapBar setOnMenuSelectedListener(OnMenuSelectedListener onMenuSelectedListener) {
         this.onMenuSelectedListener = onMenuSelectedListener;
         return this;
@@ -159,6 +166,7 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
             if (null != title) tvTitle.setText(title);
             if (elevation > -1) actionBar.setElevation(elevation);
             actionBar.setDisplayHomeAsUpEnabled(!backHide);
+            actionBar.setHomeAsUpIndicator(backRes == -1 ? R.drawable.svg_back_black : backRes);
             if (noneBar) {
                 actionBar.hide();
             } else {

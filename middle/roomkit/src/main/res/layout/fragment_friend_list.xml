@@ -85,17 +85,30 @@
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    <TextView
-        android:id="@+id/tv_empty"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_empty"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
-        android:gravity="center"
-        android:text="暂无数据"
-        android:textColor="#7303003A"
-        android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/layout_refresh"
-        app:layout_constraintTop_toTopOf="@id/layout_refresh" />
+        app:layout_constraintTop_toTopOf="@id/layout_refresh">
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableTop="@drawable/img_empty_list"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:textColor="#7303003A"
+            android:textSize="14sp"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

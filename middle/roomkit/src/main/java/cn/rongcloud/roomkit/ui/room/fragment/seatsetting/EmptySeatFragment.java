@@ -44,6 +44,7 @@ public class EmptySeatFragment extends BaseBottomSheetDialog implements View.OnC
     private boolean isMute;
     private boolean isShowSwitchSeatBtn;
     private ICommonDialog iCommonDialog;
+    private boolean isNormalSeatIndex = false;
 
     public EmptySeatFragment() {
         super(R.layout.fragment_empty_seat_setting);
@@ -58,6 +59,17 @@ public class EmptySeatFragment extends BaseBottomSheetDialog implements View.OnC
 
     public void setShowSwitchSeatBtn(boolean isShow) {
         this.isShowSwitchSeatBtn = isShow;
+    }
+
+    /**
+     * 是否是正常显示的麦位号，
+     * true：从1开始
+     * false：从0开始
+     *
+     * @param normalSeatIndex
+     */
+    public void setNormalSeatIndex(boolean normalSeatIndex) {
+        isNormalSeatIndex = normalSeatIndex;
     }
 
     /**
@@ -153,7 +165,8 @@ public class EmptySeatFragment extends BaseBottomSheetDialog implements View.OnC
             tvCloseSeat.setText("关闭座位");
         }
         tvSwitchSeat.setVisibility(isShowSwitchSeatBtn ? View.VISIBLE : View.GONE);
-        tvMemberName.setText(index + "号麦位");
+        int seatIndex = isNormalSeatIndex ? (index + 1) : index;
+        tvMemberName.setText(seatIndex + "号麦位");
     }
 
     @Override

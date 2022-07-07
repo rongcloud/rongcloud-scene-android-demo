@@ -62,5 +62,15 @@ public class RouterPath {
     public static final String FRAGMENT_ME = "/profile/fragment_me";
     public static final String FRAGMENT_ME_COMMUNITY = "/profile/fragment_me_community";
 
+    // 游戏相关页面
 
+    /**
+     * 游戏列表页面
+     */
+    public static final String ROUTER_GAME_LIST = "/game/roomlist";
+
+    /**
+     * 游戏房间页面
+     */
+    public static final String ROUTER_GAME_ROOM = "/game/room";
 }

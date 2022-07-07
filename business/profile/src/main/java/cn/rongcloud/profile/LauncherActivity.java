@@ -52,7 +52,10 @@ public class LauncherActivity extends BaseActivity {
         } else {
             jump(RouterPath.ROUTER_LOGIN, start);
         }
+
     }
+
+
 
     void jump(String routerPath, long start) {
         long dv = DELAY - (System.currentTimeMillis() - start);

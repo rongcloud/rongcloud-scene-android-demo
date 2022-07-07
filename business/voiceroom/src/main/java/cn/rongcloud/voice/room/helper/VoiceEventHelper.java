@@ -28,6 +28,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cn.rongcloud.config.UserManager;
+import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.music.MusicControlManager;
@@ -47,10 +49,13 @@ import cn.rongcloud.roomkit.message.RCChatroomLocationMessage;
 import cn.rongcloud.roomkit.message.RCChatroomSeats;
 import cn.rongcloud.roomkit.message.RCChatroomVoice;
 import cn.rongcloud.roomkit.message.RCFollowMsg;
+import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
 import cn.rongcloud.roomkit.ui.room.dialog.shield.Shield;
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback;
 import cn.rongcloud.roomkit.ui.room.model.MemberCache;
+import cn.rongcloud.rtc.api.RCRTCEngine;
+import cn.rongcloud.rtc.api.stream.RCRTCMicOutputStream;
 import cn.rongcloud.voice.Constant;
 import cn.rongcloud.voice.inter.RoomListener;
 import cn.rongcloud.voice.inter.StatusListener;
@@ -97,6 +102,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     private VRCenterDialog inviteDialog;
     protected String roomId;
     private List<Shield> shields = new ArrayList<>();
+    private VoiceRoomBean voiceRoomBean;
 
     private VoiceEventHelper() {
     }
@@ -119,7 +125,6 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     }
 
     protected void unInit() {
-        Logger.e(TAG,"unInit");
         RCVoiceRoomEngine.getInstance().setVoiceRoomEventListener(null);
         MusicControlManager.getInstance().release();
         PKManager.get().unInit();
@@ -130,6 +135,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
         isMute = false;
         roomInfo = null;
         roomId = null;
+        voiceRoomBean = null;
     }
 
 
@@ -440,7 +446,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
             @Override
             public void onClick(View v) {
                 //同意
-                notifyRoom(Constant.EVENT_AGREE_MANAGE_PICK, UserManager.get().getUserId());
+                notifyRoom(Constant.EVENT_AGREE_MANAGE_PICK, userId);
                 //获取可用麦位索引
                 int availableIndex = getAvailableSeatIndex();
                 if (availableIndex > -1) {
@@ -736,6 +742,11 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     }
 
     @Override
+    public void setRoomBean(VoiceRoomBean voiceRoomBean) {
+        this.voiceRoomBean = voiceRoomBean;
+    }
+
+    @Override
     public String getRoomId() {
         if (TextUtils.isEmpty(roomId)) {
             return "";
@@ -801,6 +812,12 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
      */
     @Override
     public void leaveRoom(IRoomCallBack callback) {
+        if (roomInfo != null) {
+            RCRTCMicOutputStream defaultAudioStream = RCRTCEngine.getInstance().getDefaultAudioStream();
+            SensorsUtil.instance().leaveRoom(roomId, voiceRoomBean.getRoomName(), voiceRoomBean.isPrivate(),
+                    defaultAudioStream == null ? false : defaultAudioStream.isMicrophoneDisable(),
+                    false, RoomType.VOICE_ROOM.convertToRcEvent(), "");
+        }
         RCVoiceRoomEngine.getInstance().leaveRoom(new RCVoiceRoomCallback() {
             @Override
             public void onSuccess() {

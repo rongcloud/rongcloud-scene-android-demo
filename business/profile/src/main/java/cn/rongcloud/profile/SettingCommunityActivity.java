@@ -12,29 +12,21 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.basis.ui.BaseActivity;
 import com.basis.utils.ImageLoader;
 import com.basis.utils.KToast;
-import com.basis.utils.Logger;
 import com.basis.utils.RealPathFromUriUtils;
 import com.basis.utils.ResUtil;
 import com.basis.utils.SoftBoardUtil;
-import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
 import com.basis.widget.interfaces.IWrapBar;
 
-import cn.rongcloud.config.ApiConfig;
 import cn.rongcloud.config.UserManager;
-import cn.rongcloud.config.feedback.RcUmEvent;
-import cn.rongcloud.config.feedback.UmengHelper;
 import cn.rongcloud.config.provider.user.Sex;
 import cn.rongcloud.config.provider.user.User;
-import cn.rongcloud.profile.dialog.UserInfoDialog;
-import cn.rongcloud.profile.webview.ActCommentWeb;
 
 
 public class SettingCommunityActivity extends BaseActivity implements View.OnClickListener {

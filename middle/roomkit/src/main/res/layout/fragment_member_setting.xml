@@ -158,7 +158,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ll_close_seat"
+            app:layout_constraintEnd_toStartOf="@id/ll_self_enter_seat"
             app:layout_constraintStart_toEndOf="@id/ll_invited_seat"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -178,6 +178,34 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/ll_self_enter_seat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_close_seat"
+            app:layout_constraintStart_toEndOf="@id/ll_kick_seat"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_member_setting_self_enter_seat" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="换我上麦"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_close_seat"
             android:layout_width="wrap_content"
@@ -186,7 +214,7 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ll_mute_seat"
-            app:layout_constraintStart_toEndOf="@id/ll_kick_seat"
+            app:layout_constraintStart_toEndOf="@id/ll_self_enter_seat"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -241,7 +269,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_invited_game"
             app:layout_constraintStart_toEndOf="@id/ll_mute_seat"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -256,6 +284,60 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="踢出房间"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_invited_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_kick_game"
+            app:layout_constraintStart_toEndOf="@id/ll_kick_room"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_member_setting_invited_game" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="邀请游戏"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_kick_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ll_invited_game"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_member_setting_kick_game" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="踢出游戏"
                 android:textColor="@color/whiteTextColor"
                 android:textSize="12sp" />
 

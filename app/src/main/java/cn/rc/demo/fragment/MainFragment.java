@@ -11,7 +11,7 @@ import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
 
 import cn.rc.demo.R;
-import cn.rongcloud.config.feedback.RcUmEvent;
+import cn.rongcloud.config.feedback.RcEvent;
 import cn.rongcloud.config.feedback.UmengHelper;
 import cn.rongcloud.config.router.RouterPath;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
@@ -73,7 +73,7 @@ public class MainFragment extends PermissionFragment implements View.OnClickList
     @Override
     public void onModuleClick(ModuleHelper.Module module) {
         String[] permissions;
-        if (module.event == RcUmEvent.VoiceRoom || module.event == RcUmEvent.RadioRoom) {
+        if (module.event == RcEvent.VoiceRoom || module.event == RcEvent.RadioRoom) {
             permissions = VOICE_PERMISSIONS;
         } else {
             permissions = CALL_PERMISSIONS;

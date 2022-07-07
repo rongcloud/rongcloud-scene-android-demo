@@ -1,7 +1,7 @@
 rootProject.name = "RC RTC"
 include ':app'
 // 业务
-include ':business:voiceroom', ':business:radio', ':business:live', ':business:call', ':business:profile', ':business:community'
+include ':business:voiceroom', ':business:radio', ':business:live', ':business:call', ':business:profile', ':business:community', ':business:gameroom'
 
 // middle 中间层
 include ':middle:music', ':middle:pk', ':middle:gift', ':middle:roomkit', ':middle:config', ':middle:mhui', ':middle:sight'

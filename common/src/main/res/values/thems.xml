@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--    自定义action bar 属性-->
-    <color name="basis_color_bar_bg">#FFFFFF</color>
+    <color name="basis_color_bar_bg">#00000000</color>
     <color name="basis_color_status_bg">#FFFFFF</color>
     <!--    标题栏高度，默认 56dp-->
     <dimen name="basis_bar_size">@dimen/abc_action_bar_default_height_material</dimen>
     <!--    标题 text size 默认：17sp-->
     <dimen name="basis_bar_text_size">17sp</dimen>
     <!--    标题栏文字包括menu颜色 默认：白色-->
-    <color name="basis_bar_text_color">@color/basis_blue</color>
+    <color name="basis_bar_text_color">@android:color/black</color>
     <!--    action text size 默认：14sp-->
     <dimen name="basis_menu_text_size">14sp</dimen>
 
@@ -44,6 +44,8 @@
     <style name="Basis_ActionBar_Style" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">@color/basis_color_bar_bg</item>
         <item name="titleTextStyle">@style/Basis_Title_Style</item>
+        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
     </style>
 
     <!--    action bar title style-->
@@ -53,4 +55,5 @@
     </style>
 
     <style name="BasisMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar"></style>
+
 </resources>

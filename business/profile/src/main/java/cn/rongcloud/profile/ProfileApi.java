@@ -1,6 +1,5 @@
 package cn.rongcloud.profile;
 
-import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
@@ -10,8 +9,8 @@ import com.basis.net.oklib.api.body.FileBody;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.KToast;
 import com.basis.utils.Logger;
-import com.basis.utils.RealPathFromUriUtils;
 import com.basis.utils.SharedPreferUtil;
+import com.basis.utils.SystemUtil;
 import com.basis.wapper.IResultBack;
 
 import java.io.File;
@@ -20,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import cn.rongcloud.config.ApiConfig;
+import cn.rongcloud.config.AppConfig;
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.provider.user.Sex;
 import cn.rongcloud.config.provider.user.User;
@@ -127,6 +127,10 @@ public class ProfileApi {
         params.put("deviceId", getDeviceId());
         params.put("region", region);
         params.put("platform", "mobile");
+        // 添加统计信息
+        params.put("platformType", "android");//平台统计
+        params.put("channel", AppConfig.get().getDispatchChannel());// 渠道
+        params.put("version", SystemUtil.getVerName());// 版本号
         OkApi.post(LOGIN, params, new WrapperCallBack() {
 
             @Override

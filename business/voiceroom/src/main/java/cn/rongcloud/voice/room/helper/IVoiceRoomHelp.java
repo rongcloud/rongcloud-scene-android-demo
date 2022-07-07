@@ -5,6 +5,7 @@ import com.basis.wapper.IRoomCallBack;
 
 import java.util.List;
 
+import cn.rongcloud.config.bean.VoiceRoomBean;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.pk.bean.PKState;
 import cn.rongcloud.roomkit.ui.miniroom.OnCloseMiniRoomListener;
@@ -32,6 +33,13 @@ public interface IVoiceRoomHelp extends OnCloseMiniRoomListener {
      * @param roomId 房间id
      */
     void register(String roomId);
+
+    /**
+     * 设置当前房间信息
+     *
+     * @param voiceRoomBean
+     */
+    void setRoomBean(VoiceRoomBean voiceRoomBean);
 
     /**
      * 获取room info

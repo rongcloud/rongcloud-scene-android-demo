@@ -3,9 +3,9 @@ package cn.rongcloud.roomkit.ui.friend;
 
 import android.view.View;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.basis.net.oklib.OkApi;
@@ -30,7 +30,7 @@ public class FriendListFragment extends BaseFragment implements FriendAdapter.On
     private SendPrivateMessageFragment sendPrivateMessageFragment;
     private RecyclerView mFriendRecyclerView;
     private SmartRefreshLayout refreshLayout;
-    private TextView emptyView;
+    private ConstraintLayout emptyView;
     private int page = 1;
 
     public static FriendListFragment getInstance() {
@@ -51,9 +51,9 @@ public class FriendListFragment extends BaseFragment implements FriendAdapter.On
                 loadData(true);
             }
         });
-        mFriendRecyclerView =  getView(R.id.rv_friend);
+        mFriendRecyclerView = getView(R.id.rv_friend);
         refreshLayout = (SmartRefreshLayout) getView(R.id.layout_refresh);
-        emptyView = (TextView) getView(R.id.tv_empty);
+        emptyView = (ConstraintLayout) getView(R.id.cl_empty);
         mAdapter = new FriendAdapter(getContext(), R.layout.item_friend);
         mAdapter.setType(mType);
         mAdapter.setOnFollowClickListener(this);

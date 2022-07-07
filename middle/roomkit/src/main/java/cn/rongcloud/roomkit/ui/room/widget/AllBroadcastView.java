@@ -30,6 +30,7 @@ import cn.rongcloud.roomkit.message.RCAllBroadcastMessage;
 public class AllBroadcastView extends AppCompatTextView implements AllBroadcastManager.OnObtainMessage {
 
     private OnClickBroadcast onClickBroadcast;
+    private boolean supportJump = true;
 
     public AllBroadcastView(@NonNull Context context) {
         this(context, null);
@@ -62,6 +63,10 @@ public class AllBroadcastView extends AppCompatTextView implements AllBroadcastM
 
     public void setOnClickBroadcast(OnClickBroadcast onClickBroadcast) {
         this.onClickBroadcast = onClickBroadcast;
+    }
+
+    public void setSupportJump(boolean supportJump) {
+        this.supportJump = supportJump;
     }
 
     public void showMessage(RCAllBroadcastMessage message) {
@@ -139,6 +144,9 @@ public class AllBroadcastView extends AppCompatTextView implements AllBroadcastM
                 String gift = String.format(" %sx%s ", message.getGiftName(), message.getGiftCount());
                 builder.append(gift);
                 start = end + gift.length();
+            }
+            if (!supportJump) {
+                return builder;
             }
             String clickStr = "点击进入房间围观";
             builder.append(clickStr);

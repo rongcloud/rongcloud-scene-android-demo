@@ -24,7 +24,7 @@ import com.basis.widget.interfaces.IWrapBar;
 
 import cn.rongcloud.config.ApiConfig;
 import cn.rongcloud.config.UserManager;
-import cn.rongcloud.config.feedback.RcUmEvent;
+import cn.rongcloud.config.feedback.RcEvent;
 import cn.rongcloud.config.feedback.UmengHelper;
 import cn.rongcloud.config.provider.user.Sex;
 import cn.rongcloud.profile.dialog.UserInfoDialog;
@@ -93,22 +93,22 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         if (R.id.iv_portrait == id) {
             showEditeInfoDialog();
         } else if (R.id.ad_first == id) {
-            UmengHelper.get().event(RcUmEvent.SettingBanner);
+            UmengHelper.get().event(RcEvent.SettingBanner);
             ActCommentWeb.openCommentWeb(this, "https://m.rongcloud.cn/activity/rtc20", "套餐方案");//banner
         } else if (R.id.ad_second == id) {
-            UmengHelper.get().event(RcUmEvent.SettingPackage);
+            UmengHelper.get().event(RcEvent.SettingPackage);
             ActCommentWeb.openCommentWeb(this, "https://m.rongcloud.cn/activity/rtc20", "套餐方案");
         } else if (R.id.ad_third == id) {
-            UmengHelper.get().event(RcUmEvent.SettingDemoDownload);
+            UmengHelper.get().event(RcEvent.SettingDemoDownload);
             ActCommentWeb.openCommentWeb(this, "https://m.rongcloud.cn/downloads/demo", "Demo 下载");
         } else if (R.id.ad_fourth == id) {
-            UmengHelper.get().event(RcUmEvent.SettingCS);
+            UmengHelper.get().event(RcEvent.SettingCS);
             ActCommentWeb.openCommentWeb(this, "https://m.rongcloud.cn/cs", "在线客服");
         } else if (R.id.ad_fivth == id) {
-            UmengHelper.get().event(RcUmEvent.SettingAboutUs);
+            UmengHelper.get().event(RcEvent.SettingAboutUs);
             ActCommentWeb.openCommentWeb(this, "https://m.rongcloud.cn/about", "关于我们");
         } else if (R.id.customer_dial == id) {
-            UmengHelper.get().event(RcUmEvent.SettingCallCM);
+            UmengHelper.get().event(RcEvent.SettingCallCM);
             Intent intent = new Intent(Intent.ACTION_DIAL);
             Uri data = Uri.parse("tel:" + ApiConfig.CUSTOMER_PHONE);
             intent.setData(data);

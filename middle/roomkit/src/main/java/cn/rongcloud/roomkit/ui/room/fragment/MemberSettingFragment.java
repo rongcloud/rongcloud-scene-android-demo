@@ -53,6 +53,9 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
     private AppCompatImageView mIvMuteSeat;
     private AppCompatTextView mTvMuteSeat;
     private LinearLayout mLlKickRoom;
+    private LinearLayout mLlKickGame;
+    private LinearLayout mLlSelfEnterSeat;
+    private LinearLayout mLlInvitedGame;
     private RelativeLayout mRlSettingAdmin;
     private AppCompatTextView mTvSettingAdmin;
     private AppCompatButton mBtnFollow;
@@ -63,8 +66,16 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
     private String roomUserId;
     private OnMemberSettingClickListener mOnMemberSettingClickListener;
 
-    // 操作的用户是否在麦位上 TODO：@lihao 需要知道当前用户是否在麦位上
+    // 操作的用户是否在麦位上
     boolean memberIsOnSeat = false;
+    // 自己是否在麦位上
+    boolean selfIsOnSeat = false;
+    // 自己是否是队长
+    boolean selfIsCaptain = false;
+    // 要操作的对方是否加入游戏了
+    boolean memberIsInGame = false;
+    // 游戏是否进行中
+    boolean isGamePlaying = false;
     //麦位的位置
     int seatPosition = 1;
     private Member member;
@@ -80,6 +91,13 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
 
     public void setMemberIsOnSeat(boolean memberIsOnSeat) {
         this.memberIsOnSeat = memberIsOnSeat;
+    }
+
+    public void setSelfAndMemberInfo(boolean selfIsOnSeat, boolean selfIsCaptain, boolean memberIsInGame, boolean isGamePlaying) {
+        this.selfIsOnSeat = selfIsOnSeat;
+        this.selfIsCaptain = selfIsCaptain;
+        this.memberIsInGame = memberIsInGame;
+        this.isGamePlaying = isGamePlaying;
     }
 
     public MemberSettingFragment(RoomOwnerType roomOwnerType, OnMemberSettingClickListener onMemberSettingClickListener) {
@@ -105,6 +123,9 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
         mIvMuteSeat = (AppCompatImageView) getView().findViewById(R.id.iv_mute_seat);
         mTvMuteSeat = (AppCompatTextView) getView().findViewById(R.id.tv_mute_seat);
         mLlKickRoom = (LinearLayout) getView().findViewById(R.id.ll_kick_room);
+        mLlKickGame = (LinearLayout) getView().findViewById(R.id.ll_kick_game);
+        mLlSelfEnterSeat = (LinearLayout) getView().findViewById(R.id.ll_self_enter_seat);
+        mLlInvitedGame = (LinearLayout) getView().findViewById(R.id.ll_invited_game);
         mRlSettingAdmin = (RelativeLayout) getView().findViewById(R.id.rl_setting_admin);
         mTvSettingAdmin = (AppCompatTextView) getView().findViewById(R.id.tv_setting_admin);
         mBtnFollow = (AppCompatButton) getView().findViewById(R.id.btn_follow);
@@ -175,6 +196,34 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
             mOnMemberSettingClickListener.clickSendGift(member.toUser());
             dismiss();
         });
+        mLlSelfEnterSeat.setOnClickListener(v -> {
+            mOnMemberSettingClickListener.switchSelfEnterSeat(member, seatPosition, (result, msg) -> {
+                if (result) {
+                    dismiss();
+                } else {
+                    KToast.show(msg);
+                }
+            });
+        });
+
+        mLlInvitedGame.setOnClickListener(v -> {
+            mOnMemberSettingClickListener.clickInvitedGame(member.toUser(), (result, msg) -> {
+                if (result) {
+                    dismiss();
+                } else {
+                    KToast.show(msg);
+                }
+            });
+        });
+        mLlKickGame.setOnClickListener(v -> {
+            mOnMemberSettingClickListener.clickKickGame(member.toUser(), (result, msg) -> {
+                if (result) {
+                    dismiss();
+                } else {
+                    KToast.show(msg);
+                }
+            });
+        });
         mBtnSendMessage.setOnClickListener(v -> {
             dismiss();
             RouteUtils.routeToConversationActivity(
@@ -223,6 +272,14 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
     }
 
     private void refreshBottomView(boolean selfIsAdmin, boolean memberIsAdmin, boolean memberIsOnSeat, boolean memberIsOwner) {
+        mLlInvitedSeat.setVisibility(View.GONE);
+        mLlKickSeat.setVisibility(View.GONE);
+        mLlSelfEnterSeat.setVisibility(View.GONE);
+        mLlCloseSeat.setVisibility(View.GONE);
+        mLlMuteSeat.setVisibility(View.GONE);
+        mLlKickRoom.setVisibility(View.GONE);
+        mLlInvitedGame.setVisibility(View.GONE);
+        mLlKickGame.setVisibility(View.GONE);
         switch (mRoomOwnerType) {
             case VOICE_OWNER:
             case LIVE_OWNER:
@@ -237,7 +294,6 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
                 // 上下麦
                 if (memberIsOnSeat) {
                     mLlKickSeat.setVisibility(View.VISIBLE);
-                    mLlInvitedSeat.setVisibility(View.GONE);
                     mLlMuteSeat.setVisibility(View.VISIBLE);
                     mLlCloseSeat.setVisibility(View.VISIBLE);
                     //根据麦位状态
@@ -249,10 +305,7 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
                         mTvMuteSeat.setText("座位禁麦");
                     }
                 } else {
-                    mLlKickSeat.setVisibility(View.GONE);
                     mLlInvitedSeat.setVisibility(View.VISIBLE);
-                    mLlMuteSeat.setVisibility(View.GONE);
-                    mLlCloseSeat.setVisibility(View.GONE);
                 }
                 // 可以踢人
                 mLlKickRoom.setVisibility(View.VISIBLE);
@@ -264,17 +317,12 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
                     mClMemberSetting.setVisibility(View.GONE);
                 } else if (selfIsAdmin) { // 自己是管理，对方是普通用户
                     mClMemberSetting.setVisibility(View.VISIBLE);
-                    // 不能禁麦和关座位
-                    mLlMuteSeat.setVisibility(View.GONE);
-                    mLlCloseSeat.setVisibility(View.GONE);
                     // 可以踢人
                     mLlKickRoom.setVisibility(View.VISIBLE);
                     // 可以上下麦
                     if (memberIsOnSeat) {
                         mLlKickSeat.setVisibility(View.VISIBLE);
-                        mLlInvitedSeat.setVisibility(View.GONE);
                     } else {
-                        mLlKickSeat.setVisibility(View.GONE);
                         mLlInvitedSeat.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -284,11 +332,6 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
                 break;
             case RADIO_OWNER:
                 mClMemberSetting.setVisibility(View.VISIBLE);
-                // 电台不能上下麦
-                mLlKickSeat.setVisibility(View.GONE);
-                mLlInvitedSeat.setVisibility(View.GONE);
-                mLlMuteSeat.setVisibility(View.GONE);
-                mLlCloseSeat.setVisibility(View.GONE);
                 // 可以踢人
                 mLlKickRoom.setVisibility(View.VISIBLE);
                 break;
@@ -298,17 +341,85 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
                     mClMemberSetting.setVisibility(View.GONE);
                 } else if (selfIsAdmin) { // 自己是管理，对方是普通用户
                     mClMemberSetting.setVisibility(View.VISIBLE);
-                    // 不能禁麦和关座位
-                    mLlMuteSeat.setVisibility(View.GONE);
-                    mLlCloseSeat.setVisibility(View.GONE);
                     // 可以踢人
                     mLlKickRoom.setVisibility(View.VISIBLE);
-                    // 语音房没有上下麦
-                    mLlKickSeat.setVisibility(View.GONE);
-                    mLlInvitedSeat.setVisibility(View.GONE);
                 } else {
                     // 自己是普通用户不能操作
                     mClMemberSetting.setVisibility(View.GONE);
+                }
+                break;
+
+            case GAME_OWNER:
+                mTvSeatPosition.setVisibility(View.GONE);
+                if (memberIsOwner) {
+                    mClButtons.setVisibility(View.INVISIBLE);
+                    mClMemberSetting.setVisibility(View.GONE);
+                    mRlSettingAdmin.setVisibility(View.GONE);
+                    break;
+                }
+                mClMemberSetting.setVisibility(View.VISIBLE);
+                // 上下麦
+                if (memberIsOnSeat) {
+                    mLlKickSeat.setVisibility(View.VISIBLE);
+                    mLlMuteSeat.setVisibility(View.VISIBLE);
+                    mLlCloseSeat.setVisibility(View.VISIBLE);
+                    //根据麦位状态
+                    if (isMute) {
+                        mIvMuteSeat.setImageResource(R.drawable.ic_room_setting_unmute_all);
+                        mTvMuteSeat.setText("取消禁麦");
+                    } else {
+                        mIvMuteSeat.setImageResource(R.drawable.ic_member_setting_mute_seat);
+                        mTvMuteSeat.setText("座位禁麦");
+                    }
+                    if (!selfIsOnSeat) {
+                        mLlSelfEnterSeat.setVisibility(View.VISIBLE);
+                    }
+
+                } else {
+                    mLlInvitedSeat.setVisibility(View.VISIBLE);
+                }
+                // 可以踢人
+                mLlKickRoom.setVisibility(View.VISIBLE);
+                // 队长对邀请游戏的操作
+                if (selfIsCaptain && !isGamePlaying) {
+                    if (memberIsInGame) {
+                        mLlKickGame.setVisibility(View.VISIBLE);
+                    } else {
+                        mLlInvitedGame.setVisibility(View.VISIBLE);
+                    }
+                }
+                break;
+            case GAME_VIEWER:
+                mTvSeatPosition.setVisibility(View.GONE);
+                // 自己和对方都是管理,或对方是房主,不显示底部操作
+                if (selfIsAdmin && memberIsAdmin || memberIsOwner) {
+                    mClMemberSetting.setVisibility(View.GONE);
+                } else if (selfIsAdmin) { // 自己是管理，对方是普通用户
+                    mClMemberSetting.setVisibility(View.VISIBLE);
+                    // 可以踢人
+                    mLlKickRoom.setVisibility(View.VISIBLE);
+                    // 可以上下麦
+                    if (memberIsOnSeat) {
+                        mLlKickSeat.setVisibility(View.VISIBLE);
+                        // 自己不在麦位可以换我上麦
+                        if (!selfIsOnSeat) {
+                            mLlSelfEnterSeat.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        mLlInvitedSeat.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    // 自己是普通用户不能操作
+                    mClMemberSetting.setVisibility(View.GONE);
+                }
+                // 队长对邀请游戏的操作
+                if (selfIsCaptain && !isGamePlaying) {
+                    mClMemberSetting.setVisibility(View.VISIBLE);
+                    if (memberIsInGame) {
+                        mLlKickGame.setVisibility(View.VISIBLE);
+                    } else {
+                        mLlInvitedGame.setVisibility(View.VISIBLE);
+                    }
                 }
                 break;
         }
@@ -327,6 +438,7 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
             case VOICE_OWNER:
             case RADIO_OWNER:
             case LIVE_OWNER:
+            case GAME_OWNER:
                 mRlSettingAdmin.setVisibility(View.VISIBLE);
                 if (memberIsAdmin) {
                     mTvSettingAdmin.setText("撤回管理");

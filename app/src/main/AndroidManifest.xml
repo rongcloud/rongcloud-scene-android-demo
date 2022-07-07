@@ -30,6 +30,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/BasisTheme_No"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- Android 12 需添加 android:exported="true"-->
+        <activity
+            android:name="com.sensorsdata.analytics.android.sdk.dialog.SchemeActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="sa6dede871" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="HIFIVE_APPID"

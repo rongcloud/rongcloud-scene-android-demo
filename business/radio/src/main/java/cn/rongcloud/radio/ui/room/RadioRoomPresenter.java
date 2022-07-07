@@ -24,6 +24,8 @@ import java.util.Map;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.feedback.RcEvent;
+import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.music.MusicApi;
 import cn.rongcloud.music.MusicBean;
@@ -55,6 +57,7 @@ import cn.rongcloud.roomkit.provider.VoiceRoomProvider;
 import cn.rongcloud.roomkit.ui.OnItemClickListener;
 import cn.rongcloud.roomkit.ui.RoomListIdsCache;
 import cn.rongcloud.roomkit.ui.RoomOwnerType;
+import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.room.dialog.shield.Shield;
 import cn.rongcloud.roomkit.ui.room.fragment.BackgroundSettingFragment;
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback;
@@ -62,6 +65,7 @@ import cn.rongcloud.roomkit.ui.room.fragment.CreatorSettingFragment;
 import cn.rongcloud.roomkit.ui.room.fragment.gift.GiftFragment;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.IFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomBackgroundFun;
+import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomFunIdUitls;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomLockFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomMusicFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomNameFun;
@@ -189,6 +193,7 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
     }
 
     private void addListener() {
+        RadioEventHelper.getInstance().setRoomBean(mVoiceRoomBean);
         RadioEventHelper.getInstance().register(mRoomId);
         RadioEventHelper.getInstance().addRadioEventListener(this);
     }
@@ -213,6 +218,8 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
     }
 
     private void joinRoom() {
+        SensorsUtil.instance().joinRoom(mRoomId, mVoiceRoomBean.getRoomName(), mVoiceRoomBean.getIsPrivate() == 1,
+                false, false, RoomType.RADIO_ROOM.convertToRcEvent());
         addListener();
 
         RCRadioRoomInfo roomInfo =
@@ -278,6 +285,13 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
     public String getRoomId() {
         if (mVoiceRoomBean != null) {
             return mVoiceRoomBean.getRoomId();
+        }
+        return "";
+    }
+
+    public String getRoomName() {
+        if (mVoiceRoomBean != null) {
+            return mVoiceRoomBean.getRoomName();
         }
         return "";
     }
@@ -755,6 +769,7 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
      * 点击底部送礼物，电台房只能给房主送，语聊房要把麦位上所有用户都返回，并且赋值麦位号
      */
     public void sendGift() {
+        SensorsUtil.instance().giftClick(getRoomId(), mVoiceRoomBean.getRoomName(), RcEvent.RadioRoom);
         mView.showSendGiftDialog(
                 mVoiceRoomBean,
                 getCreateUserId(),
@@ -956,6 +971,7 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
                 mView.showToast("请先上麦之后再播放音乐");
             }
         }
+        SensorsUtil.instance().settingClick(mRoomId, mVoiceRoomBean.getRoomName(), fun.getText(), RoomFunIdUitls.convert(fun), RcEvent.RadioRoom);
     }
 
     @Override
