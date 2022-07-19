@@ -25,7 +25,12 @@ public enum ChannelType {
     /**
      * 被移除的标记消息
      */
-    removedMarked(5);
+    removedMarked(5),
+
+    /**
+     * 退出社区
+     */
+    quit(6);
 
     private final int type;
 
@@ -48,6 +53,8 @@ public enum ChannelType {
             return enabled;
         } else if (5 == type) {
             return removedMarked;
+        } else if (6 == type) {
+            return quit;
         } else {
             return none;
         }

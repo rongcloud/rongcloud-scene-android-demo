@@ -78,7 +78,7 @@ ext {
     musicLib = "1.0.1"
     corekitLib = "1.0.0"
     voiceroomLib = "2.0.8.2"
-    liveroomLib = "2.1.0.8"
+    liveroomLib = "2.1.0.9"
     tinygameLib = "1.0.2"
 
     //动态配置

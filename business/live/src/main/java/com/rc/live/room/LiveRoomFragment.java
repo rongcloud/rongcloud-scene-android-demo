@@ -258,7 +258,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
     public void destroyRoom() {
         super.destroyRoom();
         present.unInitLiveRoomListener();
-        mRoomMessageAdapter.release();
+//        mRoomMessageAdapter.release();
         PKManager.get().unInit();
     }
 

@@ -34,6 +34,8 @@ import cn.rc.community.conversion.sdk.UltraApi;
 import cn.rc.community.conversion.sdk.UltraGroupApi;
 import cn.rc.community.helper.CommunityHelper;
 import cn.rc.community.helper.UltraGroupCenter;
+import cn.rc.community.message.sysmsg.ChannelNoticeMsg;
+import cn.rc.community.message.sysmsg.ChannelType;
 import cn.rc.community.utils.UltraUnReadMessageManager;
 import io.rong.imkit.IMCenter;
 import io.rong.imlib.ChannelClient;
@@ -166,6 +168,10 @@ public class MessageManager extends OnReceiveMessageWrapperListener implements I
      */
     @Override
     public WrapperMessage insertMessage(Message message, boolean last, boolean isScrollBottom) {
+        if (message.getContent() instanceof ChannelNoticeMsg && ((ChannelNoticeMsg) message.getContent()).getType() == ChannelType.quit) {
+            //退出的消息不显示
+            return null;
+        }
         AttachedInfo attachedInfo = getAttachedInfo(message);
         if (attachedInfo == null) return null;
         WrapperMessage msg = WrapperMessage.fromMessage(message, attachedInfo);
@@ -221,8 +227,10 @@ public class MessageManager extends OnReceiveMessageWrapperListener implements I
 
             @Override
             public void onSuccess(Message message) {
-                wrapperMessage.setMessage(message);
-                adapter.update(wrapperMessage);
+                if (wrapperMessage != null) {
+                    wrapperMessage.setMessage(message);
+                    adapter.update(wrapperMessage);
+                }
                 if (callback != null) callback.onSuccess(message);
             }
 
@@ -232,7 +240,7 @@ public class MessageManager extends OnReceiveMessageWrapperListener implements I
                     wrapperMessage.setMessage(message);
                     adapter.update(wrapperMessage);
                 }
-                callback.onError(message, code, reason);
+                if (callback != null) callback.onError(message, code, reason);
             }
         });
     }
@@ -279,8 +287,10 @@ public class MessageManager extends OnReceiveMessageWrapperListener implements I
 
             @Override
             public void onSuccess(Message message) {
-                wrapperMessage.setMessage(message);
-                adapter.update(wrapperMessage);
+                if (wrapperMessage != null) {
+                    wrapperMessage.setMessage(message);
+                    adapter.update(wrapperMessage);
+                }
                 if (callback != null) callback.onSuccess(message);
             }
 
@@ -318,15 +328,19 @@ public class MessageManager extends OnReceiveMessageWrapperListener implements I
 
             @Override
             public void onSuccess(Message message) {
-                wrapperMessage.setMessage(message);
-                adapter.update(wrapperMessage);
+                if (wrapperMessage != null) {
+                    wrapperMessage.setMessage(message);
+                    adapter.update(wrapperMessage);
+                }
                 if (callback != null) callback.onSuccess(message);
             }
 
             @Override
             public void onError(Message message, int code, String reason) {
-                wrapperMessage.setMessage(message);
-                adapter.update(wrapperMessage);
+                if (wrapperMessage != null) {
+                    wrapperMessage.setMessage(message);
+                    adapter.update(wrapperMessage);
+                }
                 if (callback != null) callback.onError(message, code, reason);
             }
 

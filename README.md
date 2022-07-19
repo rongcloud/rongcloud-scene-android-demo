@@ -79,3 +79,5 @@ developerEnvironment {
 }
 ```
 
+5. 如果编译不通过，改为 JDK 11 。
+

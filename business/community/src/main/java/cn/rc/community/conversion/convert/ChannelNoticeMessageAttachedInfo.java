@@ -40,6 +40,7 @@ public class ChannelNoticeMessageAttachedInfo extends BaseMessageAttachedInfo {
             case joined:
             case enabled:
             case disabled:
+            case quit:
                 holder.setVisible(R.id.tv_jump_to_id, false);
                 break;
         }

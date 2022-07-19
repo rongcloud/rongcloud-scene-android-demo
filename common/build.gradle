@@ -36,22 +36,22 @@ dependencies {
 
     // https://github.com/square/okhttp
     api "com.squareup.okhttp3:okhttp:$okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
+    api "com.squareup.okhttp3:logging-interceptor:$okhttp"
 
     // https://github.com/google/gson
-    implementation "com.google.code.gson:gson:$gson"
+    api "com.google.code.gson:gson:$gson"
 
     // https://github.com/googlesamples/easypermissions
     api "pub.devrel:easypermissions:$easypermissions"
 
     // https://github.com/bumptech/glide
-    implementation "com.github.bumptech.glide:glide:$glide"
+    api "com.github.bumptech.glide:glide:$glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide"
     // https://github.com/wasabeef/glide-transformations
     api "jp.wasabeef:glide-transformations:$glideTrans"
 
     // https://github.com/HarlonWang/AVLoadingIndicatorView
-    implementation "com.wang.avi:library:$indicatorView"
+    api "com.wang.avi:library:$indicatorView"
 
     // rxjava 相关
     api "io.reactivex.rxjava3:rxjava:$rxjava"

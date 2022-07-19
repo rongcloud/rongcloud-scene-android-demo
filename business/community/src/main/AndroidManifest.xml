@@ -13,10 +13,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BasisTheme" />
         <activity
-            android:name=".channel.TextChannelActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BasisTheme" />
-        <activity
             android:name=".setting.notify.NotifyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BasisTheme" />
@@ -72,8 +68,8 @@
             android:theme="@style/BasisTheme" />
 
         <meta-data
-            android:name="rc.community"
-            android:value="cn.rc.community.helper.UltraGroupCenter" />
+            android:name="rc.scenecommunity"
+            android:value="cn.rc.community.Version" />
 
         <receiver
             android:name=".push.UltraGroupPushMessageReceiver"

@@ -534,7 +534,6 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         VoiceEventHelper.helper().unregeister();
         //取消当前对于各种消息的回调监听
         present.unInitListener();
-        mRoomMessageAdapter.release();
     }
 
     @Override

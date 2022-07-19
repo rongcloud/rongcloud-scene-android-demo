@@ -28,6 +28,7 @@ import com.basis.wapper.IBuffer;
 import com.basis.wapper.RCRefreshBuffer;
 import com.vanniktech.emoji.EmojiTextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,14 +64,13 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
     private int iconSize = 0;
     private RoomType roomType;
     public RCRefreshBuffer<MessageContent> refreshBuffer;
-    RecyclerView recyclerView;
+    WeakReference<RecyclerView> recyclerView;
 
     public void release() {
         if (null != refreshBuffer) {
             refreshBuffer.release();
             refreshBuffer = null;
         }
-        recyclerView = null;
     }
 
     public RoomMessageAdapter(Context context, RecyclerView recyclerView, OnClickMessageUserListener onClickMessageUserListener, RoomType roomType) {
@@ -78,7 +78,7 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
         this.mOnClickMessageUserListener = onClickMessageUserListener;
         iconSize = UiUtils.dp2px(11);
         this.roomType = roomType;
-        this.recyclerView = recyclerView;
+        this.recyclerView = new WeakReference<>(recyclerView);
     }
 
     public RoomMessageAdapter(Context context, int... itemLayoutId) {
@@ -89,7 +89,7 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
             public void onOutflow(List<MessageContent> data) {
                 setData(data, false);
                 // 当前是否在列表最下面
-                boolean inBottom = !recyclerView.canScrollVertically(1);
+                boolean inBottom = null != recyclerView && null != recyclerView.get() && !recyclerView.get().canScrollVertically(1);
                 // 是否是自己主动发的消息
                 boolean isMyselfMessage = false;
                 if (data != null && data.size() > 0) {
@@ -103,8 +103,8 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
                 }
                 if (inBottom || isMyselfMessage) {
                     int count = getItemCount();
-                    if (count > 0) {
-                        recyclerView.smoothScrollToPosition(count - 1);
+                    if (count > 0 && null != recyclerView.get()) {
+                        recyclerView.get().smoothScrollToPosition(count - 1);
                     }
                 }
             }
@@ -127,7 +127,7 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
      */
     public synchronized void setMessages(List<MessageContent> list, boolean refresh) {
         // 当前是否在列表最下面
-        boolean inBottom = !recyclerView.canScrollVertically(1);
+        boolean inBottom = null != recyclerView && null != recyclerView.get() && !recyclerView.get().canScrollVertically(1);
         // 设置数据
         super.setData(list, refresh);
         // 是否是自己主动发的消息
@@ -143,8 +143,8 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
         }
         if (refresh || inBottom || isMyselfMessage) {
             int count = getItemCount();
-            if (count > 0) {
-                recyclerView.smoothScrollToPosition(count - 1);
+            if (count > 0 && null != recyclerView.get()) {
+                recyclerView.get().smoothScrollToPosition(count - 1);
             }
         }
     }

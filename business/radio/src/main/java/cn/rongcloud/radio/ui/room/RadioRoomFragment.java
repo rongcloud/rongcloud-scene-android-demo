@@ -532,7 +532,7 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
         clVoiceRoomView.setVisibility(View.INVISIBLE);
         rlRoomFinishedId.setVisibility(View.GONE);
         present.switchRoom();
-        mRoomMessageAdapter.release();
+//        mRoomMessageAdapter.release();
     }
 
     @Override

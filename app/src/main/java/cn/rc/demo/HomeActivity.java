@@ -29,9 +29,9 @@ import io.rong.imlib.model.Conversation;
 public class HomeActivity extends PermissionActivity implements UnReadMessageManager.IUnReadMessageObserver {
     private final static String TAG = "HomeActivity";
     private final static HomeBottomBar[] barTitles = new HomeBottomBar[]{
-            // new HomeBottomBar("社区", R.drawable.selector_bar_community, RouterPath.FRAGMENT_COMMUNITY, false, true),
+             new HomeBottomBar("社区", R.drawable.selector_bar_community, RouterPath.FRAGMENT_COMMUNITY, false, true),
             new HomeBottomBar("娱乐", R.drawable.selector_bar_home, RouterPath.FRAGMENT_HOME, false, false),
-            // new HomeBottomBar("发现", R.drawable.selector_bar_find, RouterPath.FRAGMENT_FIND),
+             new HomeBottomBar("发现", R.drawable.selector_bar_find, RouterPath.FRAGMENT_FIND),
             new HomeBottomBar("消息", R.drawable.selector_bar_message, RouterPath.FRAGMENT_MESSAGE),
             new HomeBottomBar("我的", R.drawable.selector_bar_me, RouterPath.FRAGMENT_ME_COMMUNITY)
     };
