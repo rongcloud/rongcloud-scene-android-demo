@@ -6,6 +6,7 @@ package cn.rongcloud.radioroom;
 
 import cn.rongcloud.radioroom.callback.RCRadioRoomCallback;
 import cn.rongcloud.radioroom.callback.RCRadioRoomResultCallback;
+import cn.rongcloud.radioroom.room.IPlayer;
 import cn.rongcloud.radioroom.room.RCRadioEventListener;
 import cn.rongcloud.radioroom.room.RCRadioRoomInfo;
 
@@ -29,6 +30,13 @@ public interface IRCRadioRoomEngine {
     void updateRadioRoomKV(UpdateKey key, String value, RCRadioRoomCallback callback);
 
     void getRadioRoomValue(UpdateKey key, RCRadioRoomResultCallback<String> callback);
+
+    /**
+     * 注意：需在join room 前设置
+     *
+     * @param player 自定义播放器接口
+     */
+    void setPlayer(IPlayer player);
 
     enum UpdateKey {
         RC_ROOM_NAME("RCRadioRoomKVRoomNameKey"),

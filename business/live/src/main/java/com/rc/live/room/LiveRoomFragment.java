@@ -836,7 +836,7 @@ public class LiveRoomFragment extends AbsRoomFragment<LiveRoomPresenter>
         // 设置title数据
         User createUser = voiceRoomBean.getCreateUser();
         roomTitleBar.setData(present.getRoomOwnerType(), createUser.getUserName(), voiceRoomBean.getId(), voiceRoomBean.getUserId(), present);
-        roomTitleBar.setCreatorPortrait(createUser.getPortrait());
+        roomTitleBar.setCreatorPortrait(createUser.getPortraitUrl());
         // 设置底部按钮
         roomBottomView.setData(present.getRoomOwnerType(), present, voiceRoomBean.getRoomId());
         // 设置消息列表数据

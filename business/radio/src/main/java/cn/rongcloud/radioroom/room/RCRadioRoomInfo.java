@@ -16,6 +16,7 @@ public class RCRadioRoomInfo implements Serializable {
     private String roomId;
     private boolean inSeat = false;
     private int role;
+    private StreamType streamType = StreamType.rong;// 默认 兼容之前的版本融云cdn
 
     public RCRadioRoomInfo(RCRTCLiveRole role) {
         this.role = null == role ? RCRTCLiveRole.AUDIENCE.getType() : role.getType();
@@ -34,6 +35,14 @@ public class RCRadioRoomInfo implements Serializable {
 
     protected boolean isInSeat() {
         return inSeat;
+    }
+
+    public void setStreamType(StreamType streamType) {
+        this.streamType = streamType;
+    }
+
+    public StreamType getStreamType() {
+        return streamType;
     }
 
     protected void setInSeat(boolean inSeat) {

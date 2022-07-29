@@ -83,8 +83,6 @@ android {
 
 
     flavorDimensions("environment")
-//    flavorDimensions("channel")// 线上环境
-//    def developFlag = true
 
     productFlavors {
         // 开发环境

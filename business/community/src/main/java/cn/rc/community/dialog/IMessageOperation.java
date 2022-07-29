@@ -31,7 +31,7 @@ public interface IMessageOperation {
     /**
      * 取消标注
      */
-    void cancelAnnotation(WrapperMessage iMessage);
+    void cancelAnnotation(WrapperMessage iMessage,boolean isHint);
 
     /**
      * 复制

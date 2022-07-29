@@ -203,11 +203,11 @@ public class MarkMsgFragment extends AbsMessageFragment<MarkMessage> implements 
         Message message = item.getMessage();
         String senderUserId = message.getSenderUserId();
         CircleImageView circleImageView = holder.getView(R.id.cv_id);
-        UserProvider.provider().getAsyn(senderUserId, new IResultBack<UserInfo>() {
+        UltraGroupUserManager.getInstance().getAsyn(senderUserId, new IResultBack<UltraGroupUserBean>() {
             @Override
-            public void onResult(UserInfo userInfo) {
-                holder.setText(R.id.tv_name_id, userInfo.getName());
-                ImageLoader.loadUri(circleImageView, userInfo.getPortraitUri(), R.drawable.rc_default_portrait);
+            public void onResult(UltraGroupUserBean ultraGroupUserBean) {
+                holder.setText(R.id.tv_name_id, ultraGroupUserBean.getNickName());
+                ImageLoader.loadUrl(circleImageView, ultraGroupUserBean.getPortrait(), R.drawable.rc_default_portrait);
             }
         });
         holder.setText(R.id.tv_time_id, DateUtil.getRecordDate(((RecallNotificationMessage) message.getContent()).getRecallTime()));
@@ -218,11 +218,11 @@ public class MarkMsgFragment extends AbsMessageFragment<MarkMessage> implements 
         String senderUserId = message.getSenderUserId();
         MessageContent msgContent = message.getContent();
         CircleImageView circleImageView = holder.getView(R.id.cv_id);
-        UserProvider.provider().getAsyn(senderUserId, new IResultBack<UserInfo>() {
+        UltraGroupUserManager.getInstance().getAsyn(senderUserId, new IResultBack<UltraGroupUserBean>() {
             @Override
-            public void onResult(UserInfo userInfo) {
-                holder.setText(R.id.tv_name_id, userInfo.getName());
-                ImageLoader.loadUri(circleImageView, userInfo.getPortraitUri(), R.drawable.rc_default_portrait);
+            public void onResult(UltraGroupUserBean ultraGroupUserBean) {
+                holder.setText(R.id.tv_name_id, ultraGroupUserBean.getNickName());
+                ImageLoader.loadUrl(circleImageView, ultraGroupUserBean.getPortrait(), R.drawable.rc_default_portrait);
             }
         });
         holder.setText(R.id.tv_time_id, DateUtil.getRecordDate(message.getSentTime()));
@@ -254,11 +254,11 @@ public class MarkMsgFragment extends AbsMessageFragment<MarkMessage> implements 
         String senderUserId = message.getSenderUserId();
         MessageContent msgContent = message.getContent();
         CircleImageView circleImageView = holder.getView(R.id.cv_id);
-        UserProvider.provider().getAsyn(senderUserId, new IResultBack<UserInfo>() {
+        UltraGroupUserManager.getInstance().getAsyn(senderUserId, new IResultBack<UltraGroupUserBean>() {
             @Override
-            public void onResult(UserInfo userInfo) {
-                holder.setText(R.id.tv_name_id, userInfo.getName());
-                ImageLoader.loadUri(circleImageView, userInfo.getPortraitUri(), R.drawable.rc_default_portrait);
+            public void onResult(UltraGroupUserBean ultraGroupUserBean) {
+                holder.setText(R.id.tv_name_id, ultraGroupUserBean.getNickName());
+                ImageLoader.loadUrl(circleImageView, ultraGroupUserBean.getPortrait(), R.drawable.rc_default_portrait);
             }
         });
         holder.setText(R.id.tv_time_id, DateUtil.getRecordDate(message.getSentTime()));
@@ -290,11 +290,11 @@ public class MarkMsgFragment extends AbsMessageFragment<MarkMessage> implements 
         String senderUserId = message.getSenderUserId();
         CircleImageView circleImageView = holder.getView(R.id.cv_id);
         ReferenceMessage referenceMessage = ((ReferenceMessage) message.getContent());
-        UserProvider.provider().getAsyn(senderUserId, new IResultBack<UserInfo>() {
+        UltraGroupUserManager.getInstance().getAsyn(senderUserId, new IResultBack<UltraGroupUserBean>() {
             @Override
-            public void onResult(UserInfo userInfo) {
-                holder.setText(R.id.tv_name_id, userInfo.getName());
-                ImageLoader.loadUri(circleImageView, userInfo.getPortraitUri(), R.drawable.rc_default_portrait);
+            public void onResult(UltraGroupUserBean ultraGroupUserBean) {
+                holder.setText(R.id.tv_name_id, ultraGroupUserBean.getNickName());
+                ImageLoader.loadUrl(circleImageView, ultraGroupUserBean.getPortrait(), R.drawable.rc_default_portrait);
             }
         });
         holder.setText(R.id.tv_time_id, DateUtil.getRecordDate(message.getSentTime()));
@@ -403,11 +403,11 @@ public class MarkMsgFragment extends AbsMessageFragment<MarkMessage> implements 
         MessageContent msgContent = message.getContent();
         String senderUserId = message.getSenderUserId();
         CircleImageView circleImageView = holder.getView(R.id.cv_id);
-        UserProvider.provider().getAsyn(senderUserId, new IResultBack<UserInfo>() {
+        UltraGroupUserManager.getInstance().getAsyn(senderUserId, new IResultBack<UltraGroupUserBean>() {
             @Override
-            public void onResult(UserInfo userInfo) {
-                holder.setText(R.id.tv_name_id, userInfo.getName());
-                ImageLoader.loadUri(circleImageView, userInfo.getPortraitUri(), R.drawable.rc_default_portrait);
+            public void onResult(UltraGroupUserBean ultraGroupUserBean) {
+                holder.setText(R.id.tv_name_id, ultraGroupUserBean.getNickName());
+                ImageLoader.loadUrl(circleImageView, ultraGroupUserBean.getPortrait(), R.drawable.rc_default_portrait);
             }
         });
         holder.setText(R.id.tv_time_id, DateUtil.getRecordDate(message.getSentTime()));

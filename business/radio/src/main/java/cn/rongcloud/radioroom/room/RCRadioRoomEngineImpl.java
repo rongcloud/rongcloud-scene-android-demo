@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.basis.utils.Logger;
 import com.basis.utils.UIKit;
 
 import java.util.Arrays;
@@ -20,10 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 import cn.rongcloud.radioroom.IRCRadioRoomEngine;
-import cn.rongcloud.radioroom.RCRadioRoomEngine;
 import cn.rongcloud.radioroom.callback.RCRadioRoomBaseCallback;
 import cn.rongcloud.radioroom.callback.RCRadioRoomCallback;
 import cn.rongcloud.radioroom.callback.RCRadioRoomResultCallback;
+import cn.rongcloud.radioroom.utils.EncoderUtils;
 import cn.rongcloud.radioroom.utils.JsonUtils;
 import cn.rongcloud.radioroom.utils.VMLog;
 import cn.rongcloud.rtc.api.RCRTCAudioRouteManager;
@@ -57,7 +58,7 @@ import io.rong.imlib.model.ReceivedProfile;
 /**
  * 电台房的控制
  */
-public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChatRoomClient.KVStatusListener,
+public class RCRadioRoomEngineImpl implements IRCRadioRoomEngine, RongChatRoomClient.KVStatusListener,
         IRongCoreListener.OnReceiveMessageListener {
     private static final String TAG = "RCRadioRoomEngineImpl";
     private static final IRCRadioRoomEngine instance = new RCRadioRoomEngineImpl();
@@ -74,6 +75,7 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
         RongCoreClient.addOnReceiveMessageListener(new OnReceiveMessageWrapperListener() {
             @Override
             public void onReceivedMessage(Message message, ReceivedProfile profile) {
+                VMLog.e(TAG, "onReceivedMessage");
                 RCRadioRoomEngineImpl.this.onReceived(message, profile.getLeft());
             }
         });
@@ -215,6 +217,7 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
             @Override
             public void onSuccess(RCRTCLiveInfo rcrtcLiveInfo) {
                 VMLog.e(TAG, "enterSeat#publishDefaultLiveStreams#onSuccess:");
+                addCustomerCDNStream(rcrtcLiveInfo);
                 RCRTCEngine.getInstance().registerStatusReportListener(new StateListener());
                 // 跟新KV
                 updateRadioRoomKV(UpdateKey.RC_SEATING, "1", new RCRadioRoomCallback() {
@@ -229,13 +232,54 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
                         onErrorWithCheck(callback, code, message);
                     }
                 });
-
             }
 
             @Override
             public void onFailed(RTCErrorCode error) {
                 VMLog.e(TAG, "enterSeat#publishDefaultLiveStreams#onFailed", error);
                 onErrorWithCheck(callback, error.getValue(), error.getReason());
+            }
+        });
+    }
+
+    private RCRTCLiveInfo mLiveInfo;
+
+    private void addCustomerCDNStream(RCRTCLiveInfo liveInfo) {
+        if (null == liveInfo || null == mRadioRoom
+                || StreamType.customer != mRadioRoom.getStreamType()) {
+            // 非自定义cdn
+            return;
+        }
+        this.mLiveInfo = liveInfo;
+        String pushUrl = EncoderUtils.formatRtmpUrl(mRadioRoom.getRoomId(), true);
+        Logger.e(TAG, "pushUrl = " + pushUrl);
+        mLiveInfo.addPublishStreamUrl(pushUrl, new IRCRTCResultDataCallback<String[]>() {
+            @Override
+            public void onSuccess(String[] data) {
+                VMLog.e(TAG, "addCDNStream#onSuccess:" + data);
+            }
+
+            @Override
+            public void onFailed(RTCErrorCode errorCode) {
+                VMLog.e(TAG, "addCDNStream#onFailed:" + errorCode);
+            }
+        });
+    }
+
+    // TODO: 2022/7/22 离开房间调用即可
+    private void removeCustomerCDNStream() {
+        if (null == mLiveInfo || null == mRadioRoom) return;
+        String pushUrl = EncoderUtils.formatRtmpUrl(mRadioRoom.getRoomId(), true);
+        Logger.e(TAG, "pushUrl = " + pushUrl);
+        mLiveInfo.removePublishStreamUrl(pushUrl, new IRCRTCResultDataCallback<String[]>() {
+            @Override
+            public void onSuccess(String[] data) {
+                VMLog.e(TAG, "removeCDNStream#onSuccess:" + data);
+            }
+
+            @Override
+            public void onFailed(RTCErrorCode errorCode) {
+                VMLog.e(TAG, "removeCDNStream#onFailed:" + errorCode);
             }
         });
     }
@@ -257,6 +301,7 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
             @Override
             public void onSuccess() {
                 mRadioRoom.setInSeat(false);
+                removeCustomerCDNStream();
                 onSuccessWithCheck(callback);
             }
 
@@ -319,8 +364,40 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
         });
     }
 
-    private void listenRadio(final RCRadioRoomCallback callback) {
-        VMLog.d(TAG, "onPublishCDNStream:listenRadio");
+    private IPlayer player;
+
+    @Override
+    public void setPlayer(IPlayer player) {
+        this.player = player;
+    }
+
+    private void listenRadio(boolean listen, final RCRadioRoomCallback callback) {
+        if (null != mRadioRoom && StreamType.customer == mRadioRoom.getStreamType()) {
+            listenCustomerCDN(listen, callback);
+        } else {
+            listenRongCDN(listen, callback);
+        }
+    }
+
+    private void listenCustomerCDN(boolean listen, RCRadioRoomCallback callback) {
+        if (null == mRadioRoom) return;
+        String roomId = mRadioRoom.getRoomId();
+        String pullUrl = EncoderUtils.formatRtmpUrl(roomId, false);
+        VMLog.d(TAG, "listenCustomerCDNRadio: " + listen + "  " + pullUrl);
+        if (null == player) {
+            VMLog.e(TAG, "listenCustomerCDNRadio: No Set IPlayer");
+            if (null != callback) callback.onError(-1, "No Set IPlayer");
+            return;
+        }
+        if (listen) {
+            player.start(pullUrl);
+        } else {
+            player.stop();
+        }
+    }
+
+    private void listenRongCDN(boolean listen, final RCRadioRoomCallback callback) {
+        VMLog.d(TAG, "listenRongCDN: " + listen);
         if (null == mRcrtcRoom || null == mRadioRoom || !mRadioRoom.check()) {
             onErrorWithCheck(callback, -1, "Check RTCRoom Or RadioRoom is Null ");
             return;
@@ -330,6 +407,7 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
             onErrorWithCheck(callback, -2, "Not Find CDN Stream");
             return;
         }
+        if (!listen) return;
         mRcrtcRoom.getLocalUser().subscribeStreams(Arrays.asList(stream), new IRCRTCResultCallback() {
             @Override
             public void onSuccess() {
@@ -353,6 +431,9 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
             mRcrtcRoom = null;
         }
         listener = null;
+        if (null != player) {
+            player.release();
+        }
     }
 
     private void leaveRTCRoom(final RCRadioRoomCallback callback) {
@@ -409,7 +490,7 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
                 mRcrtcRoom = rcrtcRoom;
                 mRcrtcRoom.registerRoomListener(new RoomEventsListener());
                 if (role == RCRTCLiveRole.AUDIENCE) {
-                    listenRadio(null);
+                    listenRadio(true, null);
                 }
                 VMLog.d(TAG, "joinRTCRoom#joinRoom#onSuccess: role = " + role);
                 onSuccessWithCheck(callback);
@@ -529,10 +610,29 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
             if (RCRTCLiveRole.BROADCASTER == mRadioRoom.getRole()) {
                 return;
             }
-            listenRadio(new RCRadioRoomCallback() {
+            listenRadio(true, new RCRadioRoomCallback() {
                 @Override
                 public void onSuccess() {
                     VMLog.d(TAG, "onPublishCDNStream:onSuccess");
+                }
+
+                @Override
+                public void onError(int code, String message) {
+
+                }
+            });
+        }
+
+        @Override
+        public void onUnpublishCDNStream(RCRTCCDNInputStream stream) {
+            VMLog.d(TAG, "onUnpublishCDNStream:");
+            if (RCRTCLiveRole.BROADCASTER == mRadioRoom.getRole()) {
+                return;
+            }
+            listenRadio(false, new RCRadioRoomCallback() {
+                @Override
+                public void onSuccess() {
+                    VMLog.d(TAG, "onUnpublishCDNStream:onSuccess");
                 }
 
                 @Override
@@ -564,10 +664,12 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
 
         @Override
         public void onUserLeft(RCRTCRemoteUser rcrtcRemoteUser) {
+            VMLog.d(TAG, "onUserLeft:");
         }
 
         @Override
         public void onUserOffline(RCRTCRemoteUser rcrtcRemoteUser) {
+            VMLog.d(TAG, "onUserOffline:");
         }
 
         @Override
@@ -576,10 +678,6 @@ public class RCRadioRoomEngineImpl extends RCRadioRoomEngine implements RongChat
 
         @Override
         public void onUnpublishLiveStreams(List<RCRTCInputStream> list) {
-        }
-
-        @Override
-        public void onLeaveRoom(int i) {
         }
     }
 }

@@ -38,6 +38,7 @@ import cn.rongcloud.radioroom.RCRadioRoomEngine;
 import cn.rongcloud.radioroom.callback.RCRadioRoomCallback;
 import cn.rongcloud.radioroom.callback.RCRadioRoomResultCallback;
 import cn.rongcloud.radioroom.room.RCRadioRoomInfo;
+import cn.rongcloud.radioroom.room.StreamType;
 import cn.rongcloud.radioroom.utils.JsonUtils;
 import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.intent.IntentWrap;
@@ -229,6 +230,9 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
                                 : RCRTCLiveRole.AUDIENCE);
         roomInfo.setRoomId(mRoomId);
         roomInfo.setRoomName(mVoiceRoomBean.getRoomName());
+        // 默认是内置cdn流
+        // 此处修改为自定义散发cdn流
+        roomInfo.setStreamType(StreamType.rong);
         RCRadioRoomEngine.getInstance()
                 .joinRoom(
                         roomInfo,
@@ -884,9 +888,9 @@ public class RadioRoomPresenter extends BasePresenter<RadioRoomView>
                 break;
             case RC_SEATING:
                 refreshSeatView();
-                if ("0".equals(s)) {
-                    refreshMusicView(false);
-                }
+                // if ("0".equals(s)) {
+                //     refreshMusicView(false);
+                // }
                 break;
             case RC_SILENT:
                 refreshMute();

@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import cn.rc.demo.check.TIPHelper;
 import cn.rongcloud.config.router.RouterPath;
+import cn.rongcloud.profile.VersionHelper;
 import io.rong.imkit.manager.UnReadMessageManager;
 import io.rong.imkit.utils.StatusBarUtil;
 import io.rong.imlib.model.Conversation;
@@ -106,7 +107,7 @@ public class HomeActivity extends PermissionActivity implements UnReadMessageMan
                 Conversation.ConversationType.SYSTEM};
         UnReadMessageManager.getInstance().addObserver(cs, this);
         TIPHelper.showTipDialog(this);
-
+        VersionHelper.checkVersion(activity, false);
     }
 
 

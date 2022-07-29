@@ -112,19 +112,13 @@ public class MessageOperationFragment extends BottomDialog {
                         iMessageOperation.delete(message);
                     } else if (item.getIcon() == R.drawable.ic_annotation) {
                         if (TextUtils.equals(item.getName(), getResources().getString(R.string.cmu_cancel_str_annotation))) {
-                            iMessageOperation.cancelAnnotation(message);
+                            iMessageOperation.cancelAnnotation(message, true);
                         } else {
                             iMessageOperation.annotation(message);
                         }
                     } else if (item.getIcon() == R.drawable.ic_recall) {
                         iMessageOperation.reCall(message);
-                        //如果当前消息被撤回的消息已经被标注了，那么直接去移除
-                        for (NewsOperation newsOperation : adapter.getData()) {
-                            if (TextUtils.equals(newsOperation.getName(), getResources().getString(R.string.cmu_cancel_str_annotation))) {
-                                iMessageOperation.cancelAnnotation(message);
-                                break;
-                            }
-                        }
+                        iMessageOperation.cancelAnnotation(message, false);
                     }
                     dismiss();
                 }

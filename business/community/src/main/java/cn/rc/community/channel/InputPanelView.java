@@ -62,7 +62,6 @@ import io.rong.imkit.feature.mention.RongMentionManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
-import io.rong.message.ImageMessage;
 import io.rong.message.ReferenceMessage;
 import io.rong.message.TextMessage;
 
@@ -472,15 +471,16 @@ public class InputPanelView extends FrameLayout implements View.OnClickListener,
     }
 
     @Override
-    public void cancelAnnotation(WrapperMessage iMessage) {
+    public void cancelAnnotation(WrapperMessage iMessage, boolean isHint) {
         OkApi.post(CommunityAPI.REMOVE_MARK_MSG + iMessage.getMessage().getUId(), null, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    KToast.show("标记移除成功");
-                } else {
-                    KToast.show("标记移除失败:" + result.getMessage());
-                }
+                if (isHint)
+                    if (result.ok()) {
+                        KToast.show("标记移除成功");
+                    } else {
+                        KToast.show("标记移除失败:" + result.getMessage());
+                    }
             }
         });
     }

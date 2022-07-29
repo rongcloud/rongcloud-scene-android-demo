@@ -132,6 +132,7 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
         if (!TextUtils.equals(roomId, this.roomId)) {
             this.roomId = roomId;
             RCRadioRoomEngine.getInstance().setRadioEventListener(this);
+            RCRadioRoomEngine.getInstance().setPlayer(Player.getPlayer());
         }
     }
 
