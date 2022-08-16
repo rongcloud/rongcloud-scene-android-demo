@@ -36,7 +36,7 @@ import cn.rongcloud.roomkit.message.RCChatroomUserUnBlock;
 import cn.rongcloud.roomkit.message.RCChatroomVoice;
 import cn.rongcloud.roomkit.message.RCFollowMsg;
 import cn.rongcloud.roomkit.message.RCRRCloseMessage;
-import io.rong.imlib.RongIMClient;
+import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.model.MessageContent;
 
 /**
@@ -62,7 +62,7 @@ public class RoomKitInit implements IModule {
 
     @Override
     public void onRegisterMessageType() {
-        RongIMClient.registerMessageType(new ArrayList<Class<? extends MessageContent>>() {
+        RongCoreClient.registerMessageType(new ArrayList<Class<? extends MessageContent>>() {
             {
                 add(RCAllBroadcastMessage.class);
                 add(RCChatroomAdmin.class);

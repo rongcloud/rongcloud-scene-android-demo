@@ -7,7 +7,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.basis.ui.PermissionFragment;
 import com.basis.utils.KToast;
-import com.basis.utils.UIKit;
 import com.basis.wapper.IResultBack;
 
 import cn.rc.demo.R;
@@ -15,12 +14,10 @@ import cn.rongcloud.config.feedback.RcEvent;
 import cn.rongcloud.config.feedback.UmengHelper;
 import cn.rongcloud.config.router.RouterPath;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
-import io.rong.imkit.manager.UnReadMessageManager;
-import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.model.Conversation;
 
 @Route(path = RouterPath.FRAGMENT_HOME)
-public class MainFragment extends PermissionFragment implements View.OnClickListener, ModuleHelper.OnModuleClickListener, UnReadMessageManager.IUnReadMessageObserver {
+public class MainFragment extends PermissionFragment implements View.OnClickListener, ModuleHelper.OnModuleClickListener {
     private final static String TAG = "MainFragment";
 
     @Override
@@ -56,7 +53,7 @@ public class MainFragment extends PermissionFragment implements View.OnClickList
         business = getView(R.id.business);
         // 未读消息
         Conversation.ConversationType[] cs = new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE};
-        UnReadMessageManager.getInstance().addObserver(cs, this);
+//        UnReadMessageManager.getInstance().addObserver(cs, this);
         // load module
         ModuleHelper.inflateView(business, this);
     }
@@ -66,7 +63,7 @@ public class MainFragment extends PermissionFragment implements View.OnClickList
     public void onClick(View v) {
         int id = v.getId();
         if (R.id.iv_message == id) {
-            RouteUtils.routeToSubConversationListActivity(activity, Conversation.ConversationType.PRIVATE, "消息");
+//            RouteUtils.routeToSubConversationListActivity(activity, Conversation.ConversationType.PRIVATE, "消息");
         }
     }
 
@@ -113,12 +110,12 @@ public class MainFragment extends PermissionFragment implements View.OnClickList
 
     @Override
     public void onDestroy() {
-        UnReadMessageManager.getInstance().removeObserver(this);
+//        UnReadMessageManager.getInstance().removeObserver(this);
         super.onDestroy();
     }
 
-    @Override
-    public void onCountChanged(int count) {
-        UIKit.setVisible(unread, count > 0);
-    }
+//    @Override
+//    public void onCountChanged(int count) {
+//        UIKit.setVisible(unread, count > 0);
+//    }
 }

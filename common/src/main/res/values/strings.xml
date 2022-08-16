@@ -10,4 +10,10 @@
     <string name="basis_preview">预览</string>
     <string name="basis_loading">加载中</string>
 
+
+    <string name="rc_permission_grant_needed">您需要在设置中打开权限</string>
+    <string name="rc_cancel">取消</string>
+    <string name="rc_confirm">确认</string>
+    <string name="rc_permission_microphone">（麦克风）。</string>
+    <string name="rc_not_prompt">不再提示</string>
 </resources>

@@ -10,7 +10,7 @@ import com.basis.utils.ImageLoader;
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.ui.friend.model.Friend;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.rong.imkit.utils.RouteUtils;
+//import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -35,11 +35,11 @@ public class SendPrivateMessageFragment extends BaseBottomSheetDialog {
         mIvMemberPortrait = (CircleImageView) getView().findViewById(R.id.iv_member_portrait);
         mBtnSendMessage.setOnClickListener(v -> {
             dismiss();
-            RouteUtils.routeToConversationActivity(
-                    requireContext(),
-                    Conversation.ConversationType.PRIVATE,
-                    friend.getUid()
-            );
+//            RouteUtils.routeToConversationActivity(
+//                    requireContext(),
+//                    Conversation.ConversationType.PRIVATE,
+//                    friend.getUid()
+//            );
         });
         mTvMemberName.setText(friend.getName());
         ImageLoader.loadUrl(mIvMemberPortrait, friend.getPortrait(), R.drawable.default_portrait);

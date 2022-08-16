@@ -21,7 +21,6 @@ import java.util.List;
 
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.api.VRApi;
-import io.rong.imkit.picture.tools.ToastUtils;
 
 /**
  * 屏蔽词
@@ -147,7 +146,7 @@ public class ShieldDialog extends BottomDialog {
                             }
                         }
                         if (isContains) {
-                            ToastUtils.s(getDialog().getContext(), "该屏蔽词已添加！");
+                            KToast.show("该屏蔽词已添加！");
                         } else {
                             addShield(s);
                         }
@@ -177,14 +176,14 @@ public class ShieldDialog extends BottomDialog {
                         // EventBus.get().emit(UPDATE_SHIELD, shields);
                     }
                 } else {
-                    ToastUtils.s(getDialog().getContext(), "添加敏感词失败");
+                    KToast.show("添加敏感词失败");
                 }
             }
 
             @Override
             public void onError(int code, String msg) {
                 super.onError(code, msg);
-                ToastUtils.s(getDialog().getContext(), "添加敏感词失败");
+                KToast.show( "添加敏感词失败");
             }
         });
     }
@@ -209,14 +208,14 @@ public class ShieldDialog extends BottomDialog {
 
                     // EventBus.get().emit(UPDATE_SHIELD, shields);
                 } else {
-                    ToastUtils.s(getDialog().getContext(), "删除敏感词失败");
+                    KToast.show( "删除敏感词失败");
                 }
             }
 
             @Override
             public void onError(int code, String msg) {
                 super.onError(code, msg);
-                ToastUtils.s(getDialog().getContext(), "删除敏感词失败");
+                KToast.show( "删除敏感词失败");
             }
         });
     }

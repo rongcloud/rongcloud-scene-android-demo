@@ -48,8 +48,9 @@ import cn.rongcloud.config.router.RouterPath;
 import cn.rongcloud.profile.region.Region;
 import cn.rongcloud.profile.region.RegionActivity;
 import cn.rongcloud.profile.webview.ActCommentWeb;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
+import io.rong.imlib.IRongCoreCallback;
+import io.rong.imlib.IRongCoreEnum;
+import io.rong.imlib.RongCoreClient;
 
 @Route(path = RouterPath.ROUTER_LOGIN)
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -272,7 +273,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     void initRongIM(LoadTag tag, User user) {
         if (!TextUtils.isEmpty(user.getImToken())) {
-            RongIM.connect(user.getImToken(), new RongIMClient.ConnectCallback() {
+            RongCoreClient.connect(user.getImToken(), new IRongCoreCallback.ConnectCallback() {
                 @Override
                 public void onSuccess(String t) {
                     Logger.e(TAG, "connect#onSuccess:" + t);
@@ -284,13 +285,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
 
                 @Override
-                public void onError(RongIMClient.ConnectionErrorCode e) {
+                public void onError(IRongCoreEnum.ConnectionErrorCode e) {
                     if (null != tag) tag.dismiss();
                     Logger.e(TAG, "connect#onError:" + GsonUtil.obj2Json(e));
                 }
 
                 @Override
-                public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
+                public void onDatabaseOpened(IRongCoreEnum.DatabaseOpenStatus code) {
                     Logger.e(TAG, "connect#onDatabaseOpened:code = " + code);
                 }
             });

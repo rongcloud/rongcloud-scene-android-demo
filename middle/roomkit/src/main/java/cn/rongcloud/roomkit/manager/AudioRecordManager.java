@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.basis.imkit.FeatureConfig;
+import com.basis.imkit.RongConfigCenter;
 import com.basis.net.oklib.OkApi;
 import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.api.body.FileBody;
@@ -29,13 +31,11 @@ import com.basis.net.oklib.wrapper.Wrapper;
 import java.io.File;
 
 import cn.rongcloud.config.UserManager;
+import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.message.RCChatroomVoice;
 import io.rong.common.RLog;
-import io.rong.imkit.IMCenter;
-import io.rong.imkit.R;
-import io.rong.imkit.config.RongConfigCenter;
-import io.rong.imlib.RongIMClient;
+import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.common.SavePathUtils;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.typingmessage.TypingMessageManager;
@@ -237,7 +237,7 @@ public class AudioRecordManager implements Handler.Callback {
         sendEmptyMessage(AUDIO_RECORD_EVENT_TRIGGER);
 
         if (TypingMessageManager.getInstance().isShowMessageTyping()) {
-            RongIMClient.getInstance().sendTypingStatus(conversationType, targetId, "RC:VcMsg");
+            RongCoreClient.getInstance().sendTypingStatus(conversationType, targetId, "RC:VcMsg");
         }
     }
 
@@ -301,7 +301,7 @@ public class AudioRecordManager implements Handler.Callback {
             mMediaRecorder = new MediaRecorder();
             int bpsNb = RongConfigCenter.featureConfig().getAudioNBEncodingBitRate();
             int bpsWb = RongConfigCenter.featureConfig().getAudioWBEncodingBitRate();
-            if (RongConfigCenter.featureConfig().getVoiceMessageType() == IMCenter.VoiceMessageType.HighQuality) {
+            if (RongConfigCenter.featureConfig().getVoiceMessageType() == FeatureConfig.VoiceMessageType.HighQuality) {
                 mMediaRecorder.setAudioEncodingBitRate(AUDIO_AA_ENCODING_BIT_RATE);
             } else {
                 mMediaRecorder.setAudioSamplingRate(mSampleRate.value);
@@ -314,7 +314,7 @@ public class AudioRecordManager implements Handler.Callback {
 
             mMediaRecorder.setAudioChannels(1);
             mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            if (RongConfigCenter.featureConfig().getVoiceMessageType().equals(IMCenter.VoiceMessageType.HighQuality)) {
+            if (RongConfigCenter.featureConfig().getVoiceMessageType().equals(FeatureConfig.VoiceMessageType.HighQuality)) {
                 mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.HE_AAC);

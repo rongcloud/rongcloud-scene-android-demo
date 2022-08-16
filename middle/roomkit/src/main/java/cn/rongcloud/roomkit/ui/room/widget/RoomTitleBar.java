@@ -17,6 +17,7 @@ import com.basis.net.oklib.OkParams;
 import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.ImageLoader;
+import com.basis.utils.KToast;
 import com.basis.utils.UiUtils;
 import com.jakewharton.rxbinding4.view.RxView;
 
@@ -31,7 +32,6 @@ import cn.rongcloud.roomkit.ui.RoomOwnerType;
 import cn.rongcloud.roomkit.ui.room.model.Member;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.core.Observable;
-import io.rong.imkit.picture.tools.ToastUtils;
 
 /**
  * @author gyn
@@ -229,7 +229,7 @@ public class RoomTitleBar extends ConstraintLayout {
             public void onResult(Wrapper result) {
                 if (result.ok()) {
                     if (isFollow) {
-                        ToastUtils.s(getContext(), "关注成功");
+                        KToast.show( "关注成功");
                         if (onFollowClickListener != null) {
                             RCFollowMsg followMsg = new RCFollowMsg();
                             followMsg.setUser(UserManager.get());
@@ -237,7 +237,7 @@ public class RoomTitleBar extends ConstraintLayout {
                             onFollowClickListener.clickFollow(true, followMsg);
                         }
                     } else {
-                        ToastUtils.s(getContext(), "取消关注成功");
+                        KToast.show( "取消关注成功");
                         if (onFollowClickListener != null) {
                             onFollowClickListener.clickFollow(false, null);
                         }
@@ -246,9 +246,9 @@ public class RoomTitleBar extends ConstraintLayout {
                     setFollow(isFollow);
                 } else {
                     if (isFollow) {
-                        ToastUtils.s(getContext(), "关注失败");
+                        KToast.show( "关注失败");
                     } else {
-                        ToastUtils.s(getContext(), "取消关注失败");
+                        KToast.show( "取消关注失败");
                     }
                 }
             }
@@ -256,9 +256,9 @@ public class RoomTitleBar extends ConstraintLayout {
             @Override
             public void onError(int code, String msg) {
                 if (isFollow) {
-                    ToastUtils.s(getContext(), "关注失败");
+                    KToast.show( "关注失败");
                 } else {
-                    ToastUtils.s(getContext(), "取消关注失败");
+                    KToast.show( "取消关注失败");
                 }
             }
         });

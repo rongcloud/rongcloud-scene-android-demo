@@ -4,19 +4,16 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.basis.adapter.RcyHolder;
 import com.basis.adapter.RcySAdapter;
 import com.basis.ui.BaseBottomSheetDialog;
-import com.basis.utils.UiUtils;
 
 import java.util.List;
 
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.ui.OnItemClickListener;
-import io.rong.imkit.picture.decoration.GridSpacingItemDecoration;
 
 
 /**
@@ -42,11 +39,11 @@ public class RoomSettingFragment extends BaseBottomSheetDialog {
         mIvClose = (AppCompatImageView) getView().findViewById(R.id.iv_close);
         mIvClose.setOnClickListener(v -> dismiss());
         mRvFunctionList = (RecyclerView) getView().findViewById(R.id.rv_function_list);
-        GridSpacingItemDecoration itemDecoration = new GridSpacingItemDecoration(
-                ((GridLayoutManager) mRvFunctionList.getLayoutManager()).getSpanCount(),
-                UiUtils.dp2px(20), true
-        );
-        mRvFunctionList.addItemDecoration(itemDecoration);
+//        GridSpacingItemDecoration itemDecoration = new GridSpacingItemDecoration(
+//                ((GridLayoutManager) mRvFunctionList.getLayoutManager()).getSpanCount(),
+//                UiUtils.dp2px(20), true
+//        );
+//        mRvFunctionList.addItemDecoration(itemDecoration);
         adapter = new RcySAdapter<MutableLiveData<IFun.BaseFun>, RcyHolder>(getContext(), R.layout.item_room_setting) {
             @Override
             public void convert(RcyHolder holder, MutableLiveData<IFun.BaseFun> baseFun, int position) {

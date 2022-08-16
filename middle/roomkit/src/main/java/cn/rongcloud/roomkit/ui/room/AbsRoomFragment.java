@@ -8,6 +8,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.basis.imkit.PermissionCheckUtil;
 import com.basis.ui.mvp.BaseMvpFragment;
 import com.basis.ui.mvp.BasePresenter;
 import com.basis.utils.Logger;
@@ -15,7 +16,6 @@ import com.basis.widget.dialog.VRCenterDialog;
 
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
-import io.rong.imkit.utils.PermissionCheckUtil;
 
 /**
  * @author gyn

@@ -45,7 +45,6 @@ import cn.rongcloud.roomkit.ui.miniroom.OnCloseMiniRoomListener;
 import cn.rongcloud.roomkit.ui.miniroom.OnMiniRoomListener;
 import cn.rongcloud.rtc.api.RCRTCEngine;
 import cn.rongcloud.rtc.api.stream.RCRTCMicOutputStream;
-import io.rong.imkit.picture.tools.ToastUtils;
 import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongCoreClient;
@@ -238,7 +237,7 @@ public class RadioEventHelper implements IRadioEventHelper, RCRadioEventListener
             @Override
             public void onError(Message message, IRongCoreEnum.CoreErrorCode coreErrorCode) {
                 if (messageContent instanceof RCChatroomBarrage || messageContent instanceof RCChatroomVoice) {
-                    ToastUtils.s(UIKit.getContext(), "发送失败");
+                    KToast.show("发送失败");
                 }
                 Logger.e("=============" + coreErrorCode.code + ":" + coreErrorCode.msg);
             }

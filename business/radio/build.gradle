@@ -33,13 +33,11 @@ dependencies {
     implementation android_ui.appcompat
     implementation android_ui.material
 
-    api project(path: ':middle:qnplayer')
+//    api project(path: ':middle:qnplayer')
     api project(path: ':middle:config')
     api project(path: ':middle:music')
     api project(path: ':middle:roomkit')
 
-    implementation "cn.rongcloud.sdk:im_lib:$imLib"
-    implementation "cn.rongcloud.sdk:im_kit:$imLib"
     implementation "cn.rongcloud.sdk:call_lib:$rtcLib"
     implementation "cn.rongcloud.sdk:player:$rtcLib"
     implementation project(path: ':middle:qnplayer')

@@ -50,7 +50,6 @@ import cn.rongcloud.roomkit.message.RCFollowMsg;
 import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.room.model.MemberCache;
 import cn.rongcloud.roomkit.widget.CenterAlignImageSpan;
-import io.rong.imkit.manager.AudioPlayManager;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.TextMessage;
 
@@ -234,9 +233,9 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
         AnimationDrawable animationDrawable = (AnimationDrawable) ((ImageView) holder.getView(R.id.iv_paly_voice_id)).getDrawable();
         animationDrawable.stop();
         holder.setOnClickListener(R.id.ll_paly_voice_id, v -> {
-            if (RCAudioPlayManager.getInstance().isPlaying() && TextUtils.equals(message.getPath(), AudioPlayManager.getInstance().getPlayingUri().toString())) {
+            if (RCAudioPlayManager.getInstance().isPlaying() && TextUtils.equals(message.getPath(), RCAudioPlayManager.getInstance().getPlayingUri().toString())) {
                 //当前正在播放,并且点击的就是当前的
-                AudioPlayManager.getInstance().stopPlay();
+                RCAudioPlayManager.getInstance().stopPlay();
                 return;
             }
             RCAudioPlayManager.getInstance().startPlay(context, Uri.parse(message.getPath()), new IAudioPlayListener() {

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.basis.imkit.StatusBarUtil;
 import com.basis.ui.BaseActivity;
 import com.basis.utils.Logger;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -26,7 +27,6 @@ import cn.rongcloud.roomkit.intent.IntentWrap;
 import cn.rongcloud.roomkit.provider.VoiceRoomProvider;
 import cn.rongcloud.roomkit.service.RTCNotificationService;
 import cn.rongcloud.roomkit.ui.RoomType;
-import io.rong.imkit.utils.StatusBarUtil;
 
 
 /**
@@ -61,9 +61,10 @@ public abstract class AbsRoomActivity extends BaseActivity {
         // 忽略av call
         DataShareManager.get().setIgnoreIncomingCall(true);
         initRoom();
+        getWrapBar().setHide(true).work();
         // 状态栏透明
         StatusBarUtil.setTranslucentStatus(this);
-        getWrapBar().setHide(true).work();
+
         // 下拉刷新和加载更多
         refreshLayout = getView(R.id.layout_refresh);
         refreshLayout.setEnableAutoLoadMore(false);

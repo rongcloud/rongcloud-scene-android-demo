@@ -17,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 
+import com.basis.imkit.PermissionCheckUtil;
+import com.basis.imkit.RongUtils;
 import com.basis.utils.KToast;
 import com.basis.utils.UiUtils;
 
@@ -25,9 +27,8 @@ import cn.rongcloud.roomkit.manager.AudioRecordManager;
 import cn.rongcloud.roomkit.manager.RCAudioPlayManager;
 import cn.rongcloud.roomkit.message.RCChatroomVoice;
 import cn.rongcloud.roomkit.ui.RoomOwnerType;
-import io.rong.imkit.manager.UnReadMessageManager;
-import io.rong.imkit.utils.PermissionCheckUtil;
-import io.rong.imkit.utils.RongUtils;
+//import io.rong.imkit.manager.UnReadMessageManager;
+//import io.rong.imkit.utils.RongUtils;
 import io.rong.imlib.IMLibExtensionModuleManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.HardwareResource;
@@ -36,7 +37,7 @@ import io.rong.imlib.model.HardwareResource;
  * @author gyn
  * @date 2021/9/17
  */
-public class RoomBottomView extends ConstraintLayout implements UnReadMessageManager.IUnReadMessageObserver {
+public class RoomBottomView extends ConstraintLayout{
     private View mRootView;
     /**
      * 发送文字的view
@@ -143,7 +144,7 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         // 语音
         mSendVoiceMassageView.setOnTouchListener(onTouchListener);
         // 私密消息数量监听
-        UnReadMessageManager.getInstance().addObserver(new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE}, this);
+//        UnReadMessageManager.getInstance().addObserver(new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE}, this);
     }
 
     public void closeInput() {
@@ -373,15 +374,15 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         }
     }
 
-    @Override
-    public void onCountChanged(int i) {
-        mPrivateMessageCountView.setVisibility(i > 0 ? VISIBLE : GONE);
-        mPrivateMessageCountView.setText(i < 99 ? String.valueOf(i) : "99+");
-    }
+//    @Override
+//    public void onCountChanged(int i) {
+//        mPrivateMessageCountView.setVisibility(i > 0 ? VISIBLE : GONE);
+//        mPrivateMessageCountView.setText(i < 99 ? String.valueOf(i) : "99+");
+//    }
 
     @Override
     protected void onDetachedFromWindow() {
-        UnReadMessageManager.getInstance().removeObserver(this);
+//        UnReadMessageManager.getInstance().removeObserver(this);
         super.onDetachedFromWindow();
     }
 

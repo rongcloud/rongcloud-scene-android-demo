@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.basis.imkit.StatusBarUtil;
 import com.basis.ui.CmdKey;
 import com.basis.ui.PermissionActivity;
 import com.basis.ui.UIStack;
@@ -22,18 +23,18 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import cn.rc.demo.check.TIPHelper;
 import cn.rongcloud.config.router.RouterPath;
 import cn.rongcloud.profile.VersionHelper;
-import io.rong.imkit.manager.UnReadMessageManager;
-import io.rong.imkit.utils.StatusBarUtil;
+//import io.rong.imkit.manager.UnReadMessageManager;
 import io.rong.imlib.model.Conversation;
 
 @Route(path = RouterPath.ROUTER_MAIN)
-public class HomeActivity extends PermissionActivity implements UnReadMessageManager.IUnReadMessageObserver {
+public class HomeActivity extends PermissionActivity //implements UnReadMessageManager.IUnReadMessageObserver
+         {
     private final static String TAG = "HomeActivity";
     private final static HomeBottomBar[] barTitles = new HomeBottomBar[]{
-             new HomeBottomBar("社区", R.drawable.selector_bar_community, RouterPath.FRAGMENT_COMMUNITY, false, true),
+//             new HomeBottomBar("社区", R.drawable.selector_bar_community, RouterPath.FRAGMENT_COMMUNITY, false, true),
             new HomeBottomBar("娱乐", R.drawable.selector_bar_home, RouterPath.FRAGMENT_HOME, false, false),
-             new HomeBottomBar("发现", R.drawable.selector_bar_find, RouterPath.FRAGMENT_FIND),
-            new HomeBottomBar("消息", R.drawable.selector_bar_message, RouterPath.FRAGMENT_MESSAGE),
+//             new HomeBottomBar("发现", R.drawable.selector_bar_find, RouterPath.FRAGMENT_FIND),
+//            new HomeBottomBar("消息", R.drawable.selector_bar_message, RouterPath.FRAGMENT_MESSAGE),
             new HomeBottomBar("我的", R.drawable.selector_bar_me, RouterPath.FRAGMENT_ME_COMMUNITY)
     };
 
@@ -105,7 +106,7 @@ public class HomeActivity extends PermissionActivity implements UnReadMessageMan
         Conversation.ConversationType[] cs = new Conversation.ConversationType[]{
                 Conversation.ConversationType.PRIVATE,
                 Conversation.ConversationType.SYSTEM};
-        UnReadMessageManager.getInstance().addObserver(cs, this);
+//        UnReadMessageManager.getInstance().addObserver(cs, this);
         TIPHelper.showTipDialog(this);
         VersionHelper.checkVersion(activity, false);
     }
@@ -127,22 +128,22 @@ public class HomeActivity extends PermissionActivity implements UnReadMessageMan
 
     @Override
     protected void onDestroy() {
-        UnReadMessageManager.getInstance().removeObserver(this);
+//        UnReadMessageManager.getInstance().removeObserver(this);
         super.onDestroy();
     }
 
 
-    @Override
-    public void onCountChanged(int count) {
-        Logger.e(TAG, "onCountChanged: count= " + count);
-        if (tabLayout != null && tabLayout.getTabAt(MSG_INDEX) != null) {
-            if (count > 0) {
-                BadgeDrawable badgeDrawable = tabLayout.getTabAt(MSG_INDEX).getOrCreateBadge();
-                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.color_main_unread_point));
-                badgeDrawable.setVerticalOffset(UiUtils.dp2px(5));
-            } else {
-                tabLayout.getTabAt(MSG_INDEX).removeBadge();
-            }
-        }
-    }
+//    @Override
+//    public void onCountChanged(int count) {
+//        Logger.e(TAG, "onCountChanged: count= " + count);
+//        if (tabLayout != null && tabLayout.getTabAt(MSG_INDEX) != null) {
+//            if (count > 0) {
+//                BadgeDrawable badgeDrawable = tabLayout.getTabAt(MSG_INDEX).getOrCreateBadge();
+//                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.color_main_unread_point));
+//                badgeDrawable.setVerticalOffset(UiUtils.dp2px(5));
+//            } else {
+//                tabLayout.getTabAt(MSG_INDEX).removeBadge();
+//            }
+//        }
+//    }
 }

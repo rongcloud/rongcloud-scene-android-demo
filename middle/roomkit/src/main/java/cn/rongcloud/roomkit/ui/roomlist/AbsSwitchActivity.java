@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.basis.imkit.StatusBarUtil;
 import com.basis.ui.BaseActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -18,7 +19,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.Arrays;
 
 import cn.rongcloud.roomkit.R;
-import io.rong.imkit.utils.StatusBarUtil;
 
 public class AbsSwitchActivity extends BaseActivity implements View.OnClickListener {
 
@@ -37,6 +37,7 @@ public class AbsSwitchActivity extends BaseActivity implements View.OnClickListe
     private int currentIndex = 0;
 
     protected void initView() {
+        getWrapBar().setHide(true).work();
         StatusBarUtil.setStatusBarFontIconDark(this, StatusBarUtil.TYPE_M, true);
         vp_switch = findViewById(R.id.vp_switch);
 
@@ -53,8 +54,6 @@ public class AbsSwitchActivity extends BaseActivity implements View.OnClickListe
         }).attach();
 
         getView(R.id.fl_back).setOnClickListener(this);
-
-        getWrapBar().setHide(true).work();
 
     }
 

@@ -15,6 +15,7 @@ import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.ui.BaseBottomSheetDialog;
 import com.basis.utils.ImageLoader;
+import com.basis.utils.KToast;
 import com.basis.utils.UIKit;
 import com.basis.utils.UiUtils;
 
@@ -35,7 +36,6 @@ import cn.rongcloud.roomkit.message.RCChatroomGift;
 import cn.rongcloud.roomkit.message.RCChatroomGiftAll;
 import cn.rongcloud.roomkit.ui.room.model.Member;
 import cn.rongcloud.roomkit.widget.page.CustomerPageLayoutManager;
-import io.rong.imkit.picture.tools.ToastUtils;
 import io.rong.imlib.model.MessageContent;
 
 /**
@@ -379,9 +379,9 @@ public class GiftFragment extends BaseBottomSheetDialog {
             mOnSendGiftListener.onSendGiftSuccess(messages);
         }
         if (members.size() == mSelectUserIds.size()) {
-            ToastUtils.s(getContext(), "赠送成功");
+            KToast.show( "赠送成功");
         } else {
-            ToastUtils.s(getContext(), "赠送异常");
+            KToast.show( "赠送异常");
         }
         dismiss();
     }

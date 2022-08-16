@@ -28,8 +28,6 @@ import cn.rongcloud.roomkit.ui.RoomOwnerType;
 import cn.rongcloud.roomkit.ui.room.model.Member;
 import cn.rongcloud.roomkit.ui.room.model.MemberCache;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.rong.imkit.picture.tools.ToastUtils;
-import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -226,11 +224,11 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
         });
         mBtnSendMessage.setOnClickListener(v -> {
             dismiss();
-            RouteUtils.routeToConversationActivity(
-                    requireContext(),
-                    Conversation.ConversationType.PRIVATE,
-                    member.getUserId()
-            );
+//            RouteUtils.routeToConversationActivity(
+//                    requireContext(),
+//                    Conversation.ConversationType.PRIVATE,
+//                    member.getUserId()
+//            );
         });
         mBtnFollow.setOnClickListener(v -> {
             follow();
@@ -486,7 +484,7 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
             public void onResult(Wrapper result) {
                 if (result.ok()) {
                     if (isFollow) {
-                        ToastUtils.s(getContext(), "关注成功");
+                        KToast.show( "关注成功");
                         if (mOnMemberSettingClickListener != null) {
                             RCFollowMsg followMsg = new RCFollowMsg();
                             followMsg.setUser(UserManager.get());
@@ -494,7 +492,7 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
                             mOnMemberSettingClickListener.clickFollow(true, followMsg);
                         }
                     } else {
-                        ToastUtils.s(getContext(), "取消关注成功");
+                        KToast.show( "取消关注成功");
                         if (mOnMemberSettingClickListener != null) {
                             mOnMemberSettingClickListener.clickFollow(false, null);
                         }
@@ -504,9 +502,9 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
                     dismiss();
                 } else {
                     if (isFollow) {
-                        ToastUtils.s(getContext(), "关注失败");
+                        KToast.show( "关注失败");
                     } else {
-                        ToastUtils.s(getContext(), "取消关注失败");
+                        KToast.show("取消关注失败");
                     }
                 }
             }
@@ -514,9 +512,9 @@ public class MemberSettingFragment extends BaseBottomSheetDialog {
             @Override
             public void onError(int code, String msg) {
                 if (isFollow) {
-                    ToastUtils.s(getContext(), "关注失败");
+                    KToast.show( "关注失败");
                 } else {
-                    ToastUtils.s(getContext(), "取消关注失败");
+                    KToast.show("取消关注失败");
                 }
             }
         });

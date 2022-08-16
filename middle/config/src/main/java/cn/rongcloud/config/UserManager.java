@@ -14,7 +14,7 @@ import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.config.router.RouterPath;
-import io.rong.imkit.RongIM;
+import io.rong.imlib.RongCoreClient;
 
 /**
  * @author: BaiCQ
@@ -47,8 +47,8 @@ public class UserManager extends ObjToSP<User> {
         for (IBasis b : iBasess) {
             b.onLogout();
         }
-        RongIM.getInstance().disconnect();
-        RongIM.getInstance().logout();
+        RongCoreClient.getInstance().disconnect();
+        RongCoreClient.getInstance().logout();
         SensorsUtil.instance().registerSuperProperties(false);
         SensorsUtil.instance().removeUserProperties();
         ARouter.getInstance().build(RouterPath.ROUTER_LOGIN).navigation();

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import cn.rongcloud.config.init.IModule;
 import cn.rongcloud.pk.message.RCChatroomPK;
 import cn.rongcloud.pk.message.RCChatroomPKGift;
-import io.rong.imlib.RongIMClient;
+import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.model.MessageContent;
 
 /**
@@ -25,7 +25,7 @@ public class PKInit implements IModule {
 
     @Override
     public void onRegisterMessageType() {
-        RongIMClient.registerMessageType(new ArrayList<Class<? extends MessageContent>>() {
+        RongCoreClient.registerMessageType(new ArrayList<Class<? extends MessageContent>>() {
             {
                 add(RCChatroomPK.class);
                 add(RCChatroomPKGift.class);

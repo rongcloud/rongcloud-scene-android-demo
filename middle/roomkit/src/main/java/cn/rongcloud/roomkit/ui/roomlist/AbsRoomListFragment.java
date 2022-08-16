@@ -12,6 +12,7 @@ import com.basis.net.oklib.OkParams;
 import com.basis.net.oklib.WrapperCallBack;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.ui.mvp.BaseMvpFragment;
+import com.basis.utils.KToast;
 import com.basis.widget.dialog.VRCenterDialog;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
@@ -31,7 +32,7 @@ import cn.rongcloud.roomkit.ui.OnItemClickRoomListListener;
 import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
 import cn.rongcloud.roomkit.widget.InputPasswordDialog;
-import io.rong.imkit.picture.tools.ToastUtils;
+
 
 /**
  * @author gyn
@@ -217,7 +218,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
                                 return;
                             }
                             if (password.length() < 4) {
-                                ToastUtils.s(requireContext(), requireContext().getString(R.string.text_please_input_four_number));
+                                KToast.show(requireContext().getString(R.string.text_please_input_four_number));
                                 return;
                             }
                             if (TextUtils.equals(password, item.getPassword())) {

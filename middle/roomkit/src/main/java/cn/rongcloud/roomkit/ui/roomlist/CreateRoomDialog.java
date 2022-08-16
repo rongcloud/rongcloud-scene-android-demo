@@ -22,6 +22,7 @@ import com.basis.net.oklib.api.body.BitmapBody;
 import com.basis.net.oklib.api.body.FileBody;
 import com.basis.net.oklib.wrapper.Wrapper;
 import com.basis.utils.ImageLoader;
+import com.basis.utils.KToast;
 import com.basis.utils.RealPathFromUriUtils;
 import com.basis.utils.UiUtils;
 import com.basis.widget.ChineseLengthFilter;
@@ -42,7 +43,6 @@ import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.manager.LocalDataManager;
 import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.widget.InputPasswordDialog;
-import io.rong.imkit.picture.tools.ToastUtils;
 
 /**
  * @author gyn
@@ -156,7 +156,7 @@ public class CreateRoomDialog extends BottomDialog {
         // 房间名检测
         String roomName = mRoomNameEditText.getText() == null ? "" : mRoomNameEditText.getText().toString();
         if (TextUtils.isEmpty(roomName)) {
-            ToastUtils.s(mActivity, mActivity.getString(R.string.please_input_room_name));
+            KToast.show(mActivity.getString(R.string.please_input_room_name));
             return;
         }
         // 私密房密码检测
@@ -173,7 +173,7 @@ public class CreateRoomDialog extends BottomDialog {
                         return;
                     }
                     if (password.length() < 4) {
-                        ToastUtils.s(mActivity, mActivity.getString(R.string.text_please_input_four_number));
+                        KToast.show(mActivity.getString(R.string.text_please_input_four_number));
                         return;
                     }
                     mPassword = password;
@@ -199,7 +199,7 @@ public class CreateRoomDialog extends BottomDialog {
                     if (result.ok() && !TextUtils.isEmpty(url)) {
                         createRoom(roomName, VRApi.FILE_PATH + url);
                     } else {
-                        ToastUtils.s(mActivity, result.getMessage());
+                        KToast.show(result.getMessage());
                         mLoading.dismiss();
                     }
                 }
@@ -207,7 +207,7 @@ public class CreateRoomDialog extends BottomDialog {
                 @Override
                 public void onError(int code, String msg) {
                     super.onError(code, msg);
-                    ToastUtils.s(mActivity, msg);
+                    KToast.show(msg);
                     mLoading.dismiss();
                 }
             });
@@ -221,7 +221,7 @@ public class CreateRoomDialog extends BottomDialog {
                     if (result.ok() && !TextUtils.isEmpty(url)) {
                         createRoom(roomName, VRApi.FILE_PATH + url);
                     } else {
-                        ToastUtils.s(mActivity, result.getMessage());
+                        KToast.show(result.getMessage());
                         mLoading.dismiss();
                     }
                 }
@@ -229,7 +229,7 @@ public class CreateRoomDialog extends BottomDialog {
                 @Override
                 public void onError(int code, String msg) {
                     super.onError(code, msg);
-                    ToastUtils.s(mActivity, msg);
+                    KToast.show(msg);
                     mLoading.dismiss();
                 }
             });
@@ -268,7 +268,7 @@ public class CreateRoomDialog extends BottomDialog {
                         dismiss();
                         mCreateRoomCallBack.onCreateExist(voiceRoomBean);
                     } else {
-                        ToastUtils.s(mActivity, result.getMessage());
+                        KToast.show(result.getMessage());
                     }
                 }
                 mLoading.dismiss();
@@ -277,7 +277,7 @@ public class CreateRoomDialog extends BottomDialog {
             @Override
             public void onError(int code, String msg) {
                 super.onError(code, msg);
-                ToastUtils.s(mActivity, msg);
+                KToast.show(msg);
                 mLoading.dismiss();
             }
         });

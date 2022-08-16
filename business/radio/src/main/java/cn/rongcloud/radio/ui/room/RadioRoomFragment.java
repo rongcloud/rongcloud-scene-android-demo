@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.basis.imkit.StatusBarUtil;
 import com.basis.ui.UIStack;
 import com.basis.utils.ImageLoader;
 import com.basis.utils.UiUtils;
@@ -63,8 +64,7 @@ import cn.rongcloud.roomkit.widget.EditDialog;
 import cn.rongcloud.roomkit.widget.InputPasswordDialog;
 import cn.rongcloud.roomkit.widget.decoration.DefaultItemDecoration;
 import io.reactivex.rxjava3.functions.Consumer;
-import io.rong.imkit.utils.RouteUtils;
-import io.rong.imkit.utils.StatusBarUtil;
+//import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.MessageContent;
 
@@ -553,12 +553,12 @@ public class RadioRoomFragment extends AbsRoomFragment<RadioRoomPresenter> imple
 
     @Override
     public void clickPrivateMessage() {
-        SensorsUtil.instance().textClick(mRoomId, present.getRoomName(), RcEvent.RadioRoom);
-        RouteUtils.routeToSubConversationListActivity(
-                requireActivity(),
-                Conversation.ConversationType.PRIVATE,
-                "消息"
-        );
+//        SensorsUtil.instance().textClick(mRoomId, present.getRoomName(), RcEvent.RadioRoom);
+//        RouteUtils.routeToSubConversationListActivity(
+//                requireActivity(),
+//                Conversation.ConversationType.PRIVATE,
+//                "消息"
+//        );
     }
 
     @Override

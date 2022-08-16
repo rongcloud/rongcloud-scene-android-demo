@@ -20,10 +20,10 @@ import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.init.shumei.RCDeviceMessage;
 import cn.rongcloud.config.init.shumei.RCSMMessage;
 import cn.rongcloud.config.provider.user.User;
-import io.rong.imkit.IMCenter;
-import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCoreCallback;
+import io.rong.imlib.IRongCoreEnum;
+import io.rong.imlib.IRongCoreListener;
 import io.rong.imlib.RongCoreClient;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.listener.OnReceiveMessageWrapperListener;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
@@ -48,14 +48,14 @@ public class ConnectModule implements IModule {
             return;
         }
         // 初始化im
-        RongIM.init((Application) UIKit.getContext(), appkey);
+        RongCoreClient.init((Application) UIKit.getContext(), appkey);
 
         // 连接监听
-        IMCenter.getInstance().addConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
+        RongCoreClient.getInstance().addConnectionStatusListener(new IRongCoreListener.ConnectionStatusListener() {
             @Override
             public void onChanged(ConnectionStatus status) {
                 Logger.d(TAG, "onInit: ConnectionStatusListener");
-                if (status == RongIMClient.ConnectionStatusListener.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT) {
+                if (status == IRongCoreListener.ConnectionStatusListener.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT) {
                     Logger.d(TAG, "onInit: KICKED_OFFLINE_BY_OTHER_CLIENT");
                     KToast.show("当前账号已在其他设备登录，请重新登录");
                     UserManager.logout();
@@ -117,19 +117,19 @@ public class ConnectModule implements IModule {
                     @Override
                     public void run() {
                         // 用户已登录则连接im
-                        RongIM.connect(imToken, new RongIMClient.ConnectCallback() {
+                        RongCoreClient.connect(imToken, new IRongCoreCallback.ConnectCallback() {
                             @Override
                             public void onSuccess(String t) {
                                 Logger.e(TAG, "connect#onSuccess:" + t);
                             }
 
                             @Override
-                            public void onError(RongIMClient.ConnectionErrorCode e) {
+                            public void onError(IRongCoreEnum.ConnectionErrorCode e) {
                                 Logger.e(TAG, "connect#onError:" + GsonUtil.obj2Json(e));
                             }
 
                             @Override
-                            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
+                            public void onDatabaseOpened(IRongCoreEnum.DatabaseOpenStatus code) {
                                 Logger.e(TAG, "connect#onDatabaseOpened:code = " + code);
                             }
                         });
@@ -146,7 +146,7 @@ public class ConnectModule implements IModule {
 
     @Override
     public void onRegisterMessageType() {
-        RongIMClient.registerMessageType(Arrays.asList(RCDeviceMessage.class, RCSMMessage.class));
+        RongCoreClient.registerMessageType(Arrays.asList(RCDeviceMessage.class, RCSMMessage.class));
     }
 
     /**

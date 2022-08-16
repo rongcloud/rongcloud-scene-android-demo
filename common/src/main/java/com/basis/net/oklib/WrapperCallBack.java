@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.basis.net.oklib.wrapper.Page;
 import com.basis.net.oklib.wrapper.interfaces.IPage;
+import com.basis.utils.Logger;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -32,6 +33,7 @@ public abstract class WrapperCallBack extends OCallBack<Wrapper> {//IOCallBack
             for (Map.Entry<String, String> en : hs.entrySet()) {
                 if (!TextUtils.isEmpty(en.getValue())) {
                     builder.addHeader(en.getKey(), en.getValue());
+                    Logger.e("onBefore: "+en.getKey() + " : "+en.getValue());
                 }
             }
         }

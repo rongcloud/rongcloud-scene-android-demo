@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.basis.adapter.RcyHolder;
 import com.basis.adapter.RcySAdapter;
+import com.basis.utils.KToast;
 import com.basis.utils.UiUtils;
 import com.basis.widget.BasePopupWindow;
 
@@ -16,7 +17,6 @@ import java.util.Arrays;
 
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.widget.EditDialog;
-import io.rong.imkit.picture.tools.ToastUtils;
 
 /**
  * @author gyn
@@ -84,7 +84,7 @@ public class NumPopupWindow extends BasePopupWindow {
                                     mEditDialog.dismiss();
                                     dismiss();
                                 } catch (NumberFormatException exception) {
-                                    ToastUtils.s(content.getContext(), "您输入的数量太大或不是数字");
+                                    KToast.show( "您输入的数量太大或不是数字");
                                 }
                             }
                         }
