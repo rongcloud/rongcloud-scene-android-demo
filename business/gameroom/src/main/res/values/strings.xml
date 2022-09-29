@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">gameroom</string>
+    <string name="game_room">游戏房</string>
+    <string name="game_quick_start">快速来一局</string>
+    <string name="game_text_default_room_title">快来和我一起互动吧！</string>
+    <string name="game_text_no_limit_gender">不限性别</string>
+    <string name="game_text_no_limit_game">不限游戏</string>
+    <string name="game_no_room">暂时没有内容哦</string>
+    <string name="game_text_finish">完成</string>
+    <string name="game_no_limit_gender">不限性别</string>
+    <string name="game_no_limit_game">不限游戏</string>
+    <string name="game_male">男生</string>
+    <string name="game_female">女生</string>
+    <string name="game_select_game">选择游戏</string>
+    <string name="game_room_name">房间名称</string>
+    <string name="game_create_room">创建房间</string>
+    <string name="game_text_please_select_game">请选择游戏</string>
+    <string name="game_text_please_input_room_name">请输入房间名</string>
+    <string name="game_text_captain">队长</string>
+    <string name="game_text_switch_game">更换游戏</string>
+</resources>

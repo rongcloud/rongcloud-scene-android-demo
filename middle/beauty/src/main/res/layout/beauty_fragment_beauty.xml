@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="#345">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_recovery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_recovery"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@mipmap/icon_control_recover" />
+
+        <TextView
+            android:id="@+id/tv_recovery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="恢复"
+            android:textColor="@color/beauty_tv_main_color_selector"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_recovery"
+            app:layout_constraintStart_toStartOf="@id/iv_recovery"
+            app:layout_constraintTop_toBottomOf="@id/iv_recovery" />
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="2px"
+            android:layout_height="20dp"
+            android:background="@color/divider_line_color"
+            app:layout_constraintBottom_toBottomOf="@id/iv_recovery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_recovery" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_beauty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cl_recovery"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/beauty_item_beauty" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

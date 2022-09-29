@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:shape="oval"
+    android:useLevel="false"
+    tools:ignore="ResourceName">
+    <solid android:color="#00000000" />
+
+    <stroke
+        android:width="5dp"
+        android:color="@color/basis_white" />
+    <size
+        android:width="100dp"
+        android:height="100dp" />
+
+</shape>

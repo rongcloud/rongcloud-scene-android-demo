@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="#000">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_send_private_message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gl_bg" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/iv_member_portrait"
+        app:layout_constraintGuide_begin="37dp"
+        app:layout_constraintTop_toTopOf="@id/iv_member_portrait" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_member_portrait"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:background="@drawable/bg_white_border_portrait"
+        android:padding="11dp"
+        android:src="@drawable/default_portrait"
+        app:civ_border_color="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#03003A"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_member_portrait"
+        tools:text="1111111" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_send_message"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_btn_send_message"
+        android:gravity="center"
+        android:text="@string/send_message"
+        android:textColor="#EF499A"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_member_name"
+        app:layout_constraintWidth_percent="0.25" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

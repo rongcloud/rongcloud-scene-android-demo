@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E5E8EF" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view1" />
+
+    <RelativeLayout
+        android:id="@+id/rl_audit_id"
+        android:layout_width="match_parent"
+        android:layout_height="93dp"
+        android:layout_alignParentBottom="true"
+        android:background="#F6F6F6"
+        android:paddingTop="13dp">
+
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_marginStart="35dp"
+            android:gravity="center_vertical"
+            android:text="@string/cmu_join_the_community_to_interact"
+            android:textColor="@color/app_color_black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btn_audit_status"
+            android:layout_width="77dp"
+            android:layout_height="33dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:textColor="@color/basis_white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</RelativeLayout>

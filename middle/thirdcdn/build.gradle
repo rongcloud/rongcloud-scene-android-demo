@@ -1,0 +1,54 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            jni.srcDirs = [] //disable automatic ndk-build
+        }
+    }
+
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+}
+
+
+dependencies {
+    implementation android_ui.appcompat
+    implementation android_ui.material
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    // 为了编译通过 采用 compileOnly
+    Properties properties = new Properties()
+    File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
+    properties.load(propertyFile.newDataInputStream())
+    if (properties.get("LIVE_ROOM_REMOTE_DEPENDENCE") != null && !properties.get("LIVE_ROOM_REMOTE_DEPENDENCE").toBoolean()) {
+        println("------------------------>>>> third cdn module use live module")
+        compileOnly project(path: ':RCliveroom')
+    } else {
+        compileOnly "cn.rongcloud.sdk:liveroom_lib:$liveroomLib"
+    }
+}

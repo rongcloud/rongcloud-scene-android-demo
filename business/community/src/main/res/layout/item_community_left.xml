@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="65.89dp"
+    android:layout_height="65.89dp"
+    android:layout_marginTop="9dp"
+    android:layout_marginLeft="6.87dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5.78dp"
+        android:src="@drawable/ic_promotion"
+        android:visibility="visible" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_select"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_sold_bg_blue_2dp_border"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_unread"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_gravity="top|right"
+        android:layout_margin="2.89dp"
+        android:background="@drawable/bg_unread"
+        android:textColor="@color/basis_white" />
+</FrameLayout>
+

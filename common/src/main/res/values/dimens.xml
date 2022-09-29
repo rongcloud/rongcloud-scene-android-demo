@@ -1,0 +1,39 @@
+<resources>
+    <!--font size-->
+    <dimen name="basis_20sp">20sp</dimen>
+    <dimen name="basis_18sp">18sp</dimen>
+    <dimen name="basis_17sp">17sp</dimen>
+    <dimen name="basis_16sp">16sp</dimen>
+    <dimen name="basis_15sp">15sp</dimen>
+    <dimen name="basis_14sp">14sp</dimen>
+    <dimen name="basis_13sp">13sp</dimen>
+    <dimen name="basis_12sp">12sp</dimen>
+    <dimen name="basis_10sp">10sp</dimen>
+
+    <!--margin 边距 小边距使用 大边距转换成percent -->
+    <dimen name="basis_1px">0.5dp</dimen>
+    <dimen name="basis_2px">1.0dp</dimen>
+    <dimen name="basis_3px">1.5dp</dimen>
+    <dimen name="basis_5px">2.5dp</dimen>
+    <dimen name="basis_6px">3.0dp</dimen>
+    <dimen name="basis_8px">4dp</dimen>
+    <dimen name="basis_10px">5.0dp</dimen>
+    <dimen name="basis_12px">6.0dp</dimen>
+    <dimen name="basis_15px">7.5dp</dimen>
+    <dimen name="basis_16px">8.0dp</dimen>
+    <dimen name="basis_20px">10.0dp</dimen>
+    <dimen name="basis_25px">12.5dp</dimen>
+    <dimen name="basis_30px">15.0dp</dimen>
+    <dimen name="basis_35px">17.5dp</dimen>
+    <dimen name="basis_40px">20.0dp</dimen>
+    <dimen name="basis_45px">22.5dp</dimen>
+    <dimen name="basis_50px">25.0dp</dimen>
+    <dimen name="basis_55px">27.5dp</dimen>
+    <dimen name="basis_60px">30.0dp</dimen>
+    <dimen name="basis_110px">55.0dp</dimen>
+    <dimen name="basis_112px">56.0dp</dimen>
+    <!--分割线的高/宽-->
+    <dimen name="basis_main_divide">0.3dp</dimen>
+    <dimen name="kit_corner">4dp</dimen>
+    <dimen name="basis_main_item">48dp</dimen>
+</resources>

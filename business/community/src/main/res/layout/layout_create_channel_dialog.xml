@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/basis_shape_bottom_bg"
+    android:orientation="vertical"
+    tools:ignore="ResourceName">
+
+    <TextView
+        android:id="@+id/group_name"
+        style="@style/main_secondary_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:drawableRight="@drawable/svg_right_gray"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:text="@string/cmu_str_channel_in_group" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/shape_editor_bg_gray"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:padding="12dp"
+            android:src="@drawable/svg_channel_text_gray" />
+
+        <EditText
+            android:id="@+id/et_name"
+            style="@style/main_primary_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:gravity="center_vertical"
+            android:hint="@string/cmu_tip_channel_name"
+            android:maxLength="16"
+            android:paddingRight="15dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/channel_type"
+        style="@style/main_secondary_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/cmu_str_channel_type" />
+
+    <FrameLayout
+        android:id="@+id/channel_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/shape_channel_type"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="ResourceName">
+
+        <ImageView
+            android:layout_width="@dimen/basis_main_item"
+            android:layout_height="@dimen/basis_main_item"
+            android:padding="15dp"
+            android:src="@drawable/svg_channel_text_blue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="@dimen/basis_main_item"
+            android:gravity="bottom"
+            android:text="@string/cmu_channel_text"
+            android:textColor="@color/basis_blue"
+            android:textSize="@dimen/basis_16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/basis_main_item"
+            android:gravity="top"
+            android:paddingTop="@dimen/basis_5px"
+            android:text="@string/cmu_channel_text_info"
+            android:textColor="@color/basis_blue"
+            android:textSize="@dimen/basis_10sp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/channel_voice"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_channel_type"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="ResourceName">
+
+        <ImageView
+            android:layout_width="@dimen/basis_main_item"
+            android:layout_height="@dimen/basis_main_item"
+            android:padding="15dp"
+            android:src="@drawable/svg_channel_voice_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="@dimen/basis_main_item"
+            android:gravity="bottom"
+            android:text="@string/cmu_channel_voice"
+            android:textColor="@color/basis_gray"
+            android:textSize="@dimen/basis_16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/basis_main_item"
+            android:gravity="top"
+            android:paddingTop="@dimen/basis_5px"
+            android:text="@string/cmu_channel_developing"
+            android:textColor="@color/basis_gray"
+            android:textSize="@dimen/basis_10sp" />
+
+        <ImageView
+            android:layout_width="@dimen/basis_main_item"
+            android:layout_height="@dimen/basis_main_item"
+            android:layout_gravity="right"
+            android:padding="15dp"
+            android:src="@drawable/svg_channel_lock" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/channel_doc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_channel_type"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="ResourceName">
+
+        <ImageView
+            android:layout_width="@dimen/basis_main_item"
+            android:layout_height="@dimen/basis_main_item"
+            android:padding="15dp"
+            android:src="@drawable/svg_channel_post_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="@dimen/basis_main_item"
+            android:gravity="bottom"
+            android:text="@string/cmu_channel_post"
+            android:textColor="@color/basis_gray"
+            android:textSize="@dimen/basis_16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/basis_main_item"
+            android:gravity="top"
+            android:paddingTop="@dimen/basis_5px"
+            android:text="@string/cmu_channel_developing"
+            android:textColor="@color/basis_gray"
+            android:textSize="@dimen/basis_10sp" />
+
+        <ImageView
+            android:layout_width="@dimen/basis_main_item"
+            android:layout_height="@dimen/basis_main_item"
+            android:layout_gravity="right"
+            android:padding="15dp"
+            android:src="@drawable/svg_channel_lock" />
+    </FrameLayout>
+
+</LinearLayout>

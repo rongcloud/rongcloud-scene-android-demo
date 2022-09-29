@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:paddingTop="@dimen/basis_10px"
+    tools:ignore="ResourceName">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tab_switch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <View style="@style/basis_main_divider" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_switch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

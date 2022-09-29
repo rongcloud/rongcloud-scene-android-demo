@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/game_bg_dialog_bottom"
+    android:backgroundTint="@color/white">
+
+    <TextView
+        android:id="@+id/tv_select_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/game_select_game"
+        android:textStyle="bold"
+        android:textColor="@color/game_color_text_main"
+        android:textSize="@dimen/basis_14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_game_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/tv_select_game"
+        tools:listitem="@layout/item_game" />
+
+    <TextView
+        android:id="@+id/tv_room_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/game_room_name"
+        android:textColor="@color/game_color_text_main"
+        android:textSize="@dimen/basis_14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_game_list" />
+
+    <com.vanniktech.emoji.EmojiEditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/game_bg_input"
+        android:gravity="center_vertical"
+        android:hint="@string/game_text_default_room_title"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:singleLine="true"
+        android:text="@string/game_text_default_room_title"
+        android:textColorHint="@color/game_color_text_main_hint"
+        android:textColor="@color/game_color_text_main"
+        android:textSize="@dimen/basis_14sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_room_name" />
+
+    <FrameLayout
+        android:id="@+id/fl_create_room"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_create_voice_room_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_input">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_create_voice_room_btn"
+            android:drawablePadding="8dp"
+            android:text="@string/game_create_room"
+            android:textColor="@color/white"
+            android:textSize="@dimen/basis_17sp" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

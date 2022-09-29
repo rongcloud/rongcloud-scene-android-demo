@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:layout_gravity="center"
+    android:layout_marginStart="18dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginEnd="18dp"
+    android:layout_marginBottom="7dp"
+    android:background="@drawable/game_bg_room_item"
+    tools:ignore="ResourceName">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/default_portrait"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_gender"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="45dp"
+        android:src="@drawable/game_ic_gender_selector"
+        app:layout_constraintStart_toStartOf="@id/iv_avatar"
+        app:layout_constraintTop_toTopOf="@id/iv_avatar" />
+
+    <com.vanniktech.emoji.EmojiTextView
+        android:id="@+id/tv_room_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:text="@string/game_text_default_room_title"
+        android:textColor="@color/game_color_text_title"
+        android:textSize="@dimen/basis_16sp"
+        app:layout_constraintBottom_toTopOf="@id/ll_game"
+        app:layout_constraintStart_toEndOf="@id/iv_avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_game"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:background="@drawable/game_bg_game_name"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_room_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_room_name">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_game_icon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            app:riv_corner_radius="4dp"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_game_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/game_color_text_game_name"
+            android:textSize="10sp"
+            tools:text="五子棋" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_lock"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/game_ic_room_lock"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:drawableStart="@drawable/game_ic_user_count"
+        android:drawablePadding="5dp"
+        android:textColor="@color/game_color_user_num"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="89" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notice">公告</string>
+    <string name="text_room_end">当前直播已结束</string>
+    <string name="text_confirm_close_room">确定结束本次直播吗？</string>
+</resources>

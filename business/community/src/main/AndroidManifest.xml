@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.rc.community">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <application>
+        <activity
+            android:name=".home.CreateCommunityActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.member.MemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.notify.NotifyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.manager.ManagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.notify.ChannelNotifyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".channel.details.ChannelDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.manager.MemberVerifyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.manager.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.manager.ProfileUpdateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.manager.SelectChannelActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.manager.ProfileNotifyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".channel.ConversionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+
+        <activity
+            android:name=".channel.details.MarkMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".activity.CoolViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".setting.member.SelectMentionMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+
+        <meta-data
+            android:name="rc.scenecommunity"
+            android:value="cn.rc.community.Version" />
+
+        <receiver
+            android:name=".push.UltraGroupPushMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

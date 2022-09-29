@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="ResourceName">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="21.71dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shape_editor_bg_gray"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/svg_search" />
+
+        <com.basis.widget.SearchEditText
+            android:id="@+id/et_search"
+            style="@style/main_primary_15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/cmu_member_search_hint"
+            android:imeOptions="actionSearch"
+            android:singleLine="true" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        app:tabBackground="@color/picture_color_transparent"
+        app:tabGravity="center"
+        app:tabIndicatorColor="#0099FF"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="4dp"
+        app:tabPaddingStart="20dp"
+        app:tabRippleColor="@color/picture_color_transparent"
+        app:tabSelectedTextColor="#000000"
+        app:tabTextAppearance="@style/cmu_TabTheme"
+        app:tabTextColor="#9F9FAA" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E5E8EF" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_switch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

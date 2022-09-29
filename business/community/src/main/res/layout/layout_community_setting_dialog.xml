@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/basis_shape_bottom_bg"
+    android:orientation="vertical"
+    android:paddingTop="34dp"
+    android:paddingBottom="35dp"
+    tools:ignore="ResourceName">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/community_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_promotion" />
+
+        <TextView
+            android:id="@+id/community_name"
+            style="@style/main_primary_17"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginLeft="66dp"
+            android:gravity="bottom"
+            android:paddingBottom="2dp"
+            android:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/community_num"
+            style="@style/main_secondary_13"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginLeft="66dp"
+            android:layout_marginTop="28dp"
+            android:gravity="top"
+            android:paddingTop="2dp"
+            android:text="@string/app_name" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:gravity="center"
+        android:paddingTop="34dp"
+        android:paddingBottom="24dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/notify"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="36dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/cmu_notify" />
+
+            <TextView
+                style="@style/main_secondary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/cmu_notify" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/manager"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="36dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/cmu_manager" />
+
+            <TextView
+                style="@style/main_secondary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/cmu_manager" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <LinearLayout
+        android:id="@+id/member"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/basis_selector_main_item_click"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
+
+        <TextView
+            android:id="@+id/tv_member_count"
+            style="@style/main_secondary_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cmu_member" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/svg_right_gray" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <LinearLayout
+        android:id="@+id/nick_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/basis_selector_main_item_click"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
+
+        <TextView
+            style="@style/main_secondary_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cmu_nick_name_in_community" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/svg_right_gray" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <LinearLayout
+        android:id="@+id/admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/create_group"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basis_main_item"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp">
+
+            <TextView
+                style="@style/main_secondary_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:text="@string/cmu_create_group" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/svg_right_gray" />
+        </LinearLayout>
+
+        <View style="@style/basis_main_divider" />
+
+        <LinearLayout
+            android:id="@+id/create_channel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basis_main_item"
+            android:background="@drawable/basis_selector_main_item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp">
+
+            <TextView
+                style="@style/main_secondary_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cmu_crate_channel" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/svg_right_gray" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/leave"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/basis_selector_main_item_click"
+        android:gravity="center"
+        android:text="@string/cmu_leave_community"
+        android:textColor="@color/basis_red"
+        android:textSize="@dimen/basis_16sp" />
+
+
+    <View style="@style/basis_main_divider" />
+</LinearLayout>

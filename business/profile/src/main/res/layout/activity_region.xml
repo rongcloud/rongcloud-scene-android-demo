@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/basis_20px"
+        android:layout_marginTop="@dimen/basis_15px"
+        android:layout_toLeftOf="@+id/cancel"
+        android:background="@drawable/profile_shape_search_region"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="6dp"
+            android:src="@drawable/svg_search" />
+
+        <com.basis.widget.SearchEditText
+            android:id="@+id/et_search"
+            style="@style/main_primary_14"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/basis_search_hint"
+            android:imeOptions="actionSearch"
+            android:lines="1"
+            android:singleLine="true" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="8dp"
+            android:src="@drawable/svg_search_clear"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="50dp"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/basis_15px"
+        android:gravity="center"
+        android:text="@string/basis_cancle"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/basis_15sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cancel"
+        android:layout_marginTop="@dimen/basis_15px"
+        android:background="#f6f6f6" />
+
+    <cn.rongcloud.profile.region.sort.SideBar
+        android:id="@+id/side_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/basis_20px"
+        android:paddingRight="@dimen/basis_20px"
+        android:textColor="#8D6E63"
+        android:textSize="@dimen/basis_12sp" />
+</RelativeLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_live_seat_online_bg">
+
+    <ImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_mic_audio_value"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <cn.rongcloud.roomkit.ui.room.widget.WaveView
+            android:id="@+id/wv_creator_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            app:init_radius="40dp"
+            app:wave_color="@color/color_speaking_bg" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_room_creator_portrait"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:padding="1dp"
+            android:src="@drawable/ic_room_creator_not_in_seat" />
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="gravity"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_gift_count"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="4dp"
+        tools:text="1 号麦位" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_gift_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/bg_gift_count"
+        android:drawableStart="@drawable/ic_gift_count"
+        android:drawablePadding="4dp"
+        android:paddingEnd="5dp"
+        android:text="0"
+        android:textAlignment="textStart"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_is_mute"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_margin="6dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_is_mute"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

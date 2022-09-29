@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/basis_bg"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/basis_30px"
+    android:paddingEnd="@dimen/basis_30px"
+    tools:ignore="MissingDefaultResource,ResourceName">
+
+    <TextView
+        android:id="@+id/update_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/basis_40px"
+        android:text="@string/cmu_profile_community_name"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/et_update_name"
+        style="@style/main_primary_16"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="@dimen/basis_30px"
+        android:background="@drawable/shape_editor_bg_white_corner_8px"
+        android:maxLength="16"
+        android:padding="@dimen/basis_10px"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/et_update_des"
+        style="@style/main_primary_16"
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:layout_marginTop="@dimen/basis_30px"
+        android:background="@drawable/shape_editor_bg_white_corner_8px"
+        android:gravity="left|top"
+        android:maxLength="200"
+        android:padding="@dimen/basis_10px"
+        android:visibility="gone" />
+
+</LinearLayout>

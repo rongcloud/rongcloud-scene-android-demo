@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="#234">
+
+    <ImageView
+        android:id="@+id/iv_right_mute"
+        android:layout_width="33dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/selector_pk_mute"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/pk_sb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <ImageView
+            android:id="@+id/iv_left_result_up"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_pk_win_top"
+            app:layout_constraintEnd_toEndOf="@+id/iv_left"
+            app:layout_constraintStart_toStartOf="@+id/iv_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_left"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_pink_stroke"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_portrait"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_left_result_up" />
+
+        <ImageView
+            android:id="@+id/iv_left_result_down"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_pk_fail"
+            app:layout_constraintEnd_toEndOf="@+id/iv_left"
+            app:layout_constraintStart_toStartOf="@+id/iv_left"
+            app:layout_constraintTop_toTopOf="@id/iv_left" />
+
+        <TextView
+            android:id="@+id/tv_sender_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_pk_time"
+            android:drawableEnd="@drawable/ic_pk_room_owner"
+            android:drawablePadding="3dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLength="8"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="2dp"
+            android:singleLine="true"
+            android:text="房主123afasdfasdfasdf"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_left"
+            app:layout_constraintStart_toStartOf="@+id/iv_left"
+            app:layout_constraintTop_toBottomOf="@+id/iv_left" />
+
+        <ImageView
+            android:id="@+id/iv_right_result_up"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_pk_win_top"
+            app:layout_constraintEnd_toEndOf="@+id/iv_right"
+            app:layout_constraintStart_toStartOf="@+id/iv_right"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_right"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/shape_pink_stroke"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_portrait"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_right_result_up" />
+
+        <ImageView
+            android:id="@+id/iv_right_result_down"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_pk_fail"
+            app:layout_constraintEnd_toEndOf="@+id/iv_right"
+            app:layout_constraintStart_toStartOf="@+id/iv_right"
+            app:layout_constraintTop_toTopOf="@id/iv_right" />
+
+        <TextView
+            android:id="@+id/tv_receiver_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_pk_time"
+            android:drawableEnd="@drawable/ic_pk_room_owner"
+            android:drawablePadding="3dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLength="8"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="2dp"
+            android:singleLine="true"
+            android:text="房主123afasdfasdfasdf"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_right" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/iv_vs"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_tie"
+        app:layout_constraintBottom_toTopOf="@id/pk_sb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/basis_10px"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_pk_time"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="03:00"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/pk_sb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/live_room_video_view_shape_gradient"
+        app:layout_constraintBottom_toBottomOf="@id/rv_sender"
+        app:layout_constraintTop_toTopOf="@id/pk_sb" />
+
+    <cn.rongcloud.pk.widget.PKProgressBar
+        android:id="@+id/pk_sb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@id/rv_sender"
+        app:progress_reached_color="@color/color_pk_left"
+        app:progress_reached_height="20dp"
+        app:progress_text_color="@color/white"
+        app:progress_unreached_color="@color/color_pk_right"
+        app:progress_unreached_height="20dp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sender"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="6dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rv_receiver"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_receiver"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="6dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/rv_sender" />
+</androidx.constraintlayout.widget.ConstraintLayout>

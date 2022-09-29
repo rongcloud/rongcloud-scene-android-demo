@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/basis_white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/basis_white"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_setting"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_portrait"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_setting"
+            tools:src="@drawable/default_portrait" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_protrait_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_portrait"
+            app:layout_constraintEnd_toEndOf="@+id/iv_portrait" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/main_primary_17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/app_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_portrait" />
+
+        <ImageView
+            android:id="@+id/ad_first"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/ic_setting_ad_first"
+            android:scaleType="center"
+            app:layout_constraintDimensionRatio="w,260:670"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <ImageView
+            android:id="@+id/ad_second"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_setting_ad_second"
+            android:scaleType="center"
+            app:layout_constraintDimensionRatio="w,100:156"
+            app:layout_constraintEnd_toStartOf="@id/ad_third"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ad_first" />
+
+        <TextView
+            style="@style/main_primary_17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="套餐方案"
+            app:layout_constraintStart_toStartOf="@+id/ad_second"
+            app:layout_constraintTop_toTopOf="@+id/ad_second" />
+
+        <ImageView
+            android:id="@+id/ad_third"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_setting_ad_third"
+            android:scaleType="center"
+            app:layout_constraintDimensionRatio="w,100:156"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ad_second"
+            app:layout_constraintTop_toBottomOf="@+id/ad_first" />
+
+        <TextView
+            style="@style/main_primary_17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="Demo下载"
+            app:layout_constraintStart_toStartOf="@+id/ad_third"
+            app:layout_constraintTop_toTopOf="@+id/ad_third" />
+
+        <ImageView
+            android:id="@+id/ad_fourth"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_setting_ad_fourth"
+            android:scaleType="center"
+            app:layout_constraintDimensionRatio="w,100:156"
+            app:layout_constraintEnd_toStartOf="@id/ad_fivth"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ad_second" />
+
+        <TextView
+            style="@style/main_primary_17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="在线客服"
+            app:layout_constraintStart_toStartOf="@+id/ad_fourth"
+            app:layout_constraintTop_toTopOf="@+id/ad_fourth" />
+
+
+        <ImageView
+            android:id="@+id/ad_fivth"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_setting_ad_fivth"
+            android:scaleType="center"
+            app:layout_constraintDimensionRatio="w,100:156"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ad_fourth"
+            app:layout_constraintTop_toBottomOf="@+id/ad_second" />
+
+        <TextView
+            style="@style/main_primary_17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="关于我们"
+            app:layout_constraintStart_toStartOf="@+id/ad_fivth"
+            app:layout_constraintTop_toTopOf="@+id/ad_fivth" />
+
+        <FrameLayout
+            android:id="@+id/customer_dial"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/selector_customer_dial_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ad_fourth">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/ic_customer_mic"
+                android:text="专属客户经理"
+                android:textColor="@color/basis_white"
+                android:textSize="16sp" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

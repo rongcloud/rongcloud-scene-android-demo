@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.rongcloud.profile">
+
+    <application>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".region.RegionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+
+        <activity
+            android:name=".SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+
+        <activity
+            android:name=".webview.ActCommentWeb"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/BasisTheme">
+            <intent-filter>
+                <action android:name="io.rong.intent.action.commonwebpage" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+        <activity
+            android:name=".SettingCommunityActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BasisTheme" />
+    </application>
+</manifest>

@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    resourcePrefix "game_"//前缀的名字
+}
+
+dependencies {
+    implementation android_ui.appcompat
+    implementation android_ui.material
+
+    api project(path: ':middle:config')
+    api project(path: ':middle:roomkit')
+    api project(path: ':middle:music')
+
+    implementation "cn.rongcloud.sdk:im_lib:$imLib"
+    implementation "cn.rongcloud.sdk:im_kit:$imLib"
+    implementation "cn.rongcloud.sdk:call_lib:$rtcLib"
+    implementation "cn.rongcloud.sdk:player:$rtcLib"
+    implementation "cn.rongcloud.sdk:tinygame_lib:$tinygameLib"
+
+    Properties properties = new Properties()
+    File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
+    properties.load(propertyFile.newDataInputStream())
+    if (properties.get("VOICE_ROOM_REMOTE_DEPENDENCE") != null && !properties.get("VOICE_ROOM_REMOTE_DEPENDENCE").toBoolean()) {
+        println("------------------------>>>>use local module")
+        implementation project(path: ':RCVoiceRoom')
+    } else {
+        implementation "cn.rongcloud.sdk:voiceroom_lib:$voiceroomLib"
+    }
+
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter"
+}

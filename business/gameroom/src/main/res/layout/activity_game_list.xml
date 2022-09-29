@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/game_bg_page"
+    android:fitsSystemWindows="true"
+    tools:ignore="ResourceName">
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/BasisMaterialTheme">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@color/game_bg_page"
+                    android:minHeight="40dp"
+                    android:theme="@style/BasisMaterialTheme"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="@dimen/game_page_padding"
+                        android:drawableStart="@drawable/game_ic_rocket"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/game_quick_start"
+                        android:textStyle="bold"
+                        android:textColor="@color/game_color_primary"
+                        android:textSize="14sp" />
+
+                    <cn.rongcloud.roomkit.ui.room.widget.RecyclerViewAtVP2
+                        android:id="@+id/rv_game_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="30dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_game" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:paddingStart="30dp"
+                        android:paddingEnd="30dp">
+
+                        <CheckBox
+                            android:id="@+id/cb_gender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:button="@null"
+                            android:checked="false"
+                            android:drawableEnd="@drawable/game_ic_arrow_selector"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/game_text_no_limit_gender"
+                            android:textStyle="bold"
+                            android:textColor="@color/game_filter_text_color_selector"
+                            android:textSize="@dimen/basis_14sp" />
+
+                        <CheckBox
+                            android:id="@+id/cb_game"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="36dp"
+                            android:button="@null"
+                            android:checked="false"
+                            android:drawableEnd="@drawable/game_ic_arrow_selector"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/game_text_no_limit_game"
+                            android:textStyle="bold"
+                            android:textColor="@color/game_filter_text_color_selector"
+                            android:textSize="@dimen/basis_14sp" />
+                    </LinearLayout>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_room_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@layout/item_game_room" />
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <!--        <com.scwang.smart.refresh.footer.ClassicsFooter-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content" />-->
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_create_room"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_create_room_btn" />
+</androidx.constraintlayout.widget.ConstraintLayout>

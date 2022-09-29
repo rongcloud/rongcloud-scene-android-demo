@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="#000">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_seat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible">
+
+        <cn.rongcloud.roomkit.ui.room.widget.WaveView
+            android:id="@+id/wv_creator_background"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            app:init_radius="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_room_creator_portrait"
+            app:layout_constraintEnd_toEndOf="@+id/iv_room_creator_portrait"
+            app:layout_constraintStart_toStartOf="@+id/iv_room_creator_portrait"
+            app:layout_constraintTop_toTopOf="parent"
+            app:wave_color="@color/color_speaking_bg" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_room_creator_portrait"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="1dp"
+            android:src="@drawable/ic_room_creator_not_in_seat"
+            app:layout_constraintBottom_toBottomOf="@+id/wv_creator_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/wv_creator_background" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_is_mute"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iv_room_creator_portrait"
+            app:layout_constraintEnd_toEndOf="@+id/iv_room_creator_portrait"
+            app:srcCompat="@drawable/ic_is_mute"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_room_creator_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/ic_room_owner"
+            android:drawablePadding="3dp"
+            android:textAlignment="textStart"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_gift_count"
+            app:layout_constraintEnd_toEndOf="@id/iv_room_creator_portrait"
+            app:layout_constraintStart_toStartOf="@id/iv_room_creator_portrait"
+            app:layout_constraintTop_toBottomOf="@+id/iv_room_creator_portrait"
+            tools:text="Lily" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_gift_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_gift_count"
+            android:drawableStart="@drawable/ic_gift"
+            android:drawablePadding="4dp"
+            android:paddingEnd="5dp"
+            android:text="0"
+            android:textAlignment="textStart"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="9sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_room_creator_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_room_creator_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_room_creator_name"
+            tools:text="111111" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_self_pause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_room_pause"
+            android:textColor="@color/white"
+            android:textSize="@dimen/basis_17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/btn_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_continue"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_btn_continue"
+            android:gravity="center"
+            android:text="@string/continue_live"
+            android:textColor="@color/white"
+            android:textSize="@dimen/basis_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pause"
+            app:layout_constraintWidth_percent="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_viewer_pause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_owner_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_radio_owner_pause"
+            android:drawablePadding="10dp"
+            android:text="房主暂时离开"
+            android:textColor="@color/white"
+            android:textSize="19sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_comeback"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_comeback"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/comeback_soon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/basis_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_owner_pause" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

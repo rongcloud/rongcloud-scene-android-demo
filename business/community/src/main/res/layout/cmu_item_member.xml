@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    tools:ignore="ResourceName">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/left"
+        style="@style/main_primary_15"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_promotion" />
+
+    <TextView
+        android:id="@+id/tv_member_name"
+        style="@style/main_primary_15"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/tv_identity"
+        style="@style/main_white_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/shape_sold_bg_blue"
+        android:gravity="center"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="2dp"
+        android:text="创建者"
+        android:textColor="@color/basis_white"
+        android:textSize="@dimen/basis_12sp" />
+
+    <ImageView
+        android:id="@+id/more"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="15dp"
+        android:padding="3dp"
+        android:src="@drawable/svg_more_gray" />
+</LinearLayout>

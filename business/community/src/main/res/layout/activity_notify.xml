@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f6fa"
+    android:orientation="vertical"
+    tools:ignore="ResourceName">
+
+    <View style="@style/basis_main_divider" />
+
+    <TextView
+        style="@style/main_primary_14"
+        android:layout_width="match_parent"
+        android:layout_height="57.79dp"
+        android:gravity="center_vertical|start"
+        android:paddingLeft="@dimen/basis_30px"
+        android:paddingTop="@dimen/basis_15px"
+        android:paddingRight="@dimen/basis_30px"
+        android:text="@string/cmu_notify_tip"
+        android:textColor="#949494" />
+
+    <View style="@style/basis_main_divider" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/basis_white"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <View
+        style="@style/basis_main_divider"
+        android:layout_marginTop="28dp" />
+
+    <TextView
+        android:id="@+id/channel_notify"
+        style="@style/main_secondary_16"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/basis_selector_main_item_click_white"
+        android:drawableRight="@drawable/svg_right_gray"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/basis_30px"
+        android:paddingRight="@dimen/basis_30px"
+        android:text="@string/cmu_notify_single_channel" />
+
+    <View style="@style/basis_main_divider" />
+</LinearLayout>

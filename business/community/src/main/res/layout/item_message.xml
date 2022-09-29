@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@drawable/selector_main_item_pressed"
+    android:paddingLeft="@dimen/basis_35px"
+    android:paddingEnd="@dimen/basis_35px"
+    tools:ignore="ResourceName">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/portrait"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:padding="3dp"
+        android:src="@drawable/cmu_default_portrait"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="@dimen/basis_20px"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/portrait"
+        app:layout_constraintTop_toTopOf="@+id/portrait">
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/main_primary_17"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/main_secondary_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="02:23 pm" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_last"
+        style="@style/main_secondary_15"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="@dimen/basis_20px"
+        android:gravity="center_vertical"
+        android:text="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/portrait"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/portrait" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

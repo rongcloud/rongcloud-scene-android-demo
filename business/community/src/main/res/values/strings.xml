@@ -1,0 +1,140 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="cmu_str_create">创建社区</string>
+    <string name="cmu_create_title">创建您的实时社区</string>
+    <string name="cmu_str_find">发现社区</string>
+    <string name="cmu_community_find">发现</string>
+    <string name="cmu_community_find_title">发现社区</string>
+    <string name="cmu_str_create_community">立即创建</string>
+    <string name="cmu_create_channel">新建频道</string>
+    <string name="cmu_sure">确定</string>
+    <string name="cmu_save_channel">保存</string>
+    <string name="cmu_str_channel_in_group">所属分组：</string>
+    <string name="cmu_str_please_select_a_group">请选择一个分组</string>
+    <string name="cmu_str_channel_type">频道类别：</string>
+    <string name="cmu_channel_text">文字频道</string>
+    <string name="cmu_channel_text_info">适用于日常聊天/发布公告</string>
+    <string name="cmu_channel_developing">功能还在开发中</string>
+    <string name="cmu_tip_channel_name">给你的频道起个名字吧</string>
+    <string name="cmu_channel_voice">语音频道</string>
+    <string name="cmu_channel_post">帖子频道</string>
+
+    <string name="cmu_channel_manager">频道管理</string>
+    <string name="cmu_group_manager">分组管理</string>
+    <string name="cmu_str_chat_about_what">聊点什么...</string>
+    <string name="cmu_member">社区成员</string>
+    <string name="cmu_nick_name_in_community">我在本社区的昵称</string>
+    <string name="cmu_change_nick_name_in_community">修改用户社区昵称</string>
+    <string name="cmu_create_group">创建分组</string>
+    <string name="cmu_crate_channel">创建频道</string>
+    <string name="cmu_leave_community">退出社区</string>
+    <string name="cmu_leave_community_success">退出社区成功</string>
+    <string name="cmu_crate_channel_success">创建频道成功</string>
+    <string name="cmu_delete_channel_success">删除频道成功</string>
+    <string name="cmu_delete_group_success">删除分组成功</string>
+    <string name="cmu_create_group_success">创建分组成功</string>
+    <string name="cmu_delete_community_success">解散社区成功</string>
+    <string name="cmu_delete_community_fail">解散社区失败</string>
+    <string name="cmu_crate_channel_fail">创建频道失败</string>
+    <string name="cmu_save_success">保存成功</string>
+    <string name="cmu_has_change_nickname">已修改昵称</string>
+    <string name="cmu_notify">通知</string>
+    <string name="cmu_manager">管理</string>
+    <string name="cmu_member_search_hint">搜索昵称</string>
+    <string name="cmu_online_member">在线</string>
+    <string name="cmu_offline_member">离线</string>
+    <string name="cmu_please_enter_user_name">请输入昵称</string>
+    <string name="cmu_community_uid_cant_empty">社区ID不能为空</string>
+    <string name="cmu_channel_uid_cant_empty">频道ID不能为空</string>
+    <string name="cmu_community_uid">社区号:</string>
+    <string name="cmu_shut_up_success">禁言成功</string>
+    <string name="cmu_cancel_shut_up_success">取消禁言成功</string>
+    <string name="cmu_kick_out_success">踢出成功</string>
+    <string name="cmu_whether_to_disband_the_current_community">是否解散当前社区?</string>
+
+
+    <string name="cmu_str_edit">编辑</string>
+    <string name="cmu_str_quote">引用</string>
+    <string name="cmu_str_copy">复制</string>
+    <string name="cmu_str_copy_to_the_paste_board">已复制到粘贴板</string>
+    <string name="cmu_str_has_edit">（已编辑）</string>
+    <string name="cmu_str_delete">删除</string>
+    <string name="cmu_str_recall">撤回</string>
+    <string name="cmu_str_annotation">标注</string>
+    <string name="cmu_cancel_str_annotation">取消标注</string>
+    <string name="cmu_str_pic">图片</string>
+    <string name="cmu_str_video">视频</string>
+    <string name="cmu_str_file">文件</string>
+    <!--    成员长按编辑-->
+    <string name="cmu_member_exchage_group">变更身份组</string>
+    <string name="cmu_member_update_nick">修改社区昵称</string>
+    <string name="cmu_member_no_speaking">禁止发言</string>
+    <string name="cmu_is_no_speaking">禁止 %s 在本社区发言吗?</string>
+    <string name="cmu_member_cancel_no_speaking">取消禁言</string>
+    <string name="cmu_member_closure_all">永久封禁</string>
+    <string name="cmu_member_kick_out">踢出</string>
+    <string name="cmu_member_is_kick_out">确定将 %s 踢出社区吗?</string>
+
+    <string name="cmu_me">我的</string>
+    <string name="cmu_me_tab_tip">我的帖子</string>
+
+    <string name="cmu_notify_setting">通知设置</string>
+    <string name="cmu_notify_tip">设置所有文字/帖子频道的默认通知方式</string>
+    <string name="cmu_notify_all">所有消息都通知</string>
+    <string name="cmu_notify_onlya">仅被@时通知</string>
+    <string name="cmu_notify_none">从不通知</string>
+    <string name="cmu_notify_single_channel">单独设置频道通知</string>
+    <string name="cmu_channel_notify_setting">频道通知设置</string>
+
+    <string name="cmu_community_manager">社区管理</string>
+    <string name="cmu_input_group_name">请输入分组名称</string>
+    <string name="cmu_channel_details">频道详情</string>
+    <string name="cmu_channel_name">频道名称</string>
+    <string name="cmu_channel_intro">频道简介</string>
+    <string name="cmu_welcome_to_the_channel">欢迎来到本频道，每日提供一些小福利</string>
+    <string name="cmu_join_the_community_to_interact">加入社区后即可参与互动</string>
+    <string name="cmu_you_have_been_shutup">您已被禁止在该社区发言</string>
+    <string name="cmu_tagged_information">已标注信息</string>
+    <string name="cmu_only_specific_watch">只允许特定成员查看频道</string>
+    <string name="cmu_only_specific_send">只允许特定成员发送消息</string>
+    <string name="cmu_select_group">选择分组</string>
+
+    <string name="cmu_member_verify">成员验证</string>
+    <string name="cmu_member_verify_tip">新用户申请加入社区的验证设置</string>
+    <string name="cmu_member_default_notify_tip">新用户进入社区时的默认消息通知方式</string>
+    <string name="cmu_edit_profile">编辑资料</string>
+    <string name="cmu_profile_community_name">社区名称</string>
+    <string name="cmu_profile_community_portrait">社区头像</string>
+    <string name="cmu_profile_community_them">社区封面</string>
+    <string name="cmu_profile_community_des">社区简介</string>
+    <string name="cmu_profile_default_channel">默认进入频道</string>
+    <string name="cmu_profile_default_channel_des">新用户进入社区时默认访问的频道</string>
+    <string name="cmu_profile_default_notify">默认通知设置</string>
+    <string name="cmu_profile_default_notify_des">新用户进入社区时默认消息通知方式</string>
+    <string name="cmu_profile_sys_channel">系统消息频道</string>
+    <string name="cmu_profile_sys_channel_des">接收新用户加入社区等系统消息</string>
+    <string name="cmu_profile_update_name">修改社区名称</string>
+    <string name="cmu_profile_update_des">修改社区简介</string>
+    <string name="cmu_profile_select_channel">选择频道</string>
+    <string name="cmu_need_audit">需要审核才能加入</string>
+    <string name="cmu_not_need_audit">不需要审核</string>
+    <string name="cmu_auditing">审核中</string>
+    <string name="cmu_join">加入</string>
+    <string name="cmu_restart_join">您的申请被拒绝，可重新申请加入</string>
+    <string name="cmu_refused">被拒绝</string>
+    <string name="cmu_send_message_fail">消息发送失败</string>
+    <string name="cmu_resend_message">重新发送</string>
+
+    <!--    标记消息长按 操作-->
+    <string name="cmu_message_jump">跳转</string>
+    <string name="cmu_message_remove">移除</string>
+    <string name="cmu_message_private">私信</string>
+    <string name="cmu_message_atme">\@我的</string>
+    <string name="cmu_message_system">系统消息</string>
+
+    <string name="cmu_update_success">更新成功</string>
+    <string name="cmu_unread_message_count">%s条新消息</string>
+    <string name="cmu_create_default_name">%s的社区</string>
+    <string name="cmu_text_creating_community">正在创建社区</string>
+    <string name="cmu_text_the_first_unread_message_was_not_obtained">离线未读消息暂不支持跳转</string>
+</resources>

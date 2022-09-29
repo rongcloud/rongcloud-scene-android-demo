@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_member_setting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gl_bg" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="35dp" />
+
+    <View
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/bg_setting_fragment_portrait"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_user_portrait"
+        app:layout_constraintEnd_toEndOf="@+id/iv_user_portrait"
+        app:layout_constraintStart_toStartOf="@+id/iv_user_portrait"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_portrait" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_user_portrait"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="7dp"
+        android:padding="1dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/default_portrait" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_is_mute"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_portrait"
+        app:layout_constraintEnd_toEndOf="@+id/iv_user_portrait"
+        app:srcCompat="@drawable/ic_is_mute"
+        tools:visibility="visible" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_seat_status"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_user_portrait"
+        app:layout_constraintEnd_toEndOf="@+id/iv_user_portrait"
+        app:layout_constraintStart_toStartOf="@+id/iv_user_portrait"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_portrait" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_portrait"
+        tools:text="1111111" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_invite_user_into_seat"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/live_room_btn_shape_gradient"
+        android:gravity="center"
+        android:text="邀请用户上麦"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_swich_seat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_member_name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_swich_seat"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_set_live_layout_bg_selected"
+        android:gravity="center"
+        android:text="切换麦位"
+        android:textColor="#EF499A"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cl_member_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_invite_user_into_seat" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_member_setting"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/bg_room_dialog"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/ll_close_seat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ll_mute_seat"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_close_seat"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_member_setting_close_seat" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_close_seat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="关闭座位"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_mute_seat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ll_close_seat"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_mute_seat"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_member_setting_mute_seat" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_mute_seat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="座位禁麦"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
