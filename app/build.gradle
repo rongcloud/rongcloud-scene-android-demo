@@ -1,0 +1,219 @@
+plugins {
+    id 'com.android.application'
+    // 神策插件
+    id 'com.sensorsdata.analytics.android'
+    // 瓦力插件
+    id 'walle'
+}
+
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        applicationId "cn.rongcloud.voiceroomdemo"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // 写modes到BuildConfig
+        buildConfigField("String[]", "RC_BUSI", "${modes()}")
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias "debugkey"
+            keyPassword "123456"
+            storeFile file("./debugkey.key")
+            storePassword '123456'
+        }
+        release {
+            keyAlias "debugkey"
+            keyPassword "123456"
+            storeFile file("./debugkey.key")
+            storePassword '123456'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "融云 RTC-${versionName}-${releaseTime()}.apk"
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+
+    flavorDimensions("environment")
+//    flavorDimensions("channel")// 线上环境
+//    def developFlag = true
+
+    productFlavors {
+        // 开发环境
+        develop {
+            dimension 'environment'
+            // 包名
+            applicationId "cn.rongcloud.voiceroomdemo.dev"
+
+            // 融云demo的AppKey，开发者可用来测试
+            buildConfigField("String", "APP_KEY", "\"pvxdm17jpw7ar\"")
+            // 融云demo对应服务器的测试地址，开发者可用来测试
+            buildConfigField("String", "BASE_SERVER_ADDRES", "\"https://rcrtc-api.rongcloud.net/\"")
+
+            // 这里是连接测试服务器的token，需要到 https://rcrtc-api.rongcloud.net/code 申请
+            buildConfigField("String", "BUSINESS_TOKEN", "\"xxxxx\"")
+
+            // 可选,神策地址
+            buildConfigField("String", "SENSORS_URL", "\"神策地址\"")
+            // 可选，友盟AppKey
+            buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
+            // 可选，bugly id
+            buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
+            // 可选，视频直播三方CDN推流地址，不用三方CDN推拉流可空着
+            buildConfigField("String", "THIRD_CDN_PUSH_URL", "\"\"")
+            // 可选，视频直播三方CDN拉流地址，不用三方CDN推拉流可空着
+            buildConfigField("String", "THIRD_CDN_PULL_URL", "\"\"")
+            // 区分国内/国际 国内环境不显示UI 选择地区
+            buildConfigField("Boolean", "INTERIAL", "false")
+            manifestPlaceholders = [
+                    APP_NAME         : "@string/app_name_test",
+                    // hifive音乐服务的 appid和servercode
+                    HIFIVE_APPID     : "替换您hifive音乐服务的appid",//可选替换
+                    HIFIVE_SERVERCODE: "替换您hifive音乐服务的servercode"//可选替换
+            ]
+        }
+        // 官网正式环境
+        official {
+            dimension 'environment'
+            applicationId "cn.rongcloud.voiceroomdemo"
+            buildConfigField("String", "APP_KEY", "\"xxxxxxxxx\"")
+            buildConfigField("String", "SENSORS_URL", "\"xxxxxxxx\"")
+            buildConfigField("String", "UM_APP_KEY", "\"xxxxxxx\"")
+            buildConfigField("String", "BASE_SERVER_ADDRES", "\"xxxxxxxxx\"")
+            buildConfigField("String", "BUGLY_ID", "\"xxxxxxxx\"")
+            buildConfigField("String", "BUSINESS_TOKEN", "\"xxxxxxxxxx\"")
+            buildConfigField("Boolean", "INTERIAL", "false")
+            buildConfigField("String", "THIRD_CDN_PUSH_URL", "\"\"")
+            buildConfigField("String", "THIRD_CDN_PULL_URL", "\"\"")
+            manifestPlaceholders = [
+                    APP_NAME         : "@string/app_name",
+                    // hifive音乐服务的 appid和servercode
+                    HIFIVE_APPID     : "xxxxxxxxxx",
+                    HIFIVE_SERVERCODE: "xxxxxxxxxx"
+            ]
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def apkName = "RCRTC_${variant.productFlavors[0].name}_${buildType.name}_${defaultConfig.versionName}"
+            if (buildType.name.toLowerCase().contains("release")) {
+                outputFileName = "../../../channels/" + apkName + ".apk"
+            } else {
+                outputFileName = apkName + ".apk"
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(includes: ['*.aar'], dir: 'libs')
+    implementation android_ui.appcompat
+    implementation android_ui.material
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter"
+    api 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    api 'com.tencent.bugly:nativecrashreport:latest.release'
+
+    // config
+    implementation project(path: ':middle:config')
+    // 登录设置模块
+    implementation project(path: ':business:profile')
+    // 实时社区
+    implementation project(path: ':business:community')
+    // 模块条件编译
+    if (!containMode(rootProject.ext.mode_live)
+            && !containMode(rootProject.ext.mode_voice)
+            && !containMode(rootProject.ext.mode_radio)) {
+        // 只有call 兼容编译
+        implementation project(path: ':middle:roomkit')
+        implementation project(path: ':middle:music')
+    } else {
+        if (containMode(rootProject.ext.mode_voice)) {
+            api project(path: ':business:voiceroom')
+        }
+        if (containMode(rootProject.ext.mode_radio)) {
+            api project(path: ':business:radio')
+        }
+        if (containMode(rootProject.ext.mode_call)) {
+            api project(path: ':business:call')
+        }
+        if (containMode(rootProject.ext.mode_live)) {
+            api project(path: ':business:live')
+        }
+        if (containMode(rootProject.ext.mode_game)) {
+            api project(path: ':business:gameroom')
+        }
+    }
+    // https://github.com/Meituan-Dianping/walle
+    implementation "com.meituan.android.walle:library:$walleVersion"
+}
+
+def containMode(mode) {
+    for (String temp in rootProject.ext.rc_busi) {
+        if (mode.equals(temp)) {
+            return true
+        }
+    }
+    return false
+}
+
+
+def modes() {
+    String busi = ""
+    for (String temp in rootProject.ext.rc_busi) {
+        busi += "\"${temp}\","
+    }
+    return "new String[]{" + busi.substring(0, busi.length() - 1) + "}"
+}
+
+walle {
+    apkOutputFolder = new File("${project.buildDir}/outputs/channels")
+    apkFileNameFormat = 'RCRTC_${versionName}_${channel}.apk'
+//    configFile与channelFile两者必须存在一个，否则无法生成渠道包。两者都存在时优先执行configFile
+    channelFile = new File("${project.getProjectDir()}/channel.txt")
+//    configFile = new File("${project.getProjectDir()}/config.json")
+}

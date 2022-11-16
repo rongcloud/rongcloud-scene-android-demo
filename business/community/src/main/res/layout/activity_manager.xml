@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource,ResourceName">
+
+    <View style="@style/basis_main_divider" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_60px"
+        android:background="@color/basis_bg" />
+
+    <View style="@style/basis_main_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_first"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/basis_selector_main_item_click"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/basis_30px"
+        android:paddingRight="@dimen/basis_30px">
+
+        <TextView
+            style="@style/main_secondary_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/basis_30px"
+            android:layout_weight="1"
+            android:text="编辑资料" />
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@drawable/svg_right_gray" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_second"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/basis_selector_main_item_click"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/basis_30px"
+        android:paddingRight="@dimen/basis_30px">
+
+        <TextView
+            style="@style/main_secondary_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/basis_30px"
+            android:layout_weight="1"
+            android:text="成员验证" />
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@drawable/svg_right_gray" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_35px"
+        android:background="@color/basis_bg" />
+
+    <View style="@style/basis_main_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_third"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/basis_selector_main_item_click"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/basis_30px"
+        android:paddingRight="@dimen/basis_30px">
+
+        <TextView
+            style="@style/main_secondary_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/basis_30px"
+            android:layout_weight="1"
+            android:text="身份组管理" />
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@drawable/svg_right_gray" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_fourth"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/basis_selector_main_item_click"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/basis_30px"
+        android:paddingRight="@dimen/basis_30px">
+
+        <TextView
+            style="@style/main_secondary_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/basis_30px"
+            android:layout_weight="1"
+            android:text="封禁管理" />
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@drawable/svg_right_gray" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_35px"
+        android:background="@color/basis_bg" />
+
+    <View style="@style/basis_main_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_fivth"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/basis_main_item"
+        android:background="@drawable/basis_selector_main_item_click"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/basis_30px"
+        android:paddingRight="@dimen/basis_30px">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/basis_30px"
+            android:layout_weight="1"
+            android:text="解散社区"
+            android:textColor="#D43030"
+            android:textSize="@dimen/basis_16sp" />
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@drawable/svg_right_gray" />
+    </LinearLayout>
+
+    <View style="@style/basis_main_divider" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/basis_bg" />
+
+</LinearLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/bg_room_dialog" />
+    <corners
+        android:topLeftRadius="@dimen/basis_25px"
+        android:topRightRadius="@dimen/basis_25px" />
+</shape>

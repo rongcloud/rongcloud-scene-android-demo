@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_weight="1" />
+
+    <View
+        style="@style/basis_main_divider"
+        android:layout_width="match_parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_home"
+        android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar.Bridge"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:tabIndicatorHeight="0dp"
+        android:visibility="visible"
+        app:tabIconTint="@null"
+        app:tabRippleColor="@color/transparent"
+        app:tabTextAppearance="@style/HomeTab" />
+
+</LinearLayout>

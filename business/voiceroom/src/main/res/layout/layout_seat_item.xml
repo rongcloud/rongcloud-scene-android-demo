@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <cn.rongcloud.roomkit.ui.room.widget.WaveView
+        android:id="@+id/wv_seat_background"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:init_radius="28dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_user_portrait"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@+id/iv_user_portrait"
+        app:layout_constraintStart_toStartOf="@+id/iv_user_portrait"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_portrait"
+        app:max_radius="40dp"
+        app:wave_color="@color/color_speaking_bg" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_user_portrait"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_voice_room_portrait"
+        android:padding="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/default_portrait" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_is_mute"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_portrait"
+        app:layout_constraintEnd_toEndOf="@+id/iv_user_portrait"
+        app:srcCompat="@drawable/ic_is_mute"
+        tools:visibility="visible" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_seat_status"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_user_portrait"
+        app:layout_constraintEnd_toEndOf="@+id/iv_user_portrait"
+        app:layout_constraintStart_toStartOf="@+id/iv_user_portrait"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_portrait" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="10sp"
+        android:layout_marginTop="5dp"
+        tools:text="1 号麦位"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAlignment="textStart"
+        android:drawablePadding="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_portrait" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_gift_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/bg_gift_count"
+        android:drawableStart="@drawable/ic_gift_count"
+        android:drawablePadding="3dp"
+        android:textSize="9sp"
+        android:text="0"
+        android:paddingEnd="5dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/whiteTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_member_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

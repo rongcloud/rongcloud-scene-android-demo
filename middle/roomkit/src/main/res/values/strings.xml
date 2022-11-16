@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<resources>
+
+    <string name="friend_follower">粉丝</string>
+    <string name="friend_follow">关注</string>
+    <string name="please_select_room_cover">选择封面</string>
+    <string name="please_input_room_name">请输入房间名</string>
+    <string name="label_setting_background">设置背景</string>
+    <string name="label_is_a_public_room">房间是否公开</string>
+    <string name="private_voice_room">私密</string>
+    <string name="public_voice_room">公开</string>
+    <string name="label_create_room">创建房间</string>
+    <string name="text_you_have_created_room">您已创建过房间，是否直接进入？</string>
+    <string name="text_please_input_four_number">请输入 4 位密码</string>
+    <string name="text_creating_room">正在创建房间</string>
+    <string name="text_have_chat">聊聊吧...</string>
+    <string name="leave_room">离开房间</string>
+    <string name="pack_up_room">收起房间</string>
+    <string name="close_room">关闭房间</string>
+
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+
+    <string name="please_setting_four_number_password">请设置 4 位数字密码</string>
+    <string name="please_input_four_number_password">请输入 4 位数字密码</string>
+    <string name="send_gift">送礼物</string>
+    <string name="send_message">发私信</string>
+
+    <!--    屏蔽词-->
+    <string name="shield_title">屏蔽词</string>
+    <string name="shield_setting">设置屏蔽词</string>
+    <string name="shield_tip">包含屏蔽词的发言将不会被其他用户看到</string>
+    <string name="radio_room_pause">您已暂停直播，观众无法听到声音</string>
+    <string name="continue_live">继续直播</string>
+    <string name="comeback_soon">请耐心等待，马上回来</string>
+
+    <string name="send">送给</string>
+    <string name="select_all">全选</string>
+    <string name="send_t">赠送</string>
+    <string name="text_pause_music_tips">播放音乐中下麦会导致音乐中断，是否确定下麦?</string>
+    <string name="text_open_suspend_permission">前往设置打开悬浮窗权限</string>
+</resources>

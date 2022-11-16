@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/basis_30px"
+    android:background="@drawable/selector_main_item_pressed"
+    android:paddingLeft="@dimen/basis_10px"
+    android:paddingRight="@dimen/basis_10px"
+    tools:ignore="ResourceName">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="@dimen/basis_20px"
+        android:paddingTop="@dimen/basis_20px"
+        android:paddingRight="@dimen/basis_20px"
+        android:text="@string/app_name"
+        android:textColor="@color/color_tab_text_selector"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_unread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_unread"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingTop="1dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="1dp"
+        android:text="12"
+        android:textColor="@color/basis_white"
+        android:textSize="@dimen/basis_10sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title" />
+
+    <View
+
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginLeft="@dimen/basis_20px"
+        android:layout_marginRight="@dimen/basis_20px"
+        android:background="@drawable/selector_tab_index"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintStart_toStartOf="@+id/title" />
+</androidx.constraintlayout.widget.ConstraintLayout>

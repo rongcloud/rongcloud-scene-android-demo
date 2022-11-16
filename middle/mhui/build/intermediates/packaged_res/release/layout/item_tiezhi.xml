@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bg"
+    android:layout_width="match_parent"
+    android:layout_height="46dp"
+    android:layout_margin="7dp">
+
+    <ImageView
+        android:id="@+id/thumb"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true" />
+
+    <ImageView
+        android:id="@+id/down_arrow"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_gravity="bottom|right"
+        android:src="@mipmap/sticker_download"
+        android:visibility="invisible" />
+
+    <FrameLayout
+        android:id="@+id/download_ing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_tiezhi_download"
+        android:visibility="invisible">
+
+        <ProgressBar
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/anim_loading"
+            android:indeterminateOnly="true" />
+    </FrameLayout>
+
+</FrameLayout>

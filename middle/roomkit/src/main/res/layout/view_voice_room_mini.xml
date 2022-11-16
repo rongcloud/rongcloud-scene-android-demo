@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="120dp"
+    android:layout_height="120dp">
+
+    <cn.rongcloud.roomkit.ui.room.widget.WaveView
+        android:id="@+id/wv_creator_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:init_radius="40dp"
+        app:wave_color="@color/color_speaking_bg" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_room_creator_portrait"
+        android:layout_centerInParent="true"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:padding="1dp"
+        android:src="@drawable/ic_room_creator_not_in_seat" />
+</RelativeLayout>

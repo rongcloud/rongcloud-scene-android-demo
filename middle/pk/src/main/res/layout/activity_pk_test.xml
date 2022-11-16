@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5E3E7E"
+    android:keepScreenOn="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/voice_room"
+            style="@style/main_white_17"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@color/basis_blue"
+            android:gravity="center"
+            android:text="语聊房麦位视图" />
+
+        <cn.rongcloud.pk.widget.PKView
+            android:id="@+id/pk_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/send_pk"
+        style="@style/main_white_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/basis_20px"
+        android:layout_marginBottom="@dimen/basis_20px"
+        android:background="@drawable/basis_selector_blue_solid"
+        android:paddingLeft="@dimen/basis_20px"
+        android:paddingTop="@dimen/basis_10px"
+        android:paddingRight="@dimen/basis_20px"
+        android:paddingBottom="@dimen/basis_10px"
+        android:text="发起PK" />
+
+    <TextView
+        android:id="@+id/refresh"
+        style="@style/main_white_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/basis_20px"
+        android:background="@drawable/basis_selector_blue_solid"
+        android:paddingLeft="@dimen/basis_20px"
+        android:paddingTop="@dimen/basis_10px"
+        android:paddingRight="@dimen/basis_20px"
+        android:paddingBottom="@dimen/basis_10px"
+        android:text="刷新PK Info" />
+
+    <TextView
+        android:id="@+id/quitpk"
+        style="@style/main_white_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/basis_20px"
+        android:background="@drawable/basis_selector_blue_solid"
+        android:paddingLeft="@dimen/basis_20px"
+        android:paddingTop="@dimen/basis_10px"
+        android:paddingRight="@dimen/basis_20px"
+        android:paddingBottom="@dimen/basis_10px"
+        android:text="退出PK" />
+
+    <TextView
+        android:id="@+id/leave"
+        style="@style/main_white_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/basis_20px"
+        android:background="@drawable/basis_selector_blue_solid"
+        android:paddingLeft="@dimen/basis_20px"
+        android:paddingTop="@dimen/basis_10px"
+        android:paddingRight="@dimen/basis_20px"
+        android:paddingBottom="@dimen/basis_10px"
+        android:text="离开房间" />
+
+    <TextView
+        android:id="@+id/fill"
+        style="@style/main_white_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/basis_20px"
+        android:background="@drawable/basis_selector_blue_solid"
+        android:paddingLeft="@dimen/basis_20px"
+        android:paddingTop="@dimen/basis_10px"
+        android:paddingRight="@dimen/basis_20px"
+        android:paddingBottom="@dimen/basis_10px"
+        android:text="设置过滤词" />
+
+    <TextView
+        android:id="@+id/music"
+        style="@style/main_white_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/basis_20px"
+        android:background="@drawable/basis_selector_blue_solid"
+        android:paddingLeft="@dimen/basis_20px"
+        android:paddingTop="@dimen/basis_10px"
+        android:paddingRight="@dimen/basis_20px"
+        android:paddingBottom="@dimen/basis_10px"
+        android:text="音乐" />
+</LinearLayout>

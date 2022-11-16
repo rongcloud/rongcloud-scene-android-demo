@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_main_item_pressed"
+    android:paddingStart="20dp"
+    android:paddingTop="10dp"
+    tools:ignore="ResourceName">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/portrait"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:src="@drawable/svg_sys_msg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/rl_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="26dp"
+        android:gravity="center_vertical"
+        android:minHeight="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/portrait"
+        app:layout_constraintTop_toTopOf="@+id/portrait">
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/main_primary_17"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:visibility="visible"
+            tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/main_secondary_14"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#33282828"
+            tools:text="02:23 pm" />
+
+        <TextView
+            android:id="@+id/tv_last"
+            style="@style/main_secondary_15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_toStartOf="@+id/tv_time"
+            android:ellipsize="end"
+            android:textColor="#8A282828"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:minHeight="28dp"
+            android:textSize="16sp"
+            tools:text="@string/app_name" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="26dp"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/portrait"
+        app:layout_constraintTop_toBottomOf="@+id/rl_id">
+
+        <TextView
+            android:id="@+id/reject"
+            style="@style/main_secondary_14"
+            android:layout_width="81dp"
+            android:layout_height="33dp"
+            android:background="@drawable/shape_sold_bg_gray_f3f4f5"
+            android:gravity="center"
+            android:text="拒绝" />
+
+        <TextView
+            android:id="@+id/ok"
+            style="@style/main_white_14"
+            android:layout_width="81dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="@dimen/basis_20px"
+            android:background="@drawable/shape_sold_bg_blue"
+            android:gravity="center"
+            android:paddingStart="@dimen/basis_15px"
+            android:paddingTop="@dimen/basis_8px"
+            android:paddingEnd="@dimen/basis_15px"
+            android:paddingBottom="@dimen/basis_8px"
+            android:text="同意" />
+
+        <TextView
+            android:id="@+id/info"
+            style="@style/main_secondary_14"
+            android:layout_width="81dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="@dimen/basis_20px"
+            android:background="@drawable/shape_sold_bg_gray_f3f4f5"
+            android:gravity="center"
+            android:paddingStart="@dimen/basis_15px"
+            android:paddingEnd="@dimen/basis_15px"
+            android:text="已同意" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="#DBDEE6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottom" />
+</androidx.constraintlayout.widget.ConstraintLayout>

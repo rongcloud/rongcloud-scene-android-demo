@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_option"
+    android:layout_width="match_parent"
+    android:layout_height="33dp"
+    android:background="@drawable/game_bg_option_selector"
+    android:ellipsize="end"
+    android:gravity="center"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:singleLine="true"
+    android:textColor="@color/game_option_text_color_selector"
+    android:textSize="@dimen/basis_12sp"
+    tools:text="你画我猜">
+
+</TextView>

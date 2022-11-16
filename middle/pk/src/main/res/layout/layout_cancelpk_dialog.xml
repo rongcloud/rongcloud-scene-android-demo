@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/vr_shape_dialog_bg">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
+        style="@style/main_white_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/basis_35px"
+        android:layout_marginBottom="@dimen/basis_30px"
+        android:text="@string/already_invitate_pk"
+        android:textColor="@color/basis_white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/cancele_pk"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/cancele_pk"
+        style="@style/main_white_15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/basis_30px"
+        android:layout_marginTop="@dimen/basis_20px"
+        android:layout_marginRight="@dimen/basis_30px"
+        android:layout_marginBottom="@dimen/basis_30px"
+        android:background="@drawable/vr_selector_cancel_btn_bg"
+        android:gravity="center"
+        android:paddingTop="@dimen/basis_15px"
+        android:paddingBottom="@dimen/basis_15px"
+        android:text="@string/cancel_invitate_pk"
+        android:textColor="@color/basis_white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/cancel_dialog"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/cancel_dialog"
+        style="@style/main_white_15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/basis_30px"
+        android:layout_marginTop="@dimen/basis_40px"
+        android:layout_marginRight="@dimen/basis_30px"
+        android:background="@drawable/vr_selector_cancel_btn_bg"
+        android:gravity="center"
+        android:paddingTop="@dimen/basis_15px"
+        android:paddingBottom="@dimen/basis_15px"
+        android:text="@string/basis_cancle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cancele_pk" />
+</androidx.constraintlayout.widget.ConstraintLayout>

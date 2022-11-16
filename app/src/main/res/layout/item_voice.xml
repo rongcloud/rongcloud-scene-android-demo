@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<com.basis.widget.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingBottom="20dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/module_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_voice"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingBottom="10dp"
+        app:layout_heightPercent="51.6%w">
+
+        <TextView
+            android:id="@+id/module_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/voice_room"
+            android:textColor="@color/app_color_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/module_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/voice_room_des"
+            android:textColor="@color/app_color_white"
+            android:textSize="12sp" />
+    </LinearLayout>
+</com.basis.widget.percent.PercentFrameLayout>
+

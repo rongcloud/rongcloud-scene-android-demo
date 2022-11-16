@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml:1:1-40
+INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml:1:1-40
+INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml:1:1-40
+	package
+		ADDED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml:1:11-37
+		INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+		INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml:1:1-40
+uses-sdk
+INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+		ADDED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+		INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+		ADDED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml
+		INJECTED from /Users/zangqilong/.jenkins/workspace/rcrtc-android发布及渠道包/middle/mhui/src/main/AndroidManifest.xml

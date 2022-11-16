@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_left"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="@dimen/basis_40px"
+            android:layout_marginTop="@dimen/basis_40px"
+            android:background="@drawable/shape_pink_stroke"
+            android:src="@drawable/default_portrait"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_left_result_up"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_pk_win_top"
+            app:layout_constraintEnd_toEndOf="@+id/iv_left"
+            app:layout_constraintStart_toStartOf="@+id/iv_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_left_result_down"
+            android:layout_width="83dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/ic_pk_fail"
+            app:layout_constraintEnd_toEndOf="@+id/iv_left"
+            app:layout_constraintStart_toStartOf="@+id/iv_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sender_name"
+            style="@style/main_white_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/basis_25px"
+            android:ellipsize="end"
+            android:maxLength="8"
+            android:text="@string/app_name"
+            app:layout_constraintEnd_toEndOf="@+id/iv_left"
+            app:layout_constraintStart_toStartOf="@+id/iv_left"
+            app:layout_constraintTop_toBottomOf="@+id/iv_left" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_right"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="@dimen/basis_40px"
+            android:layout_marginRight="@dimen/basis_40px"
+            android:background="@drawable/shape_pink_stroke"
+            android:src="@drawable/default_portrait"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_right_mute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_pk_mute"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_right" />
+
+        <ImageView
+            android:id="@+id/iv_right_result_up"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_pk_win_top"
+            app:layout_constraintEnd_toEndOf="@+id/iv_right"
+            app:layout_constraintStart_toStartOf="@+id/iv_right"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_right_result_down"
+            android:layout_width="83dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/ic_pk_fail"
+            app:layout_constraintEnd_toEndOf="@+id/iv_right"
+            app:layout_constraintStart_toStartOf="@+id/iv_right"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_receiver_name"
+            style="@style/main_white_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/basis_25px"
+            android:ellipsize="end"
+            android:maxLength="8"
+            android:singleLine="true"
+            android:text="@string/app_name"
+            app:layout_constraintEnd_toEndOf="@+id/iv_right"
+            app:layout_constraintStart_toStartOf="@+id/iv_right"
+            app:layout_constraintTop_toBottomOf="@+id/iv_right" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/basis_20px"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_right">
+
+            <ImageView
+                android:id="@+id/iv_vs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_vs" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/main_white_17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/basis_10px"
+                android:text="02:03" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <cn.rongcloud.pk.widget.PKProgressBar
+        android:id="@+id/pk_sb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/basis_15px"
+        android:layout_marginTop="@dimen/basis_30px"
+        android:layout_marginRight="@dimen/basis_15px"
+        android:layout_marginBottom="@dimen/basis_10px"
+        app:progress_corner_radius="10dp"
+        app:progress_reached_color="#EF499A"
+        app:progress_reached_height="20dp"
+        app:progress_text_color="@color/basis_white"
+        app:progress_unreached_color="@color/basis_blue"
+        app:progress_unreached_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/basis_15px"
+        android:layout_marginRight="@dimen/basis_15px"
+        android:layout_marginBottom="@dimen/basis_15px">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_sender"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="@dimen/basis_50px"
+            android:layout_weight="1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_receiver"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

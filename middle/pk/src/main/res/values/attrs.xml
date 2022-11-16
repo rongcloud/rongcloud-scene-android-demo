@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white_50">#80FFFFFF</color>
+
+    <declare-styleable name="PKProgressbar">
+        <attr name="progress_unreached_color" format="color" />
+        <attr name="progress_unreached_height" format="dimension" />
+        <attr name="progress_reached_color" format="color" />
+        <attr name="progress_reached_height" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_padding" format="dimension" />
+        <attr name="progress_text_visibility" format="dimension" />
+        <attr name="progress_corner_radius" format="dimension" />
+    </declare-styleable>
+</resources>

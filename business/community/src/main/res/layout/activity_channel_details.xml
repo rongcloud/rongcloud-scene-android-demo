@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f6fa">
+
+    <TextView
+        android:id="@+id/tv_channel_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="@string/cmu_channel_name"
+        android:textColor="#949494"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_channel_name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/tv_channel_name_title"
+        android:layout_marginTop="6.5dp"
+        android:background="@drawable/basis_selector_main_item_click_white"
+        android:drawableEnd="@drawable/svg_right_gray"
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:paddingEnd="23dp"
+        android:textColor="#949494"
+        android:textSize="16sp"
+        tools:text="每日福利" />
+
+    <TextView
+        android:id="@+id/tv_channel_intro_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_channel_name"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/cmu_channel_intro"
+        android:textColor="#949494"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_channel_intro"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/tv_channel_intro_title"
+        android:layout_marginTop="6.5dp"
+        android:background="@drawable/basis_selector_main_item_click_white"
+        android:drawableEnd="@drawable/svg_right_gray"
+        android:gravity="center_vertical"
+        android:hint="@string/cmu_welcome_to_the_channel"
+        android:paddingStart="30dp"
+        android:paddingEnd="23dp"
+        android:textColor="#949494"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_tagged_information"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/tv_channel_intro"
+        android:layout_marginTop="65dp"
+        android:background="@drawable/basis_selector_main_item_click_white"
+        android:drawableEnd="@drawable/svg_right_gray"
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:paddingEnd="23dp"
+        android:text="@string/cmu_tagged_information"
+
+        android:textColor="#949494"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_only_specific_watch"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/tv_tagged_information"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/basis_selector_main_item_click_white"
+        android:drawableEnd="@drawable/svg_right_gray"
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:paddingEnd="23dp"
+        android:text="@string/cmu_only_specific_watch"
+        android:textColor="#949494"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/only_send"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/tv_only_specific_watch"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/basis_selector_main_item_click_white"
+        android:drawableEnd="@drawable/svg_right_gray"
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:paddingEnd="23dp"
+        android:text="@string/cmu_only_specific_send"
+        android:textColor="#949494"
+        android:textSize="16sp" />
+</RelativeLayout>

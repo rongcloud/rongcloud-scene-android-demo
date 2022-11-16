@@ -1,0 +1,29 @@
+rootProject.name = "RC RTC"
+include ':app'
+// 业务
+include ':business:voiceroom', ':business:radio', ':business:live', ':business:call', ':business:profile', ':business:community', ':business:gameroom'
+
+// middle 中间层
+include ':middle:music', ':middle:pk', ':middle:gift', ':middle:roomkit', ':middle:config', ':middle:sight'
+
+// common
+include ':common'
+
+// 美颜ui
+include ':middle:beauty'
+
+Properties properties = new Properties()
+File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
+properties.load(propertyFile.newDataInputStream())
+
+if (properties.get("LIVE_ROOM_REMOTE_DEPENDENCE") != null && !(properties.get("LIVE_ROOM_REMOTE_DEPENDENCE").toBoolean())) {
+    println("------------------>>>>load local liveroom sdk module")
+    include ':RCliveroom'
+    project(':RCliveroom').projectDir = new File("${properties.get("LIVE_ROOM_SDK_DIR")}/liveroom")
+}
+if (properties.get("VOICE_ROOM_REMOTE_DEPENDENCE") != null && !(properties.get("VOICE_ROOM_REMOTE_DEPENDENCE").toBoolean())) {
+    println("------------------>>>>load local voiceroom sdk module")
+    include ':RCVoiceRoom'
+    project(':RCVoiceRoom').projectDir = new File("${properties.get("VOICE_ROOM_SDK_DIR")}/voiceroom")
+}
+include ':middle:thirdcdn'

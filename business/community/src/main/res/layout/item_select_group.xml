@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/main_primary_16"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/basis_selector_main_item_click"
+    android:gravity="center"
+    android:text="@string/app_name"
+    tools:ignore="ResourceName">
+
+    <TextView
+        android:id="@+id/group_name"
+        style="@style/main_primary_16"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="@string/app_name" />
+
+    <View
+        style="@style/basis_main_divider"
+        android:layout_gravity="bottom" />
+</FrameLayout>

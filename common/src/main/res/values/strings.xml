@@ -1,0 +1,13 @@
+<resources>
+    <string name="basis_no_data">暂无数据</string>
+    <string name="basis_cancle">取消</string>
+    <string name="basis_ok">确定</string>
+    <string name="basis_delete">删除</string>
+    <string name="basis_tip">提示</string>
+    <string name="basis_search_hint">请输入搜索内容</string>
+    <string name="basis_search">搜索</string>
+    <string name="re_loading">加载中…</string>
+    <string name="basis_preview">预览</string>
+    <string name="basis_loading">加载中</string>
+
+</resources>

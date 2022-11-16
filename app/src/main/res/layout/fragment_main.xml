@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="5dp">
+
+        <FrameLayout
+            android:id="@id/title"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/app_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="56dp"
+                android:text="@string/app_name"
+                android:textColor="@color/basis_color_primary"
+                android:textSize="@dimen/basis_17sp" />
+
+            <ImageView
+                android:id="@+id/iv_message"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical|end"
+                android:padding="5dp"
+                android:src="@drawable/ic_message" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_unread"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginBottom="13dp"
+                android:background="@drawable/bg_unread"
+                android:gravity="center"
+                android:textColor="@color/basis_white"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/business"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp" />
+    </LinearLayout>
+</ScrollView>

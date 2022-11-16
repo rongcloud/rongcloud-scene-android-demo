@@ -1,0 +1,73 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+}
+
+dependencies {
+    implementation android_ui.appcompat
+    implementation android_ui.material
+    api 'androidx.recyclerview:recyclerview:1.2.0'
+
+    api 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    // https://github.com/square/okhttp
+    api "com.squareup.okhttp3:okhttp:$okhttp"
+    api "com.squareup.okhttp3:logging-interceptor:$okhttp"
+
+    // https://github.com/google/gson
+    api "com.google.code.gson:gson:$gson"
+
+    // https://github.com/googlesamples/easypermissions
+    api "pub.devrel:easypermissions:$easypermissions"
+
+    // https://github.com/bumptech/glide
+    api "com.github.bumptech.glide:glide:$glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
+    // https://github.com/wasabeef/glide-transformations
+    api "jp.wasabeef:glide-transformations:$glideTrans"
+
+    // https://github.com/HarlonWang/AVLoadingIndicatorView
+    api "com.wang.avi:library:$indicatorView"
+
+    // rxjava 相关
+    api "io.reactivex.rxjava3:rxjava:$rxjava"
+    api "io.reactivex.rxjava3:rxandroid:$rxandroid"
+    api "com.jakewharton.rxbinding4:rxbinding:$rxbinding"
+
+    // https://github.com/vinc3m1/RoundedImageView
+    api "com.makeramen:roundedimageview:$roundimageview"
+
+    api "io.github.lucksiege:pictureselector:$pictureselector"
+
+    api "com.airbnb.android:lottie:$lottieVersion"
+
+    // SmartRefreshLayout
+    // https://github.com/scwang90/SmartRefreshLayout
+    api "io.github.scwang90:refresh-layout-kernel:$smartRefresh"
+    api "io.github.scwang90:refresh-header-classics:$smartRefresh"
+    api "io.github.scwang90:refresh-footer-classics:$smartRefresh"
+}

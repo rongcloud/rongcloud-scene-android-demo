@@ -1,0 +1,154 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--  ****************  ILoad style **************** -->
+    <style name="Basis_Dialog_Style" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+
+    <style name="Basis_Style_WX_Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <!--  ****************  bottom dialog  style  **************** -->
+    <style name="Basis_Style_Bottom_Menu" parent="android:Theme.Dialog">
+        <!--        <item name="android:windowBackground">@android:color/white</item>-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@style/Basis_Style_Bottom_Menu_Anim</item>
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+
+    <style name="Basis_Style_Bottom_Menu_Anim">
+        <item name="android:windowEnterAnimation">@anim/basis_anim_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/basis_anim_bottom_out</item>
+    </style>
+
+    <!--white 白色字体 style-->
+    <style name="main_white_17" tools:ignore="ResourceName">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/basis_17sp</item>
+    </style>
+
+    <style name="main_white_16" tools:ignore="ResourceName">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/basis_16sp</item>
+    </style>
+
+    <style name="main_white_15" tools:ignore="ResourceName">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/basis_15sp</item>
+    </style>
+
+    <style name="main_white_14" tools:ignore="ResourceName">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/basis_14sp</item>
+    </style>
+
+    <!--primary初级文字样式-->
+    <style name="main_primary_17" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_primary</item>
+        <item name="android:textSize">@dimen/basis_17sp</item>
+    </style>
+
+    <style name="main_primary_16" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_primary</item>
+        <item name="android:textSize">@dimen/basis_16sp</item>
+    </style>
+
+    <style name="main_primary_15" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_primary</item>
+        <item name="android:textSize">@dimen/basis_15sp</item>
+    </style>
+
+    <style name="main_primary_14" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_primary</item>
+        <item name="android:textSize">@dimen/basis_14sp</item>
+    </style>
+
+    <!--secondary次级文字样式-->
+
+    <style name="main_secondary_17" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_secondary</item>
+        <item name="android:textSize">@dimen/basis_17sp</item>
+    </style>
+
+    <style name="main_secondary_16" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_secondary</item>
+        <item name="android:textSize">@dimen/basis_16sp</item>
+    </style>
+
+
+    <style name="main_secondary_15" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_secondary</item>
+        <item name="android:textSize">@dimen/basis_15sp</item>
+    </style>
+
+    <style name="main_secondary_14" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_secondary</item>
+        <item name="android:textSize">@dimen/basis_14sp</item>
+    </style>
+
+    <style name="main_secondary_13" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_secondary</item>
+        <item name="android:textSize">@dimen/basis_13sp</item>
+    </style>
+
+    <style name="main_secondary_12" tools:ignore="ResourceName">
+        <item name="android:textColor">@color/basis_color_secondary</item>
+        <item name="android:textSize">@dimen/basis_12sp</item>
+    </style>
+
+    <!--分割线的style -->
+    <style name="basis_main_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/basis_color_divider</item>
+        <item name="android:layout_height">@dimen/basis_main_divide</item>
+    </style>
+
+    <style name="basis_main_divider_30px" parent="@style/basis_main_divider">
+        <item name="android:layout_marginLeft">@dimen/basis_30px</item>
+        <item name="android:layout_marginRight">@dimen/basis_30px</item>
+    </style>
+
+    <style name="basis_main_divider_15px" parent="@style/basis_main_divider">
+        <item name="android:layout_marginLeft">@dimen/basis_15px</item>
+        <item name="android:layout_marginRight">@dimen/basis_15px</item>
+    </style>
+
+    <style name="CustomDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--半透明-->
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+</resources>

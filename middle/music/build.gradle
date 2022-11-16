@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+}
+
+dependencies {
+    api project(':middle:config')
+    implementation fileTree(includes: ['*.jar', '*.aar'], dir: 'libs')
+
+    implementation android_ui.appcompat
+    implementation android_ui.material
+
+    implementation "cn.rongcloud.sdk:rccorekit_lib:$corekitLib"
+    api("cn.rongcloud.sdk:rcmusiccontrolkit_lib:$musicLib") {
+        exclude group: 'com.scwang.smart'
+    }
+
+    compileOnly "cn.rongcloud.sdk:im_lib:$imLib"
+    compileOnly "cn.rongcloud.sdk:im_kit:$imLib"
+    compileOnly "cn.rongcloud.sdk:call_lib:$rtcLib"
+    compileOnly "cn.rongcloud.sdk:player:$rtcLib"
+
+    // hifive音乐 需要的库 https://open.hifiveai.com/api/base/V4.1.2/baseClient/androidInterface/doc
+    implementation "io.reactivex.rxjava2:rxjava:2.2.10"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "com.squareup.retrofit2:retrofit:2.6.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.6.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.0"
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    // hifive end
+}

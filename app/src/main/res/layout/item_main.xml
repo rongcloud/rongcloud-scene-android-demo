@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+<com.basis.widget.percent.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/module_bg_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/ic_live"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_heightPercent="60%w">
+
+        <TextView
+            android:id="@+id/module_name_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live_video_call"
+            android:textColor="@color/app_color_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/module_des_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/live_video_des"
+            android:textColor="@color/app_color_white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/module_bg_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/ic_live"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_heightPercent="60%w">
+
+        <TextView
+            android:id="@+id/module_name_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live_video_call"
+            android:textColor="@color/app_color_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/module_des_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/live_video_des"
+            android:textColor="@color/app_color_white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</com.basis.widget.percent.PercentLinearLayout>
+
+

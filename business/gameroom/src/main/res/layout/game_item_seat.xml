@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:layout_gravity="center">
+
+    <cn.rongcloud.roomkit.ui.room.widget.WaveView
+        android:id="@+id/wv_seat_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:init_radius="23dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
+        app:layout_constraintEnd_toEndOf="@+id/iv_avatar"
+        app:layout_constraintStart_toStartOf="@+id/iv_avatar"
+        app:layout_constraintTop_toTopOf="@+id/iv_avatar"
+        app:max_radius="30dp"
+        app:wave_color="@color/color_speaking_bg" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_portrait"
+        app:civ_border_width="5dp"
+        app:civ_border_color="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_captain"
+        android:layout_width="23dp"
+        android:layout_height="11dp"
+        android:layout_marginStart="3dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/game_bg_seat_captain"
+        android:gravity="center"
+        android:scaleType="fitXY"
+        android:text="@string/game_text_captain"
+        android:textColor="@color/white"
+        android:textSize="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_width="32dp"
+        android:layout_height="11dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/game_bg_seat_playing"
+        android:gravity="center"
+        android:text="未准备"
+        android:textColor="@color/white"
+        android:textSize="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_avatar" />
+
+    <ImageView
+        android:id="@+id/iv_mute"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="3dp"
+        android:src="@drawable/ic_is_mute"
+        app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

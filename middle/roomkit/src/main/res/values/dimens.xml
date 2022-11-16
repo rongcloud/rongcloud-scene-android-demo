@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="friend_avatar_size">48dp</dimen>
+    <dimen name="friend_item_left_padding">20dp</dimen>
+    <dimen name="friend_item_right_padding">18dp</dimen>
+    <dimen name="friend_item_height">64dp</dimen>
+    <dimen name="create_voice_room_radius">25dp</dimen>
+    <dimen name="dimen_room_padding">12dp</dimen>
+    <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="dialog_radius">12dp</dimen>
+</resources>

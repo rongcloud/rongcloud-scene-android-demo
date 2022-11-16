@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<resources>
+    <style name="Theme.LoginStyle" parent="Theme.AppTheme.NoAction">
+        <item name="editTextStyle">@style/LoginEditTextStyle</item>
+        <item name="android:statusBarColor">#333333</item>
+    </style>
+
+    <color name="defaultTextColor">#333333</color>
+</resources>

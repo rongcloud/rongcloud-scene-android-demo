@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="20dp"
+    android:paddingTop="18.5dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="18.5dp"
+    tools:ignore="ResourceName">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cv_id"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/cmu_default_portrait" />
+
+    <TextView
+        android:id="@+id/tv_name_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/cv_id"
+        android:textSize="14sp"
+        android:textColor="#80282828"
+        android:textStyle="bold"
+        tools:text="涵涵" />
+
+    <TextView
+        android:id="@+id/tv_time_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_alignTop="@id/tv_name_id"
+        android:layout_alignBottom="@id/tv_name_id"
+        android:gravity="center"
+        android:textColor="#33282828"
+        android:layout_toEndOf="@id/tv_name_id"
+        android:textSize="12sp"
+        tools:text="02:30 pm" />
+
+    <TextView
+        android:id="@+id/tv_content_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name_id"
+        android:layout_alignStart="@+id/tv_name_id"
+        android:layout_marginTop="8dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        tools:text="还好多人点赞，还有人说为啥买那么贵的房子" />
+
+    <RelativeLayout
+        android:id="@+id/rl_quote_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content_id"
+        android:layout_alignStart="@id/tv_content_id"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_editor_bg_gray_corner_8px">
+
+        <ImageView
+            android:id="@+id/iv_quote_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/svg_mini_quote"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_quote_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_quote_icon"
+            android:padding="6dp"
+            android:visibility="gone" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_quote_content"
+            android:layout_width="72dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/tv_quote_content"
+            android:layout_margin="6dp"
+            android:layout_toRightOf="@id/iv_quote_icon"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:shapeAppearance="@style/RoundedStyle_10dp" />
+
+        <ImageView
+            android:id="@+id/iv_play_id"
+            android:layout_width="72dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/tv_quote_content"
+            android:layout_margin="6dp"
+            android:layout_toRightOf="@id/iv_quote_icon"
+            android:background="@color/picture_color_transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/rc_ic_sight_play"
+            android:visibility="gone"
+            app:shapeAppearance="@style/RoundedStyle_10dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_sendMessage_fail_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_quote_id"
+        android:layout_alignStart="@+id/tv_name_id"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_editor_bg_gray_corner_12px"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="4dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:drawableStart="@drawable/svg_ic_send_fail"
+            android:drawablePadding="4dp"
+            android:text="@string/cmu_send_message_fail"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tv_resend_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="16dp"
+            android:layout_toRightOf="@+id/tv_1"
+            android:text="@string/cmu_resend_message"
+            android:textColor="#0099FF"
+            android:textSize="@dimen/sp_14" />
+    </RelativeLayout>
+</RelativeLayout>

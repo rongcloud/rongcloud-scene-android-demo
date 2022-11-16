@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="60dp"
+    android:layout_height="wrap_content"
+    android:paddingLeft="3dp"
+    android:paddingTop="30dp"
+    android:paddingRight="3dp">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/thumb"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/check"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_onekey_check"
+                android:visibility="gone"
+
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="14sp"
+                android:background="@color/bg_white" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/item_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#B9000000"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/yes_btn" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:gravity="center"
+            android:textSize="12sp" />
+    </FrameLayout>
+</FrameLayout>

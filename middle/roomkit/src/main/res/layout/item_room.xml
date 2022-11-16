@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_room_list_item">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_room_cover"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:riv_corner_radius="8dp" />
+
+    <com.vanniktech.emoji.EmojiTextView
+        android:id="@+id/tv_room_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_room_cover"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1111111111" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_room_creator"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_room_name"
+        tools:src="@drawable/default_portrait" />
+
+    <com.vanniktech.emoji.EmojiTextView
+        android:id="@+id/tv_room_creator_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_room_creator"
+        app:layout_constraintStart_toEndOf="@+id/iv_room_creator"
+        app:layout_constraintTop_toTopOf="@+id/iv_room_creator" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_room_locked"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_room_list_locked" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_room_people_number"
+        app:layout_constraintEnd_toStartOf="@+id/tv_room_people_number"
+        app:layout_constraintTop_toTopOf="@+id/tv_room_people_number"
+        app:srcCompat="@drawable/ic_room_people_number" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_room_people_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:lines="1"
+        android:textColor="#99BBC0CA"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="1111111111" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,59 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--    自定义action bar 属性-->
+    <color name="basis_color_bar_bg">#00000000</color>
+    <color name="basis_color_status_bg">#FFFFFF</color>
+    <!--    标题栏高度，默认 56dp-->
+    <dimen name="basis_bar_size">@dimen/abc_action_bar_default_height_material</dimen>
+    <!--    标题 text size 默认：17sp-->
+    <dimen name="basis_bar_text_size">17sp</dimen>
+    <!--    标题栏文字包括menu颜色 默认：白色-->
+    <color name="basis_bar_text_color">@android:color/black</color>
+    <!--    action text size 默认：14sp-->
+    <dimen name="basis_menu_text_size">14sp</dimen>
+
+    <style name="BasisTheme_No" parent="BasisTheme">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--        <item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+        <!--        <item name="android:windowFullscreen">true</item>-->
+    </style>
+    <!--    自定义Action Bar的主体-->
+    <style name="BasisTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!--        status bar color-->
+        <item name="android:statusBarColor" tools:targetApi="o">@color/basis_color_status_bg</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <!--        action bar hight-->
+        <item name="actionBarSize">@dimen/basis_bar_size</item>
+        <!--        action bar style-->
+        <item name="actionBarStyle">@style/Basis_ActionBar_Style</item>
+        <!--        menu text size-->
+        <item name="android:actionMenuTextColor">@color/basis_bar_text_color</item>
+        <!--        menu text size-->
+        <item name="android:textSize">@dimen/basis_menu_text_size</item>
+        <!--        自定义返回监听-->
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_black</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+    <style name="Basis_ActionBar_Style" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@color/basis_color_bar_bg</item>
+        <item name="titleTextStyle">@style/Basis_Title_Style</item>
+        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <!--    action bar title style-->
+    <style name="Basis_Title_Style" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/basis_bar_text_color</item>
+        <item name="android:textSize">@dimen/basis_bar_text_size</item>
+    </style>
+
+    <style name="BasisMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar"></style>
+
+</resources>

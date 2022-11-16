@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ResourceName">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/cl_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/basis_50px"
+        android:layout_marginRight="@dimen/basis_50px"
+        android:layout_marginBottom="@dimen/basis_30px"
+        android:background="@drawable/login_edit_text_background_normal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/cl_verification_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_region"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/basis_10px"
+            android:layout_marginRight="@dimen/basis_10px"
+            android:drawableRight="@drawable/ic_down_gray"
+            android:drawablePadding="@dimen/basis_5px"
+            android:gravity="center_vertical"
+            android:text="+86"
+            android:textColor="@color/basis_color_secondary" />
+
+        <EditText
+            android:id="@+id/et_phone_number"
+            style="@style/main_primary_15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/please_input_phone_number"
+            android:inputType="phone"
+            android:paddingLeft="10dp" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_verification_code"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cl_phone_number"
+        app:layout_constraintStart_toStartOf="@+id/cl_phone_number"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/et_verification_code"
+            style="@style/main_primary_15"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_edit_text_background_normal"
+            android:gravity="center_vertical"
+            android:hint="@string/please_input_verification_code"
+            android:inputType="number"
+            android:paddingLeft="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_get_verification_code"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_get_verification_code"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/login_edit_text_background_normal"
+            android:gravity="center"
+            android:text="@string/get_verification_code"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/basis_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/et_verification_code"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/login_btn_selector"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@color/basis_white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/cl_verification_code"
+        app:layout_constraintStart_toStartOf="@+id/cl_verification_code"
+        app:layout_constraintTop_toBottomOf="@+id/cl_verification_code" />
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_version"
+        app:layout_constraintEnd_toEndOf="@+id/cl_phone_number"
+        app:layout_constraintStart_toStartOf="@+id/cl_phone_number">
+
+        <ImageView
+            android:id="@+id/iv_checked"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/shape_checkbox_inner" />
+
+        <TextView
+            android:id="@+id/bottom_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《注册条款》"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bottom_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="1.0.0"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

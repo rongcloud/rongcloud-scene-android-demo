@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cardview_dark_background">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_beauty"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/divider_line_color"
+        app:layout_constraintTop_toBottomOf="@id/vp_beauty" />
+
+    <ImageView
+        android:id="@+id/iv_clear"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="2dp"
+        android:layout_marginStart="10dp"
+        android:src="@mipmap/icon_control_delete_all"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_line" />
+
+    <View
+        android:id="@+id/v_line_v"
+        android:layout_width="2px"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/divider_line_color"
+        app:layout_constraintBottom_toBottomOf="@id/iv_clear"
+        app:layout_constraintStart_toEndOf="@id/iv_clear"
+        app:layout_constraintTop_toTopOf="@id/iv_clear" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_tab"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/v_line_v"
+        app:layout_constraintTop_toBottomOf="@id/v_line"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@color/transparent"
+        app:tabTextAppearance="@style/BeautyTab" />
+</androidx.constraintlayout.widget.ConstraintLayout>

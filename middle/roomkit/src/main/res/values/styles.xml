@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright © 2021 RongCloud. All rights reserved.
+  -->
+
+<resources>
+
+    <style name="music_audio_setting_seekbar_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:max">100</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:progressDrawable">@drawable/bg_music_audio_volume_seekbar</item>
+        <item name="android:thumb">@drawable/thumb_audio_volume_setting</item>
+    </style>
+
+    <style name="SwitchCompat.Control" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#EF499A</item>
+        <item name="colorSwitchThumbNormal">#ebebeb</item>
+        <item name="android:colorForeground">#ffffff</item>
+    </style>
+
+    <style name="SwitchCompat.Text" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <attr name="radius" format="dimension" />
+    <attr name="left_top_radius" format="dimension" />
+    <attr name="right_top_radius" format="dimension" />
+    <attr name="right_bottom_radius" format="dimension" />
+    <attr name="left_bottom_radius" format="dimension" />
+
+    <style name="TransparentDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--半透明-->
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <declare-styleable name="verify_EditText">
+        <!-- 验证码的个数 -->
+        <attr name="verify_count" format="integer" />
+        <!--        TextView 的宽度-->
+        <attr name="verify_width" format="dimension" />
+        <!--        TextView 的高度-->
+        <attr name="verify_height" format="dimension" />
+        <!--        TextView 的间隔-->
+        <attr name="verify_margin" format="dimension" />
+        <!--        TextView 的字体大小-->
+        <attr name="verify_textSize" format="dimension" />
+        <!--        TextView 的字体颜色-->
+        <attr name="verify_textColor" format="color" />
+        <!-- TextView 无值背景 -->
+        <attr name="verify_background_normal" format="reference" />
+        <!-- TextView 有值背景 -->
+        <attr name="verify_background_selected" format="reference" />
+        <!--        是否隐藏密码-->
+        <attr name="verify_password" format="boolean" />
+        <!--        密码显示时间ms-->
+        <attr name="verify_password_visible_time" format="integer" />
+        <!--        editText的输入类型 -->
+        <attr name="verify_inputType">
+            <flag name="none" value="0x00000000" />
+            <flag name="text" value="0x00000001" />
+            <flag name="textCapCharacters" value="0x00001001" />
+            <flag name="textCapWords" value="0x00002001" />
+            <flag name="textCapSentences" value="0x00004001" />
+            <flag name="textAutoCorrect" value="0x00008001" />
+            <flag name="textAutoComplete" value="0x00010001" />
+            <flag name="textMultiLine" value="0x00020001" />
+            <flag name="textImeMultiLine" value="0x00040001" />
+            <flag name="textNoSuggestions" value="0x00080001" />
+            <flag name="textUri" value="0x00000011" />
+            <flag name="textEmailAddress" value="0x00000021" />
+            <flag name="textEmailSubject" value="0x00000031" />
+            <flag name="textShortMessage" value="0x00000041" />
+            <flag name="textLongMessage" value="0x00000051" />
+            <flag name="textPersonName" value="0x00000061" />
+            <flag name="textPostalAddress" value="0x00000071" />
+            <flag name="textPassword" value="0x00000081" />
+            <flag name="textVisiblePassword" value="0x00000091" />
+            <flag name="textWebEditText" value="0x000000a1" />
+            <flag name="textFilter" value="0x000000b1" />
+            <flag name="textPhonetic" value="0x000000c1" />
+            <flag name="textWebEmailAddress" value="0x000000d1" />
+            <flag name="textWebPassword" value="0x000000e1" />
+            <flag name="number" value="0x00000002" />
+            <flag name="numberSigned" value="0x00001002" />
+            <flag name="numberDecimal" value="0x00002002" />
+            <flag name="numberPassword" value="0x00000012" />
+            <flag name="phone" value="0x00000003" />
+            <flag name="datetime" value="0x00000004" />
+            <flag name="date" value="0x00000014" />
+            <flag name="time" value="0x00000024" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="wave_view">
+        <attr name="init_radius" format="dimension" />
+        <attr name="max_radius" format="dimension" />
+        <attr name="wave_duration" format="integer" />
+        <attr name="wave_speed" format="integer" />
+        <attr name="wave_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="MusicPlayView">
+        <attr name="line_color" format="color" />
+        <attr name="line_number" format="integer" />
+        <attr name="refresh_duration" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerImageView">
+        <attr name="radius" />
+        <attr name="left_top_radius" />
+        <attr name="right_top_radius" />
+        <attr name="right_bottom_radius" />
+        <attr name="left_bottom_radius" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RealtimeBlurView">
+        <attr name="realtimeBlurRadius" format="dimension" />
+        <attr name="realtimeDownsampleFactor" format="float" />
+        <attr name="realtimeOverlayColor" format="color" />
+
+        <attr name="radius" />
+        <attr name="left_top_radius" />
+        <attr name="right_top_radius" />
+        <attr name="right_bottom_radius" />
+        <attr name="left_bottom_radius" />
+    </declare-styleable>
+
+
+    <style name="TabTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="MessageTabTheme" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <declare-styleable name="KsgLikeView">
+        <!-- 进入动画 时长-->
+        <attr name="ksg_enter_duration" format="integer" />
+        <!--路径动画 时长-->
+        <attr name="ksg_curve_duration" format="integer" />
+    </declare-styleable>
+
+    <!--控制popupwindows进出动画-->
+    <style name="popup_window_anim_style">
+        <item name="android:windowEnterAnimation">@anim/pop_enter_anim</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/pop_exit_anim</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+    <style name="transparentBackgroundDiaolg" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+
+    <style name="InputBar_Dialog_Style" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+</resources>
+
